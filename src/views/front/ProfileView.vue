@@ -1,0 +1,239 @@
+<script setup>
+import {
+  ArrowRightIcon,
+  Bars3Icon,
+  DocumentTextIcon,
+  ShieldCheckIcon,
+} from "@heroicons/vue/24/outline";
+import SidebarItem from "../../components/front/SidebarItem.vue";
+import { UserIcon, Cog6ToothIcon } from "@heroicons/vue/24/outline";
+
+import { inject, isProxy, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { AdjustmentsVerticalIcon } from "@heroicons/vue/24/solid";
+import {
+  ArrowRightStartOnRectangleIcon,
+  InformationCircleIcon,
+} from "@heroicons/vue/24/outline";
+import PersonalSection from "../../components/front/PersonalSection.vue";
+import SettingAccount from "../../components/front/SettingAccount.vue";
+import FavoriteSetting from "../../components/front/FavoriteSetting.vue";
+import PrivacyAndSecurity from "../../components/front/PrivacyAndSecurity.vue";
+import PrivacyPolicy from "../../components/front/PrivacyPolicy.vue";
+import TermsAndConditions from "../../components/front/TermsAndConditions.vue";
+import AboutApp from "../../components/front/AboutApp.vue";
+
+const links = [
+  {
+    group_name: "الحساب",
+    items: [
+      { id: "personal_page", label: "الملف الشخصي", icon: UserIcon },
+      { id: "setting", label: "الاعدادات", icon: Cog6ToothIcon },
+    ],
+  },
+  {
+    group_name: "التخصص و التحكم",
+    items: [
+      { id: "preferences", label: "التفضيلات", icon: AdjustmentsVerticalIcon },
+      {
+        id: "privacy-security",
+        label: "الخصوصية و الامان",
+        icon: ShieldCheckIcon,
+      },
+    ],
+  },
+  {
+    group_name: "اخرى",
+    items: [
+      { id: "privacy-policy", label: "سياسة الخصوصية", icon: DocumentTextIcon },
+      {
+        id: "terms-conditions",
+        label: "الشروط و الاحكام",
+        icon: DocumentTextIcon,
+      },
+      { id: "about", label: "حول", icon: InformationCircleIcon },
+    ],
+  },
+];
+
+const activeId = ref("personal_page");
+
+const sectionRefs = ref({});
+
+const setSectionRef = (id) => (el) => {
+  if (el) sectionRefs.value[id] = el;
+};
+
+let observer = null;
+let ignoreObserver = false;
+const scrollToSection = ({ id, label }) => {
+  ignoreObserver = true;
+  sectionRefs.value[id]?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+  sectionTitle.value = label;
+  setTimeout(() => {
+    ignoreObserver = false;
+  }, 500);
+};
+const isOpen = ref(false);
+const emitter = inject("emitter");
+const scrollContainer = ref(null);
+const sectionTitle = ref("الملف الشخصي");
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (ignoreObserver) return;
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeId.value = entry.target.id;
+        }
+      });
+    },
+    { root: scrollContainer.value, threshold: 0.8 }
+  );
+
+  Object.values(sectionRefs.value).forEach((el) => observer.observe(el));
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
+// watch(
+//   () => isOpen.value,
+//   (newVal) => {
+//     if (newVal) {
+//       emitter.emit("hiddenButton", true);
+//       return;
+//     }
+//     emitter.emit("hiddenButton", false);
+//   }
+// );
+</script>
+
+<template>
+  <div
+    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 border-b bg-white z-50"
+  >
+    <div class="flex items-center gap-5 container mx-auto">
+      <div class="flex items-center gap-2">
+        <Bars3Icon
+          class="w-6 h-6 cursor-pointer block lg:hidden"
+          @click="isOpen = !isOpen"
+        />
+        <ArrowRightIcon class="w-4 h-4 cursor-pointer hidden lg:block" />
+      </div>
+      <p class="text-black font-[600] text-[16px] sm:text-[20px]">
+        لوحة التحكم - {{ sectionTitle }}
+      </p>
+    </div>
+    <div class="name text-gray-500">احمد</div>
+  </div>
+
+  <div class="flex -mt-[27px]">
+    <nav
+      class="side-bar w-full lg:w-1/4 border-l top-0 right-0 absolute h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
+      :class="{
+        'bg-white h-screen z-[1000000000]': isOpen,
+        '-right-full': !isOpen,
+      }"
+    >
+      <ul class="relative">
+        <li v-for="link in links" :key="link.group_name" class="mb-4">
+          <p class="group-name text-gray-600 font-[500] text-[14px] mb-3">
+            {{ link.group_name }}
+          </p>
+          <ul>
+            <SidebarItem
+              v-for="item in link.items"
+              :key="item.id"
+              :id="item.id"
+              :label="item.label"
+              :class="{
+                'text-white bg-back rounded-lg': activeId === item.id,
+                'mb-[6px]': true,
+              }"
+              :active-id="activeId"
+              @update:activeId="activeId = $event"
+              @scrollTo="scrollToSection($event)"
+            >
+              <template #icon>
+                <component :is="item.icon" class="h-5 w-5" />
+              </template>
+            </SidebarItem>
+          </ul>
+        </li>
+        <span
+          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 -left-[16px]"
+        ></span>
+      </ul>
+      <button
+        class="text-white bg-red-600 w-full flex items-center justify-center gap-3 py-2 font-[500] rounded-lg text-[14px] mt-8"
+      >
+        <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
+        <span>تسجيل الخروج</span>
+      </button>
+    </nav>
+    <span
+      class="overlay w-screen h-screen transition-all duration-[0.4s] bg-black opacity-25 absolute top-0 left-0 z-[100000000]"
+      :class="{
+        'block lg:hidden': isOpen,
+        hidden: !isOpen,
+      }"
+      @click="isOpen = false"
+    />
+    <main
+      class="lg:container mx-auto pr-4 max-h-[calc(100vh-63px)] overflow-y-auto scrollbar-hide"
+      ref="scrollContainer"
+    >
+      <div
+        class="mt-4"
+        id="personal_page"
+        :ref="setSectionRef('personal_page')"
+      >
+        <PersonalSection />
+      </div>
+      <div class="mt-6" id="setting" :ref="setSectionRef('setting')">
+        <SettingAccount />
+      </div>
+      <div class="mt-6" id="preferences" :ref="setSectionRef('preferences')">
+        <FavoriteSetting />
+      </div>
+      <div
+        class="mt-6"
+        id="privacy-security"
+        :ref="setSectionRef('privacy-security')"
+      >
+        <PrivacyAndSecurity />
+      </div>
+      <div
+        class="mt-6"
+        id="privacy-policy"
+        :ref="setSectionRef('privacy-policy')"
+      >
+        <PrivacyPolicy />
+      </div>
+      <div
+        class="mt-6"
+        id="terms-conditions"
+        :ref="setSectionRef('terms-conditions')"
+      >
+        <TermsAndConditions />
+      </div>
+      <div class="my-6" id="about" :ref="setSectionRef('about')">
+        <AboutApp />
+      </div>
+    </main>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

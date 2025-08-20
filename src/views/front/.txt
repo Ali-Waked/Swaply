@@ -1,0 +1,58 @@
+<template>
+  <Dialog :open="isOpen" @close="setIsOpen">
+    <DialogPanel>
+      <DialogTitle>Deactivate account</DialogTitle>
+      <DialogDescription>
+        This will permanently deactivate your account
+      </DialogDescription>
+
+      <p>
+        Are you sure you want to deactivate your account? All of your data will
+        be permanently removed. This action cannot be undone.
+      </p>
+
+      <button @click="setIsOpen(false)">Deactivate</button>
+      <button @click="setIsOpen(false)">Cancel</button>
+    </DialogPanel>
+  </Dialog>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  DialogDescription,
+} from "@headlessui/vue";
+
+const isOpen = ref(true);
+
+function setIsOpen(value) {
+  isOpen.value = value;
+}
+</script>
+
+
+
+
+<template>
+  <div>
+    <button @click="isOpen = true" class="px-4 py-2 bg-blue-500 text-white rounded">
+      فتح النافذة
+    </button>
+
+    <Dialog v-model="isOpen" class="fixed inset-0 z-50 flex items-center justify-center">
+      <DialogOverlay class="fixed inset-0 bg-black/30" />
+      <div class="bg-white p-6 rounded shadow-lg">
+        <DialogTitle class="text-lg font-bold">عنوان النافذة</DialogTitle>
+        <DialogDescription class="mt-2 text-sm text-gray-500">
+          هذا نص داخل الـ Dialog
+        </DialogDescription>
+        <button @click="isOpen = false" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+          إغلاق
+        </button>
+      </div>
+    </Dialog>
+  </div>
+</template>
