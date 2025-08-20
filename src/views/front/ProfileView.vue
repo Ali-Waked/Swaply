@@ -86,7 +86,11 @@ onMounted(() => {
       if (ignoreObserver) return;
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          activeId.value = entry.target.id;
+          const id = entry.target.id;
+          activeId.value = id;
+          const label = getLabelById(id);
+          console.log(label);
+          if (label) sectionTitle.value = label;
         }
       });
     },
@@ -99,6 +103,13 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (observer) observer.disconnect();
 });
+const getLabelById = (id) => {
+  for (const group of links) {
+    const item = group.items.find((i) => i.id === id);
+    if (item) return item.label;
+  }
+  return null;
+};
 // watch(
 //   () => isOpen.value,
 //   (newVal) => {
@@ -113,34 +124,40 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 border-b bg-white z-50"
+    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 border-b dark:border-gray-700 bg-white dark:bg-gray-800 z-50"
   >
     <div class="flex items-center gap-5 container mx-auto">
       <div class="flex items-center gap-2">
         <Bars3Icon
-          class="w-6 h-6 cursor-pointer block lg:hidden"
+          class="w-6 h-6 cursor-pointer block lg:hidden text-black dark:text-white"
           @click="isOpen = !isOpen"
         />
-        <ArrowRightIcon class="w-4 h-4 cursor-pointer hidden lg:block" />
+        <ArrowRightIcon
+          class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
+        />
       </div>
-      <p class="text-black font-[600] text-[16px] sm:text-[20px]">
+      <p
+        class="text-black dark:text-white font-[600] text-[16px] sm:text-[20px]"
+      >
         لوحة التحكم - {{ sectionTitle }}
       </p>
     </div>
-    <div class="name text-gray-500">احمد</div>
+    <div class="name text-gray-500 dark:text-gray-300">احمد</div>
   </div>
 
   <div class="flex -mt-[27px]">
     <nav
-      class="side-bar w-full lg:w-1/4 border-l top-0 right-0 absolute h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
+      class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
       :class="{
-        'bg-white h-screen z-[1000000000]': isOpen,
+        'bg-white dark:bg-gray-800 h-screen z-[1000000000] right-0': isOpen,
         '-right-full': !isOpen,
       }"
     >
       <ul class="relative">
         <li v-for="link in links" :key="link.group_name" class="mb-4">
-          <p class="group-name text-gray-600 font-[500] text-[14px] mb-3">
+          <p
+            class="group-name text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3"
+          >
             {{ link.group_name }}
           </p>
           <ul>
@@ -152,36 +169,43 @@ onBeforeUnmount(() => {
               :class="{
                 'text-white bg-back rounded-lg': activeId === item.id,
                 'mb-[6px]': true,
+                'text-black dark:text-white': activeId !== item.id,
               }"
               :active-id="activeId"
               @update:activeId="activeId = $event"
               @scrollTo="scrollToSection($event)"
             >
               <template #icon>
-                <component :is="item.icon" class="h-5 w-5" />
+                <component
+                  :is="item.icon"
+                  class="h-5 w-5 text-black dark:text-white"
+                />
               </template>
             </SidebarItem>
           </ul>
         </li>
         <span
-          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 -left-[16px]"
+          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 -left-[16px]"
         ></span>
       </ul>
       <button
-        class="text-white bg-red-600 w-full flex items-center justify-center gap-3 py-2 font-[500] rounded-lg text-[14px] mt-8"
+        class="text-white bg-red-600 w-full flex items-center justify-center gap-3 py-2 font-[500] rounded-lg text-[14px] mt-8 hover:bg-red-700 dark:hover:bg-red-500"
       >
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
         <span>تسجيل الخروج</span>
       </button>
     </nav>
+
     <span
-      class="overlay w-screen h-screen transition-all duration-[0.4s] bg-black opacity-25 absolute top-0 left-0 z-[100000000]"
+      class="overlay w-screen h-screen transition-all duration-[0.4s] absolute top-0 left-0 z-[100000000]"
       :class="{
-        'block lg:hidden': isOpen,
+        'block lg:hidden bg-black bg-opacity-25 dark:bg-white dark:bg-opacity-25':
+          isOpen,
         hidden: !isOpen,
       }"
       @click="isOpen = false"
     />
+
     <main
       class="lg:container mx-auto pr-4 max-h-[calc(100vh-63px)] overflow-y-auto scrollbar-hide"
       ref="scrollContainer"

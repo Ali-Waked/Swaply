@@ -25,7 +25,9 @@ const localValue = computed({
   <Switch
     v-model="localValue"
     :class="[
-      localValue ? activeColor : inactiveColor,
+      localValue
+        ? 'bg-black dark:bg-blue-700' // عند التفعيل: أسود في الوضع العادي، فاتح في الداكن
+        : 'bg-gray-200 dark:bg-gray-700', // عند الإيقاف: رمادي فاتح في العادي، غامق في الداكن
       'relative inline-flex h-6 w-11 items-center rounded-full transition-colors rotate-[180deg]',
     ]"
   >
@@ -33,7 +35,7 @@ const localValue = computed({
     <span
       :class="[
         localValue ? '-translate-x-6' : '-translate-x-1',
-        'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+        'inline-block h-4 w-4 transform rounded-full bg-white dark:bg-gray-300 transition-transform',
       ]"
     />
   </Switch>

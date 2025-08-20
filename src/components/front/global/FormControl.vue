@@ -1,16 +1,20 @@
 <template>
   <div class="mb-3">
-    <label :for="id" class="block font-[400] mb-2">{{ label }}</label>
+    <label :for="id" class="block font-[400] mb-2 text-black dark:text-white">{{
+      label
+    }}</label>
+
     <textarea
-      v-if="type == 'textarea'"
+      v-if="type === 'textarea'"
       :placeholder="placeholder"
-      class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 block w-full placeholder:text-[14px] placeholder:font-[400] h-[90px]"
+      class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"
     ></textarea>
+
     <input
       v-else
       :type="type"
       :placeholder="placeholder"
-      class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 block w-full placeholder:text-[14px] placeholder:font-[400]"
+      class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
     />
   </div>
 </template>

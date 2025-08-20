@@ -25,8 +25,8 @@ const handleClick = () => {
       :class="[
         'flex items-center gap-3 p-[10px] rounded-lg transition-colors font-[500] text-[16px]',
         activeId === id
-          ? 'text-white bg-black'
-          : 'text-black hover:bg-gray-100',
+          ? 'text-white bg-black dark:bg-gray-600'
+          : 'text-black hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700',
       ]"
     >
       <span class="icon">

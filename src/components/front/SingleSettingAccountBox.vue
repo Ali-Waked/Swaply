@@ -42,34 +42,46 @@ const isEdit = ref(false);
 
 <template>
   <div
-    class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0"
+    class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
   >
-    <span class="text-gray-600 font-[500] text-[14px] mb-3">{{ label }}</span>
+    <!-- Label -->
+    <span
+      class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block"
+    >
+      {{ label }}
+    </span>
+
+    <!-- Edit Mode -->
     <div v-if="isEdit" class="flex items-center gap-4 mt-3">
       <input
         :type="inputType"
         v-model="localValue"
-        class="focus:border-gray-500 focus:ring-gray-500 rounded-md w-full p-[6px] bg-gray-100 block placeholder:text-[14px] font-[500]"
+        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-black focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
       />
       <div class="action flex justify-end gap-1">
         <span
-          class="cursor-pointer w-9 h-7 rounded-md active:bg-gray-200 flex items-center justify-center"
+          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
         >
           <CheckIcon class="w-5 h-5" />
         </span>
         <span
-          class="cursor-pointer w-9 h-7 rounded-md active:bg-gray-200 flex items-center justify-center"
+          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
           @click="isEdit = false"
         >
           <XMarkIcon class="w-5 h-5" />
         </span>
       </div>
     </div>
-    <div v-else class="font-[500] text-black flex items-center justify-between">
-      <p class="">{{ displayValue }}</p>
+
+    <!-- Display Mode -->
+    <div
+      v-else
+      class="font-[500] flex items-center justify-between text-black dark:text-white"
+    >
+      <p>{{ displayValue }}</p>
       <button
         @click="isEdit = true"
-        class="w-fit border border-gray-200 rounded-lg py-2 px-4 hover:bg-gray-100 focus:bg-gray-100 text-[12px] text-black font-[500] transition"
+        class="w-fit border rounded-lg py-2 px-4 text-[12px] font-[500] transition border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
       >
         {{ buttonLabel }}
       </button>

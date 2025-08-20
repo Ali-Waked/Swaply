@@ -52,10 +52,13 @@ watch(
     @update:modelValue="(val) => (isDialogOpen = val)"
   />
   <div class="offers">
-    <h5 class="title font-[500] text-[18px]">العروض المتاحة</h5>
-    <div class="offers-list">
+    <h5 class="title font-[500] text-[18px] text-black dark:text-white">
+      العروض المتاحة
+    </h5>
+
+    <div class="offers-list pb-8">
       <template v-for="n in 4" :key="n">
-        <SingleOffer class="my-4" @startChat="startChat" />
+        <SingleOffer class="my-4 last-of-type:mb-0" @startChat="startChat" />
       </template>
     </div>
   </div>

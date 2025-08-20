@@ -1,21 +1,29 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
     <Dialog @close="closeDialog" class="relative z-50">
-      <!-- الخلفية -->
+      <!-- Overlay -->
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-      <!-- صندوق الـ Dialog -->
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel
           class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg relative"
         >
           <DialogTitle class="pt-6 mb-3">
-            <h3 class="title font-[500] text-[20px]">اضافة عرض مقايضة</h3>
-            <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px]">
-              اضف تفاصيل عرض المقاي ضة الخاص بك
+            <h3 class="title font-[500] text-[20px] text-black dark:text-white">
+              اضافة عرض مقايضة
+            </h3>
+            <p
+              class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300"
+            >
+              اضف تفاصيل عرض المقايضة الخاص بك
             </p>
           </DialogTitle>
-          <FormControl label="ماذا تعرض؟" id="ماذا تعرض؟" />
+
+          <FormControl
+            label="ماذا تعرض؟"
+            id="ماذا تعرض؟"
+            placeholder="مثال: 5 لتر بنزين"
+          />
           <FormControl
             label="ماذا تريد؟"
             id="ماذا تريد؟"
@@ -32,20 +40,23 @@
             id="الموقع"
             placeholder="المنطقة او الحي"
           />
+
           <div class="mb-3">
             <label
               for="file_image"
               class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md"
             >
-              <CameraIcon class="w-4 h-4 text-gray-600" />
-              <span class="font-[400]">اضافة صورة</span>
+              <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
+              <span class="font-[400] dark:text-white">اضافة صورة</span>
             </label>
             <input type="file" id="file_image" hidden />
           </div>
+
           <MainButton label="نشر العرض" />
+
           <div class="absolute top-[20px] right-[20px]">
             <span
-              class="text-gray-600 hover:text-gray-800 transition-all cursor-pointer"
+              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer"
             >
               <XMarkIcon class="h-5 w-5" @click="closeDialog()" />
             </span>

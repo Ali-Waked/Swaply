@@ -1,6 +1,6 @@
 <script setup >
-import { ref } from "vue";
-import CheckboxComponent from "./global/CheckboxComponent.vue";
+import { ref, watch } from "vue";
+import RadioComponent from "./global/RadioComponent.vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
 import { Switch } from "@headlessui/vue";
@@ -40,14 +40,23 @@ const currency = [
     id: "ils",
   },
 ];
+watch(apperenceSelected, (newVal) => {
+  if (newVal === "dark") {
+    document.body.classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+  }
+});
 </script>
 
 <template>
   <SecandryTitle label="التفضيلات" class="mb-3" />
-  <div class="border rounded-xl p-6">
+  <div
+    class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+  >
     <SingleFavoriteStraucture title="اللغة" description="اختر لغة التطبيق">
       <template #action>
-        <CheckboxComponent
+        <RadioComponent
           :items="langs"
           name="lang"
           v-model:selected="langSelected"
@@ -56,7 +65,7 @@ const currency = [
     </SingleFavoriteStraucture>
     <SingleFavoriteStraucture title="المظهر" description="اختر مظهر التطبيق">
       <template #action>
-        <CheckboxComponent
+        <RadioComponent
           :items="apperences"
           name="apperence"
           v-model:selected="apperenceSelected"
@@ -65,7 +74,7 @@ const currency = [
     </SingleFavoriteStraucture>
     <SingleFavoriteStraucture title="الوحدة" description="وحدة قياس الاسعار">
       <template #action>
-        <CheckboxComponent
+        <RadioComponent
           :items="currency"
           name="currency"
           v-model:selected="currencySelected"

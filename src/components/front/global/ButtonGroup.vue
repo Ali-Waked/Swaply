@@ -29,26 +29,26 @@ onMounted(() => {
     >
       <single-button-group title="الاسعار" name="pricing">
         <template #icon>
-          <StarIcon class="w-6 h-6 text-gray-600" />
+          <StarIcon class="w-6 h-6 text-black dark:text-white" />
         </template>
       </single-button-group>
       <single-button-group title="التنبيهات" name="notifications">
         <template #icon>
-          <BellIcon class="w-6 h-6 text-gray-600" />
+          <BellIcon class="w-6 h-6 text-black dark:text-white" />
           <span
-            class="absolute -top-[2px] -right-[2px] bg-black rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]"
+            class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]"
             >3</span
           >
         </template>
       </single-button-group>
       <single-button-group title="المقايضة" name="exchange">
         <template #icon>
-          <ArrowsRightLeftIcon class="w-6 h-6 text-gray-600" />
+          <ArrowsRightLeftIcon class="w-6 h-6 text-black dark:text-white" />
         </template>
       </single-button-group>
       <single-button-group title="الملف الشخصي" name="personal_profile">
         <template #icon>
-          <UserIcon class="w-6 h-6 text-gray-600" />
+          <UserIcon class="w-6 h-6 text-black dark:text-white" />
         </template>
       </single-button-group>
     </div>

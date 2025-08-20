@@ -10,6 +10,10 @@ defineProps({
 </script>
 
 <template>
-  <h3 class="title font-[500] text-[24px]">{{ title }}</h3>
-  <p class="subtitle font-[400] text-gray-600 mt-1">{{ subtitle }}</p>
+  <h3 class="title font-[500] text-[24px] text-black dark:text-white">
+    {{ title }}
+  </h3>
+  <p class="subtitle font-[400] text-gray-600 mt-1 dark:text-gray-300">
+    {{ subtitle }}
+  </p>
 </template>

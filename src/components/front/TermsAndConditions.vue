@@ -19,7 +19,9 @@ const data = [
 
 <template>
   <SecandryTitle label="الشروط و الاحكام" class="mb-3" />
-  <div class="border rounded-xl p-6 pb-9">
+  <div
+    class="border rounded-xl p-6 pb-9 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+  >
     <template v-for="item in data" :key="item.title">
       <SingleFavoriteStraucture
         class="pb-0 border-none -mb-4"

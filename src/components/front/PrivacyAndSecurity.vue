@@ -10,7 +10,9 @@ const twoFA = ref(false);
 
 <template>
   <SecandryTitle label="الخصوصية و الامان" class="mb-3" />
-  <div class="border rounded-xl p-6">
+  <div
+    class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+  >
     <SingleSettingAccountBox
       label="كلمة المرور"
       value="password"
