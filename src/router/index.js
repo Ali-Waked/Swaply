@@ -50,6 +50,36 @@ const routes = [
             },
         ],
     },
+    // {
+    //     path: "/",
+    //     component: () => import("../views/layouts/AccountLayout.vue"),
+    //     children: [
+    {
+        path: "/login",
+        name: "login",
+        meta: {
+            title: "تسجيل الدخول",
+        },
+        component: () => import('../views/front/CreateAccount.vue'),
+    },
+    {
+        path: "/register",
+        name: "register",
+        meta: {
+            title: "انشاء حساب",
+        },
+        component: () => import('../views/front/CreateAccount.vue'),
+    },
+    //     ],
+    // },
+    {
+        path: "/create-account",
+        name: "account",
+        meta: {
+            title: "انشاء حساب",
+        },
+        component: () => import('../views/front/CreateAccount.vue'),
+    },
 ];
 
 
