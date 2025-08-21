@@ -13,9 +13,10 @@ const props = defineProps({
   <button
     class="border-2 flex-1 transition-all font-[400]"
     :class="{
-      'bg-gray-900 border-gray-700 text-white dark:bg-gray-100 dark:text-gray-900':
+      ' bg-white border-gray-300 text-gray-900  dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:border-blue-700':
         isActive,
-      'border-transparent text-gray-400 dark:text-gray-500': !isActive,
+      'border-transparent text-gray-600 dark:text-gray-50 dark:hover:bg-white/45':
+        !isActive,
     }"
   >
     {{ label }}
