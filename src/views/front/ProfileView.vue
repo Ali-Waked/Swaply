@@ -181,7 +181,11 @@ const getLabelById = (id) => {
               <template #icon>
                 <component
                   :is="item.icon"
-                  class="h-5 w-5 text-black dark:text-white"
+                  class="h-5 w-5 dark:text-white"
+                  :class="{
+                    'text-white': activeId === item.id,
+                    'text-black': activeId !== item.id,
+                  }"
                 />
               </template>
             </SidebarItem>

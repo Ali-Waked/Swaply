@@ -144,10 +144,11 @@ watch(
           />
           <span
             v-if="type == 'number'"
-            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-300"
+            class="absolute left-3 top-1/2 -translate-y-1/2"
             :class="{
               'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
                 emailOrPhone === '',
+              'text-black dark:text-white': emailOrPhone !== '',
             }"
             >+97</span
           >

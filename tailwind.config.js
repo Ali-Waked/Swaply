@@ -2,7 +2,7 @@
 import tailwindRtl from 'tailwindcss-rtl'
 
 export default {
-    darkMode: 'media', //'class , media, system
+    darkMode: 'class', //'class , media, system
     content: [
         "./index.html",
         "./src/**/*.{vue,js,ts,jsx,tsx}",
