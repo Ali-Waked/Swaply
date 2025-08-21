@@ -1,0 +1,60 @@
+<script setup>
+import { computed } from "vue";
+import BaseSwitch from "./global/BaseSwitch.vue";
+import MdiIcon from "./MdiIcon.vue";
+
+const props = defineProps({
+  icon: [Object, String],
+  title: String,
+  description: String,
+  isEnable: Boolean,
+  from: String,
+});
+
+const emit = defineEmits(["update:isEnable"]);
+
+const isEnableValue = computed({
+  get: () => props.isEnable,
+  set: (value) => emit("update:isEnable", value),
+});
+</script>
+
+<template>
+  <div
+    class="flex bg-white dark:bg-gray-900 shadow-md w-full items-center rounded-2xl justify-between px-8 py-4 mb-4 transition-colors"
+  >
+    <div class="flex items-center gap-4">
+      <div class="icon">
+        <template v-if="from == 'mdi'">
+          <MdiIcon
+            :icon="icon"
+            class="w-[30px] h-[30px] text-gray-900 dark:text-white"
+          />
+        </template>
+        <template v-else>
+          <component
+            :is="icon"
+            class="w-[30px] h-[30px] text-gray-900 dark:text-white"
+          />
+        </template>
+      </div>
+      <div>
+        <div>
+          <span
+            class="text-gray-900 dark:text-white font-[500] text-[16px] mb-1 block"
+          >
+            {{ title }}
+          </span>
+          <span
+            class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block"
+          >
+            {{ description }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="action">
+      <BaseSwitch v-model:model-value="isEnableValue" />
+    </div>
+  </div>
+</template>

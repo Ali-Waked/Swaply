@@ -29,6 +29,9 @@ watch(
 </script>
 
 <template>
+  <div class="logo">
+    <img src="/public/Logo.png" class="w-20 absolute top-8" alt="logo" />
+  </div>
   <HeaderTitle
     title="لوحة المقايضة"
     subtitle="تبادل السلع و الخدمات مع المجتمع"

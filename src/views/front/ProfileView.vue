@@ -71,6 +71,9 @@ const scrollToSection = ({ id, label }) => {
     behavior: "smooth",
     block: "start",
   });
+  if (isOpen.value) {
+    isOpen.value = false;
+  }
   sectionTitle.value = label;
   setTimeout(() => {
     ignoreObserver = false;

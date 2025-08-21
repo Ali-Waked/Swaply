@@ -44,3 +44,13 @@ body {
 .translate-x-rtl {
     @apply rtl:-translate-x-6 ltr:translate-x-6;
 }
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.no-spinner[type=number] {
+    -moz-appearance: textfield;
+}
