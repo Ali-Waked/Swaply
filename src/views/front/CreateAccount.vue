@@ -240,7 +240,7 @@ watch(
         </div>
       </div>
       <div class="absolute right-8 top-6">
-        <BackButton />
+        <BackButton @click="router.push({ name: 'home' })" />
       </div>
     </div>
   </div>

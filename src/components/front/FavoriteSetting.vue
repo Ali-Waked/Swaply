@@ -5,10 +5,13 @@ import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
 import { Switch } from "@headlessui/vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
+import { useThemeStore } from "../../stores/theme";
+import { storeToRefs } from "pinia";
 
 const enabled = ref(false);
 const langSelected = ref("ar");
-const apperenceSelected = ref("ligth");
+// const apperenceSelected = ref("ligth");
+
 const currencySelected = ref("ils");
 const langs = [
   {
@@ -20,16 +23,16 @@ const langs = [
     id: "en",
   },
 ];
-const apperences = [
-  {
-    label: "فاتح",
-    id: "ligth",
-  },
-  {
-    label: "داكن",
-    id: "dark",
-  },
-];
+// const apperences = [
+//   {
+//     label: "فاتح",
+//     id: "ligth",
+//   },
+//   {
+//     label: "داكن",
+//     id: "dark",
+//   },
+// ];
 const currency = [
   {
     label: "دولار",
@@ -40,13 +43,18 @@ const currency = [
     id: "ils",
   },
 ];
-watch(apperenceSelected, (newVal) => {
-  if (newVal === "dark") {
-    document.body.classList.add("dark");
-  } else {
-    document.body.classList.remove("dark");
-  }
-});
+// watch(apperenceSelected, (newVal) => {
+//   if (newVal === "dark") {
+//     document.body.classList.add("dark");
+//   } else {
+//     document.body.classList.remove("dark");
+//   }
+// });
+
+const themeStore = useThemeStore();
+const theme = storeToRefs(themeStore);
+const { currentTheme } = theme;
+const themes = themeStore.themes;
 </script>
 
 <template>
@@ -66,9 +74,9 @@ watch(apperenceSelected, (newVal) => {
     <SingleFavoriteStraucture title="المظهر" description="اختر مظهر التطبيق">
       <template #action>
         <RadioComponent
-          :items="apperences"
-          name="apperence"
-          v-model:selected="apperenceSelected"
+          :items="themes"
+          name="theme"
+          v-model:selected="currentTheme"
         />
       </template>
     </SingleFavoriteStraucture>

@@ -1,4 +1,5 @@
 <script setup>
+import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 import { ArrowRightIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
@@ -11,10 +12,10 @@ const props = defineProps({
 
 <template>
   <div
-    class="back-button flex items-center justify-start cursor-pointer gap-2 mb-4"
+    class="back-button flex items-center justify-start cursor-pointer gap-1 mb-4"
   >
-    <ArrowRightIcon
-      class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
+    <ChevronRightIcon
+      class="w-[18px] h-[18px] mt-[2px] cursor-pointer hidden lg:block text-black dark:text-white"
     />
     <span class="text-black dark:text-white">{{ label }}</span>
   </div>

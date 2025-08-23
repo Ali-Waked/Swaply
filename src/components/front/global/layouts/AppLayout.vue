@@ -2,7 +2,7 @@
 import ButtonGroup from "../ButtonGroup.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const links = ["personal_profile"];
+const links = ["personal_profile", "home", "search-map", "search-list-stores"];
 </script>
 
 <template>
@@ -10,7 +10,10 @@ const links = ["personal_profile"];
     class="dark:bg-gray-800"
     :class="{ 'bg-gray-100': !links.includes(router.currentRoute.value.name) }"
   >
-    <div class="container mx-auto p-2 sm:p-0">
+    <div
+      class="mx-auto p-2 sm:p-0"
+      :class="{ container: router.currentRoute.value.name != 'home' }"
+    >
       <ButtonGroup />
       <slot />
     </div>

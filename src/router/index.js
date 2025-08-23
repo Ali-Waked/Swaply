@@ -48,6 +48,28 @@ const routes = [
                 },
                 component: () => import('../views/front/ProfileView.vue'),
             },
+            {
+                path: '/',
+                component: () => import("../views/layouts/SearchLayout.vue"),
+                children: [
+                    {
+                        path: '/search',
+                        name: 'search-map',
+                        meta: {
+                            title: 'بحث'
+                        },
+                        component: () => import('../views/front/SearchView.vue')
+                    },
+                    {
+                        path: '/search-list-stores',
+                        name: 'search-list-stores',
+                        meta: {
+                            title: 'بحث'
+                        },
+                        component: () => import('../views/front/ListStoreView.vue')
+                    }
+                ],
+            }
         ],
     },
     // {

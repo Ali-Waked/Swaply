@@ -23,7 +23,7 @@ const notification = reactive({
   selected: { id: 2, name: "اقل من", value: "lt" },
 });
 
-const people = [
+const items = [
   { id: 1, name: "بيض" },
   { id: 2, name: "حليب" },
   { id: 3, name: "رز" },
@@ -34,14 +34,14 @@ const options = [
   { id: 2, name: "اقل من", value: "lt" },
 ];
 
-const selectedPerson = ref(null);
+const selectedItem = ref(null);
 const query = ref("");
 
-const filteredPeople = computed(() =>
+const filteredItems = computed(() =>
   query.value === ""
-    ? people
-    : people.filter((person) =>
-        person.name.toLowerCase().includes(query.value.toLowerCase())
+    ? items
+    : items.filter((item) =>
+        item.name.toLowerCase().includes(query.value.toLowerCase())
       )
 );
 </script>
@@ -53,22 +53,22 @@ const filteredPeople = computed(() =>
     <NotificationSectionTitle title="اضافة تنبيه جديد" />
 
     <div class="combobox mt-6">
-      <Combobox v-model="selectedPerson">
+      <Combobox v-model="selectedItem">
         <div class="relative mt-1">
           <!-- input -->
           <ComboboxInput
             class="focus:border-gray-500 border-none py-3 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
             @change="query = $event.target.value"
             placeholder="اسم المنتج (مثل: بيض, رز, حليب)"
-            :displayValue="(person) => person?.name"
+            :displayValue="(item) => item?.name"
           />
           <ComboboxOptions
             class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg"
           >
             <ComboboxOption
-              v-for="person in filteredPeople"
-              :key="person.id"
-              :value="person"
+              v-for="item in filteredItems"
+              :key="item.id"
+              :value="item"
               v-slot="{ active, selected }"
             >
               <li
@@ -80,7 +80,7 @@ const filteredPeople = computed(() =>
                   selected ? 'bg-gray-200 dark:bg-blue-700 text-gray-600' : '',
                 ]"
               >
-                {{ person.name }}
+                {{ item.name }}
               </li>
             </ComboboxOption>
           </ComboboxOptions>

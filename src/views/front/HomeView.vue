@@ -1,52 +1,27 @@
 <script setup>
-import ButtonGroup from "../../components/front/global/ButtonGroup.vue";
-import HeaderTitle from "../../components/front/global/HeaderTitle.vue";
-import MainButton from "../../components/front/global/MainButton.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
-import WoringAlert from "../../components/front/global/WoringAlert.vue";
-import { ref } from "vue";
-import TradeDialog from "../../components/front/TradeDialog.vue";
-import SingleOffer from "../../components/front/SingleOffer.vue";
-import ChatApp from "../../components/front/ChatApp.vue";
-
-const isDialogOpen = ref(false);
-const isOpenChat = ref(true);
-const startChat = () => {
-  isOpenChat.value = true;
-  console.log("hi");
-};
+import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue";
+import AppFooter from "../../components/front/global/AppFooter.vue";
+import HomeNav from "../../components/front/HomeNav.vue";
+import LastPricing from "../../components/front/LastPricing.vue";
+import SearchSection from "../../components/front/SearchSection.vue";
 </script>
 
 <template>
-  <HeaderTitle
-    title="لوحة المقايضة"
-    subtitle="تبادل السلع و الخدمات مع المجتمع"
-  />
-  <MainButton
-    class="mt-4"
-    label="اعراض مقايضة جديدة"
-    @click="isDialogOpen = true"
-  >
-    <template #icon>
-      <PlusIcon class="h-5 w-5" />
-    </template>
-  </MainButton>
-  <WoringAlert
-    class="mt-4"
-    title="تنبيه امني"
-    text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل"
-  />
-  <TradeDialog
-    :model-value="isDialogOpen"
-    @update:modelValue="(val) => (isDialogOpen = val)"
-  />
-  <div class="offers">
-    <h5 class="title font-[500] text-[18px]">العروض المتاحة</h5>
-    <div class="offers-list">
-      <template v-for="n in 4" :key="n">
-        <SingleOffer class="my-4" @startChat="startChat" />
-      </template>
+  <div class="bg-white dark:bg-gray-800">
+    <HomeNav />
+    <div class="container mx-auto">
+      <SearchSection />
     </div>
   </div>
-  <ChatApp class="mt-8" v-model:is-open="isOpenChat" />
+
+  <div class="bg-white py-14 dark:bg-gray-800">
+    <LastPricing />
+  </div>
+
+  <div class="bg-white py-14 dark:bg-gray-800">
+    <AuthFeaturesSection />
+  </div>
+  <div class="bg-gray-100 dark:bg-gray-700">
+    <AppFooter />
+  </div>
 </template>
