@@ -29,7 +29,7 @@ const items = [
     storeName: "السوق المركزي",
     price: "68",
     usdPrice: "18.83",
-    priceType: "3.8",
+    // priceType: "3.8",
     distance: "2.1",
     rating: "سعر مرتفع",
     isCertified: false,
@@ -39,8 +39,10 @@ const items = [
 </script>
 
 <template>
-  <div class="grid grid-cols-3">
-    <div class="">
+  <div
+    class="flex flex-col-reverse lg:grid lg:gap-5 lg:grid-cols-3 lg:max-h-screen lg:overflow-scroll scrollbar-hide"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 lg:block lg:mt-0">
       <template v-for="item in items" :key="item.storeName">
         <StoreBox
           :price="item.price"
@@ -50,9 +52,23 @@ const items = [
           :is-certified="item.isCertified"
           :rating="item.rating"
           :distance="item.distance"
+          :priceType="item.priceType"
         />
       </template>
     </div>
-    <div class="col-span-2"></div>
+    <div
+      class="col-span-2 bg-gray-100 dark:bg-gray-700 rounded-lg min-h-screen"
+    ></div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

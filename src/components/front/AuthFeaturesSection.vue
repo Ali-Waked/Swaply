@@ -7,6 +7,9 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/vue/24/solid";
 import { mdiAccountDetails } from "@mdi/js";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const data = [
   {
@@ -51,9 +54,9 @@ const data = [
         سجل الدخول للحصول على مزايا متقدمة
       </h4>
 
-      <div class="grid grid-cols-3 gap-8">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
         <div
-          class="box flex flex-col items-center text-center"
+          class="box flex flex-col items-center text-center box"
           v-for="item in data"
           :key="item.title"
         >
@@ -73,7 +76,10 @@ const data = [
           </template>
 
           <template v-else>
-            <div class="join-now flex justify-center items-center h-full">
+            <div
+              class="join-now flex justify-center items-center h-full"
+              @click="router.push({ name: 'login' })"
+            >
               <button
                 class="border border-sky-600 rounded-lg px-7 py-[10px] font-[400] text-sky-600 transition-all hover:text-blue-800 hover:border-blue-800 dark:border-blue-400 dark:text-blue-400 dark:hover:text-blue-300 dark:hover:border-blue-300"
               >
@@ -86,3 +92,33 @@ const data = [
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.box:nth-child(2) {
+  position: relative;
+  &::after {
+    content: "";
+    left: 0;
+    height: 140%;
+    width: 2px;
+    position: absolute;
+    top: 0;
+    background: #a7a4beb0;
+  }
+  &::before {
+    content: "";
+    right: 0;
+    height: 140%;
+    width: 2px;
+    position: absolute;
+    top: 0;
+    background: #a7a4beb0;
+  }
+  @media (max-width: 1025px) {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+</style>

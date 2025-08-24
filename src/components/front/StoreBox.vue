@@ -11,32 +11,39 @@ defineProps({
   usdPrice: Number,
   lastUpdate: String,
   distance: Number,
+  priceType: String,
 });
 </script>
 
 <template>
-  <div class="border p-6 rounded-xl mb-2">
-    <div class="flex justify-between items-center font-[400] text-[24px]">
-      <div class="flex gap-2 items-center font-[400] text-[24px]">
-        <span>{{ storeName }}</span>
+  <div
+    class="border border-gray-200 dark:border-gray-700 py-8 px-6 rounded-xl mb-2 bg-white dark:bg-gray-900"
+  >
+    <div class="flex justify-between items-center font-[400] text-[26px]">
+      <div class="flex gap-2 items-center font-[400] text-[26px]">
+        <span class="text-gray-900 dark:text-gray-100">{{ storeName }}</span>
         <span
-          class="cursor-default border rounded-lg text-gray-700 gap-[2px] text-[10px] py-1 pr-1 flex items-center"
+          class="cursor-default border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 gap-[2px] text-[10px] py-1 pr-1 flex items-center"
           v-if="isCertified"
         >
-          <span>معتمد</span>
+          <span class="font-[500]">معتمد</span>
           <CheckIcon class="w-4 h-4" />
         </span>
       </div>
-      <span>{{ price }}</span>
+      <span class="text-gray-900 dark:text-gray-100">{{ price }}</span>
     </div>
-    <div class="flex items-center justify-between text-gray-700 font-[400]">
+
+    <div
+      class="flex items-center justify-between text-gray-700 dark:text-gray-300 font-[400]"
+    >
       <span class="flex items-center gap-2 mt-3">
-        <span class="">{{ rating }}</span>
+        <span>{{ rating }}</span>
         <StarIcon class="w-5 h-5 text-amber-400" />
       </span>
       <span>{{ usdPrice }}</span>
     </div>
-    <div class="flex justify-between items-center mt-4">
+
+    <div class="flex justify-between items-center mt-3">
       <span
         class="text-[12px] rounded-lg px-4 py-[6px] cursor-default"
         :class="{
@@ -50,7 +57,9 @@ defineProps({
       >
         {{ priceType }}
       </span>
-      <div class="flex items-center gap-1 text-gray-500 font-[400]">
+      <div
+        class="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-[400]"
+      >
         <span>
           {{ distance }}
           كم
@@ -63,7 +72,8 @@ defineProps({
         </span>
       </div>
     </div>
-    <div class="text-gray-500 text-[12px] mt-2 font-[400]">
+
+    <div class="text-gray-500 dark:text-gray-400 text-[12px] mt-3 font-[400]">
       <span>اخر تحديث: </span>
       <span>{{ lastUpdate }}</span>
     </div>

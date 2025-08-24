@@ -11,7 +11,7 @@
       />
 
       <div
-        class="fixed inset-0 flex items-center justify-center overflow-y-auto scrollbar-hide py-6 pt-44"
+        class="fixed inset-0 flex items-center justify-center overflow-y-auto scrollbar-hide py-6 pt-28"
       >
         <DialogPanel
           class="w-full max-w-md bg-white rounded-xl dark:bg-gray-800 relative shadow-lg"
@@ -105,6 +105,8 @@
 
             <!-- زر الابلاغ -->
             <button
+              v-if="!isReported"
+              @click="isReported = true"
               class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-red-50 dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
             >
               <MdiIcon
@@ -116,10 +118,18 @@
 
             <!-- زر تم الابلاغ -->
             <button
-              class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
+              v-else
+              class="flex items-center justify-center cursor-default select-none w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
             >
               <MdiIcon class="text-white" :icon="mdiFlagOutline" />
               <span>تم الابلاغ</span>
+            </button>
+            <button
+              @click="$emit('deleteProduct')"
+              class="flex items-center justify-center w-full py-2 border-2 rounded-lg hover:bg-red-600/95 border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
+            >
+              <MdiIcon class="text-white" :icon="mdiTrashCanOutline" />
+              <span>حذف المنتج</span>
             </button>
           </div>
 
@@ -138,8 +148,8 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, inject } from "vue";
-import { ClockIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { defineProps, defineEmits, inject, ref } from "vue";
+import { ClockIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { CameraIcon } from "@heroicons/vue/24/outline";
 import {
   TransitionRoot,
@@ -151,13 +161,19 @@ import HeaderTitle from "./global/HeaderTitle.vue";
 import FormControl from "./global/FormControl.vue";
 import MainButton from "./global/MainButton.vue";
 import { StarIcon } from "@heroicons/vue/24/solid";
-import { mdiFlagOutline, mdiNavigationOutline } from "@mdi/js";
+import {
+  mdiFlagOutline,
+  mdiNavigationOutline,
+  mdiTrashCanOutline,
+} from "@mdi/js";
 import MdiIcon from "./MdiIcon.vue";
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   data: { type: Object },
 });
+
+const isReported = ref(false);
 
 const emit = defineEmits(["update:modelValue"]);
 // const emitter = inject("emitter");

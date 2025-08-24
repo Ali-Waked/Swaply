@@ -11,6 +11,7 @@ import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
 import TitleProductsSection from "./global/TitleProductsSection.vue";
 import ProductGridDisplay from "./global/ProductGridDisplay.vue";
+import { FireIcon } from "@heroicons/vue/24/outline";
 
 const items = [
   {
@@ -49,7 +50,7 @@ const showAll = ref(false);
 </script>
 
 <template>
-  <TitleProductsSection :icon="ArrowTrendingUpIcon" title="اخر الاسعار">
+  <TitleProductsSection :icon="FireIcon" title="عروض محدودة">
     <template #button>
       <ShowAllProductButton @showAll="($event) => (showAll = $event)" />
     </template>

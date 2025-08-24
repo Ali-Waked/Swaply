@@ -6,8 +6,10 @@ import {
   ComboboxOptions,
 } from "@headlessui/vue";
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const search = ref(null);
+const router = useRouter();
 
 const items = [
   { id: 1, name: "بيض" },
@@ -23,18 +25,30 @@ const filteredItems = computed(() =>
         item.name.toLowerCase().includes(query.value.toLowerCase())
       )
 );
+const suggestion = ["بقوليات", " مواد تنظيف", "صناعات", "اغراض منزلية"];
+const searchFor = () => {
+  if (search.value.name) {
+    router.push({
+      name: "search-map",
+      query: { for: search.value.name, id: search.value.id },
+    });
+  }
+};
+const suggestionClick = (value) => {
+  console.log("hi");
+  search.value = value;
+};
 </script>
 
 <template>
   <div class="search mt-6">
-    <Combobox v-model="search">
+    <Combobox v-model="search" @keyup.enter="searchFor">
       <div class="relative mt-1">
         <!-- input -->
         <ComboboxInput
           class="focus:border-blue-400 py-3 bg-transparent text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
           @change="query = $event.target.value"
           placeholder="ابحث عن اي منتج... (خبز, ارز, حليب)"
-          :displayValue="(item) => item?.name"
         />
         <ComboboxOptions
           class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg"
@@ -65,23 +79,11 @@ const filteredItems = computed(() =>
       <ul class="flex items-center gap-1">
         <li
           class="bg-blue-50 text-blue-600 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white transition-all rounded-lg"
+          v-for="value in suggestion"
+          :key="value"
+          @click="suggestionClick(value)"
         >
-          بقوليات
-        </li>
-        <li
-          class="bg-blue-50 text-blue-600 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white transition-all rounded-lg"
-        >
-          مواد تنظيف
-        </li>
-        <li
-          class="bg-blue-50 text-blue-600 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white transition-all rounded-lg"
-        >
-          صناعات
-        </li>
-        <li
-          class="bg-blue-50 text-blue-600 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white transition-all rounded-lg"
-        >
-          اغراض منزلية
+          {{ value }}
         </li>
       </ul>
     </div>

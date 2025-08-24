@@ -137,6 +137,7 @@ const getLabelById = (id) => {
         />
         <ArrowRightIcon
           class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
+          @click="$router.push({ name: 'home' })"
         />
       </div>
       <p
@@ -148,7 +149,7 @@ const getLabelById = (id) => {
     <div class="name text-gray-500 dark:text-gray-300">احمد</div>
   </div>
 
-  <div class="flex -mt-[27px]">
+  <div class="flex">
     <nav
       class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
       :class="{
@@ -214,7 +215,7 @@ const getLabelById = (id) => {
     />
 
     <main
-      class="lg:container mx-auto pr-4 max-h-[calc(100vh-63px)] overflow-y-auto scrollbar-hide"
+      class="lg:container mx-auto pr-4 max-h-[calc(100vh-63px)] overflow-y-auto scrollbar-hide pt-4"
       ref="scrollContainer"
     >
       <div

@@ -3,6 +3,10 @@ import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue"
 import AppFooter from "../../components/front/global/AppFooter.vue";
 import HomeNav from "../../components/front/HomeNav.vue";
 import LastPricing from "../../components/front/LastPricing.vue";
+import MerchantProductsSection from "../../components/front/MerchantProductsSection.vue";
+import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
+import OfferSection from "../../components/front/OfferSection.vue";
+import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
 </script>
 
@@ -16,6 +20,16 @@ import SearchSection from "../../components/front/SearchSection.vue";
 
   <div class="bg-white py-14 dark:bg-gray-800">
     <LastPricing />
+  </div>
+
+  <div class="bg-white dark:bg-gray-800">
+    <OfferSection />
+  </div>
+  <div class="bg-white dark:bg-gray-800 pt-14">
+    <MerchantProductsSection />
+  </div>
+  <div class="bg-white dark:bg-gray-800 pt-14">
+    <MyFavoritesSection />
   </div>
 
   <div class="bg-white py-14 dark:bg-gray-800">

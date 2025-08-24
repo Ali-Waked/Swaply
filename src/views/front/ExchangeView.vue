@@ -8,6 +8,8 @@ import { inject, ref, watch } from "vue";
 import TradeDialog from "../../components/front/TradeDialog.vue";
 import SingleOffer from "../../components/front/SingleOffer.vue";
 import ChatApp from "../../components/front/ChatApp.vue";
+import ChatSidebar from "../../components/front/ChatSidebar.vue";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/vue/24/outline";
 
 const isDialogOpen = ref(false);
 const isOpenChat = ref(false);
@@ -16,6 +18,7 @@ const startChat = () => {
   isOpenChat.value = true;
   console.log("hi");
 };
+const dialog = ref(false);
 watch(
   () => isDialogOpen.value,
   (newVal) => {
@@ -26,6 +29,10 @@ watch(
     emitter.emit("hiddenButton", false);
   }
 );
+const chatWith = (data) => {
+  dialog.value = false;
+  isOpenChat.value = true;
+};
 </script>
 
 <template>
@@ -55,9 +62,23 @@ watch(
     @update:modelValue="(val) => (isDialogOpen = val)"
   />
   <div class="offers">
-    <h5 class="title font-[500] text-[18px] text-black dark:text-white">
-      العروض المتاحة
-    </h5>
+    <div class="flex justify-between items-center">
+      <h5 class="title font-[500] text-[20px] text-black dark:text-white">
+        العروض المتاحة
+      </h5>
+      <div
+        class="message-icon relative left-4 cursor-pointer text-white bg-gray-600 flex items-center justify-center w-10 h-10 rounded-full font-bold"
+        @click="dialog = true"
+      >
+        <button>
+          <ChatBubbleLeftEllipsisIcon class="w-6" />
+        </button>
+        <span
+          class="text-white bg-gray-400 text-[10px] hidden absolute -top-6 w-[100px] text-center p-1 rounded-md"
+          >لديك رسالة جديدة</span
+        >
+      </div>
+    </div>
 
     <div class="offers-list pb-8">
       <template v-for="n in 4" :key="n">
@@ -66,4 +87,15 @@ watch(
     </div>
   </div>
   <ChatApp class="mt-8" v-model:is-open="isOpenChat" />
+  <ChatSidebar v-model="dialog" @chatWith="chatWith($event)" />
 </template>
+
+<style lang="scss" scoped>
+.message-icon {
+  &:hover {
+    span {
+      display: block;
+    }
+  }
+}
+</style>

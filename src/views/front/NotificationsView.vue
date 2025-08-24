@@ -10,6 +10,7 @@ import AddNotification from "../../components/front/AddNotification.vue";
 <template>
   <div
     class="back-button flex items-center justify-start cursor-pointer gap-2 mb-4"
+    @click="$router.push({ name: 'home' })"
   >
     <ArrowRightIcon
       class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"

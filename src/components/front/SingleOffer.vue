@@ -15,7 +15,6 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { StarIcon } from "@heroicons/vue/24/outline";
 import { ShieldCheckIcon } from "@heroicons/vue/24/outline";
 import { CalendarIcon } from "@heroicons/vue/24/outline";
-import { ChatBubbleLeftEllipsisIcon } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
 import ScondButton from "./ScondButton.vue";
 
@@ -28,7 +27,7 @@ function toggle() {
 
 <template>
   <div
-    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition"
+    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition relative"
   >
     <div class="flex items-center justify-between mb-4">
       <div class="info flex items-center gap-2">
@@ -324,3 +323,4 @@ function toggle() {
     </div>
   </div>
 </template>
+
