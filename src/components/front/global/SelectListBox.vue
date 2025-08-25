@@ -11,12 +11,13 @@ import { computed } from "vue";
 const props = defineProps({
   modelValue: Object,
   options: Array,
+  label: { type: String, default: "اختر" },
 });
 const emit = defineEmits(["update:modelValue"]);
 
 const value = computed({
   get: () => props.modelValue,
-  set: (value) => emit("update:modelValue", value),
+  set: (val) => emit("update:modelValue", val),
 });
 </script>
 
@@ -27,7 +28,7 @@ const value = computed({
         v-slot="{ open }"
         class="w-full h-10 flex text-[14px] items-center justify-between rounded-md bg-gray-100 dark:bg-gray-700 py-3 px-3 text-gray-700 font-[400] dark:text-white"
       >
-        <span>{{ value.name }}</span>
+        <span>{{ value?.name || label }}</span>
         <ChevronUpIcon
           class="w-4 h-4 text-gray-500 dark:text-gray-300 mt-1"
           v-if="open"
@@ -37,8 +38,9 @@ const value = computed({
           v-else
         />
       </ListboxButton>
+
       <ListboxOptions
-        class="absolute mt-1 max-h-60 text-[14px] w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg"
+        class="absolute mt-1 max-h-60 text-[14px] w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg z-[1000]"
       >
         <ListboxOption
           v-for="option in options"

@@ -1,8 +1,9 @@
 <template>
   <div class="mb-3">
-    <label :for="id" class="block font-[400] mb-2 text-black dark:text-white">{{
+    <!-- <label :for="id" class="block font-[400] mb-2 text-black dark:text-white">{{
       label
-    }}</label>
+    }}</label> -->
+    <MainLabel :id="id" :label="label" />
 
     <textarea
       v-if="type === 'textarea'"
@@ -16,12 +17,21 @@
       :type="type"
       :placeholder="placeholder"
       :required="isRequired"
-      class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+      class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
+      :class="{
+        'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70':
+          errorMessage,
+        'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+          !errorMessage,
+      }"
     />
+    <small class="text-red-600 font-[400]">{{ errorMessage }}</small>
   </div>
 </template>
 
 <script setup>
+import MainLabel from "./MainLabel.vue";
+
 defineProps({
   id: {
     type: String,
@@ -38,6 +48,10 @@ defineProps({
   label: {
     type: String,
     required: true,
+  },
+  errorMessage: {
+    type: String,
+    default: "",
   },
   isRequired: {
     type: Boolean,

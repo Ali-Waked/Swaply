@@ -2,7 +2,7 @@
 import { CheckIcon, StarIcon } from "@heroicons/vue/24/solid";
 import MdiIcon from "./MdiIcon.vue";
 import { mdiNavigationOutline } from "@mdi/js";
-
+import format from "../../mixins/formats";
 defineProps({
   storeName: String,
   isCertified: Boolean,
@@ -13,6 +13,8 @@ defineProps({
   distance: Number,
   priceType: String,
 });
+
+const { currencyFormat } = format();
 </script>
 
 <template>
@@ -30,7 +32,9 @@ defineProps({
           <CheckIcon class="w-4 h-4" />
         </span>
       </div>
-      <span class="text-gray-900 dark:text-gray-100">{{ price }}</span>
+      <span class="text-gray-900 dark:text-gray-100">{{
+        currencyFormat(price, undefined, "ar", "ILS")
+      }}</span>
     </div>
 
     <div
@@ -40,7 +44,7 @@ defineProps({
         <span>{{ rating }}</span>
         <StarIcon class="w-5 h-5 text-amber-400" />
       </span>
-      <span>{{ usdPrice }}</span>
+      <span>{{ currencyFormat(usdPrice) }}</span>
     </div>
 
     <div class="flex justify-between items-center mt-3">

@@ -1,6 +1,21 @@
 <script setup>
+import { computed } from "vue";
 import LastNotificationBox from "./LastNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
+
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const isShowAll = computed({
+  get: () => props.modelValue,
+  set: (value) => emit("update:modelValue", value),
+});
 
 const items = [
   {
@@ -34,9 +49,10 @@ const items = [
     <div class="flex items-center justify-between mb-6">
       <NotificationSectionTitle title="الاشعارات الاخيرة" />
       <button
+        @click="isShowAll = !isShowAll"
         class="show-more text-gray-600 dark:text-gray-300 border border-gray-400 dark:border-gray-600 rounded-lg text-[12px] w-[94px] h-8 font-[500] bg-gray-100 dark:bg-gray-700 transition-all hover:bg-gray-200 dark:hover:bg-gray-600"
       >
-        عرض الكل
+        {{ isShowAll ? "عرض اقل" : "عرض الكل" }}
       </button>
     </div>
 

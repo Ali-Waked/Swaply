@@ -4,6 +4,8 @@ import ButtonTab from "../../components/front/ButtonTab.vue";
 import { CheckIcon } from "@heroicons/vue/24/solid";
 import MdiIcon from "../../components/front/MdiIcon.vue";
 import StoreBox from "../../components/front/StoreBox.vue";
+import HeaderPage from "../../components/front/global/HeaderPage.vue";
+import LogoSection from "../../components/front/global/LogoSection.vue";
 const items = [
   {
     storeName: "سوق الشجاعية",

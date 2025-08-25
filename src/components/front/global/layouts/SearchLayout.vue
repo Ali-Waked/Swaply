@@ -5,6 +5,8 @@ import ButtonTab from "../../ButtonTab.vue";
 import { onMounted, ref, watch } from "vue";
 import { ListBulletIcon } from "@heroicons/vue/24/solid";
 import SelectListBox from "../SelectListBox.vue";
+import HeaderPage from "../HeaderPage.vue";
+import LogoSection from "../LogoSection.vue";
 
 const isListStorePage = ref(false);
 const router = useRouter();
@@ -76,6 +78,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <HeaderPage>
+    <LogoSection />
+  </HeaderPage>
   <!-- العنوان -->
   <div
     class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500]"

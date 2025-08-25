@@ -10,6 +10,8 @@ import SingleOffer from "../../components/front/SingleOffer.vue";
 import ChatApp from "../../components/front/ChatApp.vue";
 import ChatSidebar from "../../components/front/ChatSidebar.vue";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/vue/24/outline";
+import HeaderPage from "../../components/front/global/HeaderPage.vue";
+import LogoSection from "../../components/front/global/LogoSection.vue";
 
 const isDialogOpen = ref(false);
 const isOpenChat = ref(false);
@@ -36,9 +38,9 @@ const chatWith = (data) => {
 </script>
 
 <template>
-  <div class="logo">
-    <img src="/public/Logo.png" class="w-20 absolute top-8" alt="logo" />
-  </div>
+  <HeaderPage>
+    <LogoSection />
+  </HeaderPage>
   <HeaderTitle
     title="لوحة المقايضة"
     subtitle="تبادل السلع و الخدمات مع المجتمع"

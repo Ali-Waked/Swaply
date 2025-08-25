@@ -2,6 +2,9 @@
 import { reactive } from "vue";
 import ActiveNotificationBox from "./ActiveNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
+const props = defineProps({
+  showScroll: { type: Boolean, default: false },
+});
 
 const items = reactive([
   {
@@ -61,7 +64,8 @@ const items = reactive([
 
 <template>
   <div
-    class="px-6 pt-8 pb-6 rounded-[20px] shadow-md max-h-[652px] h-full overflow-y-auto has-scroll bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+    class="px-6 pt-8 pb-6 rounded-[20px] shadow-md h-full max-h-[652px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+    :class="showScroll ? 'overflow-y-auto' : 'overflow-y-hidden'"
   >
     <NotificationSectionTitle title="التبيهات النشطة" class="mb-6" />
     <template v-for="item in items" :key="item.title">
@@ -76,29 +80,21 @@ const items = reactive([
 </template>
 
 <style lang="scss" scoped>
-.has-scroll {
-  //   scrollbar-width: thin;
-  //   scrollbar-color: #888 #f1f1f1;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE و Edge */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
 }
 
-.has-scroll::-webkit-scrollbar {
-  //   width: 2px;
-  display: none;
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
-// .has-scroll::-webkit-scrollbar-track {
-//   background: #f1f1f1;
-//   border-radius: 10px;
-// }
-
-// .has-scroll::-webkit-scrollbar-thumb {
-//   background: #888;
-//   border-radius: 10px;
-// }
-
-// .has-scroll::-webkit-scrollbar-thumb:hover {
-//   background: #555;
-// }
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Firefox */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
 </style>

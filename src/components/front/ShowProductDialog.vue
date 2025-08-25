@@ -37,7 +37,9 @@
               class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1"
             >
               <span class="name">{{ data.name }}</span>
-              <span class="price">{{ data.price }}</span>
+              <span class="price">{{
+                currencyFormat(data.price, undefined, "ar", "ILS")
+              }}</span>
             </div>
 
             <!-- الوصف -->
@@ -45,7 +47,7 @@
               class="flex items-center justify-between text-gray-400 dark:text-gray-300"
             >
               <span class="name">{{ data.description }}</span>
-              <span class="price">{{ data.usdPrice }}</span>
+              <span class="price">{{ currencyFormat(data.usdPrice) }}</span>
             </div>
 
             <!-- التقييم -->
@@ -107,7 +109,7 @@
             <button
               v-if="!isReported"
               @click="isReported = true"
-              class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-red-50 dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
+              class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
             >
               <MdiIcon
                 class="text-red-600 dark:text-red-400"
@@ -168,6 +170,9 @@ import {
 } from "@mdi/js";
 import MdiIcon from "./MdiIcon.vue";
 
+import format from "../../mixins/formats";
+
+const { currencyFormat } = format();
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   data: { type: Object },

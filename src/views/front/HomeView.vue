@@ -1,6 +1,7 @@
 <script setup>
 import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue";
 import AppFooter from "../../components/front/global/AppFooter.vue";
+import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import HomeNav from "../../components/front/HomeNav.vue";
 import LastPricing from "../../components/front/LastPricing.vue";
 import MerchantProductsSection from "../../components/front/MerchantProductsSection.vue";
@@ -12,9 +13,11 @@ import SearchSection from "../../components/front/SearchSection.vue";
 
 <template>
   <div class="bg-white dark:bg-gray-800">
-    <HomeNav />
+    <HeaderPage>
+      <HomeNav />
+    </HeaderPage>
     <div class="container mx-auto">
-      <SearchSection />
+      <SearchSection class="" />
     </div>
   </div>
 

@@ -41,7 +41,8 @@ onMounted(() => {
         container: router.currentRoute.value.name != 'home',
       }"
     >
-      <ButtonGroup />
+      <slot name="title" />
+      <slot name="buttons" />
       <slot />
     </div>
   </div>

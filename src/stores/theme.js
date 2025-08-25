@@ -31,8 +31,10 @@ export const useThemeStore = defineStore("theme", () => {
     watch(currentTheme, (newVal) => {
         if (newVal == 'dark') {
             document.body.classList.add("dark");
+            changeTheme('dark');
         } else {
             document.body.classList.remove("dark");
+            changeTheme('ligth');
         }
     });
 

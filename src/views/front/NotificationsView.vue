@@ -5,18 +5,21 @@ import NotificationSetting from "../../components/front/NotificationSetting.vue"
 import LastNotification from "../../components/front/LastNotification.vue";
 import ActiveNotification from "../../components/front/ActiveNotification.vue";
 import AddNotification from "../../components/front/AddNotification.vue";
+import { ref } from "vue";
+import HeaderPage from "../../components/front/global/HeaderPage.vue";
+import LogoSection from "../../components/front/global/LogoSection.vue";
+
+const showAll = ref(false);
+
+// const showAllNotifications = () => {
+//   showAll.value = true;
+// };
 </script>
 
 <template>
-  <div
-    class="back-button flex items-center justify-start cursor-pointer gap-2 mb-4"
-    @click="$router.push({ name: 'home' })"
-  >
-    <ArrowRightIcon
-      class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
-    />
-    <span class="text-black dark:text-white">الرجوع</span>
-  </div>
+  <HeaderPage>
+    <LogoSection />
+  </HeaderPage>
 
   <HeaderTitle
     title="مركز التنبيهات"
@@ -26,13 +29,13 @@ import AddNotification from "../../components/front/AddNotification.vue";
     <div class="left-site flex-1">
       <div class="notification-setting w-full">
         <NotificationSetting />
-        <LastNotification />
+        <LastNotification v-model="showAll" />
       </div>
     </div>
     <div class="right-site flex-1 relative">
-      <ActiveNotification />
+      <ActiveNotification :showScroll="showAll" />
       <span
-        class="absolute w-full left-0 bottom-0 rounded-bl-[20px] rounded-br-[20px] h-8 bg-white dark:bg-gray-900 opacity-45"
+        class="absolute w-full left-0 bottom-0 h-8 rounded-bl-[20px] rounded-br-[20px] bg-gradient-to-t from-white to-transparent dark:from-gray-900"
       ></span>
     </div>
   </div>
