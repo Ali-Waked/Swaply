@@ -59,6 +59,10 @@ const data = [
           class="box flex flex-col items-center text-center box"
           v-for="item in data"
           :key="item.title"
+          :class="{
+            'row-start-4 col-start-1 col-end-3 sm:row-start-auto sm:col-start-auto sm:col-end-auto':
+              !item.icon,
+          }"
         >
           <template v-if="item.icon">
             <component

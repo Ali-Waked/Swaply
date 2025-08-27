@@ -111,7 +111,18 @@ const router = createRouter({
 });
 
 
-// router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore();
+    const { isAuth, user } = storeToRefs(authStore);
+    let position = { x: 0, y: 0 };
+    if (sessionStorage.getItem("scrollPosition")) {
+        position = JSON.parse(sessionStorage.getItem("scrollPosition"));
+        sessionStorage.removeItem("scrollPosition");
+    }
+    return next();
+})
+// window.scrollTo(position.x, position.y);
+// document.title = to.meta.title;
 //   const authStore = useAuthStore();
 //   const { isAuth, user } = storeToRefs(authStore);
 //   let position = { x: 0, y: 0 };

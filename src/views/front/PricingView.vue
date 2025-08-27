@@ -15,18 +15,18 @@ import SearchSection from "../../components/front/SearchSection.vue";
   <HeaderPage>
     <LogoSection />
   </HeaderPage>
-  <div class="bg-white dark:bg-gray-800">
+  <div class="dark:bg-gray-800">
     <!-- <HomeNav /> -->
-    <div class="container mx-auto mt-16">
+    <div class="container mx-auto mt-20">
       <SearchSection />
     </div>
   </div>
 
-  <div class="bg-white py-14 dark:bg-gray-800">
+  <div class="py-14 dark:bg-gray-800">
     <LastPricing />
   </div>
 
-  <div class="bg-white dark:bg-gray-800 mb-12">
+  <div class="dark:bg-gray-800 pb-4">
     <OfferSection />
   </div>
 

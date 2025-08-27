@@ -55,17 +55,24 @@ const columnsData = [
 ];
 </script>
 <template>
-  <footer class="container grid grid-cols-4 gap-3 px-6 py-12">
+  <footer
+    class="container grid grid-cols-2 sm:grid-cols-4 text-center sm:text-start gap-3 px-6 py-12"
+  >
     <div>
       <!-- Logo -->
-      <div class="logo">
-        <span class="font-[700] text-4xl text-blue-600 dark:text-blue-400"
+      <!-- <div class="logo"> -->
+      <!-- <span class="font-[700] text-4xl text-blue-600 dark:text-blue-400"
           >نبض</span
-        >
+        > -->
+      <!-- </div> -->
+      <div
+        class="logo flex-1 flex justify-center sm:justify-start items-center"
+      >
+        <img src="../../../../public/Logo.png" class="w-28" alt="logo" />
       </div>
 
       <!-- Language selector -->
-      <div class="lang flex items-center mt-4">
+      <div class="lang flex items-center mt-4 justify-center sm:justify-start">
         <div class="icon mb-2 ml-1">
           <MdiIcon :icon="mdiWeb" class="text-gray-700 dark:text-gray-300" />
         </div>
@@ -114,7 +121,7 @@ const columnsData = [
       </div>
 
       <!-- Social icons -->
-      <div class="icons flex gap-2 mt-4">
+      <div class="icons flex gap-2 mt-4 justify-center sm:justify-start">
         <a
           href="http://x.com"
           target="_blank"

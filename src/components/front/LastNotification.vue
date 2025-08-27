@@ -2,22 +2,40 @@
 import { computed } from "vue";
 import LastNotificationBox from "./LastNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
+import { ref } from "vue";
 
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-});
+// const props = defineProps({
+//   modelValue: {
+//     type: Boolean,
+//     default: false,
+//   },
+// });
 
-const emit = defineEmits(["update:modelValue"]);
+// const emit = defineEmits(["update:modelValue"]);
 
-const isShowAll = computed({
-  get: () => props.modelValue,
-  set: (value) => emit("update:modelValue", value),
-});
-
+const isShowAll = ref(false);
 const items = [
+  {
+    title: "البيض انخفض الى 16 في سوق الشجاعية",
+    time: "منذ 15 دقيقية",
+    isDecrease: true,
+    // isIncrease: '',
+    // isUrgent: '',
+  },
+  {
+    title: "تحذير ارتفاع سعر الخبز الى 30%",
+    time: "منذ ساعة",
+    // isDecrease: '',
+    isIncrease: true,
+    isUrgent: true,
+  },
+  {
+    title: "عرض جديد: خصم على اللحوم في السوق المركزي",
+    time: "منذ ساعتين",
+    // isDecrease: '',
+    // isIncrease: '',
+    // isUrgent: '',
+  },
   {
     title: "البيض انخفض الى 16 في سوق الشجاعية",
     time: "منذ 15 دقيقية",
@@ -44,7 +62,8 @@ const items = [
 
 <template>
   <div
-    class="px-6 pt-8 pb-2 rounded-[20px] shadow-md bg-white dark:bg-gray-900"
+    class="px-6 pt-8 h-[330px] pb-2 rounded-[20px] shadow-md bg-white dark:bg-gray-900"
+    :class="{ 'overflow-y-auto': isShowAll, 'overflow-y-hidden': !isShowAll }"
   >
     <div class="flex items-center justify-between mb-6">
       <NotificationSectionTitle title="الاشعارات الاخيرة" />
@@ -67,3 +86,24 @@ const items = [
     </template>
   </div>
 </template>
+
+
+<style lang="scss" scoped>
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Firefox */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+</style>

@@ -12,7 +12,7 @@ import SearchSection from "../../components/front/SearchSection.vue";
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-800">
+  <div class="dark:bg-gray-800">
     <HeaderPage>
       <HomeNav />
     </HeaderPage>
@@ -21,24 +21,24 @@ import SearchSection from "../../components/front/SearchSection.vue";
     </div>
   </div>
 
-  <div class="bg-white py-14 dark:bg-gray-800">
+  <div class="py-14 dark:bg-gray-800">
     <LastPricing />
   </div>
 
-  <div class="bg-white dark:bg-gray-800">
+  <div class="dark:bg-gray-800">
     <OfferSection />
   </div>
-  <div class="bg-white dark:bg-gray-800 pt-14">
+  <div class="dark:bg-gray-800 pt-14">
     <MerchantProductsSection />
   </div>
-  <div class="bg-white dark:bg-gray-800 pt-14">
+  <div class="dark:bg-gray-800 pt-14">
     <MyFavoritesSection />
   </div>
 
-  <div class="bg-white py-14 dark:bg-gray-800">
+  <div class="py-14 dark:bg-gray-800">
     <AuthFeaturesSection />
   </div>
-  <div class="bg-gray-100 dark:bg-gray-700">
+  <div class="bg-gray-200 dark:bg-gray-700">
     <AppFooter />
   </div>
 </template>

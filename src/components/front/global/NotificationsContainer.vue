@@ -1,6 +1,5 @@
 <!-- components/NotificationsContainer.vue -->
 <template>
-  {{ notifications }}
   <div class="fixed top-4 right-4 z-[9999] flex flex-col items-end">
     <NotificationAlert
       v-for="(note, index) in notifications"

@@ -37,12 +37,12 @@ const changeTheme = (value) => {
 
 <template>
   <nav
-    class="flex items-center justify-between container mx-auto py-4 bg-white dark:bg-gray-800"
+    class="flex items-center justify-between container mx-auto py-4 dark:bg-gray-800"
   >
     <div class="left flex items-center gap-4">
       <!-- Theme toggle -->
       <div
-        class="mode flex items-center gap-1 p-1 rounded-lg bg-gray-100 dark:bg-gray-700"
+        class="mode flex items-center gap-1 p-1 rounded-lg bg-gray-200 dark:bg-gray-700"
       >
         <div
           class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-transparent"

@@ -70,7 +70,7 @@ watch(isFavorite, (newVal) => {
     class="border rounded-[18px] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover:shadow-md dark:border-gray-700"
   >
     <!-- Image container -->
-    <div class="bg-gray-100 dark:bg-gray-700/30 py-4 px-6 relative group">
+    <div class="bg-gray-300/70 dark:bg-gray-700/30 py-4 px-6 relative group">
       <img :src="image" class="w-[250px]" alt="product image" />
       <StarSolidIcon
         @click.stop="isFavorite = false"

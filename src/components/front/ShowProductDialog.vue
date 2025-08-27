@@ -11,10 +11,10 @@
       />
 
       <div
-        class="fixed inset-0 flex items-center justify-center overflow-y-auto scrollbar-hide py-6 pt-28"
+        class="fixed inset-0 flex items-center justify-center p-4 overflow-auto"
       >
         <DialogPanel
-          class="w-full max-w-md bg-white rounded-xl dark:bg-gray-800 relative shadow-lg"
+          class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg"
         >
           <DialogTitle class="mb-3 px-6 pt-12 pb-1">
             <h3

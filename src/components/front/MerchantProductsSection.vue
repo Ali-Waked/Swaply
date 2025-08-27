@@ -65,26 +65,24 @@ const showAll = ref(false);
 <template>
   <TitleProductsSection :icon="ShoppingBagIcon" title="منتجاتي">
     <template #button>
-      <div class="flex-1 mr-4 relative">
+      <!-- <div class="flex-1 mr-4 relative">
         <span
-          @click="addProduct = true"
           class="flex plus-icon relative transition-all items-center justify-center border-2 border-blue-700 cursor-pointer h-[26px] w-[26px] rounded-full text-blue-700 hover:text-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white"
         >
-          <PlusIcon class="w-5 h-5" />
-
-          <!-- Tooltip -->
           <span
             class="absolute -top-9 left-1/2 hidden -translate-x-1/2 bg-black/70 dark:bg-gray-700 text-white dark:text-gray-200 text-[12px] w-[120px] p-1 text-center rounded-md transition-all duration-200 pointer-events-none"
           >
             اضافة منتج جديد
           </span>
         </span>
-      </div>
+      </div> -->
       <div class="flex gap-4 items-center justify-between">
         <button
-          class="text-[14px] font-[400] border-2 block border-gray-500 text-gray-600 rounded-lg px-6 py-[6px] transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          @click="addProduct = true"
+          class="text-[14px] flex gap-1 font-[400] border-2 border-gray-500 text-gray-600 rounded-lg px-4 py-[6px] transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
         >
-          اضافة منتج
+          <PlusIcon class="w-5 h-5" />
+          <span> اضافة منتج </span>
         </button>
         <ShowAllProductButton @showAll="($event) => (showAll = $event)" />
       </div>

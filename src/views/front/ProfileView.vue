@@ -127,7 +127,7 @@ const getLabelById = (id) => {
 
 <template>
   <div
-    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 border-b dark:border-gray-700 bg-white dark:bg-gray-800 z-50"
+    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 border-b dark:border-gray-700 bg-gray-100 dark:bg-gray-800 z-50"
   >
     <div class="flex items-center gap-5 container mx-auto">
       <div class="flex items-center gap-2">
@@ -149,7 +149,7 @@ const getLabelById = (id) => {
     <div class="name text-gray-500 dark:text-gray-300">احمد</div>
   </div>
 
-  <div class="flex mt-16">
+  <div class="flex mt-[62px]">
     <nav
       class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
       :class="{
