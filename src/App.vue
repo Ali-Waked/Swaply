@@ -8,11 +8,18 @@
 import { storeToRefs } from "pinia";
 import { useThemeStore } from "./stores/theme";
 import { onMounted } from "vue";
+import { useAuthStore } from "./stores/auth/auth";
 
 const themeStore = useThemeStore();
 const theme = storeToRefs(themeStore);
 
-onMounted(() => {
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+
+onMounted(async () => {
+  if (!user.value) {
+    // await authStore.checkAuth();
+  }
   themeStore.initTheme();
 });
 </script>

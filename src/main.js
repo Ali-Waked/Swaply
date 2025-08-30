@@ -3,6 +3,9 @@ import App from './App.vue'
 import './index.css'
 import router from "./router";
 
+// import Vue3EasyDataTable from 'vue3-easy-data-table';
+// import 'vue3-easy-data-table/dist/style.css';
+
 // mitt
 import mitt from "mitt";
 const emitter = mitt();
@@ -21,6 +24,7 @@ app.use(createPinia());
 // await authStore.checkAuth();
 app.use(router);
 // app.use()
+// app.component('EasyDataTable', Vue3EasyDataTable);
 
 app.provide("emitter", emitter);
 

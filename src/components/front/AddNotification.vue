@@ -10,13 +10,18 @@ import {
   ListboxOptions,
 } from "@headlessui/vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
-import { computed, reactive, ref } from "vue";
+import { computed, inject, onMounted, reactive, ref } from "vue";
 import MainButton from "./global/MainButton.vue";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   PlusIcon,
 } from "@heroicons/vue/24/solid";
+import axiosClient from "../../axiosClient";
+
+const loading = ref(false);
+const emitter = inject("emitter");
+// const productStore = useProductStore
 
 const notification = reactive({
   price: "",
@@ -44,6 +49,24 @@ const filteredItems = computed(() =>
         item.name.toLowerCase().includes(query.value.toLowerCase())
       )
 );
+
+const addNotification = async () => {
+  try {
+    loading.value = true;
+    const response = await axiosClient.post("/notifications");
+    if ((response.data.status = 201)) {
+      emitter.emit("showNotificationAlert", ["success", "تم اضاف"]);
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(async () => {
+  // await
+});
 </script>
 
 <template>
@@ -144,7 +167,7 @@ const filteredItems = computed(() =>
       </div>
     </div>
 
-    <MainButton label="اضافة تنبيه">
+    <MainButton label="اضافة تنبيه" @click="addNotification()">
       <template #icon>
         <PlusIcon class="w-6 h-6" />
       </template>

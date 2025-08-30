@@ -14,7 +14,16 @@ import { ArrowRightIcon } from "@heroicons/vue/24/solid";
       <span class="text-black dark:text-white">الرجوع</span>
     </div>
     <div class="logo flex-1 flex justify-center items-center">
-      <img src="../../../../public/Logo.png" class="w-28" alt="logo" />
+      <img
+        src="../../../../public/Logo.png"
+        class="w-28 block dark:hidden"
+        alt="logo"
+      />
+      <img
+        src="../../../../public/Logo-black.png"
+        class="w-28 hidden dark:block"
+        alt="logo"
+      />
     </div>
   </div>
 </template>

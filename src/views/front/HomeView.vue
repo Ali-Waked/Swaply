@@ -1,4 +1,5 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue";
 import AppFooter from "../../components/front/global/AppFooter.vue";
 import HeaderPage from "../../components/front/global/HeaderPage.vue";
@@ -9,6 +10,10 @@ import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
 import OfferSection from "../../components/front/OfferSection.vue";
 import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
+import { useAuthStore } from "../../stores/auth/auth";
+
+const authStore = useAuthStore();
+const { isAuth } = storeToRefs(authStore);
 </script>
 
 <template>
@@ -16,7 +21,7 @@ import SearchSection from "../../components/front/SearchSection.vue";
     <HeaderPage>
       <HomeNav />
     </HeaderPage>
-    <div class="container mx-auto">
+    <div class="container mx-auto mt-16">
       <SearchSection class="" />
     </div>
   </div>
@@ -28,17 +33,11 @@ import SearchSection from "../../components/front/SearchSection.vue";
   <div class="dark:bg-gray-800">
     <OfferSection />
   </div>
-  <div class="dark:bg-gray-800 pt-14">
-    <MerchantProductsSection />
-  </div>
-  <div class="dark:bg-gray-800 pt-14">
-    <MyFavoritesSection />
-  </div>
 
-  <div class="py-14 dark:bg-gray-800">
+  <div class="pt-14 dark:bg-gray-800" v-if="!isAuth">
     <AuthFeaturesSection />
   </div>
-  <div class="bg-gray-200 dark:bg-gray-700">
+  <div class="bg-gray-200 dark:bg-gray-700 mt-14">
     <AppFooter />
   </div>
 </template>

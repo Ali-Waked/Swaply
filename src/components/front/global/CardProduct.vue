@@ -24,7 +24,7 @@ const props = defineProps({
   },
   oldPrice: {
     type: Number,
-    required: true,
+    // required: true,
   },
   name: {
     type: String,

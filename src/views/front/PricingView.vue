@@ -6,6 +6,8 @@ import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import LogoSection from "../../components/front/global/LogoSection.vue";
 import HomeNav from "../../components/front/HomeNav.vue";
 import LastPricing from "../../components/front/LastPricing.vue";
+import MerchantProductsSection from "../../components/front/MerchantProductsSection.vue";
+import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
 import OfferSection from "../../components/front/OfferSection.vue";
 import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
@@ -13,7 +15,9 @@ import SearchSection from "../../components/front/SearchSection.vue";
 
 <template>
   <HeaderPage>
-    <LogoSection />
+    <div class="container mx-auto">
+      <LogoSection />
+    </div>
   </HeaderPage>
   <div class="dark:bg-gray-800">
     <!-- <HomeNav /> -->
@@ -26,8 +30,18 @@ import SearchSection from "../../components/front/SearchSection.vue";
     <LastPricing />
   </div>
 
-  <div class="dark:bg-gray-800 pb-4">
+  <div class="dark:bg-gray-800">
     <OfferSection />
+  </div>
+
+  <div class="dark:bg-gray-800 pt-14">
+    <MerchantProductsSection />
+  </div>
+  <div class="dark:bg-gray-800 pt-14 pb-4">
+    <MyFavoritesSection />
+  </div>
+  <div class="bg-gray-200 dark:bg-gray-700">
+    <AppFooter />
   </div>
 
   <!-- <div class="bg-white py-14 dark:bg-gray-800">

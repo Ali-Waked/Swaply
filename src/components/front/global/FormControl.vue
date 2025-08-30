@@ -4,13 +4,14 @@
       label
     }}</label> -->
     <MainLabel :id="id" :label="label" />
-
-    <textarea
-      v-if="type === 'textarea'"
-      :placeholder="placeholder"
-      :required="isRequired"
-      class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"
-    ></textarea>
+    <div v-if="type === 'textarea'">
+      <textarea
+        :placeholder="placeholder"
+        :required="isRequired"
+        class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"
+      ></textarea>
+      <ErrorInputText :error-message="errorMessage" />
+    </div>
 
     <input
       v-else
@@ -19,17 +20,19 @@
       :required="isRequired"
       class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
       :class="{
-        'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70':
+        'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
           errorMessage,
         'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
           !errorMessage,
       }"
     />
-    <small class="text-red-600 font-[400]">{{ errorMessage }}</small>
+    <!-- <small class="text-red-600 font-[400]">{{ errorMessage }}</small> -->
+    <ErrorInputText :error-message="errorMessage" />
   </div>
 </template>
 
 <script setup>
+import ErrorInputText from "./ErrorInputText.vue";
 import MainLabel from "./MainLabel.vue";
 
 defineProps({

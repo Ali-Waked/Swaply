@@ -26,7 +26,7 @@ const localValue = computed({
     v-model="localValue"
     :class="[
       localValue
-        ? 'bg-black dark:bg-blue-700' // عند التفعيل: أسود في الوضع العادي، فاتح في الداكن
+        ? 'bg-blue-800 dark:bg-blue-700' // عند التفعيل: أسود في الوضع العادي، فاتح في الداكن
         : 'bg-gray-200 dark:bg-gray-700', // عند الإيقاف: رمادي فاتح في العادي، غامق في الداكن
       'relative inline-flex h-6 w-11 items-center rounded-full transition-colors rotate-[180deg]',
     ]"

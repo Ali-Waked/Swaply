@@ -33,7 +33,7 @@ onMounted(() => {
 <template>
   <div class="dark:bg-gray-800 bg-gray-100">
     <div
-      class="mx-auto p-2 sm:p-0"
+      class="mx-auto"
       :class="{
         container: !['home', 'pricing'].includes(
           router.currentRoute.value.name

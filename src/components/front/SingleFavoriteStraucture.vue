@@ -18,7 +18,7 @@ defineProps({
   >
     <div>
       <span
-        class="text-black dark:text-white font-[500] text-[16px] mb-1 block"
+        class="text-blue-950 dark:text-white font-[500] text-[16px] mb-1 block"
       >
         {{ title }}
       </span>

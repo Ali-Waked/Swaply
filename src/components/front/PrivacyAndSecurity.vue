@@ -37,7 +37,7 @@ const twoFA = ref(false);
     <div class="mt-4">
       <p class="text-red-600 font-[500] text-[16px] mb-3 block">منطقة خطر</p>
       <button
-        class="font-[500] text-white bg-red-600 hover:opacity-70 transition-opacity rounded-lg w-full block py-[6px]"
+        class="font-[500] text-white bg-red-600 hover:bg-red-700 transition-opacity rounded-lg w-full block py-[6px]"
       >
         حذف الحساب
       </button>

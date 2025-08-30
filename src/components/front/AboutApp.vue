@@ -13,7 +13,7 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
     >
       <div>
         <span
-          class="text-black dark:text-white font-[700] text-[26px] mb-3 block"
+          class="text-blue-950 dark:text-white font-[700] text-[26px] mb-3 block"
           >نبض الاسعار</span
         >
         <span
@@ -36,11 +36,11 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
       <span
         class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-2 block"
       >
-        <ul class="list-ul">
-          <li class="pr-4 mb-1">تتبع اسعار المواد الاساسية</li>
-          <li class="pr-4 mb-1">نظام تنبيهات ذكي</li>
-          <li class="pr-4 mb-1">منصة مقايضة مجتمعية</li>
-          <li class="pr-4 mb-1">وضع الطوارئ للازمات</li>
+        <ul class="list-disc pr-4">
+          <li class="mb-1">تتبع اسعار المواد الاساسية</li>
+          <li class="mb-1">نظام تنبيهات ذكي</li>
+          <li class="mb-1">منصة مقايضة مجتمعية</li>
+          <li class="mb-1">وضع الطوارئ للازمات</li>
         </ul>
       </span>
     </div>

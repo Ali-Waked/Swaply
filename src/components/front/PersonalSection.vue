@@ -10,13 +10,13 @@ import SecandryTitle from "./global/SecandryTitle.vue";
   >
     <div class="info flex items-center gap-4 mb-7">
       <div
-        class="icon bg-gray-100 dark:bg-gray-700 h-14 w-14 flex items-center justify-center rounded-full font-[500] text-[14px] text-black dark:text-white"
+        class="icon bg-gray-100 dark:bg-gray-700 h-14 w-14 flex items-center justify-center rounded-full font-[500] text-[14px] text-blue-950 dark:text-white"
       >
         اح
       </div>
       <div>
         <span class="font-[500]">
-          <p class="text-black dark:text-white">أحمد م.</p>
+          <p class="text-blue-950 dark:text-white">أحمد م.</p>
           <p
             class="degree text-gray-700 dark:text-gray-300 text-[12px] font-[500] mt-1"
           >
@@ -24,9 +24,9 @@ import SecandryTitle from "./global/SecandryTitle.vue";
           </p>
           <p class="flex mt-1 -mr-1">
             <span
-              class="text-[12px] flex items-center gap-2 text-gray-900 dark:text-gray-200"
+              class="text-[12px] flex items-center gap-2 text-blue-950 dark:text-gray-200"
             >
-              <PhoneIcon class="w-4 h-4 text-gray-900 dark:text-gray-200" />
+              <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200" />
               <span>970591234567+</span>
             </span>
             <span
@@ -47,20 +47,20 @@ import SecandryTitle from "./global/SecandryTitle.vue";
         <span class="font-[400] text-gray-700 dark:text-gray-300 text-[13px]"
           >درجة الموثوقية</span
         >
-        <span class="text-black dark:text-white font-[400] text-[13px]"
+        <span class="text-blue-950 dark:text-white font-[400] text-[13px]"
           >87%</span
         >
       </div>
-      <div class="w-full h-2 rounded-md bg-gray-400 dark:bg-gray-700 relative">
+      <div class="w-full h-2 rounded-md bg-blue-200 dark:bg-gray-700 relative">
         <div
-          class="absolute left-0 top-0 h-full w-[87%] bg-black dark:bg-white rounded-md"
+          class="absolute left-0 top-0 h-full w-[87%] bg-blue-950 dark:bg-white rounded-md"
         ></div>
       </div>
     </div>
 
     <div class="flex gap-4 items-center justify-between mt-4">
       <div
-        class="box flex-1 text-center bg-green-100 dark:bg-green-800 p-4 rounded-lg"
+        class="box flex-1 text-center bg-green-100 dark:bg-green-700/60 p-4 rounded-lg"
       >
         <span class="font-[600] text-[32px] text-green-600 dark:text-green-300"
           >11</span
@@ -70,7 +70,7 @@ import SecandryTitle from "./global/SecandryTitle.vue";
         </p>
       </div>
       <div
-        class="box flex-1 text-center bg-blue-100 dark:bg-blue-800 p-4 rounded-lg"
+        class="box flex-1 text-center bg-blue-100 dark:bg-blue-700/60 p-4 rounded-lg"
       >
         <span class="font-[600] text-[32px] text-blue-600 dark:text-blue-300"
           >5</span

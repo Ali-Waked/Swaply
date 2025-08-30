@@ -39,5 +39,7 @@ const showAll = ref(false);
       ></span>
     </div>
   </div>
-  <AddNotification />
+  <div class="pb-4">
+    <AddNotification />
+  </div>
 </template>

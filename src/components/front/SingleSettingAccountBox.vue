@@ -56,7 +56,7 @@ const isEdit = ref(false);
       <input
         :type="inputType"
         v-model="localValue"
-        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-black focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
+        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
       />
       <div class="action flex justify-end gap-1">
         <span
@@ -76,7 +76,7 @@ const isEdit = ref(false);
     <!-- Display Mode -->
     <div
       v-else
-      class="font-[500] flex items-center justify-between text-black dark:text-white"
+      class="font-[500] flex items-center justify-between text-blue-950 dark:text-white"
     >
       <p>{{ displayValue }}</p>
       <button

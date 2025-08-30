@@ -4,7 +4,7 @@ import ProductSectionTitle from "../ProductSectionTitle.vue";
 
 const props = defineProps({
   icon: {
-    type: Object,
+    type: [Object, Function],
     default: ArrowTrendingUpIcon,
   },
   title: {

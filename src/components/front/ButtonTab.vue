@@ -10,10 +10,15 @@ const props = defineProps({
   icon: {
     type: Object,
   },
+  type: {
+    type: String,
+    default: "button",
+  },
 });
 </script>
 <template>
   <button
+    :type="type"
     class="border-2 flex-1 transition-all font-[400] flex items-center justify-center gap-1"
     :class="{
       ' bg-white border-gray-300 text-gray-900  dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:border-blue-700':

@@ -1,36 +1,106 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import MainButton from "../../components/front/global/MainButton.vue";
 import { mdiGoogle } from "@mdi/js";
 import MdiIcon from "../../components/front/MdiIcon.vue";
 import ButtonTab from "../../components/front/ButtonTab.vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import IMask from "imask";
 import { VueSpinnerIos, VueSpinnerPuff } from "vue3-spinners";
 import BackButton from "../../components/front/global/BackButton.vue";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import ErrorInputText from "../../components/front/global/ErrorInputText.vue";
+import axiosClient from "../../axiosClient";
+import { useAuthStore } from "../../stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+const authStore = useAuthStore();
+const { user, loading, redirect, isAuth, backErrors } = storeToRefs(authStore);
 
 const showPassword = ref(false);
-const password = ref("");
+// const password = ref("");
 
 const props = defineProps({});
-const type = ref("number");
+const type = ref("text");
 const placeholderInput = ref("0 59 123 4567");
 const buttonTitle = ref("مرحبا بعودتك");
-const emailOrPhone = ref("");
+// const emailOrPhone = ref("");
 const router = useRouter();
+const route = useRoute();
 const isLoginPage = ref(false);
 const isPhoneNumber = ref(true);
 const using = ref("phone_number");
-const loading = ref(false);
+// const loading = ref(false);
+
+const baseSchema = {
+  emailOrPhone: yup
+    .string()
+    .required("هذا الحقل مطلوب")
+    .test("emailOrPhone", function (value) {
+      if (!value) return false;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{10}$/;
+
+      const isPhone = isPhoneNumber.value;
+      const isValid = isPhone ? phoneRegex.test(value) : emailRegex.test(value);
+
+      if (!isValid) {
+        return this.createError({
+          message: isPhone ? "أدخل رقم هاتف صحيح" : "ادخل بريد إلكتروني صحيح",
+        });
+      }
+
+      return true;
+    }),
+
+  password: yup
+    .string()
+    .required("كلمة المرور مطلوبة")
+    .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
+};
+const schema = computed(() => {
+  if (isLoginPage.value) {
+    // ✅ تسجيل دخول فقط
+    return yup.object(baseSchema);
+  } else {
+    // ✅ تسجيل جديد: أضف first_name + last_name
+    return yup.object({
+      ...baseSchema,
+      first_name: yup.string().required("الاسم الأول مطلوب"),
+      last_name: yup.string().required("الاسم الأخير مطلوب"),
+    });
+  }
+});
+const { handleSubmit, errors, defineField, resetForm } = useForm({
+  validationSchema: schema,
+  context: { type: type.value },
+});
+
+// const { handleSubmit, errors, defineField, resetForm } = useForm({
+//   validationSchema: schema,
+//   validateOnMount: false,
+//   validateOnBlur: false,
+//   validateOnChange: false,
+//   validateOnInput: false,
+// });
+
+const [emailOrPhone] = defineField("emailOrPhone");
+const [password] = defineField("password");
+const [first_name] = defineField("first_name");
+const [last_name] = defineField("last_name");
 
 watch(
   isPhoneNumber,
   (newVal) => {
+    const routeValue = route.query.using;
+    // console.log(newVal && routeValue == "phone_number");
     if (newVal) {
       placeholderInput.value = "0 59 123 4567";
       using.value = "phone_number";
-      type.value = "number";
+      type.value = "text";
       emailOrPhone.value = "";
     } else {
       placeholderInput.value = "example@gamil.com";
@@ -38,6 +108,16 @@ watch(
       type.value = "email";
       emailOrPhone.value = "";
     }
+    resetForm({
+      values: {
+        emailOrPhone: "",
+        password: "",
+        first_name: first_name.value,
+        last_name: last_name.value,
+      },
+      errors: {},
+    });
+
     router.replace({
       name: router.currentRoute.value.name,
       query: { using: using.value },
@@ -49,7 +129,18 @@ watch(
 );
 watch(
   () => router.currentRoute.value.name,
-  (newVal) => {
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      resetForm({
+        values: {
+          emailOrPhone: "",
+          password: "",
+          first_name: "",
+          last_name: "",
+        },
+        errors: {},
+      });
+    }
     if (newVal == "login") {
       isLoginPage.value = true;
       buttonTitle.value = "مرحبا بعودتك";
@@ -62,6 +153,41 @@ watch(
     immediate: true,
   }
 );
+
+const onSubmit = handleSubmit(async (values) => {
+  const routeName = router.currentRoute.value.name;
+  const credentials = {
+    password: password.value,
+  };
+  // const filedName = isPhoneNumber.value ? "phone" : "email";
+  // credentials[filedName] = emailOrPhone.value;
+  if (isPhoneNumber.value) {
+    credentials.phone = "+97" + emailOrPhone.value;
+  } else {
+    credentials.email = emailOrPhone.value;
+  }
+  console.log("creadentails", credentials, routeName);
+  if (routeName == "login") {
+    await authStore.login(credentials);
+  }
+  if (routeName == "register") {
+    credentials.name = `${first_name.value} ${last_name.value}`;
+    await authStore.register(credentials);
+  }
+
+  // هنا تعمل request للـ backend مثلاً axios.post("/login", values)
+});
+
+const firstError = (field) => {
+  return Array.isArray(backErrors.value?.[field])
+    ? backErrors.value[field][0]
+    : null;
+};
+const data = ref({});
+onMounted(async () => {
+  const response = await axiosClient.get("/auth/user");
+  data.value = response;
+});
 </script>
 <template>
   <div class="bg-gray-100 dark:bg-gray-800 min-h-screen">
@@ -71,7 +197,8 @@ watch(
     <div
       class="container mx-auto p-2 sm:p-0 -mt-3 h-screen flex items-center justify-center"
     >
-      <div
+      <form
+        @submit.prevent="onSubmit"
         class="bg-white dark:bg-gray-900 rounded-[22px] border border-gray-300 dark:border-gray-700 p-6 w-full sm:w-[420px]"
       >
         <!-- التبديل بين تسجيل الدخول والتسجيل -->
@@ -94,21 +221,39 @@ watch(
 
         <!-- الاسم الأول والاخير -->
         <div
-          class="flex items-center justify-between gap-4 mb-4"
+          class="flex items-start justify-between gap-4 mb-4"
           v-if="!isLoginPage"
         >
-          <input
-            type="text"
-            placeholder="الاسم الاول"
-            required
-            class="focus:border-gray-500 py-[10px] border-none focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
-          />
-          <input
-            type="text"
-            placeholder="الاسم الاخير"
-            required
-            class="focus:border-gray-500 py-[10px] border-none focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
-          />
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="الاسم الاول"
+              v-model="first_name"
+              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
+              :class="{
+                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                  errors.first_name,
+                'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                  !errors.first_name,
+              }"
+            />
+            <ErrorInputText :error-message="errors?.first_name" />
+          </div>
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="الاسم الاخير"
+              v-model="last_name"
+              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
+              :class="{
+                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                  errors.last_name,
+                'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                  !errors.last_name,
+              }"
+            />
+            <ErrorInputText :error-message="errors.last_name" />
+          </div>
         </div>
 
         <!-- التبديل بين الايميل والهاتف -->
@@ -131,49 +276,81 @@ watch(
 
         <!-- الايميل أو الهاتف -->
         <div class="relative" dir="ltr">
-          <input
-            :type="type"
-            :placeholder="placeholderInput"
-            v-model="emailOrPhone"
-            required
-            class="no-spinner focus:border-gray-500 border-none focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
-            :class="{
-              'pl-[34px]': type == 'number',
-              'pl-[37px]': emailOrPhone !== '' && type == 'number',
-            }"
+          <div class="relative">
+            <input
+              :type="type"
+              :placeholder="placeholderInput"
+              v-model="emailOrPhone"
+              class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+              :class="{
+                'pl-[35px]': type === 'text',
+                'pl-[39px]': emailOrPhone !== '' && type === 'text',
+                'border-red-600 text-red-600  focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                  errors.emailOrPhone ||
+                  firstError('email') ||
+                  firstError('phone'),
+                'focus:border-gray-500 border-none  dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                  !errors.emailOrPhone &&
+                  !firstError('email') &&
+                  !firstError('phone'),
+              }"
+            />
+            <span
+              v-if="type == 'text'"
+              class="absolute left-3 top-1/2 -translate-y-1/2"
+              :class="{
+                'text-red-500':
+                  errors.emailOrPhone ||
+                  firstError('email') ||
+                  firstError('phone'),
+                'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
+                  emailOrPhone === '',
+                'text-black dark:text-white':
+                  emailOrPhone !== '' &&
+                  !firstError('email') &&
+                  !firstError('phone'),
+              }"
+              >+97</span
+            >
+          </div>
+          <ErrorInputText
+            :error-message="
+              errors.emailOrPhone || firstError('email') || firstError('phone')
+            "
           />
-          <span
-            v-if="type == 'number'"
-            class="absolute left-3 top-1/2 -translate-y-1/2"
-            :class="{
-              'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
-                emailOrPhone === '',
-              'text-black dark:text-white': emailOrPhone !== '',
-            }"
-            >+97</span
-          >
         </div>
 
         <!-- كلمة المرور -->
-        <div class="relative w-full mt-3">
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            v-model="password"
-            placeholder="كلمة المرور"
-            required
-            class="focus:border-gray-500 border-none focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
-          />
-
-          <button
-            type="button"
-            @click="showPassword = !showPassword"
-            class="absolute inset-y-0 left-2 flex items-center px-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          >
-            <component
-              :is="showPassword ? EyeIcon : EyeSlashIcon"
-              class="w-5 h-5"
+        <div class="relative">
+          <div class="relative w-full mt-3">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              placeholder="كلمة المرور"
+              class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
+              :class="{
+                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                  errors.password,
+                'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                  !errors.password,
+              }"
             />
-          </button>
+
+            <button
+              type="button"
+              @click="showPassword = !showPassword"
+              class="absolute inset-y-0 left-2 flex items-center px-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              :class="{
+                'text-red-500 hover:text-red-600': errors.password,
+              }"
+            >
+              <component
+                :is="showPassword ? EyeIcon : EyeSlashIcon"
+                class="w-5 h-5"
+              />
+            </button>
+          </div>
+          <ErrorInputText :error-message="errors.password" />
         </div>
 
         <!-- نسيت كلمة السر -->
@@ -185,11 +362,11 @@ watch(
 
         <!-- زر تسجيل الدخول -->
         <MainButton
+          type="submit"
           :label="buttonTitle"
           class="mt-6 select-none"
           :style="{ opacity: loading ? 0.8 : 1 }"
           :class="{ 'pointer-events-none': loading }"
-          @click="loading = true"
         >
           <template #icon>
             <VueSpinnerIos v-if="loading" size="20" class="text-gray-50 ml-2" />
@@ -238,7 +415,7 @@ watch(
             >سياسة الخصوصية</span
           >
         </div>
-      </div>
+      </form>
       <div class="absolute right-8 top-6">
         <BackButton @click="router.push({ name: 'home' })" />
       </div>

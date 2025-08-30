@@ -149,7 +149,7 @@ const getLabelById = (id) => {
     <div class="name text-gray-500 dark:text-gray-300">احمد</div>
   </div>
 
-  <div class="flex mt-[62px]">
+  <div class="flex mt-[63px] h-[calc(100vh - 63px)] overflow-hidden">
     <nav
       class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-14 lg:pt-4 transition-all duration-[0.4s]"
       :class="{
@@ -185,7 +185,7 @@ const getLabelById = (id) => {
                   class="h-5 w-5 dark:text-white"
                   :class="{
                     'text-white': activeId === item.id,
-                    'text-black': activeId !== item.id,
+                    'text-blue-950': activeId !== item.id,
                   }"
                 />
               </template>
@@ -193,7 +193,7 @@ const getLabelById = (id) => {
           </ul>
         </li>
         <span
-          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 -left-[16px]"
+          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 left-[0px]"
         ></span>
       </ul>
       <button

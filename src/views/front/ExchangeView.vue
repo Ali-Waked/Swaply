@@ -76,8 +76,8 @@ const chatWith = (data) => {
           <ChatBubbleLeftEllipsisIcon class="w-6" />
         </button>
         <span
-          class="text-white bg-gray-400 text-[10px] hidden absolute -top-6 w-[100px] text-center p-1 rounded-md"
-          >لديك رسالة جديدة</span
+          class="text-white bg-red-600 text-[9px] w-5 h-5 rounded-full absolute -top-[7px] -right-2 flex justify-center items-center text-center p-1 text-wrap"
+          >1</span
         >
       </div>
     </div>
@@ -93,11 +93,11 @@ const chatWith = (data) => {
 </template>
 
 <style lang="scss" scoped>
-.message-icon {
-  &:hover {
-    span {
-      display: block;
-    }
-  }
-}
+// .message-icon {
+//   &:hover {
+//     span {
+//       display: block;
+//     }
+//   }
+// }
 </style>

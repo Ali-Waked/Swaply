@@ -78,7 +78,7 @@ const suggestionClick = (value) => {
       <span class="text-[12px] text-gray-400 font-[400] mx-4">مقترح:</span>
       <ul class="flex items-center gap-1">
         <li
-          class="bg-blue-50 text-blue-600 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white transition-all rounded-lg"
+          class="text-blue-800 bg-blue-200 dark:bg-blue-600/30 dark:text-blue-400 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all rounded-lg"
           v-for="value in suggestion"
           :key="value"
           @click="suggestionClick(value)"

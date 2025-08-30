@@ -35,7 +35,7 @@ body {
     direction: rtl;
     text-align: right;
     margin: 0;
-    padding: 0;
+    /* padding: 0.5rem; */
     font-weight: 300;
     font-size: 16px;
     line-height: 1.5;
@@ -53,4 +53,15 @@ body {
 
 .no-spinner[type=number] {
     -moz-appearance: textfield;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    /* .xl\:p-0 {
+        padding: 0.75rem !important;
+    } */
 }

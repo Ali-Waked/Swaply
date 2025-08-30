@@ -68,11 +68,20 @@ const columnsData = [
       <div
         class="logo flex-1 flex justify-center sm:justify-start items-center"
       >
-        <img src="../../../../public/Logo.png" class="w-28" alt="logo" />
+        <img
+          src="../../../../public/Logo.png"
+          class="w-28 block dark:hidden"
+          alt="logo"
+        />
+        <img
+          src="../../../../public/Logo-black.png"
+          class="w-28 hidden dark:block"
+          alt="logo"
+        />
       </div>
 
       <!-- Language selector -->
-      <div class="lang flex items-center mt-4 justify-center sm:justify-start">
+      <!-- <div class="lang flex items-center mt-4 justify-center sm:justify-start">
         <div class="icon mb-2 ml-1">
           <MdiIcon :icon="mdiWeb" class="text-gray-700 dark:text-gray-300" />
         </div>
@@ -118,7 +127,7 @@ const columnsData = [
             </ListboxOptions>
           </div>
         </Listbox>
-      </div>
+      </div> -->
 
       <!-- Social icons -->
       <div class="icons flex gap-2 mt-4 justify-center sm:justify-start">

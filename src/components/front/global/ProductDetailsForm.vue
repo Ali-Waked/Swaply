@@ -68,7 +68,7 @@ const selectedAvailability = ref("");
   <Disclosure>
     <template #default="{ open }">
       <DisclosureButton
-        class="w-full px-4 border py-2 text-right border-gray-500 text-[14px] text-gray-500 font-[400] focus:border-gray-500 dark:text-white focus:ring-gray-500 bg-gray-100 dark:bg-gray-700 rounded-md flex justify-between items-center"
+        class="w-full px-4 border py-2 text-right border-gray-500 text-[14px] text-gray-500 font-[400] focus:border-gray-500 dark:text-white focus:ring-gray-500 bg-white dark:bg-gray-700 rounded-md flex justify-between items-center"
       >
         <span>إضافة تفاصيل</span>
         <span>

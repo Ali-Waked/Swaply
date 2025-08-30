@@ -6,9 +6,14 @@ import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useAuthStore } from "../../stores/auth/auth";
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/vue/24/solid";
 
 const menuOpen = ref(false);
 const langRef = ref(null);
+
+const authStore = useAuthStore();
+const { user, isAuth } = storeToRefs(authStore);
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -17,6 +22,10 @@ const handleClickOutside = (event) => {
   if (langRef.value && !langRef.value.contains(event.target)) {
     menuOpen.value = false;
   }
+};
+
+const logout = async () => {
+  await authStore.logout();
 };
 
 onMounted(() => {
@@ -59,7 +68,7 @@ const changeTheme = (value) => {
       </div>
 
       <!-- Language button -->
-      <div
+      <!-- <div
         ref="langRef"
         class="lang relative cursor-pointer rounded-xl p-2 bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
       >
@@ -95,16 +104,29 @@ const changeTheme = (value) => {
             </li>
           </ul>
         </transition>
-      </div>
+      </div> -->
     </div>
 
     <!-- Logo -->
     <div class="logo">
-      <img src="../../../public/Logo.png" class="w-28" alt="logo" />
+      <img src="../../../public/Logo.png" class="w-28 dark:hidden" alt="logo" />
+      <img
+        src="../../../public/Logo-black.png"
+        class="w-28 hidden dark:block"
+        alt="logo"
+      />
     </div>
 
     <!-- Right button -->
-    <div class="right" @click="router.push({ name: 'login' })">
+    <div class="right" @click="logout()" v-if="isAuth">
+      <button
+        class="text-white bg-red-600 transition-colors flex items-center gap-2 py-2 px-4 font-[400] rounded-lg text-[14px] hover:bg-red-700 dark:hover:bg-red-500"
+      >
+        <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
+        <span>تسجيل الخروج</span>
+      </button>
+    </div>
+    <div class="right" @click="router.push({ name: 'login' })" v-else>
       <button
         class="transition-colors rounded-lg px-4 py-2 font-[400] text-white bg-blue-600 hover:bg-blue-800 dark:text-gray-200 dark:bg-blue-500 dark:hover:bg-blue-700"
       >

@@ -13,6 +13,7 @@ const routes = [
                 name: "home",
                 meta: {
                     title: "الرئيسية",
+                    // requiresAuth: true,
                 },
                 component: HomeView,
             },
@@ -21,6 +22,7 @@ const routes = [
                 name: "exchange",
                 meta: {
                     title: "المقايضة",
+                    requiresAuth: true,
                 },
                 component: () => import('../views/front/ExchangeView.vue'),
             },
@@ -29,6 +31,7 @@ const routes = [
                 name: "pricing",
                 meta: {
                     title: "الأسعار",
+                    requiresAuth: true,
                 },
                 component: () => import('../views/front/PricingView.vue'),
             },
@@ -37,6 +40,7 @@ const routes = [
                 name: "notifications",
                 meta: {
                     title: "التنبيهات",
+                    requiresAuth: true,
                 },
                 component: () => import('../views/front/NotificationsView.vue'),
             },
@@ -45,6 +49,7 @@ const routes = [
                 name: "personal_profile",
                 meta: {
                     title: "الملف الشخصي",
+                    requiresAuth: true,
                 },
                 component: () => import('../views/front/ProfileView.vue'),
             },
@@ -56,7 +61,8 @@ const routes = [
                         path: '/search',
                         name: 'search-map',
                         meta: {
-                            title: 'بحث'
+                            title: 'بحث',
+                            requiresAuth: true,
                         },
                         component: () => import('../views/front/SearchView.vue')
                     },
@@ -64,7 +70,8 @@ const routes = [
                         path: '/search-list-stores',
                         name: 'search-list-stores',
                         meta: {
-                            title: 'بحث'
+                            title: 'بحث',
+                            requiresAuth: true,
                         },
                         component: () => import('../views/front/ListStoreView.vue')
                     }
@@ -81,6 +88,7 @@ const routes = [
         name: "login",
         meta: {
             title: "تسجيل الدخول",
+            requiresGuest: true,
         },
         component: () => import('../views/front/CreateAccount.vue'),
     },
@@ -89,6 +97,7 @@ const routes = [
         name: "register",
         meta: {
             title: "انشاء حساب",
+            requiresGuest: true,
         },
         component: () => import('../views/front/CreateAccount.vue'),
     },
@@ -102,6 +111,22 @@ const routes = [
         },
         component: () => import('../views/front/CreateAccount.vue'),
     },
+
+    {
+        path: "/",
+        component: () => import("../views/layouts/DashboardLayout.vue"),
+        children: [
+            {
+                path: "/dashboard",
+                name: "dashboard",
+                meta: {
+                    title: "لوحة التحكم",
+                    // requiresAuth: true,
+                },
+                component: () => import('../views/dashboard/DashboardView.vue'),
+            },
+        ],
+    },
 ];
 
 
@@ -111,18 +136,36 @@ const router = createRouter({
 });
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const authStore = useAuthStore();
-    const { isAuth, user } = storeToRefs(authStore);
+    const { isAuth, user, isCheckedAuth } = storeToRefs(authStore);
+    // console.log(isCheckedAuth.value);
+    // if (!user.value && isCheckedAuth.value) {
+    await authStore.checkAuth();
+    // }
+
+    if (to.meta.requiresAuth) {
+        if (isAuth.value) {
+            return next();
+        }
+        return next({ name: 'login' });
+    }
+    if (to.meta.requiresGuest) {
+        if (isAuth.value) {
+            next({ name: 'home' });
+        }
+        return next();
+    }
+
     let position = { x: 0, y: 0 };
     if (sessionStorage.getItem("scrollPosition")) {
         position = JSON.parse(sessionStorage.getItem("scrollPosition"));
         sessionStorage.removeItem("scrollPosition");
     }
+    window.scrollTo(position.x, position.y);
+    document.title = to.meta.title;
     return next();
 })
-// window.scrollTo(position.x, position.y);
-// document.title = to.meta.title;
 //   const authStore = useAuthStore();
 //   const { isAuth, user } = storeToRefs(authStore);
 //   let position = { x: 0, y: 0 };

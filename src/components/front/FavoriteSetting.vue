@@ -62,7 +62,7 @@ const themes = themeStore.themes;
   <div
     class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
   >
-    <SingleFavoriteStraucture title="اللغة" description="اختر لغة التطبيق">
+    <!-- <SingleFavoriteStraucture title="اللغة" description="اختر لغة التطبيق">
       <template #action>
         <RadioComponent
           :items="langs"
@@ -70,7 +70,7 @@ const themes = themeStore.themes;
           v-model:selected="langSelected"
         />
       </template>
-    </SingleFavoriteStraucture>
+    </SingleFavoriteStraucture> -->
     <SingleFavoriteStraucture title="المظهر" description="اختر مظهر التطبيق">
       <template #action>
         <RadioComponent

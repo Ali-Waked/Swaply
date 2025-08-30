@@ -79,7 +79,7 @@ const showAll = ref(false);
       <div class="flex gap-4 items-center justify-between">
         <button
           @click="addProduct = true"
-          class="text-[14px] flex gap-1 font-[400] border-2 border-gray-500 text-gray-600 rounded-lg px-4 py-[6px] transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          class="text-[14px] flex gap-1 font-[400] border-2 bg-blue-700 border-blue-700 text-white rounded-lg px-4 py-[6px] transition-colors hover:bg-blue-800 hover:border-blue-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
         >
           <PlusIcon class="w-5 h-5" />
           <span> اضافة منتج </span>
