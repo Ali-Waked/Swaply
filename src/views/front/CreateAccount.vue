@@ -192,7 +192,12 @@ onMounted(async () => {
 <template>
   <div class="bg-gray-100 dark:bg-gray-800 min-h-screen">
     <div class="logo flex items-center justify-center pt-6">
-      <img src="../../../public/Logo.png" class="w-32" />
+      <!-- --OLD-- -->
+      <!-- <img src="../../../public/Logo.png" class="w-32" /> -->
+
+      <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
+      <img src="../../../public/Logo-black.png" class="w-32 hidden dark:block" alt="logo" />
+      <!-- --NEW-- -->
     </div>
     <div
       class="container mx-auto p-2 sm:p-0 -mt-3 h-screen flex items-center justify-center"
