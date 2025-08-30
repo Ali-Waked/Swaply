@@ -103,7 +103,7 @@ watch(
       type.value = "text";
       emailOrPhone.value = "";
     } else {
-      placeholderInput.value = "example@gamil.com";
+      placeholderInput.value = "example@gmail.com";
       using.value = "email";
       type.value = "email";
       emailOrPhone.value = "";
