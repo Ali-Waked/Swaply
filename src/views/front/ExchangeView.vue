@@ -47,7 +47,7 @@ const chatWith = (data) => {
   />
   <MainButton
     class="mt-4"
-    label="اعراض مقايضة جديدة"
+    label="اعرض مقايضة جديدة"
     @click="isDialogOpen = true"
   >
     <template #icon>
@@ -56,7 +56,7 @@ const chatWith = (data) => {
   </MainButton>
   <WoringAlert
     class="my-4"
-    title="تنبيه امني"
+    title="تنبيه أمني"
     text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل"
   />
   <TradeDialog
