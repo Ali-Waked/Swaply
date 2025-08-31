@@ -37,7 +37,7 @@ const { isAuth } = storeToRefs(authStore);
   <div class="pt-14 dark:bg-gray-800" v-if="!isAuth">
     <AuthFeaturesSection />
   </div>
-  <div class="bg-gray-200 dark:bg-gray-700 mt-14">
+  <div class="bg-gray-200 dark:bg-gray-700 mt-12 rounded-t-xl">
     <AppFooter />
   </div>
 </template>
