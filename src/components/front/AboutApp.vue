@@ -9,7 +9,7 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
     class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
   >
     <div
-      class="last-of-type:border-none border-b dark:border-gray-700 last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 flex items-center justify-between"
+      class="last-of-type:border-none border-b dark:border-gray-700 last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 flex items-center"
     >
       <div>
         <span
@@ -46,11 +46,11 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
     </div>
 
     <div
-      class="last-of-type:border-none border-b last-of-type:p-0 mt-4 first-of-type:mt-0 flex items-center justify-center"
+      class="last-of-type:border-none border-b last-of-type:p-0 mt-4 first-of-type:mt-0 flex"
     >
       <div>
         <span
-          class="text-black dark:text-white font-[500] text-[16px] mb-3 block text-center"
+          class="text-black dark:text-white font-[500] text-[16px] mb-3 block"
           >تواصل معنا</span
         >
         <span
