@@ -18,7 +18,7 @@ const data = [
 </script>
 
 <template>
-  <SecandryTitle label="ساسة الخصوصية" class="mb-3" />
+  <SecandryTitle label="سياسة الخصوصية" class="mb-3" />
   <div
     class="border rounded-xl p-6 pb-9 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
   >
