@@ -54,9 +54,9 @@ function toggle() {
         </div>
       </div>
       <div
-        class="text-white bg-red-600 dark:bg-red-500 rounded-md w-12 h-6 flex items-center justify-center"
+        class="text-white bg-red-600 dark:bg-red-500 rounded-md w-12 h-6 px-7 flex items-center justify-center"
       >
-        <span class="font-[500] text-[10px]">عاجل</span>
+        <span class="font-[500] text-[10px] leading-none">عاجل</span>
       </div>
     </div>
 
