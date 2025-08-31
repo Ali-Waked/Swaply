@@ -60,7 +60,7 @@ onUnmounted(() => {
   <!-- <div class="h-[58px] mb-8"> -->
   <div
     ref="buttonGroup"
-    class="flex items-center justify-center shoadow-lg dark:shadow-white/5 bg-white rounded-lg overflow-hidden space-x-4 dark:bg-gray-700 shadow-md flex-1 p-0 left-0 right-0 z-[10000000] mx-auto w-fit"
+    class="flex items-center justify-center dark:shadow-white/5 bg-white rounded-lg overflow-hidden space-x-4 dark:bg-gray-700 shadow-md flex-1 p-0 left-0 right-0 z-[10000000] mx-auto w-fit"
     :class="[
       isFixed || route.name === 'personal_profile'
         ? 'fixed top-2'
