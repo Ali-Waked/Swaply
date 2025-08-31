@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
   <!-- <div class="h-screen overflow-hidden"> -->
   <!-- الشريط الجانبي -->
   <div
-    class="scrollbar-hide overflow-auto h-screen absolute top-0 w-[400px] bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 z-[1000] pt-8"
+    class="scrollbar-hide overflow-auto h-screen fixed top-0 w-[400px] bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 z-[1000] pt-8"
     :class="{ '-right-full': !dialog, 'right-0': dialog }"
   >
     <!-- العنوان -->
