@@ -40,7 +40,7 @@ import SearchSection from "../../components/front/SearchSection.vue";
   <div class="dark:bg-gray-800 pt-14 pb-4">
     <MyFavoritesSection />
   </div>
-  <div class="bg-gray-200 dark:bg-gray-700">
+  <div class="bg-gray-200 dark:bg-gray-700 pt-12 pb-8 mt-12 rounded-t-xl">
     <AppFooter />
   </div>
 
