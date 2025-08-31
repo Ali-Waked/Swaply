@@ -40,7 +40,7 @@ function toggle() {
           <span class="font-[500] flex">
             <span class="text-gray-800 dark:text-white">أحمد م.</span>
             <span
-              class="text-[11px] border border-gray-200 dark:border-green-600 py-1 px-[6px] rounded-md flex items-center gap-1 ml-2 w-fit justify-center mr-2"
+              class="text-[11px] border border-gray-200 dark:border-green-600  py-1.5 px-3 rounded-full flex items-center gap-1 ml-2 w-fit justify-center mr-2"
             >
               <CheckIcon class="w-3 h-3 text-gray-600 dark:text-green-600" />
               <span class="text-gray-600 dark:text-green-600">موثوق</span>
