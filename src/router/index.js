@@ -125,6 +125,33 @@ const routes = [
                 },
                 component: () => import('../views/dashboard/DashboardView.vue'),
             },
+            {
+                path: "/dashboard/products",
+                name: "dashboard-product",
+                meta: {
+                    title: "المنتجات",
+                    // requiresAuth: true,
+                },
+                component: () => import('../views/dashboard/ProductView.vue'),
+            },
+            {
+                path: "/dashboard/categories",
+                name: "dashboard-category",
+                meta: {
+                    title: "التصنيفات",
+                    // requiresAuth: true,
+                },
+                component: () => import('../views/dashboard/CategoryView.vue'),
+            },
+            {
+                path: "/dashboard/users",
+                name: "dashboard-user",
+                meta: {
+                    title: "المستخدمون",
+                    // requiresAuth: true,
+                },
+                component: () => import('../views/dashboard/UserView.vue'),
+            },
         ],
     },
 ];

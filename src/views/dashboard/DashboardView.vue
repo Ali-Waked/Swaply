@@ -1,208 +1,199 @@
 <template>
-  <div class="p-4" dir="rtl">
-    <EasyDataTable
-      ref="dataTable"
-      :headers="headers"
-      :items="itemsComputed"
-      :pagination="true"
-      :search="true"
-      :sortable="true"
-      hide-footer
-      class="text-right"
-    >
-      <template #cell-actions="{ item }">
-        <div class="flex gap-2 justify-start">
-          <button
-            @click="viewUser(item)"
-            class="flex items-center px-3 py-1 bg-green-500 text-white rounded"
-          >
-            <i class="mdi mdi-eye-outline ml-1"></i> عرض
-          </button>
-          <button
-            @click="openEditModal(item)"
-            class="flex items-center px-3 py-1 bg-blue-500 text-white rounded"
-          >
-            <i class="mdi mdi-pencil-outline ml-1"></i> تعديل
-          </button>
-          <button
-            @click="deleteUser(item.number)"
-            class="flex items-center px-3 py-1 bg-red-500 text-white rounded"
-          >
-            <i class="mdi mdi-delete-outline ml-1"></i> حذف
-          </button>
+  <div>
+    <HeaderPage title="لوحة التحكم-الرئيسية" :is-has-add-button="false" />
+  </div>
+
+  <div class="flex flex-wrap justify-evenly gap-4 mx-4 mt-6">
+    <template v-for="item in cardItems" :key="item.title">
+      <div
+        class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-[400] w-[280px] lg:w-[340px] transition-colors duration-200"
+        :class="item.style"
+      >
+        <component :is="item.icon" class="w-12 lg:w-14" />
+        <div class="flex items-center flex-col justify-center gap-4">
+          <span>{{ item.title }}</span>
+          <span class="font-[500] text-2xl lg:text-4xl">{{ item.number }}</span>
         </div>
-      </template>
-    </EasyDataTable>
-
-    <!-- Custom Footer -->
-    <div class="flex justify-between items-center mt-4 bg-gray-100 p-3 rounded">
-      <!-- Rows per page -->
-      <div>
-        <label>عدد الصفوف لكل صفحة:</label>
-        <select
-          @change="updateRowsPerPageSelect"
-          class="border px-2 py-1 rounded"
-        >
-          <option
-            v-for="item in rowsPerPageOptions"
-            :key="item"
-            :value="item"
-            :selected="item === rowsPerPageActiveOption"
-          >
-            {{ item }}
-          </option>
-        </select>
       </div>
+    </template>
+  </div>
 
-      <!-- Displayed items -->
-      <div>
-        عرض: {{ currentPageFirstIndex }} ~ {{ currentPageLastIndex }} من
-        {{ clientItemsLength }}
+  <div class="flex flex-col items-stretch lg:flex-row gap-4 mt-8 pb-6 h-full">
+    <div
+      class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md dark:shadow-gray-700 rounded-lg"
+    >
+      <div class="min-w-[750px] h-full">
+        <div
+          class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h4 class="text-blue-500 text-[20px] font-[500]">
+              اخر المستخدمين انضماما
+            </h4>
+            <button
+              @click="$router.push({ name: 'dashboard-user' })"
+              class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
+            >
+              عرض المزيد
+            </button>
+          </div>
+          <div class="text-[14px]">
+            <div
+              class="row grid grid-cols-8 gap-4 mb-2 font-[400] text-gray-800 dark:text-gray-200"
+            >
+              <span>رقم المستخدم</span>
+              <span>اسم المستخدم</span>
+              <span class="col-span-2 text-center">ايميل المستخدم</span>
+              <span>رقم الهاتف</span>
+              <span>الدور</span>
+              <span class="col-span-2">تاريخ الاضمام</span>
+            </div>
+            <div
+              class="row grid grid-cols-8 gap-4 py-4 border-b last-of-type:border-none text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
+              v-for="user in users"
+              :key="user.id"
+            >
+              <span class="text-center">{{ user.id }}#</span>
+              <span>{{ user.name }}</span>
+              <span class="col-span-2 text-center">{{ user.email }}</span>
+              <span>{{ user.phone }}</span>
+              <span>{{ user.role }}</span>
+              <span class="col-span-2">{{
+                user.created_at ?? "8-8-2020"
+              }}</span>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Pagination -->
-      <div class="flex gap-2 items-center">
+    <div
+      class="bg-white border border-gray-200 dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 h-[394px] overflow-y-auto min-w-[240px] transition-colors duration-200"
+    >
+      <div class="flex justify-between items-center gap-6 mb-6">
+        <h4 class="text-blue-500 text-[20px] font-[500]">اخر الاشعارات</h4>
         <button
-          @click="prevPage"
-          :disabled="isFirstPage"
-          class="px-2 py-1 border rounded"
+          class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
-          السابق
+          عرض الكل
         </button>
-        <span
-          v-for="page in maxPaginationNumber"
-          :key="page"
-          @click="updatePage(page)"
-          :class="{
-            'bg-blue-500 text-white px-2 py-1 rounded cursor-pointer':
-              page === currentPaginationNumber,
-            'px-2 py-1 rounded cursor-pointer':
-              page !== currentPaginationNumber,
-          }"
-        >
-          {{ page }}
-        </span>
-        <button
-          @click="nextPage"
-          :disabled="isLastPage"
-          class="px-2 py-1 border rounded"
-        >
-          التالي
-        </button>
+      </div>
+      <div
+        class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700 last-of-type:border-none"
+        v-for="notification in notifications"
+        :key="notification.title"
+      >
+        <component
+          :is="notification.icon"
+          class="w-6 text-gray-800 dark:text-gray-200"
+        />
+        <div class="flex flex-col gap-[2px]">
+          <span class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]">
+            {{ notification.title }}
+          </span>
+          <span class="text-gray-600 dark:text-gray-400 text-[12px]">
+            {{ notification.text }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import EasyDataTable from "vue3-easy-data-table";
-import "vue3-easy-data-table/dist/style.css";
-import "@mdi/font/css/materialdesignicons.min.css";
+import {
+  ArchiveBoxIcon,
+  ShoppingBagIcon,
+  UserIcon,
+  UsersIcon,
+} from "@heroicons/vue/24/outline";
+import HeaderPage from "../../components/dashboard/global/HeaderPage.vue";
+import { ref } from "vue";
+const cardItems = [
+  {
+    title: "المنتجات",
+    icon: ShoppingBagIcon,
+    style: "bg-amber-100 text-amber-600 border-amber-200",
+    number: 10,
+  },
+  {
+    title: "التصنيفات",
+    icon: ArchiveBoxIcon,
+    style: "bg-blue-100 text-blue-600 border-blue-200",
+    number: 1254,
+  },
+  {
+    title: "المستخدمين",
+    icon: UsersIcon,
+    style: "bg-green-100 text-green-600 border-green-200",
+    number: 99,
+  },
+];
 
-const dataTable = ref();
-
-const headers = ref([
-  { text: "اللاعب", value: "اللاعب" },
-  { text: "الفريق", value: "الفريق" },
-  { text: "الرقم", value: "الرقم" },
-  { text: "المركز", value: "المركز" },
-  { text: "الطول", value: "مؤشر.الطول" },
-  { text: "الوزن (رطل)", value: "مؤشر.الوزن", sortable: true },
-  { text: "آخر مدرسة", value: "آخر_حضور" },
-  { text: "البلد", value: "البلد" },
-  { text: "إجراءات", value: "إجراءات", sortable: false },
+const users = ref([
+  {
+    id: 1,
+    name: "Ali Waked",
+    email: "ali@example.com",
+    phone: "0591234567",
+    role: "Admin",
+  },
+  {
+    id: 2,
+    name: "Sara Ahmad",
+    email: "sara@example.com",
+    phone: "0597654321",
+    role: "Moderator",
+  },
+  {
+    id: 3,
+    name: "Omar Khaled",
+    email: "omar@example.com",
+    phone: "0591122334",
+    role: "User",
+  },
+  {
+    id: 4,
+    name: "Sara Ahmad",
+    email: "sara@example.com",
+    phone: "0597654321",
+    role: "Moderator",
+  },
+  {
+    id: 5,
+    name: "Omar Khaled",
+    email: "omar@example.com",
+    phone: "0591122334",
+    role: "User",
+  },
 ]);
 
-const items = ref([
+const notifications = [
   {
-    اللاعب: "ستيفن كاري",
-    الفريق: "GSW",
-    الرقم: 30,
-    المركز: "G",
-    مؤشر: { الطول: "6-2", الوزن: 185 },
-    آخر_حضور: "ديفيدسون",
-    البلد: "USA",
+    icon: UserIcon,
+    title: "مستخدم جديد",
+    text: "مستخدم جديد عمل lgoin",
   },
   {
-    اللاعب: "ليبرون جيمس",
-    الفريق: "LAL",
-    الرقم: 6,
-    المركز: "F",
-    مؤشر: { الطول: "6-9", الوزن: 250 },
-    آخر_حضور: "St. Vincent-St. Mary HS (OH)",
-    البلد: "USA",
+    icon: UserIcon,
+    title: "مستخدم جديد",
+    text: "مستخدم جديد عمل lgoin",
   },
   {
-    اللاعب: "كيفن دورانت",
-    الفريق: "BKN",
-    الرقم: 7,
-    المركز: "F",
-    مؤشر: { الطول: "6-10", الوزن: 240 },
-    آخر_حضور: "Texas-Austin",
-    البلد: "USA",
+    icon: UserIcon,
+    title: "مستخدم جديد",
+    text: "مستخدم جديد عمل lgoin",
   },
-  {
-    اللاعب: "جيانيس أنتيتوكونمبو",
-    الفريق: "MIL",
-    الرقم: 34,
-    المركز: "F",
-    مؤشر: { الطول: "6-11", الوزن: 242 },
-    آخر_حضور: "Filathlitikos",
-    البلد: "Greece",
-  },
-]);
-
-const itemsComputed = computed(() => items.value || []);
-
-const editForm = reactive({ player: "", team: "", number: null, position: "" });
-const showModal = ref(false);
-const viewForm = reactive({ player: "", team: "", number: null, position: "" });
-const showViewModal = ref(false);
-
-const openEditModal = (player) => {
-  Object.assign(editForm, player);
-  showModal.value = true;
-};
-const closeModal = () => (showModal.value = false);
-const submitEdit = () => {
-  const idx = items.value.findIndex((i) => i.number === editForm.number);
-  if (idx !== -1)
-    items.value[idx] = { ...editForm, indicator: items.value[idx].indicator };
-  closeModal();
-};
-const deleteUser = (number) => {
-  items.value = items.value.filter((i) => i.number !== number);
-};
-const viewUser = (item) => {
-  Object.assign(viewForm, item);
-  showViewModal.value = true;
-};
-const closeViewModal = () => (showViewModal.value = false);
-
-// Footer pagination logic
-const currentPageFirstIndex = computed(
-  () => dataTable.value?.currentPageFirstIndex
-);
-const currentPageLastIndex = computed(
-  () => dataTable.value?.currentPageLastIndex
-);
-const clientItemsLength = computed(() => dataTable.value?.clientItemsLength);
-const maxPaginationNumber = computed(
-  () => dataTable.value?.maxPaginationNumber
-);
-const currentPaginationNumber = computed(
-  () => dataTable.value?.currentPaginationNumber
-);
-const isFirstPage = computed(() => dataTable.value?.isFirstPage);
-const isLastPage = computed(() => dataTable.value?.isLastPage);
-const nextPage = () => dataTable.value.nextPage();
-const prevPage = () => dataTable.value.prevPage();
-const updatePage = (n) => dataTable.value.updatePage(n);
-const rowsPerPageOptions = computed(() => dataTable.value?.rowsPerPageOptions);
-const rowsPerPageActiveOption = computed(
-  () => dataTable.value?.rowsPerPageActiveOption
-);
-const updateRowsPerPageSelect = (e) =>
-  dataTable.value.updateRowsPerPageActiveOption(Number(e.target.value));
+];
 </script>
+
+<style lang="scss" scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>
