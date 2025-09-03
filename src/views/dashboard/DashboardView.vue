@@ -108,65 +108,33 @@ import {
   UsersIcon,
 } from "@heroicons/vue/24/outline";
 import HeaderPage from "../../components/dashboard/global/HeaderPage.vue";
-import { ref } from "vue";
-const cardItems = [
+import { onMounted, reactive, ref } from "vue";
+import axiosClient from "../../axiosClient";
+import format from "../../mixins/formats";
+
+const { formatDate, cleanId } = format();
+const cardItems = reactive([
   {
     title: "المنتجات",
     icon: ShoppingBagIcon,
     style: "bg-amber-100 text-amber-600 border-amber-200",
-    number: 10,
+    number: 0,
   },
   {
     title: "التصنيفات",
     icon: ArchiveBoxIcon,
     style: "bg-blue-100 text-blue-600 border-blue-200",
-    number: 1254,
+    number: 0,
   },
   {
     title: "المستخدمين",
     icon: UsersIcon,
     style: "bg-green-100 text-green-600 border-green-200",
-    number: 99,
-  },
-];
-
-const users = ref([
-  {
-    id: 1,
-    name: "Ali Waked",
-    email: "ali@example.com",
-    phone: "0591234567",
-    role: "Admin",
-  },
-  {
-    id: 2,
-    name: "Sara Ahmad",
-    email: "sara@example.com",
-    phone: "0597654321",
-    role: "Moderator",
-  },
-  {
-    id: 3,
-    name: "Omar Khaled",
-    email: "omar@example.com",
-    phone: "0591122334",
-    role: "User",
-  },
-  {
-    id: 4,
-    name: "Sara Ahmad",
-    email: "sara@example.com",
-    phone: "0597654321",
-    role: "Moderator",
-  },
-  {
-    id: 5,
-    name: "Omar Khaled",
-    email: "omar@example.com",
-    phone: "0591122334",
-    role: "User",
+    number: 0,
   },
 ]);
+
+const users = ref([]);
 
 const notifications = [
   {
@@ -185,6 +153,39 @@ const notifications = [
     text: "مستخدم جديد عمل lgoin",
   },
 ];
+const translateRole = (role) => {
+  switch (role) {
+    case "admin":
+      return "مدير";
+    case "merchant":
+      return "تاجر";
+    case "customer":
+      return "مستهلك";
+    default:
+      return "غير معروف";
+  }
+};
+
+onMounted(async () => {
+  try {
+    const response = await axiosClient.get("/admin/dashboard");
+    users.value = response.data.last_users_register.map((ele) => {
+      return {
+        id: `# ${ele.id}`,
+        name: ele.name,
+        email: ele.email ?? "غير مسجل",
+        phone: ele.phone ?? "غير مسجل",
+        role: translateRole(ele.role),
+        created_at: formatDate(ele.created_at),
+      };
+    });
+    cardItems[0].number = response.data.products_count;
+    cardItems[1].number = response.data.categories_count;
+    cardItems[2].number = response.data.users_count;
+  } catch (e) {
+    console.error(e);
+  }
+});
 </script>
 
 <style lang="scss" scoped>

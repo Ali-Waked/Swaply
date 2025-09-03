@@ -18,8 +18,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import { useAuthStore } from "./stores/auth/auth";
+const pinia = createPinia();
 const app = createApp(App);
-app.use(createPinia());
+app.use(pinia);
 // const authStore = useAuthStore();
 // await authStore.checkAuth();
 app.use(router);

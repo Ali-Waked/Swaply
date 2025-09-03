@@ -2,10 +2,19 @@
   <HeaderPage
     title="التصنيفات"
     ButtonLabel="اضافة تصنيف جديد"
-    @button-add-click="openDialog('created')"
+    @button-add-click="openDialog('create')"
   />
 
-  <GenericDataTable :headers="headers" :items="items">
+  <div class="mb-4">
+    <input
+      v-model="searchQuery"
+      type="text"
+      placeholder="ابحث عن تصنيف..."
+      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+    />
+  </div>
+
+  <GenericDataTable :headers="headers" :items="filteredItems">
     <template #actions="item">
       <div class="flex gap-2 justify-center">
         <button
@@ -31,10 +40,12 @@
       <ChevronDoubleLeftIcon class="w-5" />
     </template>
   </GenericDataTable>
+
   <AddOrEditCategoryDialog
     v-model="showDialog"
     :mode="mode"
-    :category="category"
+    v-model:category="category"
+    @fetch-categories="fetchCategories"
   />
   <ConfirmDeleteDialog
     v-model="showDeleteDialog"
@@ -44,9 +55,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, inject } from "vue";
-import "vue3-easy-data-table/dist/style.css";
-import "@mdi/font/css/materialdesignicons.min.css";
+import { ref, reactive, computed, inject, onMounted } from "vue";
 import HeaderPage from "../../components/dashboard/global/HeaderPage.vue";
 import AddOrEditCategoryDialog from "../../components/dashboard/AddOrEditCategoryDialog.vue";
 import ConfirmDeleteDialog from "../../components/dashboard/global/ConfirmDeleteDialog.vue";
@@ -55,39 +64,29 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/vue/24/outline";
+import axiosClient from "../../axiosClient";
+import format from "../../mixins/formats";
 
 const headers = [
   { text: "رقم التصنيف", value: "id", sortable: true },
   { text: "اسم التصنيف", value: "name", sortable: true },
-  { text: "تاريخ الإضافة", value: "created_at", sortable: true }, // ✅ التاريخ
+  { text: "تاريخ الإضافة", value: "created_at", sortable: true },
   { text: "إجراءات", value: "actions" },
 ];
 
-// البيانات
-const items = ref([
-  { id: 1, name: "الإلكترونيات", created_at: "2025-09-01" },
-  { id: 2, name: "الأثاث", created_at: "2025-08-30" },
-  { id: 3, name: "الأجهزة المنزلية", created_at: "2025-08-28" },
-  { id: 4, name: "الملابس", created_at: "2025-08-25" },
-]);
+const items = ref([]);
+const searchQuery = ref("");
 
-// تعديل
-const editForm = reactive({ id: null, name: "" });
-const showModal = ref(false);
+const filteredItems = computed(() => {
+  if (!searchQuery.value) return items.value;
+  return items.value.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
 
-const openEditModal = (category) => {
-  console.log(category);
-  openDialog("edit", category);
-};
-const closeModal = () => (showModal.value = false);
-const submitEdit = () => {
-  const idx = items.value.findIndex((i) => i.id === editForm.id);
-  if (idx !== -1) items.value[idx] = { ...editForm };
-  closeModal();
-};
-
-const mode = ref("create"); // "create" أو "edit"
-const category = ref([]);
+const { formatDate, cleanId } = format();
+const mode = ref("create");
+const category = ref({});
 const showDialog = ref(false);
 const showDeleteDialog = ref(false);
 const confirmMessage = ref("");
@@ -101,9 +100,14 @@ const deleteCategory = ({ id, name = "" }) => {
   showDeleteDialog.value = true;
 };
 
-const ConfirmDelete = () => {
-  items.value = items.value.filter((i) => i.id !== selectedCategory.id);
-  emitter.emit("showNotificationAlert", ["success", "تم حذف المنتج بنجاح!"]);
+const ConfirmDelete = async () => {
+  const response = await axiosClient.delete(
+    `admin/categories/${cleanId(selectedCategory.id)}`
+  );
+  if (response.status == 200) {
+    items.value = items.value.filter((i) => i.id !== selectedCategory.id);
+    emitter.emit("showNotificationAlert", ["success", "تم حذف التصنيف بنجاح!"]);
+  }
 };
 
 const openDialog = (type, cat = {}) => {
@@ -111,48 +115,22 @@ const openDialog = (type, cat = {}) => {
   category.value = cat;
   showDialog.value = true;
 };
+
+const fetchCategories = async () => {
+  try {
+    const response = await axiosClient.get("/admin/categories");
+    items.value = response.data.categories.map((ele) => ({
+      id: `# ${ele.id}`,
+      name: ele.name,
+      description: ele.description,
+      created_at: formatDate(ele.created_at),
+    }));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+onMounted(async () => {
+  await fetchCategories();
+});
 </script>
-
-<style scoped lang="scss">
-.customize-table {
-  --easy-table-border: 1px solid #ddd;
-  --easy-table-row-border: 1px solid #eee;
-
-  --easy-table-header-font-size: 14px;
-  --easy-table-header-height: 50px;
-  --easy-table-header-font-color: #333;
-  --easy-table-header-background-color: #f8f9fa;
-
-  --easy-table-header-item-padding: 10px 15px;
-
-  --easy-table-body-even-row-font-color: #333;
-  --easy-table-body-even-row-background-color: #fdfdfd;
-
-  --easy-table-body-row-font-color: #333;
-  --easy-table-body-row-background-color: #ffffff;
-  --easy-table-body-row-height: 50px;
-  --easy-table-body-row-font-size: 14px;
-
-  --easy-table-body-row-hover-font-color: #000;
-  --easy-table-body-row-hover-background-color: #f1f5f9;
-
-  --easy-table-body-item-padding: 10px 15px;
-
-  --easy-table-footer-background-color: #f8f9fa;
-  --easy-table-footer-font-color: #333;
-  --easy-table-footer-font-size: 14px;
-  --easy-table-footer-padding: 0px 10px;
-  --easy-table-footer-height: 50px;
-
-  --easy-table-rows-per-page-selector-width: 70px;
-  --easy-table-rows-per-page-selector-option-padding: 10px;
-  --easy-table-rows-per-page-selector-z-index: 1;
-
-  --easy-table-scrollbar-track-color: #f1f1f1;
-  --easy-table-scrollbar-color: #f1f1f1;
-  --easy-table-scrollbar-thumb-color: #c1c1c1;
-  --easy-table-scrollbar-corner-color: #f1f1f1;
-
-  --easy-table-loading-mask-background-color: #ffffffd9;
-}
-</style>

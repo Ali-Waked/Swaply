@@ -121,7 +121,7 @@ const routes = [
                 name: "dashboard",
                 meta: {
                     title: "لوحة التحكم",
-                    // requiresAuth: true,
+                    requiresAuth: true,
                 },
                 component: () => import('../views/dashboard/DashboardView.vue'),
             },
@@ -130,7 +130,7 @@ const routes = [
                 name: "dashboard-product",
                 meta: {
                     title: "المنتجات",
-                    // requiresAuth: true,
+                    requiresAuth: true,
                 },
                 component: () => import('../views/dashboard/ProductView.vue'),
             },
@@ -139,7 +139,7 @@ const routes = [
                 name: "dashboard-category",
                 meta: {
                     title: "التصنيفات",
-                    // requiresAuth: true,
+                    requiresAuth: true,
                 },
                 component: () => import('../views/dashboard/CategoryView.vue'),
             },
@@ -148,7 +148,7 @@ const routes = [
                 name: "dashboard-user",
                 meta: {
                     title: "المستخدمون",
-                    // requiresAuth: true,
+                    requiresAuth: true,
                 },
                 component: () => import('../views/dashboard/UserView.vue'),
             },
@@ -164,11 +164,15 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
+    // return next();
     const authStore = useAuthStore();
     const { isAuth, user, isCheckedAuth } = storeToRefs(authStore);
     // console.log(isCheckedAuth.value);
     // if (!user.value && isCheckedAuth.value) {
+    // if (!isCheckedAuth.value) {
     await authStore.checkAuth();
+    // }
+    // await authStore.checkAuth();
     // }
 
     if (to.meta.requiresAuth) {
@@ -178,9 +182,9 @@ router.beforeEach(async (to, from, next) => {
         return next({ name: 'login' });
     }
     if (to.meta.requiresGuest) {
-        if (isAuth.value) {
-            next({ name: 'home' });
-        }
+        // if (isAuth.value) {
+        //     next({ name: 'home' });
+        // }
         return next();
     }
 

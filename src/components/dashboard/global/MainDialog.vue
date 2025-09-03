@@ -45,8 +45,9 @@
               إلغاء
             </button>
             <button
-              @click="$emit('submitData')"
+              @click="emit('submitData')"
               class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              :class="{ 'pointer-events-none': loading }"
             >
               {{ buttonLabel }}
             </button>
@@ -63,9 +64,10 @@ import { computed } from "vue";
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
   buttonLabel: { type: String, default: "اضافة" },
+  loading: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "submitData"]);
 
 const showDialog = computed({
   get: () => props.modelValue,

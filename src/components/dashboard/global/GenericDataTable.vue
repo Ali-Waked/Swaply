@@ -20,81 +20,87 @@
         <slot name="actions" :item="item" />
       </template>
 
+      <!-- date slot -->
+      <!-- <template #item-created_at="item">
+        <slot name="created_at" :item="item" />
+      </template> -->
+
       <!-- empty message slot -->
       <template #empty-message>
         <div class="text-center text-gray-500 py-4">لا توجد بيانات لعرضها</div>
       </template>
     </EasyDataTable>
-
     <!-- Footer -->
-    <div
-      class="flex justify-between items-center mt-1 dark:bg-gray-800 p-3 rounded"
-      v-if="items.length"
-    >
-      <!-- Rows per page -->
-      <div>
-        <label
-          class="font-[400] text-[14px] text-gray-700 dark:text-gray-300 ml-3"
-        >
-          عدد الصفوف لكل صفحة:
-        </label>
-        <select
-          v-model="rowsPerPage"
-          class="border px-2 py-1 rounded w-12 border-gray-700 dark:border-gray-500 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700"
-        >
-          <option v-for="n in [5, 10, 15, 20]" :key="n" :value="n">
-            {{ n }}
-          </option>
-        </select>
-      </div>
+    <div class="customize-footer">
+      <div
+        class="flex justify-between items-center dark:bg-gray-800 p-3 rounded"
+      >
+        <!-- Rows per page -->
+        <div>
+          <label
+            class="font-[400] text-[14px] text-gray-700 dark:text-gray-300 ml-3"
+          >
+            عدد الصفوف لكل صفحة:
+          </label>
+          <select
+            v-model="rowsPerPage"
+            @change="updateRowsPerPageSelect"
+            class="appearance-none border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 pr-8 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option v-for="n in [5, 10, 15, 20]" :key="n" :value="n">
+              {{ n }}
+            </option>
+          </select>
+        </div>
 
-      <!-- Display items -->
-      <div class="text-[12px] text-gray-700 dark:text-gray-300">
-        عرض: {{ currentPageFirstIndex }} ~ {{ currentPageLastIndex }} من
-        {{ items.length }}
-      </div>
+        <!-- Display items -->
+        <div class="text-[12px] text-gray-700 dark:text-gray-300">
+          عرض: {{ currentPageFirstIndex }} ~ {{ currentPageLastIndex }} من
+          {{ items.length }}
+        </div>
 
-      <!-- Pagination -->
-      <div class="flex gap-2 items-center">
-        <button
-          @click="prevPage"
-          :disabled="isFirstPage"
-          class="px-2 py-1 transition-all duration-200"
-          :class="{
-            'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300':
-              !isFirstPage,
-            'text-gray-400 dark:text-gray-500': isFirstPage,
-          }"
-        >
-          <slot name="prev-icon" />
-        </button>
+        <!-- Pagination -->
+        <div class="flex gap-2 items-center">
+          <button
+            @click="prevPage"
+            :disabled="isFirstPage"
+            class="px-2 py-1 transition-all duration-200"
+            :class="{
+              'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300':
+                !isFirstPage,
+              'text-gray-400 dark:text-gray-500': isFirstPage,
+            }"
+          >
+            <slot name="prev-icon" />
+          </button>
 
-        <span
-          v-for="page in maxPaginationNumber"
-          :key="page"
-          @click="updatePage(page)"
-          :class="{
-            'bg-blue-600 dark:bg-blue-700 text-white px-2 py-1 rounded cursor-pointer':
-              page === currentPaginationNumber,
-            'px-2 py-1 rounded cursor-pointer text-gray-700 dark:text-gray-300':
-              page !== currentPaginationNumber,
-          }"
-        >
-          {{ page }}
-        </span>
+          <span
+            v-for="page in maxPaginationNumber"
+            :key="page"
+            @click="updatePage(page)"
+            :class="{
+              'bg-blue-600 dark:bg-blue-700 text-white px-2 py-1 rounded cursor-pointer':
+                page === currentPaginationNumber,
+              'px-2 py-1 rounded cursor-pointer text-gray-700 dark:text-gray-300':
+                page !== currentPaginationNumber,
+            }"
+          >
+            {{ page }}
+          </span>
 
-        <button
-          @click="nextPage"
-          :disabled="isLastPage"
-          class="px-2 py-1 transition-all duration-200"
-          :class="{
-            'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300':
-              !isLastPage,
-            'text-gray-400 dark:text-gray-500': isLastPage,
-          }"
-        >
-          <slot name="next-icon" />
-        </button>
+          <button
+            @click="nextPage"
+            :disabled="isLastPage"
+            class="px-2 py-1 transition-all duration-200"
+            :class="{
+              'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300':
+                !isLastPage,
+              'text-gray-400 dark:text-gray-500': isLastPage,
+            }"
+          >
+            <slot name="next-icon" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -106,7 +112,19 @@ import EasyDataTable from "vue3-easy-data-table";
 import "vue3-easy-data-table/dist/style.css";
 import { useThemeStore } from "../../../stores/theme";
 import { storeToRefs } from "pinia";
+// import { useRowsPerPage } from "use-vue3-easy-data-table";
+import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
+// import type {
+//   UsePaginationReturn,
+//   UseRowsPerPageReturn,
+// } from "use-vue3-easy-data-table";
 
+const dataTable = ref();
+const {
+  rowsPerPageOptions,
+  rowsPerPageActiveOption,
+  updateRowsPerPageActiveOption,
+} = useRowsPerPage(dataTable);
 const props = defineProps({
   headers: { type: Array, required: true },
   items: { type: Array, required: true },
@@ -119,7 +137,6 @@ const changeTheme = (value) => {
   themeStore.changeTheme(value);
 };
 
-const dataTable = ref();
 const rowsPerPage = ref(10);
 
 // Pagination computed
@@ -141,6 +158,9 @@ const isLastPage = computed(() => dataTable.value?.isLastPage || false);
 const nextPage = () => dataTable.value?.nextPage();
 const prevPage = () => dataTable.value?.prevPage();
 const updatePage = (n) => dataTable.value?.updatePage(n);
+const updateRowsPerPageSelect = (e) => {
+  updateRowsPerPageActiveOption(Number(e.target.value));
+};
 </script>
 
 <style scoped lang="scss">

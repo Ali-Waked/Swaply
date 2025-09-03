@@ -1,6 +1,9 @@
 <script setup>
-import { computed } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import MainDialog from "./global/MainDialog.vue";
+import axiosClient from "../../axiosClient";
+import ErrorInputText from "../front/global/ErrorInputText.vue";
+import useFormats from "../../mixins/formats";
 
 const props = defineProps({
   modelValue: {
@@ -12,12 +15,20 @@ const props = defineProps({
     default: "create",
   },
   category: {
-    type: Object,
+    type: [Object, String],
     default: {},
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:category",
+  "fetchCategories",
+]);
+const emitter = inject("emitter");
+const loading = ref(false);
+const errors = ref({});
+const { cleanId } = useFormats();
 
 const showDialog = computed({
   get: () => props.modelValue,
@@ -25,8 +36,19 @@ const showDialog = computed({
 });
 
 const localCategoryName = computed({
-  get: () => props.category?.name,
-  set: (val) => emit("update:categoryName", val),
+  get: () => {
+    if (!props.category) return "";
+    return typeof props.category === "string"
+      ? props.category
+      : props.category.name ?? "";
+  },
+  set: (val) => {
+    if (typeof props.category === "string" || !props.category) {
+      emit("update:category", val);
+    } else {
+      emit("update:category", { ...props.category, name: val });
+    }
+  },
 });
 
 const currentMode = computed(() => {
@@ -38,25 +60,71 @@ const currentMode = computed(() => {
 
 // إغلاق المودال
 const closeDialog = () => {
+  errors.value = {};
   emit("update:modelValue", false);
 };
 const label = computed(() => {
-  return currentMode.value === "create" ? "إضافة" : "تعديل";
+  let base = currentMode.value === "create" ? "إضافة" : "تعديل";
+  return loading.value ? base + "..." : base;
 });
-const saveCategory = () => {
-  if (currentMode.value === "create") {
-    console.log("تمت إضافة:", categoryName.value);
-  } else {
-    console.log("تم التعديل:", categoryName.value);
-  }
-  closeDialog();
-};
 
-const submit = () => {};
+// watch(loading, (newVal) => {
+//   console.log("loading");
+//   if (newVal) {
+//     label.value = label.value + "...";
+//   }
+// });
+
+const submit = async () => {
+  console.log(props.category.id);
+  try {
+    loading.value = true;
+
+    if (currentMode.value === "create") {
+      console.log(localCategoryName.value);
+      const response = await axiosClient.post("/admin/categories", {
+        name: localCategoryName.value,
+      });
+      if (response.status == 200) {
+        closeDialog();
+        emitter.emit("showNotificationAlert", [
+          "success",
+          `تم اضافة التصنيف ${localCategoryName.value} بنجاح!`,
+        ]);
+        emit("fetchCategories");
+      }
+    } else if (props.category.id) {
+      const response = await axiosClient.put(
+        `/admin/categories/${cleanId(props.category.id)}`,
+        {
+          name: localCategoryName.value,
+        }
+      );
+      if (response.status == 200) {
+        closeDialog();
+        emitter.emit("showNotificationAlert", [
+          "success",
+          `تم تحديث التصنيف ${localCategoryName.value} بنجاح!`,
+        ]);
+        emit("fetchCategories");
+      }
+    }
+  } catch (e) {
+    errors.value = e.response?.data?.errors || {};
+    console.error(e);
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
-  <MainDialog v-model="showDialog" :button-label="label" @submit-data="submit">
+  <MainDialog
+    v-model="showDialog"
+    :button-label="label"
+    :loading="loading"
+    @submitData="submit"
+  >
     <template #title>
       {{ mode === "create" ? "إضافة تصنيف جديد" : "تعديل التصنيف" }}
     </template>
@@ -65,8 +133,21 @@ const submit = () => {};
         v-model="localCategoryName"
         type="text"
         placeholder="اسم التصنيف"
-        class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+        class="w-full rounded-lg px-3 py-2 outline-none transition-all duration-200"
+        :class="{
+          'border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-400':
+            !errors.name?.[0],
+          'border border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500':
+            errors.name?.[0],
+        }"
       />
+      <ErrorInputText :error-message="errors.name?.[0]" />
+      <!-- <input
+        v-model="localCategoryName"
+        type="text"
+        placeholder="اسم التصنيف"
+        class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+      /> -->
     </template>
   </MainDialog>
 </template>

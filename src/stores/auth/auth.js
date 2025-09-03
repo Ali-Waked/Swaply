@@ -41,6 +41,9 @@ export const useAuthStore = defineStore("auth", () => {
           user.value = response.data.user;
           console.log(response);
           isCheckedAuth.value = true;
+          if (user.value.role == 'admin') {
+            router.push({ name: 'dashboard' });
+          }
           router.push({ name: 'home' });
           emitter.emit("showNotificationAlert", ["success", "تم تسجيل الدخول بنجاح!"]);
         }
@@ -102,7 +105,8 @@ export const useAuthStore = defineStore("auth", () => {
         isAuth.value = false;
         redirect.value = true;
         loading.value = false;
-        router.push({ name: 'home' });
+        if (router.currentRoute.value.name != 'home')
+          router.push({ name: 'home' })
       }
     });
   }
@@ -111,7 +115,9 @@ export const useAuthStore = defineStore("auth", () => {
       .get("http://localhost:8000/sanctum/csrf-cookie", {
         withCredentials: true,
       })
-      .then((response) => { });
+      .then((response) => {
+
+      });
   }
   const loginWith = async (driver) => {
     await getCsrfToken();
@@ -128,27 +134,22 @@ export const useAuthStore = defineStore("auth", () => {
       });
   }
   const checkAuth = async () => {
-    if (isCheckedAuth.value) {
-      return;
-    }
+    if (isCheckedAuth.value) return;
+
+    loading.value = true;
     try {
-      loading.value = true;
       await getCsrfToken();
       const response = await axiosClient.get("/auth/user");
-      if (response.status === 200) {
-        isAuth.value = true;
-        user.value = response.data; // Assuming user data is returned
-        console.log(response.data);
-        // router.push({ name: 'home' });
-      }
+      user.value = response.data;
+      isAuth.value = true;
     } catch (error) {
-      isAuth.value = false; // If verification fails, set isAuth to false
       user.value = null;
+      isAuth.value = false;
     } finally {
       isCheckedAuth.value = true;
       loading.value = false;
     }
-  }
+  };
 
   const firstError = (field) => {
     return Array.isArray(backErrors.value?.[field]) ? backErrors.value[field][0] : null;

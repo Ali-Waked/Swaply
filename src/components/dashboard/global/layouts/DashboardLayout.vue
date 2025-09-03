@@ -9,9 +9,11 @@ import {
 } from "@heroicons/vue/24/outline";
 import { inject, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../../../../stores/auth/auth";
 import NotificationsContainer from "../../../front/global/NotificationsContainer.vue";
 const sideOpen = ref(false);
 const linksSide = ref(null);
+const authStore = useAuthStore();
 const toggleSide = () => {
   sideOpen.value = !sideOpen.value;
 };
@@ -66,6 +68,10 @@ const goToPageName = (name) => {
   sideOpen.value = false;
   router.push({ name: name });
 };
+
+const logout = async () => {
+  await authStore.logout();
+};
 </script>
 <template>
   <nav class="h-[76px] bg-gray-100 dark:bg-gray-900 shadow">
@@ -88,6 +94,7 @@ const goToPageName = (name) => {
       </div>
       <span
         class="cursor-pointer transition-colors flex items-center gap-1 text-red-600 dark:text-red-400 font-[500] text-[14px] border rounded-md py-2 px-4 border-red-600 dark:border-red-400 hover:text-red-800 dark:hover:text-red-200 hover:border-red-800 dark:hover:border-red-200"
+        @click="logout"
       >
         <ArrowRightStartOnRectangleIcon class="w-6" />
         <span> تسجيل الخروج </span>

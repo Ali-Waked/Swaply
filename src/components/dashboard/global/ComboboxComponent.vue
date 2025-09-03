@@ -31,6 +31,8 @@ const query = ref("");
 
 watch(selectedItem, (val) => {
   emit("update:modelValue", val);
+  console.log(val);
+  query.value = val?.name || "";
 });
 
 const filteredItems = computed(() => {
@@ -40,19 +42,32 @@ const filteredItems = computed(() => {
   );
 });
 
+// const filteredItems = computed(() => {
+//   if (!query.value) return props.items;
+//   return props.items.filter((item) =>
+//     item.name.toLowerCase().includes(query.value.toLowerCase())
+//   );
+// });
+
 const searchFor = () => {
   emit("search", query.value);
 };
 </script>
 
 <template>
-  <Combobox v-model="selectedItem" @keyup.enter="searchFor">
+  <Combobox
+    v-model="selectedItem"
+    @keyup.enter="searchFor"
+    :by="(item) => item?.id ?? null"
+  >
     <div class="relative mt-1">
       <!-- Input -->
       <ComboboxInput
-        v-model="query"
+        @change="query = $event.target.value"
         class="focus:border-blue-400 py-3 bg-transparent text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
         :placeholder="placeholder"
+        v-model="query"
+        :display-value="(item) => item?.name || query"
       />
 
       <!-- Options -->
