@@ -189,6 +189,7 @@ onMounted(async () => {
   data.value = response;
 });
 </script>
+
 <template>
   <div class="bg-gray-100 dark:bg-gray-800 min-h-screen">
     <div class="logo flex items-center justify-center pt-6">
@@ -196,7 +197,11 @@ onMounted(async () => {
       <!-- <img src="../../../public/Logo.png" class="w-32" /> -->
 
       <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
-      <img src="../../../public/Logo-black.png" class="w-32 hidden dark:block" alt="logo" />
+      <img
+        src="../../../public/Logo-black.png"
+        class="w-32 hidden dark:block"
+        alt="logo"
+      />
       <!-- --NEW-- -->
     </div>
     <div
@@ -361,6 +366,7 @@ onMounted(async () => {
         <!-- نسيت كلمة السر -->
         <span
           v-if="isLoginPage"
+          @click="router.push({ name: 'forgot-password' })"
           class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500 transition-colors cursor-pointer text-[12px] mt-[6px] block"
           >هل نسيت كلمة السر؟</span
         >

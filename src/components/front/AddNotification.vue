@@ -18,22 +18,28 @@ import {
   PlusIcon,
 } from "@heroicons/vue/24/solid";
 import axiosClient from "../../axiosClient";
+import { useProductStore } from "../../stores/product";
+import { storeToRefs } from "pinia";
+import { useNotificationStore } from "../../stores/notification";
 
-const loading = ref(false);
+// const loading = ref(false);
 const emitter = inject("emitter");
-// const productStore = useProductStore
+const productStore = useProductStore();
+const { products } = storeToRefs(productStore);
+const notificationStore = useNotificationStore();
+const { loading, status } = storeToRefs(notificationStore);
 
 const notification = reactive({
   price: "",
   selected: { id: 2, name: "اقل من", value: "lt" },
 });
 
-const items = [
-  { id: 1, name: "بيض" },
-  { id: 2, name: "حليب" },
-  { id: 3, name: "رز" },
-  { id: 4, name: "كفتة" },
-];
+// const items = [
+//   { id: 1, name: "بيض" },
+//   { id: 2, name: "حليب" },
+//   { id: 3, name: "رز" },
+//   { id: 4, name: "كفتة" },
+// ];
 const options = [
   { id: 1, name: "اكبر من", value: "gt" },
   { id: 2, name: "اقل من", value: "lt" },
@@ -44,28 +50,29 @@ const query = ref("");
 
 const filteredItems = computed(() =>
   query.value === ""
-    ? items
-    : items.filter((item) =>
+    ? products.value
+    : products.value.filter((item) =>
         item.name.toLowerCase().includes(query.value.toLowerCase())
       )
 );
-
 const addNotification = async () => {
-  try {
-    loading.value = true;
-    const response = await axiosClient.post("/notifications");
-    if ((response.data.status = 201)) {
-      emitter.emit("showNotificationAlert", ["success", "تم اضاف"]);
-    }
-  } catch (e) {
-    console.error(e);
-  } finally {
-    loading.value = false;
+  await notificationStore.addNotification(
+    selectedItem.value.id,
+    notification.selected.value,
+    notification.price
+  );
+
+  if ((status.value = 201)) {
+    query.value = "";
+    selectedItem.value = "";
+    notification.price = "";
+    notification.selected = { id: 2, name: "اقل من", value: "lt" };
+    status.value = 400;
   }
 };
 
 onMounted(async () => {
-  // await
+  await productStore.fetchAllProductsIds();
 });
 </script>
 
@@ -167,7 +174,11 @@ onMounted(async () => {
       </div>
     </div>
 
-    <MainButton label="اضافة تنبيه" @click="addNotification()">
+    <MainButton
+      label="اضافة تنبيه"
+      @click="addNotification()"
+      :class="{ 'pointer-events-none': loading }"
+    >
       <template #icon>
         <PlusIcon class="w-6 h-6" />
       </template>

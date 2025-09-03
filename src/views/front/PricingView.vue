@@ -1,4 +1,5 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue";
 import AppFooter from "../../components/front/global/AppFooter.vue";
 import BackButton from "../../components/front/global/BackButton.vue";
@@ -11,6 +12,10 @@ import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
 import OfferSection from "../../components/front/OfferSection.vue";
 import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
+import { useAuthStore } from "../../stores/auth/auth";
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
 </script>
 
 <template>
@@ -34,7 +39,7 @@ import SearchSection from "../../components/front/SearchSection.vue";
     <OfferSection />
   </div>
 
-  <div class="dark:bg-gray-800 pt-14">
+  <div class="dark:bg-gray-800 pt-14" v-if="user.role == 'merchant'">
     <MerchantProductsSection />
   </div>
   <div class="dark:bg-gray-800 pt-14 pb-4">

@@ -3,6 +3,8 @@ import ButtonGroup from "../ButtonGroup.vue";
 import { useRouter } from "vue-router";
 import NotificationsContainer from "../NotificationsContainer.vue";
 import { inject, onMounted, reactive } from "vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "../../../../stores/auth/auth";
 const router = useRouter();
 // const links = [
 //   "personal_profile",
@@ -11,6 +13,8 @@ const router = useRouter();
 //   "search-list-stores",
 //   "pricing",
 // ];
+const authStore = useAuthStore();
+const { isAuth } = storeToRefs(authStore);
 const emitter = inject("emitter");
 const notifications = reactive([]);
 onMounted(() => {
@@ -41,7 +45,7 @@ onMounted(() => {
       }"
     >
       <slot name="title" />
-      <slot name="buttons" />
+      <slot name="buttons" v-if="isAuth" />
       <slot />
     </div>
   </div>

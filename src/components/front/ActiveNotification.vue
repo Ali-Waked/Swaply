@@ -1,62 +1,20 @@
 <script setup>
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import ActiveNotificationBox from "./ActiveNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
+import axios from "axios";
+import axiosClient from "../../axiosClient";
+import { useNotificationStore } from "../../stores/notification";
+import { storeToRefs } from "pinia";
 
-const items = reactive([
-  {
-    title: "البيض (12 حبة)",
-    isActive: true,
-    whenRun: "اقل من 20",
-  },
-  {
-    title: "خبز عربي",
-    isActive: true,
-    whenRun: "اعلى من 8",
-    alerted: true,
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-  {
-    title: "البيض (12 حبة)",
-    isActive: true,
-    whenRun: "اقل من 20",
-  },
-  {
-    title: "خبز عربي",
-    isActive: true,
-    whenRun: "اعلى من 8",
-    alerted: true,
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-  {
-    title: "لحم غنم (1 كغ)",
-    isActive: false,
-    whenRun: "اقل من 65",
-  },
-]);
+const notificationStore = useNotificationStore();
+const { notifications } = storeToRefs(notificationStore);
+
+// const items = ref([]);
+
+onMounted(async () => {
+  await notificationStore.fetchNotification();
+});
 </script>
 
 <template>
@@ -64,12 +22,17 @@ const items = reactive([
     class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
   >
     <NotificationSectionTitle title="التنبيهات النشطة" class="mb-6" />
-    <template v-for="item in items" :key="item.title">
+    <template v-for="item in notifications" :key="item.title">
       <ActiveNotificationBox
-        :title="item.title"
-        v-model:is-active="item.isActive"
-        :whenRun="item.whenRun"
-        :alerted="item.alerted"
+        :id="item.id"
+        :title="item.product?.name"
+        v-model:is-active="item.status"
+        :whenRun="
+          item.type === 'lt'
+            ? `اقل من ${+item.target_price}`
+            : `اكبر من ${+item.target_price}`
+        "
+        :alerted="item.is_triggered"
       />
     </template>
   </div>

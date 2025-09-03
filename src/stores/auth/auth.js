@@ -21,6 +21,7 @@ export const useAuthStore = defineStore("auth", () => {
   const isAuth = ref(false);
   const isCheckedAuth = ref(false);
   const emitter = inject('emitter');
+  const forgotMessage = ref(null);
   const router = useRouter();
   const isCustomer = computed(() => {
     return user.value.role == 'customer';
@@ -41,8 +42,10 @@ export const useAuthStore = defineStore("auth", () => {
           user.value = response.data.user;
           console.log(response);
           isCheckedAuth.value = true;
+          console.log('admin role', user.value.role == 'admin')
           if (user.value.role == 'admin') {
             router.push({ name: 'dashboard' });
+            return;
           }
           router.push({ name: 'home' });
           emitter.emit("showNotificationAlert", ["success", "تم تسجيل الدخول بنجاح!"]);
@@ -55,6 +58,51 @@ export const useAuthStore = defineStore("auth", () => {
       .finally(() => {
         loading.value = false;
       });
+  }
+  const forgotPassword = async (credentials) => {
+    await getCsrfToken();
+    try {
+      loading.value = true;
+      const response = await axiosClient.post("/forgot-password", credentials);
+      if (response.status === 200) {
+        isAuth.value = true;
+        user.value = response.data.user;
+        backErrors.value = null;
+        // router.push({ name: 'login' });
+        forgotMessage.value = credentials.email ? 'تم ارسال رسالة الى الايمل الخاص بك' : "تم ارسال رسالة الى رقم هاتفك"
+
+        emitter.emit("showNotificationAlert", ["success", "تم اعادة ضبط كلمة المرور بنجاح"]);
+        isCheckedAuth.value = true;
+      }
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      backErrors.value = error.response.data.errors;
+    } finally {
+      loading.value = false;
+    }
+  }
+  const resetPassword = async (credentials) => {
+    await getCsrfToken();
+    try {
+      loading.value = true;
+      const response = await axiosClient.post("/reset-password", credentials);
+      if (response.status === 200) {
+        isAuth.value = true;
+        user.value = response.data.user;
+        backErrors.value = null;
+        router.push({ name: 'login' });
+
+        emitter.emit("showNotificationAlert", ["success", "تم اعادة ضبط كلمة المرور بنجاح"]);
+        isCheckedAuth.value = true;
+      }
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      backErrors.value = error.response.data.errors;
+    } finally {
+      loading.value = false;
+    }
   }
   const register = async (credentials) => {
     await getCsrfToken();
@@ -98,7 +146,7 @@ export const useAuthStore = defineStore("auth", () => {
   //     }
   // },
   const logout = async () => {
-    // await getCsrfToken();
+    await getCsrfToken();
     await axiosClient.post("/logout").then((response) => {
       if (response.status === 204) {
         user.value = null;
@@ -154,5 +202,5 @@ export const useAuthStore = defineStore("auth", () => {
   const firstError = (field) => {
     return Array.isArray(backErrors.value?.[field]) ? backErrors.value[field][0] : null;
   };
-  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, login, checkAuth, loginWith, logout, firstError, register }
+  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
 });

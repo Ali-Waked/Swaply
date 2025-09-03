@@ -1,0 +1,263 @@
+<script setup>
+import { computed, onMounted, ref, watch } from "vue";
+import MainButton from "../../components/front/global/MainButton.vue";
+import { mdiGoogle } from "@mdi/js";
+import MdiIcon from "../../components/front/MdiIcon.vue";
+import ButtonTab from "../../components/front/ButtonTab.vue";
+import { useRoute, useRouter } from "vue-router";
+import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/vue/24/outline";
+import IMask from "imask";
+import { VueSpinnerIos, VueSpinnerPuff } from "vue3-spinners";
+import BackButton from "../../components/front/global/BackButton.vue";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import ErrorInputText from "../../components/front/global/ErrorInputText.vue";
+import axiosClient from "../../axiosClient";
+import { useAuthStore } from "../../stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+const authStore = useAuthStore();
+const { user, loading, redirect, isAuth, backErrors, forgotMessage } =
+  storeToRefs(authStore);
+
+const props = defineProps({});
+const type = ref("text");
+const placeholderInput = ref("0 59 123 4567");
+const buttonTitle = ref("مرحبا بعودتك");
+const router = useRouter();
+const route = useRoute();
+const isLoginPage = ref(false);
+const isPhoneNumber = ref(true);
+const using = ref("phone_number");
+
+const baseSchema = {
+  emailOrPhone: yup
+    .string()
+    .required("هذا الحقل مطلوب")
+    .test("emailOrPhone", function (value) {
+      if (!value) return false;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{10}$/;
+
+      const isPhone = isPhoneNumber.value;
+      const isValid = isPhone ? phoneRegex.test(value) : emailRegex.test(value);
+
+      if (!isValid) {
+        return this.createError({
+          message: isPhone ? "أدخل رقم هاتف صحيح" : "ادخل بريد إلكتروني صحيح",
+        });
+      }
+
+      return true;
+    }),
+
+  password: yup
+    .string()
+    .required("كلمة المرور مطلوبة")
+    .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
+};
+const schema = computed(() => {
+  if (isLoginPage.value) {
+    // ✅ تسجيل دخول فقط
+    return yup.object(baseSchema);
+  } else {
+    // ✅ تسجيل جديد: أضف first_name + last_name
+    return yup.object({
+      ...baseSchema,
+      first_name: yup.string().required("الاسم الأول مطلوب"),
+      last_name: yup.string().required("الاسم الأخير مطلوب"),
+    });
+  }
+});
+const { handleSubmit, errors, defineField, resetForm } = useForm({
+  validationSchema: schema,
+  context: { type: type.value },
+});
+
+const [emailOrPhone] = defineField("emailOrPhone");
+
+watch(
+  isPhoneNumber,
+  (newVal) => {
+    const routeValue = route.query.using;
+    // console.log(newVal && routeValue == "phone_number");
+    if (newVal) {
+      placeholderInput.value = "0 59 123 4567";
+      using.value = "phone_number";
+      type.value = "text";
+      emailOrPhone.value = "";
+    } else {
+      placeholderInput.value = "example@gmail.com";
+      using.value = "email";
+      type.value = "email";
+      emailOrPhone.value = "";
+    }
+    resetForm({
+      values: {
+        emailOrPhone: "",
+      },
+      errors: {},
+    });
+
+    router.replace({
+      name: router.currentRoute.value.name,
+      query: { using: using.value },
+    });
+  },
+  {
+    immediate: true,
+  }
+);
+watch(
+  () => router.currentRoute.value.name,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      resetForm({
+        values: {
+          emailOrPhone: "",
+        },
+        errors: {},
+      });
+    }
+    if (newVal == "login") {
+      isLoginPage.value = true;
+      buttonTitle.value = "مرحبا بعودتك";
+      return;
+    }
+    isLoginPage.value = false;
+    buttonTitle.value = "انضمام";
+  },
+  {
+    immediate: true,
+  }
+);
+
+const onSubmit = handleSubmit(async (values) => {
+  const routeName = router.currentRoute.value.name;
+  const credentials = {};
+  // const filedName = isPhoneNumber.value ? "phone" : "email";
+  // credentials[filedName] = emailOrPhone.value;
+  if (isPhoneNumber.value) {
+    credentials.phone = "+97" + emailOrPhone.value;
+  } else {
+    credentials.email = emailOrPhone.value;
+  }
+  await authStore.forgotPassword(credentials);
+
+  // هنا تعمل request للـ backend مثلاً axios.post("/login", values)
+});
+
+const firstError = (field) => {
+  return Array.isArray(backErrors.value?.[field])
+    ? backErrors.value[field][0]
+    : null;
+};
+const data = ref({});
+onMounted(async () => {
+  const response = await axiosClient.get("/auth/user");
+  data.value = response;
+});
+</script>
+
+<template>
+  <div
+    class="flex items-center justify-center bg-gray-50 dark:bg-gray-800 h-screen"
+  >
+    <BackButton class="absolute right-6 top-8" />
+    <div class="logo flex items-center justify-center pt-6 absolute top-1">
+      <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
+      <img
+        src="../../../public/Logo-black.png"
+        class="w-32 hidden dark:block"
+        alt="logo"
+      />
+    </div>
+    <div
+      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 min-w-[250px] w-[30%]"
+    >
+      <div class="icon">
+        <KeyIcon class="w-28 mx-auto text-blue-600" />
+      </div>
+      <span class="block text-xl font-[500] text-blue-600 mt-2 mb-4"
+        >استعادة كلمة المرور</span
+      >
+      <div
+        class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-[9px] text-[13px] flex items-center gap-2 mb-4"
+      >
+        <ButtonTab
+          label="البريد الالكتروني"
+          :is-active="!isPhoneNumber"
+          @click="isPhoneNumber = false"
+          class="py-1 rounded-[8px]"
+        />
+        <ButtonTab
+          label="الهاتف"
+          :is-active="isPhoneNumber"
+          @click="isPhoneNumber = true"
+          class="py-1 rounded-[8px]"
+        />
+      </div>
+      <div class="relative" dir="ltr">
+        <div class="relative">
+          <input
+            :type="type"
+            :placeholder="placeholderInput"
+            v-model="emailOrPhone"
+            class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+            :class="{
+              'pl-[35px]': type === 'text',
+              'pl-[39px]': emailOrPhone !== '' && type === 'text',
+              'border-red-600 text-red-600  focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                errors.emailOrPhone ||
+                firstError('email') ||
+                firstError('phone'),
+              'focus:border-gray-500 border-none  dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                !errors.emailOrPhone &&
+                !firstError('email') &&
+                !firstError('phone'),
+            }"
+          />
+          <span
+            v-if="type == 'text'"
+            class="absolute left-3 top-1/2 -translate-y-1/2"
+            :class="{
+              'text-red-500':
+                errors.emailOrPhone ||
+                firstError('email') ||
+                firstError('phone'),
+              'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
+                emailOrPhone === '',
+              'text-black dark:text-white':
+                emailOrPhone !== '' &&
+                !firstError('email') &&
+                !firstError('phone'),
+            }"
+            >+97</span
+          >
+        </div>
+        <ErrorInputText
+          :error-message="
+            errors.emailOrPhone || firstError('email') || firstError('phone')
+          "
+        />
+        <span
+          v-if="forgotMessage"
+          class="text-[14px] font-[400] text-green-600"
+          >{{ forgotMessage }}</span
+        >
+      </div>
+      <MainButton
+        type="submit"
+        label="ارسال"
+        class="mt-6 select-none"
+        :style="{ opacity: loading ? 0.8 : 1 }"
+        :class="{ 'pointer-events-none': loading }"
+      >
+        <template #icon>
+          <VueSpinnerIos v-if="loading" size="20" class="text-gray-50 ml-2" />
+        </template>
+      </MainButton>
+    </div>
+  </div>
+</template>

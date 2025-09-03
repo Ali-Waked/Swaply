@@ -1,6 +1,28 @@
 <script setup>
 import { PhoneIcon, ShieldCheckIcon } from "@heroicons/vue/24/outline";
 import SecandryTitle from "./global/SecandryTitle.vue";
+import { useAuthStore } from "../../stores/auth/auth";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+
+const joinedAt = computed(() => {
+  const date = new Date(user.value.created_at);
+  const month = date.toLocaleDateString("ar-EG", { month: "long" });
+  const year = date.getFullYear();
+  return `انضم في ${month} ${year}`;
+});
+
+const letterImage = computed(() => {
+  const parts = user.value.name.trim().split(" ");
+
+  const first = parts[0]?.charAt(0).toUpperCase() || "";
+  const second = parts[1]?.charAt(0).toUpperCase() || "";
+
+  return first + second;
+});
 </script>
 
 <template>
@@ -12,22 +34,22 @@ import SecandryTitle from "./global/SecandryTitle.vue";
       <div
         class="icon bg-gray-100 dark:bg-gray-700 h-14 w-14 flex items-center justify-center rounded-full font-[500] text-[14px] text-blue-950 dark:text-white"
       >
-        اح
+        {{ letterImage }}
       </div>
       <div>
         <span class="font-[500]">
-          <p class="text-blue-950 dark:text-white">أحمد م.</p>
+          <p class="text-blue-950 dark:text-white">{{ user.name }}</p>
           <p
             class="degree text-gray-700 dark:text-gray-300 text-[12px] font-[500] mt-1"
           >
-            انظم في ديسمبر 2023
+            {{ joinedAt }}
           </p>
           <p class="flex mt-1 -mr-1">
             <span
               class="text-[12px] flex items-center gap-2 text-blue-950 dark:text-gray-200"
             >
               <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200" />
-              <span>970591234567+</span>
+              <span>{{ user.phone ?? "عير مسجل" }}</span>
             </span>
             <span
               class="text-[9px] bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 py-[6px] px-[8px] rounded-md flex items-center gap-1 ml-2 w-fit justify-center mr-2"

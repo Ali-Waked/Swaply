@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from "vue";
+import { computed, inject, watch } from "vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
 import MdiIcon from "./MdiIcon.vue";
+import axiosClient from "../../axiosClient";
 
 const props = defineProps({
   icon: [Object, String],
@@ -9,14 +10,35 @@ const props = defineProps({
   description: String,
   isEnable: Boolean,
   from: String,
+  id: String,
 });
 
 const emit = defineEmits(["update:isEnable"]);
+const emitter = inject("emitter");
 
 const isEnableValue = computed({
   get: () => props.isEnable,
   set: (value) => emit("update:isEnable", value),
 });
+
+watch(
+  () => isEnableValue.value,
+  async (newVal) => {
+    const response = await axiosClient.put(
+      "/notifications/change-status-methods",
+      {
+        notification_method: props.id,
+        status: newVal,
+      }
+    );
+    if (response.status == 200) {
+      emitter.emit("showNotificationAlert", [
+        "success",
+        `تم ${newVal ? "تفعيل" : "ايقاف"} ${props.title} بنجاح`,
+      ]);
+    }
+  }
+);
 </script>
 
 <template>

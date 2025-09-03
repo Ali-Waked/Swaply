@@ -1,8 +1,10 @@
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/solid";
-import { ref } from "vue";
+import { inject, onMounted, ref } from "vue";
+import axiosClient from "../../axiosClient";
 
-defineProps({
+const props = defineProps({
+  id: Number,
   title: {
     type: String,
   },
@@ -11,6 +13,33 @@ defineProps({
   alerted: Boolean,
 });
 const box = ref(null);
+const emitter = inject("emitter");
+const emit = defineEmits(["update:isActive"]);
+
+const updateStatus = async () => {
+  const status = props.isActive == "active" ? "inactive" : "active";
+  const response = await axiosClient.put(`notifications/${props.id}`, {
+    status: status,
+  });
+  if (response.status == 200) {
+    emit("update:isActive", status);
+    emitter.emit("showNotificationAlert", [
+      "success",
+      `تم ${status == "active" ? "تنشيط" : "ايقاف"} بنجاح`,
+    ]);
+  }
+};
+
+const removeFromNotification = async () => {
+  const response = await axiosClient.delete(`/notifications/${props.id}`);
+  if (response.status == 200) {
+    emitter.emit("showNotificationAlert", [
+      "success",
+      "تم حذف اتلتنبيه بنجاح!",
+    ]);
+    box.value.remove();
+  }
+};
 </script>
 <template>
   <div
@@ -27,15 +56,15 @@ const box = ref(null);
         <span class="status flex items-center gap-2 mr-2">
           <span
             class="active bg-black dark:bg-green-600 rounded font-[500] text-[12px] text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
-            v-if="isActive"
-            @click="$emit('update:isActive', false)"
+            v-if="isActive == 'active'"
+            @click="updateStatus"
           >
             نشط
           </span>
           <span
             class="in-active bg-gray-200 dark:bg-gray-600 rounded font-[500] text-[12px] text-black dark:text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
             v-else
-            @click="$emit('update:isActive', true)"
+            @click="updateStatus"
           >
             متوقف
           </span>
@@ -55,7 +84,7 @@ const box = ref(null);
     </div>
     <XMarkIcon
       class="w-6 h-6 text-gray-600 dark:text-gray-300 transition-all cursor-pointer hover:text-gray-900 dark:hover:text-white"
-      @click="box.remove()"
+      @click="removeFromNotification"
     />
   </div>
 </template>

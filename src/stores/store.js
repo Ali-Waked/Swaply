@@ -2,8 +2,8 @@ import { defineStore } from "pinia"
 import { ref, watch } from "vue"
 import axiosClient from "../axiosClient";
 
-export const useCategoryStore = defineStore("category", () => {
-    const categories = ref([]);
+export const useStore = defineStore("store", () => {
+    const store = ref([]);
     const loading = ref(false);
     const errors = ref({});
 

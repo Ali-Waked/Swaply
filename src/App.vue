@@ -17,6 +17,7 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 onMounted(async () => {
+  authStore.checkAuth();
   if (!user.value) {
     // await authStore.checkAuth();
   }

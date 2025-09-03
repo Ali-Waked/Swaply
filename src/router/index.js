@@ -101,6 +101,24 @@ const routes = [
         },
         component: () => import('../views/front/CreateAccount.vue'),
     },
+    {
+        path: "/forgot-password",
+        name: "forgot-password",
+        meta: {
+            title: "نسيت كلمة المرور",
+            requiresGuest: true,
+        },
+        component: () => import('../views/front/ForgotPassword.vue'),
+    },
+    {
+        path: "/reset-password",
+        name: "reset-password",
+        meta: {
+            title: "اعادة تعيين كلمة المرور",
+            requiresGuest: true,
+        },
+        component: () => import('../views/front/ResetPassword.vue'),
+    },
     //     ],
     // },
     {
@@ -122,6 +140,7 @@ const routes = [
                 meta: {
                     title: "لوحة التحكم",
                     requiresAuth: true,
+                    role: ['admin']
                 },
                 component: () => import('../views/dashboard/DashboardView.vue'),
             },
@@ -131,6 +150,7 @@ const routes = [
                 meta: {
                     title: "المنتجات",
                     requiresAuth: true,
+                    role: ['admin']
                 },
                 component: () => import('../views/dashboard/ProductView.vue'),
             },
@@ -140,6 +160,7 @@ const routes = [
                 meta: {
                     title: "التصنيفات",
                     requiresAuth: true,
+                    role: ['admin']
                 },
                 component: () => import('../views/dashboard/CategoryView.vue'),
             },
@@ -149,6 +170,7 @@ const routes = [
                 meta: {
                     title: "المستخدمون",
                     requiresAuth: true,
+                    role: ['admin']
                 },
                 component: () => import('../views/dashboard/UserView.vue'),
             },
@@ -177,14 +199,20 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta.requiresAuth) {
         if (isAuth.value) {
-            return next();
+            if (to.meta.role) {
+                if (to.meta.role.includes(user.value.role)) {
+                    return next();
+                }
+                return next({ name: 'home' })
+            }
+            return next()
         }
         return next({ name: 'login' });
     }
     if (to.meta.requiresGuest) {
-        // if (isAuth.value) {
-        //     next({ name: 'home' });
-        // }
+        if (isAuth.value) {
+            next({ name: 'home' });
+        }
         return next();
     }
 
