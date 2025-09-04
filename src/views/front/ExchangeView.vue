@@ -46,7 +46,7 @@ const chatWith = (data) => {
     subtitle="تبادل السلع و الخدمات مع المجتمع"
   />
   <MainButton
-    class="mt-4"
+    class="mt-4 py-4"
     label="اعرض مقايضة جديدة"
     @click="isDialogOpen = true"
   >
