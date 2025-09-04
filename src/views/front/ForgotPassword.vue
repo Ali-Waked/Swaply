@@ -174,7 +174,7 @@ onMounted(async () => {
       />
     </div>
     <div
-      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 min-w-[250px] w-[30%]"
+      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 max-w-[450px] w-[95%]"
     >
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />
