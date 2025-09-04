@@ -40,8 +40,8 @@ const localSelected = computed({
       <label
         :for="item.id"
         :class="{
-          'rounded-md px-[14px] py-[6px] cursor-pointer font-[400] text-[14px]': true,
-          'bg-blue-800 text-white dark:bg-blue-700 dark:text-white':
+          'rounded-md px-4 py-2 cursor-pointer font-[400] text-[14px]': true,
+          'bg-blue-700 text-white dark:bg-blue-700 dark:text-white':
             localSelected === item.id,
           'text-black bg-white border border-gray-200 hover:bg-gray-200 transition dark:text-white dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700':
             localSelected !== item.id,
