@@ -179,23 +179,24 @@ onMounted(async () => {
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />
       </div>
-      <span class="block text-xl font-[500] text-blue-600 mt-2 mb-4"
-        >استعادة كلمة المرور</span
-      >
+      <span class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1"
+        >استعادة كلمة المرور</span>
+       <span class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4"
+        >ادخل البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة المرور</span>
       <div
-        class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-[9px] text-[13px] flex items-center gap-2 mb-4"
+        class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[13px] flex items-center gap-x-0.5 mb-4"
       >
         <ButtonTab
           label="البريد الالكتروني"
           :is-active="!isPhoneNumber"
           @click="isPhoneNumber = false"
-          class="py-1 rounded-[8px]"
+          class="py-1 rounded-full"
         />
         <ButtonTab
           label="الهاتف"
           :is-active="isPhoneNumber"
           @click="isPhoneNumber = true"
-          class="py-1 rounded-[8px]"
+          class="py-1 rounded-full"
         />
       </div>
       <div class="relative" dir="ltr">
@@ -220,7 +221,7 @@ onMounted(async () => {
           />
           <span
             v-if="type == 'text'"
-            class="absolute left-3 top-1/2 -translate-y-1/2"
+            class="absolute left-2.5 top-1/2 -translate-y-[50%] leading-none"
             :class="{
               'text-red-500':
                 errors.emailOrPhone ||
