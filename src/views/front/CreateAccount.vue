@@ -213,19 +213,19 @@ onMounted(async () => {
       >
         <!-- التبديل بين تسجيل الدخول والتسجيل -->
         <div
-          class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-[12px] text-[16px] flex items-center gap-2 mb-4"
+          class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[16px] flex items-center gap-0.5 mb-4"
         >
           <ButtonTab
             label="تسجيل الدخول"
             :is-active="isLoginPage"
             @click="router.push({ name: 'login', query: { using } })"
-            class="py-2 rounded-[11px]"
+            class="py-2 rounded-full"
           />
           <ButtonTab
             label="انضم مجانا"
             :is-active="!isLoginPage"
             @click="router.push({ name: 'register', query: { using } })"
-            class="py-2 rounded-[11px]"
+            class="py-2 rounded-full"
           />
         </div>
 
@@ -268,19 +268,19 @@ onMounted(async () => {
 
         <!-- التبديل بين الايميل والهاتف -->
         <div
-          class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-[9px] text-[13px] flex items-center gap-2 mb-4"
+          class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[13px] flex items-center gap-0.5 mb-4"
         >
           <ButtonTab
             label="البريد الالكتروني"
             :is-active="!isPhoneNumber"
             @click="isPhoneNumber = false"
-            class="py-1 rounded-[8px]"
+            class="py-1 rounded-full"
           />
           <ButtonTab
             label="الهاتف"
             :is-active="isPhoneNumber"
             @click="isPhoneNumber = true"
-            class="py-1 rounded-[8px]"
+            class="py-1 rounded-full"
           />
         </div>
 
