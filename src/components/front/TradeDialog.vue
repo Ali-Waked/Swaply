@@ -59,7 +59,7 @@
             </div>
 
             <!-- Submit Button -->
-            <MainButton label="نشر العرض" />
+            <MainButton label="نشر العرض" class="py-3" />
           </div>
         </DialogPanel>
       </div>
