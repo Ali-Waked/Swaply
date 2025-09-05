@@ -83,7 +83,7 @@ onMounted(() => {
   </HeaderPage>
   <!-- العنوان -->
   <div
-    class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500]"
+    class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16"
   >
     <span>نتائج البحث:</span>
     <span>{{ search }}</span>
