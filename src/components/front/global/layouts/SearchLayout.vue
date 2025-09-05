@@ -108,7 +108,7 @@ onMounted(() => {
 
   <!-- أزرار العرض -->
   <div
-    class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-[12px] text-[16px] flex items-center gap-2 mb-4"
+    class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[16px] flex items-center gap-1 mb-4"
   >
     <ButtonTab
       label="قائمة"
@@ -119,7 +119,7 @@ onMounted(() => {
           query: route.query,
         })
       "
-      class="py-2 rounded-[11px]"
+      class="py-2 rounded-full"
       :icon="ListBulletIcon"
     />
     <ButtonTab
@@ -131,7 +131,7 @@ onMounted(() => {
           query: route.query,
         })
       "
-      class="py-2 rounded-[11px]"
+      class="py-2 rounded-full"
       :icon="MapPinIcon"
     />
   </div>
