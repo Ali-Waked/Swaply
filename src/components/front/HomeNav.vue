@@ -126,7 +126,7 @@ const changeTheme = (value) => {
         <span>تسجيل الخروج</span>
       </button>
     </div>
-    <div class="right" @click="router.push({ name: 'login' })" v-else>
+    <div class="right absolute left-4" @click="router.push({ name: 'login' })" v-else>
       <button
         class="transition-colors rounded-lg px-4 py-2 font-[400] text-white bg-blue-600 hover:bg-blue-800 dark:text-gray-200 dark:bg-blue-500 dark:hover:bg-blue-700"
       >
