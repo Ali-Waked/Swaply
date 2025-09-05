@@ -47,6 +47,9 @@ export const useAuthStore = defineStore("auth", () => {
             router.push({ name: 'dashboard' });
             return;
           }
+          // a fix ,i guess?!
+          // router.push({ name: 'pricing' });
+          // don't forget to put the nav bar in the pricing tag with logout and change them 
           router.push({ name: 'home' });
           emitter.emit("showNotificationAlert", ["success", "تم تسجيل الدخول بنجاح!"]);
         }
