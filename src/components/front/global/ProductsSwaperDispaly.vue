@@ -56,7 +56,7 @@ const items = [
 </script>
 
 <template>
-  <div class="mt-2 overflow-x-hidden">
+  <div class="mt-2 overflow-x-hidden mx-auto container">
     <Swiper
       :slidesPerView="5"
       class="mt-6 overflow-visible"
