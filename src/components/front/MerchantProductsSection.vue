@@ -51,7 +51,7 @@ const showProduct = () => {
 const dialogOpen = ref(false);
 
 const deleteProduct = () => {
-  console.log("✅ Product deleted");
+  // console.log("✅ Product deleted");
 };
 
 const showConfirmDialog = (data) => {
