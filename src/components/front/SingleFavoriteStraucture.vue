@@ -23,7 +23,7 @@ defineProps({
         {{ title }}
       </span>
       <span
-        class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-2 block"
+        class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block"
       >
         {{ description }}
       </span>
