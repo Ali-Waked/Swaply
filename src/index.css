@@ -54,26 +54,24 @@ body {
   -moz-appearance: textfield;
 }
 
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
   .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
 
-  /* .xl\:p-0 {
+   .xl\:p-0 {
         padding: 0.75rem !important;
-    } */
-}
+    } 
+} */
 
-/* @media (min-width: 375px) {
-    .container {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-    }
-   
-    /* .xl\:p-0 {
-        padding: 0.75rem !important;
-    } */
+@media (min-width: 375px) {
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+}
 
 @media (max-width: 560px) {
   .minimum {
