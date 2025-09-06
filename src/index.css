@@ -1,86 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap");
 
 @font-face {
-    font-family: 'Readex Pro';
-    src: url('@/assets/fonts/ReadexPro/ReadexPro-Regular.woff2') format('woff2'),
-        url('@/assets/fonts/ReadexPro/ReadexPro-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Readex Pro";
+  src: url("@/assets/fonts/ReadexPro/ReadexPro-Regular.woff2") format("woff2"),
+    url("@/assets/fonts/ReadexPro/ReadexPro-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Readex Pro';
-    src: url('@/assets/fonts/ReadexPro/ReadexPro-Bold.woff2') format('woff2'),
-        url('@/assets/fonts/ReadexPro/ReadexPro-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
+  font-family: "Readex Pro";
+  src: url("@/assets/fonts/ReadexPro/ReadexPro-Bold.woff2") format("woff2"),
+    url("@/assets/fonts/ReadexPro/ReadexPro-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    /* @apply font-readex; */
+  /* @apply font-readex; */
 
-    font-family: "Readex Pro", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-variation-settings:
-        "HEXP" 0;
+  font-family: "Readex Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "HEXP" 0;
 
-    direction: rtl;
-    text-align: right;
-    margin: 0;
-    /* padding: 0.5rem; */
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 1.5;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  /* padding: 0.5rem; */
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .translate-x-rtl {
-    @apply rtl:-translate-x-6 ltr:translate-x-6;
+  @apply rtl:-translate-x-6 ltr:translate-x-6;
 }
 
 .no-spinner::-webkit-outer-spin-button,
 .no-spinner::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.no-spinner[type=number] {
-    -moz-appearance: textfield;
+.no-spinner[type="number"] {
+  -moz-appearance: textfield;
 }
 
 @media (min-width: 640px) {
-    .container {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-    }
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
 
-    /* .xl\:p-0 {
+  /* .xl\:p-0 {
         padding: 0.75rem !important;
     } */
 }
 
-@media (max-width: 560px) {
-    .minimum {
-        max-width: 7rem;
-        
+/* @media (min-width: 375px) {
+    .container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
     }
+   
+    /* .xl\:p-0 {
+        padding: 0.75rem !important;
+    } */
+
+@media (max-width: 560px) {
+  .minimum {
+    max-width: 7rem;
+  }
 }
 @media (max-width: 470px) {
-    .minimum {
-        max-width: 6rem;
-        
-    }
+  .minimum {
+    max-width: 6rem;
+  }
 }
 @media (max-width: 400px) {
-    .minimum {
-        max-width: 5.5rem;
-        
-    }
+  .minimum {
+    max-width: 5.5rem;
+  }
 }
