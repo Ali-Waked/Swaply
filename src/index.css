@@ -65,7 +65,7 @@ body {
     } 
 } */
 
-@media (min-width: 375px) {
+@media (min-width: 320px) {
   .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
