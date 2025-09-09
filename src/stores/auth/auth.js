@@ -201,9 +201,52 @@ export const useAuthStore = defineStore("auth", () => {
       loading.value = false;
     }
   };
+  const update = async (data) => {
+    try {
+      const response = await axiosClient.put("/user", data);
+      if (response.status == 200) {
+        emitter.emit("showNotificationAlert", [
+          "success",
+          "تم تحديث بيانات الحساب بنجاح!",
+        ]);
+      }
+    } catch (error) {
+      console.error("Error updating account type:", error);
+      emitter.emit("showNotificationAlert", [
+        "error",
+        error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",
+      ]);
+    }
+  };
+
+  const deleteAccount = async (current_password) => {
+    try {
+      const response = await axiosClient.delete("/user/delete-account", {
+        data: { current_password }
+      });
+      if (response.status == 204) {
+        user.value = null;
+        isAuth.value = false;
+        redirect.value = true;
+        loading.value = false;
+        if (router.currentRoute.value.name != 'home')
+          router.push({ name: 'home' })
+        emitter.emit("showNotificationAlert", [
+          "success",
+          "تم حذف الحساب بنجاح!",
+        ]);
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      emitter.emit("showNotificationAlert", [
+        "error",
+        error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",
+      ]);
+    }
+  };
 
   const firstError = (field) => {
     return Array.isArray(backErrors.value?.[field]) ? backErrors.value[field][0] : null;
   };
-  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
+  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, update, deleteAccount, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
 });

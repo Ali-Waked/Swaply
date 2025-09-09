@@ -3,7 +3,7 @@
   <transition name="slide-fade">
     <div
       :class="[
-        'flex items-center gap-2 px-4 py-2 rounded shadow-md text-white font-medium mb-2 transition-all duration-200 absolute top-2 text-nowrap',
+        'flex items-center gap-2 px-4 py-2 rounded shadow-md text-white font-medium mb-2 transition-all duration-200 absolute top-2 text-nowrap z-[1000000000]',
         typeClasses,
         visible ? 'right-2' : '-right-full',
       ]"

@@ -1,57 +1,56 @@
-<script setup >
+<script setup>
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+
 const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  value: {
-    type: String,
-    required: true,
-  },
-  buttonLabel: {
-    type: String,
-    default: "تعديل",
-  },
-  inputType: {
-    type: String,
-    default: "text",
-  },
+  id: { type: String, required: true },
+  label: { type: String, required: true },
+  value: { type: String, required: true },
+  buttonLabel: { type: String, default: "تعديل" },
+  inputType: { type: String, default: "text" },
 });
 
-const emit = defineEmits(["update:value"]);
+const emit = defineEmits(["update", "update:value"]);
 
-const localValue = computed({
-  get() {
-    return props.value;
-  },
-  set(newVal) {
-    emit("update:value", newVal);
-  },
-});
+const localValue = ref("");
 
-const displayValue = computed(() => {
-  return props.inputType === "password"
-    ? "*".repeat(props.value.length)
-    : props.value;
-});
+watch(
+  () => props.value,
+  (newVal) => {
+    localValue.value =
+      newVal === "غير معروف" ? "" : newVal === "password" ? "" : newVal;
+  },
+  { immediate: true }
+);
 
 const isEdit = ref(false);
+
+const displayValue = computed(() =>
+  props.inputType === "password" ? "*".repeat(props.value.length) : props.value
+);
+
+const saveEdit = () => {
+  emit("update", { id: props.id, value: localValue.value });
+  emit("update:value", localValue.value);
+  isEdit.value = false;
+};
+
+const cancelEdit = () => {
+  localValue.value = props.value;
+  isEdit.value = false;
+};
 </script>
 
 <template>
   <div
     class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
   >
-    <!-- Label -->
     <span
       class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block"
     >
       {{ label }}
     </span>
 
-    <!-- Edit Mode -->
     <div v-if="isEdit" class="flex items-center gap-4 mt-3">
       <input
         :type="inputType"
@@ -60,20 +59,20 @@ const isEdit = ref(false);
       />
       <div class="action flex justify-end gap-1">
         <span
+          @click="saveEdit"
           class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
         >
           <CheckIcon class="w-5 h-5" />
         </span>
         <span
+          @click="cancelEdit"
           class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
-          @click="isEdit = false"
         >
           <XMarkIcon class="w-5 h-5" />
         </span>
       </div>
     </div>
 
-    <!-- Display Mode -->
     <div
       v-else
       class="font-[500] flex items-center justify-between text-blue-950 dark:text-white"

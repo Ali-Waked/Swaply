@@ -21,7 +21,11 @@ import PrivacyAndSecurity from "../../components/front/PrivacyAndSecurity.vue";
 import PrivacyPolicy from "../../components/front/PrivacyPolicy.vue";
 import TermsAndConditions from "../../components/front/TermsAndConditions.vue";
 import AboutApp from "../../components/front/AboutApp.vue";
+import { useAuthStore } from "../../stores/auth/auth";
+import { storeToRefs } from "pinia";
 
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
 const links = [
   {
     group_name: "الحساب",
@@ -146,12 +150,14 @@ const getLabelById = (id) => {
         لوحة التحكم - {{ sectionTitle }}
       </p>
     </div>
-    <div class="name text-gray-500 dark:text-gray-300">احمد</div>
+    <div class="name text-gray-500 dark:text-gray-300 text-nowrap">
+      {{ user.name }}
+    </div>
   </div>
 
-  <div class="flex mt-[63px] h-[calc(100vh - 63px)] overflow-hidden">
+  <div class="flex mt-[127px] h-[calc(100vh - 127px)] overflow-hidden">
     <nav
-      class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 63px)] lg:relative lg:right-0 max-w-[280px] p-4 lg:pr-0 pt-20 transition-all duration-[0.4s]"
+      class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 127px)] lg:relative lg:right-0 max-w-[280px] p-4 transition-all lg:max-h-[calc(100vh-127px)] lg:overflow-y-auto lg:overflow-x-hidden duration-[0.4s] side-bar"
       :class="{
         'bg-white dark:bg-gray-800 h-screen z-[1000000000] right-0': isOpen,
         '-right-full': !isOpen,
@@ -198,6 +204,7 @@ const getLabelById = (id) => {
       </ul>
       <button
         class="text-white bg-red-600 w-full flex items-center justify-center gap-3 py-2 font-[500] rounded-lg text-[14px] mt-8 hover:bg-red-700 dark:hover:bg-red-500"
+        @click="authStore.logout()"
       >
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
         <span>تسجيل الخروج</span>
@@ -215,7 +222,7 @@ const getLabelById = (id) => {
     />
 
     <main
-      class="lg:container mx-auto pr-4 max-h-[calc(100vh-63px)] overflow-y-auto scrollbar-hide pt-20"
+      class="container mx-auto lg:mr-0 lg:ml-auto max-h-[calc(100vh-127px)] overflow-y-auto scrollbar-hide lg:w-3/4"
       ref="scrollContainer"
     >
       <div
@@ -267,5 +274,10 @@ const getLabelById = (id) => {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+.side-bar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+  direction: ltr; /* يحرك scrollbar للجهة الأخرى */
 }
 </style>

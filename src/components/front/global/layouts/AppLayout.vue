@@ -7,11 +7,11 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "../../../../stores/auth/auth";
 const router = useRouter();
 // const links = [
-//   "personal_profile",
-//   "home",
-//   "search-map",
-//   "search-list-stores",
-//   "pricing",
+// "personal_profile",
+// "home",
+// "search-map",
+// "search-list-stores",
+// "pricing",
 // ];
 const authStore = useAuthStore();
 const { isAuth } = storeToRefs(authStore);
@@ -39,7 +39,7 @@ onMounted(() => {
     <div
       class="mx-auto"
       :class="{
-        container: !['home', 'pricing'].includes(
+        container: !['home', 'pricing', 'personal_profile'].includes(
           router.currentRoute.value.name
         ),
       }"

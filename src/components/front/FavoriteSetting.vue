@@ -7,12 +7,15 @@ import { Switch } from "@headlessui/vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
 import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
+import { useAuthStore } from "../../stores/auth/auth";
 
-const enabled = ref(false);
 const langSelected = ref("ar");
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
 // const apperenceSelected = ref("ligth");
 
-const currencySelected = ref("ils");
+const enabled = ref(user.value?.recive_notification ?? false);
+const currencySelected = ref(user.value?.currency || "ILS");
 const langs = [
   {
     label: "العربية",
@@ -23,6 +26,15 @@ const langs = [
     id: "en",
   },
 ];
+
+watch(currencySelected, async (newVal) => {
+  await authStore.update({ currency: newVal });
+  user.value.currency = newVal;
+});
+watch(enabled, async (newVal) => {
+  await authStore.update({ recive_notification: +newVal });
+  user.value.recive_notification = newVal;
+});
 // const apperences = [
 //   {
 //     label: "فاتح",
@@ -36,11 +48,11 @@ const langs = [
 const currency = [
   {
     label: "دولار",
-    id: "usd",
+    id: "USD",
   },
   {
     label: "شيكل",
-    id: "ils",
+    id: "ILS",
   },
 ];
 // watch(apperenceSelected, (newVal) => {

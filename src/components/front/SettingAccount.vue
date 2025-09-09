@@ -1,5 +1,5 @@
 <script setup >
-import { ref } from "vue";
+import { inject, reactive, ref } from "vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SelectListBox from "./global/SelectListBox.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
@@ -7,39 +7,46 @@ import { ShoppingBagIcon, UserIcon } from "@heroicons/vue/24/outline";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
+import axiosClient from "../../axiosClient";
+import { watch } from "vue";
 
 const userStore = useAuthStore();
 const { user } = storeToRefs(userStore);
-const items = [
+const items = reactive([
   {
+    id: "name",
     label: "الاسم",
     value: user.value.name,
   },
   {
+    id: "email",
     label: "الايميل",
     value: user.value.email ?? "غير معروف",
   },
   {
+    id: "phone",
     label: "رقم الهاتف",
     value: user.value.phone ?? "غير معروف",
   },
-];
+]);
 
 const accountOptionsType = [
-  { id: "1", name: "مستهلك", label: "حساب تجاري" },
-  { id: "2", name: "تاجر", label: "حساب مستهلك" },
+  { id: "1", name: "مستهلك", label: "حساب مستهلك" },
+  { id: "2", name: "تاجر", label: "حساب تجاري" },
 ];
 
-const merchantSettings = [
+const merchantSettings = reactive([
   {
+    id: "name",
     label: "اسم المحل",
-    value: "متجر احمد للمواد الغذائية",
+    value: user.value.store?.name ?? "غير معروف",
   },
   {
+    id: "address",
     label: "عنوان المحل",
-    value: "شارع الوحدة, غزة فلسطين",
+    value: user.value.store?.address ?? "غير معروف",
   },
-];
+]);
 
 const selectedAccountType = computed({
   get() {
@@ -52,14 +59,76 @@ const selectedAccountType = computed({
   },
 });
 
+watch(
+  () => selectedAccountType.value,
+  (newVal, oldVal) => {
+    if (newVal.name !== oldVal.name) {
+      userStore.update({
+        role: newVal.name === "تاجر" ? "merchant" : "customer",
+      });
+    }
+  }
+);
+
 const storeImage = ref(null);
-const previewUrl = ref(null);
+const emitter = inject("emitter");
+const previewUrl = ref(user.value.store?.image ?? null);
 
 const handleImageChange = (event) => {
   const file = event.target.files[0];
   if (file) {
     storeImage.value = file;
     previewUrl.value = URL.createObjectURL(file);
+  }
+};
+
+watch(storeImage, async (newImage) => {
+  if (newImage) {
+    const formData = new FormData();
+    formData.append("image", newImage);
+    formData.append("_method", "PUT");
+
+    try {
+      const response = await axiosClient.post("/merchant/store", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 200) {
+        emitter.emit("showNotificationAlert", [
+          "success",
+          "تم تحديث صورة المتجر بنجاح!",
+        ]);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      emitter.emit("showNotificationAlert", [
+        "error",
+        "حدث خطأ أثناء رفع الصورة. حاول مرة أخرى.",
+      ]);
+    }
+  }
+});
+
+const update = async (data) => {
+  await userStore.update({
+    [data.id]: data.value,
+  });
+};
+
+const merchantUpdate = async (data) => {
+  try {
+    const response = await axiosClient.put("/merchant/store", {
+      [data.id]: data.value,
+    });
+    if (response.status == 200) {
+      emitter.emit("showNotificationAlert", [
+        "success",
+        "تم تحديث بيانات المتجر بنجاح!",
+      ]);
+    }
+  } catch (error) {
+    console.error("Error updating account type:", error);
   }
 };
 </script>
@@ -72,8 +141,10 @@ const handleImageChange = (event) => {
     <template v-for="item in items" :key="item.label">
       <SingleSettingAccountBox
         :label="item.label"
-        :value="item.value"
+        v-model:value="item.value"
+        :id="item.id"
         class="dark:text-white"
+        @update="update"
       />
     </template>
     <div
@@ -106,9 +177,11 @@ const handleImageChange = (event) => {
     <template v-if="selectedAccountType.name == 'تاجر'">
       <template v-for="item in merchantSettings" :key="item.label">
         <SingleSettingAccountBox
+          :id="item.id"
           :label="item.label"
-          :value="item.value"
+          v-model:value="item.value"
           class="dark:text-white"
+          @update="merchantUpdate"
         />
       </template>
       <div

@@ -17,11 +17,11 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 onMounted(async () => {
-  authStore.checkAuth();
+  await authStore.checkAuth();
   if (!user.value) {
     // await authStore.checkAuth();
   }
-  themeStore.initTheme();
+  themeStore.initTheme(user.value?.theme);
 });
 </script>
 
