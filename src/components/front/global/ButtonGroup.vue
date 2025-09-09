@@ -20,13 +20,11 @@ const route = useRoute();
 
 const handleScroll = () => {
   if (route.name == "personal_profile") {
-    console.log("hi");
     return;
   }
   const scrollY = window.scrollY;
   // لو نزلنا أكثر من مكان العنصر الأصلي - 20px، خليه fixed
   isFixed.value = scrollY >= 80;
-  console.log(scrollY, scrollY >= initialOffset - 20);
 };
 
 // const handleScroll = () => {

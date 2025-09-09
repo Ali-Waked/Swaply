@@ -3,7 +3,7 @@
     <div
       class="fixed inset-0 flex items-center justify-center"
       :class="{
-        'z-50': showDialog,
+        'z-[10000000]': showDialog,
         '-z-50': !showDialog,
       }"
     >

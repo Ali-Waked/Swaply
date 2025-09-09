@@ -9,54 +9,20 @@ import ShowProductDialog from "../ShowProductDialog.vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import useFormats from "../../../mixins/formats";
 
-// const props = defineProps({
-//   icon: {
-//     type: Object,
-//     default: ArrowTrendingUpIcon,
-//   },
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-// });
-
-const items = [
-  {
-    image: "../../../public/flour.webp",
-    price: "",
-    name: "",
-    storeName: "",
-    description: "",
-    time: "",
+const props = defineProps({
+  products: {
+    type: Array,
+    default: [],
   },
-];
+});
 
-// const showProductDialog = reactive({
-//   dialog: false,
-//   data: {},
-// });
-
-// const showProduct = () => {
-//   showProductDialog.dialog = true;
-//   showProductDialog.data = {
-//     image: "../../../public/flour.webp",
-//     price: "20",
-//     usdPrice: "500",
-//     name: "سكر ابيض",
-//     description: "1 كيلو نقي و مكرر",
-//     storeName: "متجر الشجاعية",
-//     time: "منذ ساعتين",
-//     rating: 4.5,
-//     distance: "0.8 كم",
-//   };
-// };
-
-// const showAll = ref(false);
+const { getRelativeTime } = useFormats();
 </script>
 
 <template>
-  <div class="mt-2 overflow-x-hidden mx-auto container">
+  <div class="mt-2 overflow-x-hidden" v-if="products.length">
     <Swiper
       :slidesPerView="5"
       class="mt-6 overflow-visible"
@@ -67,7 +33,7 @@ const items = [
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       }"
-      loop
+      :loop="products.length >= 5"
       :autoplay="{
         delay: 3000,
         pauseOnMouseEnter: true,
@@ -85,18 +51,21 @@ const items = [
       }"
     >
       <swiper-slide
-        v-for="n in 10"
-        :key="n"
+        v-for="product in products"
+        :key="product.id"
         class="swiper-wrapper overflow-visible"
       >
         <CardProduct
-          image="../../../public/flour.webp"
-          :price="20"
-          name="سكر ابيض"
-          description="1 كيلو نقي و مكرر"
-          store-name="متجر الشجاعية"
-          time="منذ ساعتين"
-          @click="$emit('showProduct', n)"
+          :id="+product.id"
+          :image="product.image"
+          :price="+product.price"
+          :name="product.name"
+          :description="product.description"
+          :store-name="product.store?.address"
+          :time="getRelativeTime(product.updated_at)"
+          v-model:is-favorite="product.is_favorite"
+          :offer="product.active_offer"
+          @click="$emit('showProduct', product.id)"
         />
       </swiper-slide>
       <!-- <div class="pagination"></div> -->

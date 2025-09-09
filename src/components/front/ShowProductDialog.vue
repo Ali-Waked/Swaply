@@ -1,5 +1,5 @@
 <template>
-  <TransitionRoot :show="modelValue" as="template">
+  <TransitionRoot :show="modelValue" as="template" v-if="product">
     <Dialog
       @close="closeDialog"
       class="relative overflow-visible z-[100000000]"
@@ -28,7 +28,11 @@
           <div
             class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-4 py-8"
           >
-            <img :src="data.image" class="max-w-[180px]" :alt="data.name" />
+            <img
+              :src="product.image"
+              class="max-w-[180px]"
+              :alt="product.name"
+            />
           </div>
 
           <div class="p-6 pt-5">
@@ -36,9 +40,9 @@
             <div
               class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1"
             >
-              <span class="name">{{ data.name }}</span>
+              <span class="name">{{ product.name }}</span>
               <span class="price">{{
-                currencyFormat(data.price, undefined, "ar", "ILS")
+                currencyFormat(product.price, undefined, "ar", "ILS")
               }}</span>
             </div>
 
@@ -46,8 +50,8 @@
             <div
               class="flex items-center justify-between text-gray-400 dark:text-gray-300"
             >
-              <span class="name">{{ data.description }}</span>
-              <span class="price">{{ currencyFormat(data.usdPrice) }}</span>
+              <span class="name">{{ product.description }}</span>
+              <span class="price">{{ usdPrice }}</span>
             </div>
 
             <!-- التقييم -->
@@ -56,7 +60,7 @@
                 <span
                   class="font-[400] text-gray-800 dark:text-gray-100 text-[28px]"
                 >
-                  {{ data.rating }}
+                  {{ product.rating }}
                 </span>
                 <StarIcon class="text-amber-400 w-8 h-8" />
               </span>
@@ -81,7 +85,7 @@
                   :icon="mdiNavigationOutline"
                   class="text-gray-600 dark:text-gray-300"
                 />
-                <span>{{ data.distance }}</span>
+                <span>{{ product.distance }}</span>
               </span>
             </div>
 
@@ -96,7 +100,7 @@
                 class="flex items-center text-[14px] mt-1 text-gray-600 dark:text-gray-300 gap-1"
               >
                 <ClockIcon class="w-4 h-4" />
-                <span>{{ data.time }}</span>
+                <span>{{ getRelativeTime(product.updated_at) }}</span>
               </div>
             </div>
 
@@ -106,33 +110,46 @@
             />
 
             <!-- زر الابلاغ -->
-            <button
-              v-if="!isReported"
-              @click="isReported = true"
-              class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
-            >
-              <MdiIcon
-                class="text-red-600 dark:text-red-400"
-                :icon="mdiFlagOutline"
-              />
-              <span>ابلاغ عن غلاء الاسعار</span>
-            </button>
+            <div v-if="!isForMe">
+              <button
+                v-if="!isReported"
+                @click="isReported = true"
+                class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
+              >
+                <MdiIcon
+                  class="text-red-600 dark:text-red-400"
+                  :icon="mdiFlagOutline"
+                />
+                <span>ابلاغ عن غلاء الاسعار</span>
+              </button>
 
-            <!-- زر تم الابلاغ -->
-            <button
-              v-else
-              class="flex items-center justify-center cursor-default select-none w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
+              <!-- زر تم الابلاغ -->
+              <button
+                v-else
+                class="flex items-center justify-center cursor-default select-none w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
+              >
+                <MdiIcon class="text-white" :icon="mdiFlagOutline" />
+                <span>تم الابلاغ</span>
+              </button>
+            </div>
+            <div
+              v-if="isForMe"
+              :class="[
+                'gap-2',
+                productButtons.length >= 4
+                  ? 'grid grid-cols-1  sm:grid-cols-2 gap-1'
+                  : 'flex items-center justify-center flex-wrap sm:flex-nowrap',
+              ]"
             >
-              <MdiIcon class="text-white" :icon="mdiFlagOutline" />
-              <span>تم الابلاغ</span>
-            </button>
-            <button
-              @click="$emit('deleteProduct')"
-              class="flex items-center justify-center w-full py-2 border-2 rounded-lg hover:bg-red-600/95 border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
-            >
-              <MdiIcon class="text-white" :icon="mdiTrashCanOutline" />
-              <span>حذف المنتج</span>
-            </button>
+              <MainButtonForMyProduct
+                v-for="btn in productButtons"
+                :key="btn.label"
+                :icon="btn.icon"
+                :label="btn.label"
+                @click="btn.onClick"
+                :class="btn.class"
+              />
+            </div>
           </div>
 
           <!-- زر الإغلاق -->
@@ -150,7 +167,16 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, inject, ref } from "vue";
+import {
+  defineProps,
+  defineEmits,
+  inject,
+  ref,
+  onMounted,
+  watch,
+  computed,
+  watchEffect,
+} from "vue";
 import { ClockIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { CameraIcon } from "@heroicons/vue/24/outline";
 import {
@@ -166,26 +192,116 @@ import { StarIcon } from "@heroicons/vue/24/solid";
 import {
   mdiFlagOutline,
   mdiNavigationOutline,
+  mdiPencilOutline,
+  mdiTagOutline,
   mdiTrashCanOutline,
 } from "@mdi/js";
 import MdiIcon from "./MdiIcon.vue";
 
 import format from "../../mixins/formats";
-
-const { currencyFormat } = format();
-const props = defineProps({
-  modelValue: { type: Boolean, required: true },
-  data: { type: Object },
-});
+import axiosClient from "../../axiosClient";
+import { useCurrencyStore } from "../../stores/currencyStore";
+import MainButtonForMyProduct from "./MainButtonForMyProduct.vue";
 
 const isReported = ref(false);
+const product = ref(null);
+const data = ref({});
+const usdPrice = ref("");
+const emit = defineEmits([
+  "update:modelValue",
+  "addDiscount",
+  "deleteDiscount",
+  "deleteProduct",
+]);
+const productButtons = computed(() => {
+  const buttons = [
+    {
+      icon: mdiPencilOutline,
+      label: "تعديل المنتج",
+      onClick: () => emit("editProduct", product.value),
+      class:
+        "hover:bg-blue-600/95 border-blue-600 text-white gap-2 bg-blue-600 mt-2 dark:border-blue-500 dark:bg-blue-500",
+    },
+  ];
 
-const emit = defineEmits(["update:modelValue"]);
+  if (!product.value.offer) {
+    buttons.push({
+      icon: mdiTagOutline,
+      label: "اضافة عرض",
+      onClick: () => emit("addDiscount", product.value),
+      class:
+        "hover:bg-green-600/95 border-green-600 text-white gap-2 bg-green-600 mt-2 dark:border-green-500 dark:bg-green-500",
+    });
+  } else {
+    buttons.push(
+      {
+        icon: mdiTagOutline,
+        label: "تعديل عرض",
+        onClick: () => emit("addDiscount", product.value),
+        class:
+          "hover:bg-green-600/95 border-green-600 text-white gap-2 bg-green-600 mt-2 dark:border-green-500 dark:bg-green-500",
+      },
+      {
+        icon: mdiTagOutline,
+        label: "حذف عرض",
+        onClick: () => emit("deleteDiscount", product.value),
+        class:
+          "hover:bg-red-600/95 border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500",
+      }
+    );
+  }
+
+  buttons.push({
+    icon: mdiTrashCanOutline,
+    label: "حذف المنتج",
+    onClick: () => emit("deleteProduct", product.value),
+    class:
+      "hover:bg-red-600/95 border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500",
+  });
+
+  return buttons;
+});
+
+const { currencyFormat, getRelativeTime } = format();
+const currencyStore = useCurrencyStore();
+
+const props = defineProps({
+  modelValue: { type: Boolean, required: true },
+  productId: { type: Number },
+  isForMe: { type: Boolean, default: false },
+});
+
+watchEffect(async () => {
+  if (product.value) {
+    usdPrice.value = await currencyStore.convertToUSD(product.value.price);
+  }
+});
+
 // const emitter = inject("emitter");
 
 function closeDialog() {
   emit("update:modelValue", false);
 }
+
+watch(
+  () => props.productId,
+  async () => {
+    console.log("hi");
+    if (props.isForMe) {
+      const resposne = await axiosClient.get(
+        `merchant/store/products/${props.productId}`
+      );
+      if (resposne.status == 200) {
+        product.value = resposne.data.product;
+      }
+    } else {
+      const resposne = await axiosClient.get(`product/view/${props.productId}`);
+      if (resposne.status == 200) {
+        product.value = resposne.data.product;
+      }
+    }
+  }
+);
 </script>
 
 

@@ -9,11 +9,16 @@ import {
 import { StarIcon as StarSolidIcon } from "@heroicons/vue/24/solid";
 
 import format from "../../../mixins/formats";
-import { inject, ref, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
+import axiosClient from "../../../axiosClient";
 
-const { currencyFormat } = format();
+const { currencyFormat, calculatePriceAfterOffer } = format();
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
   image: {
     type: String,
     required: true,
@@ -42,13 +47,21 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  // isFavorite: {
-  //   type: Boolean,
-  //   default: false,
-  // },
+  offer: {
+    type: Object,
+    default: null,
+  },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  },
 });
 const emitter = inject("emitter");
-const isFavorite = ref(false);
+const emit = defineEmits(["update:isFavorite"]);
+const isFavorite = computed({
+  get: () => props.isFavorite,
+  set: (value) => emit("update:isFavorite", value),
+});
 
 watch(isFavorite, (newVal) => {
   if (newVal) {
@@ -63,6 +76,27 @@ watch(isFavorite, (newVal) => {
     ]);
   }
 });
+
+const addToFavorite = async () => {
+  try {
+    const response = await axiosClient.post(`/favorites/${props.id}`);
+    if (response.status == 201) {
+      isFavorite.value = true;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+const removeFromFavorite = async () => {
+  try {
+    const response = await axiosClient.delete(`/favorites/${props.id}`);
+    if (response.status == 200) {
+      isFavorite.value = false;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
 </script>
 
 <template>
@@ -76,11 +110,13 @@ watch(isFavorite, (newVal) => {
         @click.stop="isFavorite = false"
         class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-500"
         v-if="isFavorite"
+        @click="removeFromFavorite"
       />
 
       <StarIcon
         @click.stop="isFavorite = true"
         class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-red-400 hover:text-red-500 dark:text-gray-300 dark:hover:text-gray-200"
+        @click="addToFavorite"
         v-else
       />
     </div>
@@ -90,7 +126,12 @@ watch(isFavorite, (newVal) => {
       <div class="flex items-center gap-4 font-[500] mb-1 text-[18px]">
         <span class="title flex-1">{{ name }}</span>
         <span class="price">{{
-          currencyFormat(price, undefined, "ar", "ILS")
+          currencyFormat(
+            calculatePriceAfterOffer({ price: price, offer: offer }),
+            undefined,
+            "ar",
+            "ILS"
+          )
         }}</span>
       </div>
 
@@ -117,7 +158,7 @@ watch(isFavorite, (newVal) => {
           <ClockIcon class="w-[12px] h-[12px]" />
           <span class="text-[12px] dark:text-gray-300">{{ time }}</span>
         </div>
-        <FireIcon class="w-5 text-orange-600" />
+        <FireIcon class="w-5 text-orange-600" v-if="offer" />
       </div>
       <!-- </div> -->
     </div>

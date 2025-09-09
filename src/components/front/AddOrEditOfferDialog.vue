@@ -1,0 +1,296 @@
+<template>
+  <TransitionRoot :show="modelValue" as="template">
+    <Dialog
+      @close="closeDialog"
+      class="relative z-[1000000000]"
+      v-if="product.id"
+    >
+      <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <div class="fixed inset-0 flex items-center justify-center p-4">
+        <DialogPanel
+          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative"
+        >
+          <DialogTitle class="pt-6 mb-3">
+            <h3 class="title font-[500] text-[20px] text-black dark:text-white">
+              {{ isEditPage ? "تعديل العرض" : "اضافة عرض" }}
+            </h3>
+            <p
+              class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300"
+            >
+              {{
+                isEditPage ? "تعديل تفاصيل العرض للمنتج" : "اضف عرض جديد لمنتجك"
+              }}
+              <span class="underline font-[500]">{{ product.name }}</span>
+            </p>
+          </DialogTitle>
+          <form @submit.prevent="submit">
+            <div class="mb-4">
+              <label class="block mb-1 font-[400]">نوع الخصم</label>
+              <select
+                v-model="discountType"
+                class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
+                :class="{
+                  'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                    errorMessage,
+                  'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+                    !errorMessage,
+                }"
+              >
+                <option
+                  v-for="option in discountOptions"
+                  :key="option.id"
+                  :value="option.id"
+                  class="text-sm text-gray-700"
+                >
+                  {{ option.name }}
+                </option>
+              </select>
+            </div>
+            <FormControl
+              id="discount"
+              :label="
+                discountType === 'fixed' ? 'الخصم بالمبلغ' : 'الخصم بالنسبة'
+              "
+              type="number"
+              v-model="discount_value"
+              :error-message="errors.discount_value"
+              placeholder="0"
+            >
+              <template #suffix>
+                {{ suffixSymbol }}
+              </template>
+            </FormControl>
+            <div>
+              <span class="font-[400]">الحالة:</span>
+              <div class="flex justify-evenly items-center">
+                <div class="flex gap-1 items-center text-gray-700">
+                  <input
+                    id="active"
+                    type="radio"
+                    v-model="is_active"
+                    :value="true"
+                    name="status"
+                  />
+                  <label for="active">نشط</label>
+                </div>
+                <div class="flex gap-1 items-center text-gray-700">
+                  <input
+                    id="in-active"
+                    type="radio"
+                    v-model="is_active"
+                    :value="false"
+                    name="status"
+                  />
+                  <label for="in-active">غير نشط</label>
+                </div>
+              </div>
+            </div>
+
+            <FormControl
+              label="تاريخ البداية"
+              type="date"
+              v-model="startDate"
+              :error-message="errors.start_date"
+            />
+            <FormControl
+              label="تاريخ النهاية"
+              type="date"
+              v-model="endDate"
+              :error-message="errors.end_date"
+            />
+
+            <MainButton
+              :label="isEditPage ? 'تعديل العرض' : 'اضافة العرض'"
+              class="bg-gray-800 mt-4"
+              type="submit"
+            />
+
+            <div class="absolute top-[20px] right-[20px]">
+              <XMarkIcon
+                class="h-5 w-5 cursor-pointer"
+                @click="closeDialog()"
+              />
+            </div>
+          </form>
+        </DialogPanel>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+</template>
+<script setup>
+import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import axiosClient from "../../axiosClient";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  TransitionRoot,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/vue";
+
+import FormControl from "./global/FormControl.vue";
+import ErrorInputText from "./global/ErrorInputText.vue";
+import MainButton from "./global/MainButton.vue";
+import RadioComponent from "./global/RadioComponent.vue";
+
+const props = defineProps({
+  modelValue: Boolean,
+  product: { type: Object, default: () => ({}) },
+});
+const emit = defineEmits(["update:modelValue", "fetchOffers"]);
+const emitter = inject("emitter");
+const is_active = ref(true);
+// validation schema
+const schema = yup.object({
+  discount_type: yup.string().required(),
+  discount_value: yup
+    .number()
+    .nullable()
+    .when("discount_type", {
+      is: "fixed",
+      then: (schema) =>
+        schema.min(0, "يجب ان يكون رقم >= 0").required("المبلغ مطلوب"),
+    })
+    .when("discount_type", {
+      is: "percent",
+      then: (schema) =>
+        schema
+          .min(1, "اقل نسبة 1%")
+          .max(100, "اقصى نسبة 100%")
+          .required("النسبة مطلوبة"),
+    }),
+  start_date: yup.date().required("تاريخ البداية مطلوب"),
+  end_date: yup
+    .date()
+    .required("تاريخ النهاية مطلوب")
+    .min(yup.ref("start_date"), "يجب أن يكون بعد تاريخ البداية"),
+});
+
+const { handleSubmit, defineField, errors, resetForm } = useForm({
+  validationSchema: schema,
+});
+
+const [discountPrice] = defineField("discount_price");
+const [discountPercent] = defineField("discount_percent");
+const [discountType] = defineField("discount_type"); // fixed | percent
+const [discount_value] = defineField("discount_value");
+const [startDate] = defineField("start_date");
+const [endDate] = defineField("end_date");
+
+const resetInputsForm = () => {
+  resetForm({
+    values: {
+      startDate: "",
+      endDate: "",
+      discountType: "fixed",
+      discountPercent: null,
+    },
+  });
+};
+
+discountType.value = "fixed";
+
+const discountOptions = [
+  { id: "fixed", name: "خصم ثابت" },
+  { id: "percent", name: "خصم نسبة مئوية" },
+];
+
+const suffixSymbol = computed(() =>
+  discountType.value === "fixed" ? "₪" : "%"
+);
+const isEditPage = computed(() => {
+  return props.product.offer;
+});
+// const discountValue = computed({
+//   get() {
+//     return discountType.value === "fixed"
+//       ? discountPrice.value
+//       : discountPercent.value;
+//   },
+//   set(val) {
+//     if (discountType.value === "fixed") discountPrice.value = val;
+//     else discountPercent.value = val;
+//   },
+// });
+
+const closeDialog = () => {
+  emit("update:modelValue", false);
+};
+
+// submit
+const submit = handleSubmit(async (values) => {
+  const formData = new FormData();
+  formData.append("product_id", props.product.id);
+  if (discountType.value == "fixed")
+    formData.append("discount_price", discount_value.value);
+  else formData.append("discount_percent", discount_value.value);
+  formData.append("start_date", values.start_date);
+  formData.append("end_date", values.end_date);
+  formData.append("active", +is_active.value);
+
+  try {
+    if (isEditPage.value) {
+      const response = await axiosClient.put(
+        `merchant/offers/${props.product.offer.id}`,
+        formData
+      );
+      if (response.status === 200) {
+        emitter.emit("showNotificationAlert", [
+          "success",
+          "تم تعديل العرض بنجاح!",
+        ]);
+        emit("fetchOffers");
+        closeDialog();
+      }
+      return;
+    }
+    const response = await axiosClient.post("merchant/offers", formData);
+    if (response.status === 201) {
+      emitter.emit("showNotificationAlert", [
+        "success",
+        "تم اضافة العرض بنجاح!",
+      ]);
+      emit("fetchOffers");
+      closeDialog();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+});
+const formatDate = (datetime) => datetime?.split(" ")[0] ?? "";
+watch(
+  () => props.product.offer,
+  (newVal) => {
+    if (newVal) {
+      const offer = newVal;
+      startDate.value = formatDate(offer.start_date);
+      endDate.value = formatDate(offer.end_date);
+      is_active.value = Boolean(offer.active);
+
+      if (offer.discount_price) {
+        discountType.value = "fixed";
+        discount_value.value = +offer.discount_price;
+      } else if (offer.discount_percent) {
+        discountType.value = "percent";
+        discount_value.value = +offer.discount_percent;
+      }
+    }
+  },
+  { immediate: true }
+);
+</script>
+<style scoped>
+/* Scrollbar للـ modal */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 3px;
+}
+</style>

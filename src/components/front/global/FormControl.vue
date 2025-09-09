@@ -1,11 +1,11 @@
 <template>
-  <div class="mb-3">
-    <!-- <label :for="id" class="block font-[400] mb-2 text-black dark:text-white">{{
-      label
-    }}</label> -->
+  <div class="mb-3 relative">
     <MainLabel :id="id" :label="label" />
+
     <div v-if="type === 'textarea'">
       <textarea
+        v-model="modelValue"
+        v-bind="$attrs"
         :placeholder="placeholder"
         :required="isRequired"
         class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"
@@ -13,29 +13,45 @@
       <ErrorInputText :error-message="errorMessage" />
     </div>
 
-    <input
-      v-else
-      :type="type"
-      :placeholder="placeholder"
-      :required="isRequired"
-      class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
-      :class="{
-        'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
-          errorMessage,
-        'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-          !errorMessage,
-      }"
-    />
-    <!-- <small class="text-red-600 font-[400]">{{ errorMessage }}</small> -->
+    <div v-else class="relative">
+      <input
+        v-model="modelValue"
+        v-bind="$attrs"
+        :type="type"
+        :placeholder="placeholder"
+        :required="isRequired"
+        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
+        :class="{
+          'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+            errorMessage,
+          'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
+            !errorMessage,
+        }"
+      />
+
+      <!-- مكان العلامة -->
+      <span
+        v-if="$slots.suffix"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 text-xl"
+      >
+        <slot name="suffix" />
+      </span>
+    </div>
+
     <ErrorInputText :error-message="errorMessage" />
   </div>
 </template>
 
 <script setup>
+import { computed } from "vue";
 import ErrorInputText from "./ErrorInputText.vue";
 import MainLabel from "./MainLabel.vue";
 
-defineProps({
+defineOptions({
+  inheritAttrs: false,
+});
+
+const props = defineProps({
   id: {
     type: String,
     required: true,
@@ -60,5 +76,15 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
+});
+
+const emit = defineEmits(["update:modelValue"]);
+const modelValue = computed({
+  get: () => props.modelValue,
+  set: (value) => emit("update:modelValue", value),
 });
 </script>

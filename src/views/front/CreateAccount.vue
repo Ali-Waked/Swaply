@@ -63,10 +63,8 @@ const baseSchema = {
 };
 const schema = computed(() => {
   if (isLoginPage.value) {
-    // ✅ تسجيل دخول فقط
     return yup.object(baseSchema);
   } else {
-    // ✅ تسجيل جديد: أضف first_name + last_name
     return yup.object({
       ...baseSchema,
       first_name: yup.string().required("الاسم الأول مطلوب"),
