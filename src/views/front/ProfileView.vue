@@ -156,8 +156,8 @@ const getLabelById = (id) => {
   </div>
 
   <div class="flex mt-[127px] h-[calc(100vh - 127px)] overflow-hidden">
-    <nav
-      class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 127px)] lg:relative lg:right-0 max-w-[280px] p-4 transition-all lg:max-h-[calc(100vh-127px)] lg:overflow-y-auto lg:overflow-x-hidden duration-[0.4s] side-bar"
+    <nav dir=""
+      class="side-bar w-full lg:w-1/4 border-l top-0 absolute dark:border-gray-700 h-[calc(100vh - 127px)] lg:relative lg:right-0 max-w-[280px] p-4 transition-all lg:max-h-[calc(100vh-127px)] lg:overflow-y-auto lg:overflow-x-hidden duration-[0.4s]"
       :class="{
         'bg-white dark:bg-gray-800 h-screen z-[1000000000] right-0': isOpen,
         '-right-full': !isOpen,
@@ -278,6 +278,6 @@ const getLabelById = (id) => {
 .side-bar {
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
-  direction: ltr; /* يحرك scrollbar للجهة الأخرى */
+  direction: rtl; /* يحرك scrollbar للجهة الأخرى */
 }
 </style>
