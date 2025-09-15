@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
@@ -7,7 +7,8 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
 import ConfirmDeleteDialog from "../dashboard/global/ConfirmDeleteDialog.vue";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
-const location = ref(true);
+import { useCityStore } from "../../stores/city";
+import SelectListBox from "./global/SelectListBox.vue";
 const twoFA = ref(false);
 const deleteDialog = ref({
   dialog: false,
@@ -18,7 +19,20 @@ const password = ref("password");
 const currentPassword = ref("");
 const currentPasswordDialog = ref(false);
 const isDeleteAccount = ref(false);
+const cityStore = useCityStore();
+const { cities } = storeToRefs(cityStore);
 
+const location = ref(false);
+// watch(
+//   () => location.value,
+//   (newVal) => {
+//     user.value.city?.id ? (location.value = true) : (location.value = false);
+//     // set: (value) => (location.value = value),
+//   },
+//   {
+//     immediate: true,
+//   }
+// );
 const openConfirmPasswordDialog = () => {
   currentPasswordDialog.value = true;
   currentPassword.value = "";
@@ -47,6 +61,23 @@ const update = async () => {
     console.error("Error updating password:", error);
   }
 };
+watch(
+  () => user.value.city,
+  async (newVal) => {
+    await authStore.update({
+      city_id: newVal.id,
+    });
+  }
+);
+watch(
+  () => user.value.share_location,
+  async (newVal) => {
+    await authStore.update({
+      share_location: +newVal,
+    });
+  }
+);
+
 const deleteAccount = async (password) => {
   try {
     await authStore.deleteAccount(password);
@@ -55,6 +86,9 @@ const deleteAccount = async (password) => {
     console.error("Error deleting account:", error);
   }
 };
+onMounted(async () => {
+  await cityStore.fetchAllCities();
+});
 </script>
 
 <template>
@@ -82,8 +116,15 @@ const deleteAccount = async (password) => {
       description="السماح بمشاركة موقعك"
     >
       <template #action>
-        <BaseSwitch v-model:model-value="location" />
+        <BaseSwitch v-model:model-value="user.share_location" />
       </template>
+      <SelectListBox
+        v-if="user.share_location"
+        class="w-full"
+        v-model="user.city"
+        :options="cities"
+        label="اختر المدينة التي تقيم فيها"
+      />
     </SingleFavoriteStraucture>
     <div class="mt-4">
       <p class="text-red-600 font-[500] text-[16px] mb-3 block">منطقة خطر</p>

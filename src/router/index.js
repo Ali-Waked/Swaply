@@ -155,6 +155,26 @@ const routes = [
                 component: () => import('../views/dashboard/ProductView.vue'),
             },
             {
+                path: "/dashboard/reports",
+                name: "dashboard-report",
+                meta: {
+                    title: "الابلاغات",
+                    requiresAuth: true,
+                    role: ['admin']
+                },
+                component: () => import('../views/dashboard/ReportView.vue'),
+            },
+            {
+                path: "/dashboard/stores",
+                name: "dashboard-store",
+                meta: {
+                    title: "المتاجر",
+                    requiresAuth: true,
+                    role: ['admin']
+                },
+                component: () => import('../views/dashboard/StoreView.vue'),
+            },
+            {
                 path: "/dashboard/categories",
                 name: "dashboard-category",
                 meta: {

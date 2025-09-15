@@ -162,12 +162,12 @@ export const useAuthStore = defineStore("auth", () => {
     });
   }
   const getCsrfToken = async () => {
+    console.log('csrf')
     await axios
       .get("http://localhost:8000/sanctum/csrf-cookie", {
         withCredentials: true,
       })
       .then((response) => {
-
       });
   }
   const loginWith = async (driver) => {
@@ -189,6 +189,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     loading.value = true;
     try {
+      console.log('hi');
       await getCsrfToken();
       const response = await axiosClient.get("/auth/user");
       user.value = response.data;

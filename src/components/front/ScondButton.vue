@@ -5,10 +5,15 @@ defineProps({
     required: true,
   },
 });
+defineOptions({
+  inheritAttrs: false,
+});
 </script>
 <template>
   <button
-    class="flex-1 flex items-center gap-3 w-full text-black dark:text-white justify-center p-[6px] border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all rounded-lg text-[14px]"
+    :class="[$attrs.class]"
+    class="flex-1 flex items-center gap-3 w-full justify-center p-[6px] border-2 transition-all rounded-lg text-[14px]"
+    @click="$emit('click')"
   >
     <slot name="icon" />
     <span class="font-[500] text-[13px]">{{ title }}</span>

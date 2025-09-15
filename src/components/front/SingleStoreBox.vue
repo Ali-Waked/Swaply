@@ -3,19 +3,39 @@ import { CheckIcon, StarIcon } from "@heroicons/vue/24/solid";
 import MdiIcon from "./MdiIcon.vue";
 import { mdiNavigationOutline } from "@mdi/js";
 import format from "../../mixins/formats";
+import usePrice from "../../mixins/price";
+import { useCurrencyStore } from "../../stores/currencyStore";
+import { computed, onMounted, ref } from "vue";
+import { useCityStore } from "../../stores/city";
 
-defineProps({
+const props = defineProps({
   storeName: String,
   isCertified: Boolean,
   price: Number,
   rating: Number,
-  usdPrice: Number,
+  cityId: Number,
+  // usdPrice: Number,
   lastUpdate: String,
-  distance: Number,
-  priceType: String,
+  image: String,
+  // distance: Number,
+  // priceType: String,
+  recentPrices: Array,
 });
 
 const { currencyFormat } = format();
+const { calculatePriceRating } = usePrice();
+const currencyStore = useCurrencyStore();
+const priceUSD = ref(0);
+const priceType = computed(() => {
+  return calculatePriceRating(props.price, props.recentPrices);
+});
+const cityStore = useCityStore();
+const distance = computed(() => {
+  return cityStore.distanceToSpecificCity(props.cityId);
+});
+onMounted(async () => {
+  priceUSD.value = await currencyStore.convertToUSD(props.price);
+});
 </script>
 
 <template>
@@ -51,22 +71,15 @@ const { currencyFormat } = format();
           <span>{{ rating }}</span>
           <StarIcon class="w-5 h-5 text-amber-400" />
         </span>
-        <span>{{ currencyFormat(usdPrice) }}</span>
+        <span>{{ priceUSD }}</span>
       </div>
 
       <div class="flex justify-between flex-col items-start gap-2 mt-3">
         <span
           class="text-[12px] rounded-lg px-4 py-[6px] cursor-default"
-          :class="{
-            'text-amber-700 font-[400] bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400':
-              priceType == 'سعر عادل',
-            'text-green-700 font-[400] bg-green-50 dark:bg-green-900/30 dark:text-green-400':
-              priceType == 'سعر جيد',
-            'text-red-700 font-[400] bg-red-50 dark:bg-red-900/30 dark:text-red-400':
-              priceType == 'سعر مرتفع',
-          }"
+          :class="priceType.style"
         >
-          {{ priceType }}
+          {{ priceType.rating }}
         </span>
 
         <div>
@@ -95,6 +108,14 @@ const { currencyFormat } = format();
     </div>
 
     <!-- الصورة أو الخريطة -->
-    <div class="col-span-2 bg-gray-100 dark:bg-gray-800"></div>
+    <div class="col-span-2 bg-gray-100 dark:bg-gray-800">
+      <div class="p-2">
+        <img
+          :src="image"
+          :alt="storeName + ' صورة'"
+          class="max-h-[350px] mx-auto"
+        />
+      </div>
+    </div>
   </div>
 </template>

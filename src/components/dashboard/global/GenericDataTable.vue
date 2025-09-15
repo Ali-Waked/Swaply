@@ -15,6 +15,10 @@
       body-text-direction="center"
       class="rounded-lg overflow-hidden"
     >
+      <template #item-image="item">
+        <slot name="image" :item="item" />
+      </template>
+
       <!-- actions slot -->
       <template #item-actions="item">
         <slot name="actions" :item="item" />

@@ -112,8 +112,8 @@
             <!-- زر الابلاغ -->
             <div v-if="!isForMe">
               <button
-                v-if="!isReported"
-                @click="isReported = true"
+                v-if="!product.is_reported"
+                @click="sendReport"
                 class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
               >
                 <MdiIcon
@@ -151,7 +151,6 @@
               />
             </div>
           </div>
-
           <!-- زر الإغلاق -->
           <div class="absolute top-[20px] right-[20px]">
             <span
@@ -205,6 +204,7 @@ import MainButtonForMyProduct from "./MainButtonForMyProduct.vue";
 
 const isReported = ref(false);
 const product = ref(null);
+const emitter = inject("emitter");
 const data = ref({});
 const usdPrice = ref("");
 const emit = defineEmits([
@@ -286,7 +286,6 @@ function closeDialog() {
 watch(
   () => props.productId,
   async () => {
-    console.log("hi");
     if (props.isForMe) {
       const resposne = await axiosClient.get(
         `merchant/store/products/${props.productId}`
@@ -302,6 +301,21 @@ watch(
     }
   }
 );
+
+const sendReport = async () => {
+  try {
+    const response = await axiosClient.post(
+      `/products/${product.value.id}/report`
+    );
+    if (response.status == 200) {
+      product.value.is_reported = true;
+      emitter.emit("showNotificationAlert", [
+        "success",
+        "تم الابلاغ عن هذا المنتج!",
+      ]);
+    }
+  } catch (e) {}
+};
 </script>
 
 

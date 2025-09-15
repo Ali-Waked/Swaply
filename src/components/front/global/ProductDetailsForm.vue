@@ -1,9 +1,25 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import SelectListBox from "./SelectListBox.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid";
 import MainLabel from "./MainLabel.vue";
+
+const props = defineProps({
+  quantity: { type: String, default: "" },
+  contact_method: { type: String, default: "" },
+  availability: { type: String, default: "" },
+  exchange_preferences: { type: String, default: "" },
+  offer_status: { type: String, default: "" },
+});
+
+const emits = defineEmits([
+  "update:quantity",
+  "update:contact_method",
+  "update:availability",
+  "update:exchange_preferences",
+  "update:offer_status",
+]);
 
 const contactOptions = [
   { id: 1, name: "واتساب" },
@@ -37,7 +53,7 @@ const quantityOptions = [
 
 const availabilityOptions = [
   { id: 3, name: "متوفر الان" },
-  { id: 3, name: "متوفر اليو" },
+  { id: 3, name: "متوفر اليوم" },
   { id: 3, name: "متوفر غذا" },
   { id: 3, name: "متوفر في العطلة نهاية الاسبوع" },
   { id: 3, name: "متوفر صباحا (6ص - 12ظ)" },
@@ -57,11 +73,48 @@ const exchangeDetails = [
   { id: 3, name: "مرونة في المكان" },
 ];
 
-const selectedContact = ref("");
-const selectedStatus = ref("");
-const selectedQuantity = ref("");
-const selectedExchange = ref("");
-const selectedAvailability = ref("");
+const selectedContact = computed({
+  get() {
+    return contactOptions.filter((el) => el.name == props.contact_method)[0];
+  },
+  set(value) {
+    emits("update:contact_method", value);
+  },
+});
+const selectedStatus = computed({
+  get() {
+    return statusOptions.filter((el) => el.name == props.offer_status)[0];
+  },
+  set(value) {
+    emits("update:offer_status", value);
+  },
+});
+const selectedQuantity = computed({
+  get() {
+    return quantityOptions.filter((el) => el.name == props.quantity)[0];
+  },
+  set(value) {
+    emits("update:quantity", value);
+  },
+});
+const selectedExchange = computed({
+  get() {
+    return exchangeDetails.filter(
+      (el) => el.name == props.exchange_preferences
+    )[0];
+  },
+  set(value) {
+    emits("update:exchange_preferences", value);
+  },
+});
+const selectedAvailability = computed({
+  get() {
+    return availabilityOptions.filter((el) => el.name == props.availability)[0];
+  },
+  set(value) {
+    emits("update:availability", value);
+  },
+});
 </script>
 
 <template>

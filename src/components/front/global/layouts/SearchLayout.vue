@@ -2,16 +2,23 @@
 import { FunnelIcon, MapPinIcon } from "@heroicons/vue/24/outline";
 import { useRoute, useRouter } from "vue-router";
 import ButtonTab from "../../ButtonTab.vue";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { ListBulletIcon } from "@heroicons/vue/24/solid";
 import SelectListBox from "../SelectListBox.vue";
 import HeaderPage from "../HeaderPage.vue";
 import LogoSection from "../LogoSection.vue";
+import { useSearchStore } from "../../../../stores/search";
+import { storeToRefs } from "pinia";
+import { useCategoryStore } from "../../../../stores/category";
 
 const isListStorePage = ref(false);
 const router = useRouter();
 const route = useRoute();
 const search = ref("");
+const categoryStore = useCategoryStore();
+const { categories } = storeToRefs(categoryStore);
+const searchStore = useSearchStore();
+const { current_page } = storeToRefs(searchStore);
 
 watch(
   () => router.currentRoute.value.name,
@@ -25,27 +32,43 @@ watch(
 );
 
 const priceOptions = [
-  { id: 1, name: "حسب السعر", value: "ar" },
-  { id: 2, name: "حسب المسافة", value: "en" },
-  { id: 3, name: "حسب التقييم", value: "ek" },
+  { id: 1, name: "حسب السعر", value: "price" },
+  { id: 2, name: "حسب المسافة", value: "distance" },
+  { id: 3, name: "حسب التقييم", value: "rating" },
 ];
 const dependentPrice = ref({ id: 1, name: "حسب السعر", value: "ar" });
 
-const categoriesOptions = [
-  { id: 1, name: "جميع الفئات", value: "all" },
-  { id: 2, name: "مواد اساسية", value: "pk" },
-  { id: 3, name: "مواد غذائية", value: "fk" },
-  { id: 4, name: "ادوية", value: "ek" },
-];
+// const categoriesOptions = [
+//   { id: 1, name: "جميع الفئات", value: "all" },
+//   { id: 2, name: "مواد اساسية", value: "pk" },
+//   { id: 3, name: "مواد غذائية", value: "fk" },
+//   { id: 4, name: "ادوية", value: "ek" },
+// ];
+const categoriesOptions = computed(() => {
+  const allCategories = categories.value.map((cat) => {
+    return { id: cat.id, name: cat.name, value: cat.id };
+  });
+  return [{ id: 1, name: "جميع الفئات", value: "all" }, ...allCategories];
+});
 const dependentCategories = ref({ id: 1, name: "جميع الفئات", value: "all" });
 
 const updateRoute = () => {};
 
-const searchFor = () => {
+const searchFor = async () => {
   const query = {
     dependent: dependentPrice.value.name,
     categories: dependentCategories.value.name,
   };
+  console.log(dependentCategories.value.value);
+  // console.log(dependentCategories.value.)
+  await searchStore.fetchAllStoresHasProdcut(
+    route.query.id,
+    current_page.value,
+    JSON.stringify({
+      category: dependentCategories.value.value,
+      dependent: dependentPrice.value.value,
+    })
+  );
   console.log(query);
   router.replace({
     name: router.currentRoute.value.name,
@@ -67,13 +90,19 @@ onMounted(() => {
   if (dependent) {
     dependentPrice.value = dependent;
   }
-  const categories = categoriesOptions.find(
+  const categories = categoriesOptions.value.find(
     (el) => el.name == route.query.categories
   );
   if (categories) {
     dependentCategories.value = categories;
   }
   console.log("categoru", categories);
+});
+
+onMounted(async () => {
+  if (route.query.id && route.query.for)
+    await searchStore.fetchAllStoresHasProdcut(route.query.id);
+  await categoryStore.fetchAllCategoriesIds();
 });
 </script>
 

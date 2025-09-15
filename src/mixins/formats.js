@@ -61,7 +61,34 @@ const useFormats = () => {
         return Number(id.toString().replace("#", "").trim());
     }
 
-    return { currencyFormat, formatDate, cleanId, getRelativeTime, calculatePriceAfterOffer };
+    const timeAgo = (dateString) => {
+        if (!dateString) return "";
+
+        const now = new Date();
+        const updatedAt = new Date(dateString);
+        const diffInSeconds = Math.floor((now - updatedAt) / 1000);
+
+        if (diffInSeconds < 60) {
+            return `منذ ${diffInSeconds} ثانية`;
+        } else if (diffInSeconds < 3600) {
+            const minutes = Math.floor(diffInSeconds / 60);
+            return `منذ ${minutes} دقيقة`;
+        } else if (diffInSeconds < 86400) {
+            const hours = Math.floor(diffInSeconds / 3600);
+            return `منذ ${hours} ساعة`;
+        } else if (diffInSeconds < 2592000) {
+            const days = Math.floor(diffInSeconds / 86400);
+            return `منذ ${days} يوم`;
+        } else if (diffInSeconds < 31104000) {
+            const months = Math.floor(diffInSeconds / 2592000);
+            return `منذ ${months} شهر`;
+        } else {
+            const years = Math.floor(diffInSeconds / 31104000);
+            return `منذ ${years} سنة`;
+        }
+    };
+
+    return { currencyFormat, formatDate, cleanId, getRelativeTime, calculatePriceAfterOffer, timeAgo };
 };
 
 export default useFormats;

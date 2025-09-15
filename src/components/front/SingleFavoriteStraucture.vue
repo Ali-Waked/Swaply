@@ -14,22 +14,25 @@ defineProps({
 
 <template>
   <div
-    class="last-of-type:border-none border-b dark:border-gray-700 last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 flex items-center justify-between"
+    class="last-of-type:border-none border-b dark:border-gray-700 last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0"
   >
-    <div>
-      <span
-        class="text-blue-950 dark:text-white font-[500] text-[16px] mb-1 block"
-      >
-        {{ title }}
-      </span>
-      <span
-        class="text-gray-600 dark:text-gray-300 font-[400]  text-[14px] mb-2 block"
-      >
-        {{ description }}
-      </span>
+    <div class="flex items-center justify-between">
+      <div>
+        <span
+          class="text-blue-950 dark:text-white font-[500] text-[16px] mb-1 block"
+        >
+          {{ title }}
+        </span>
+        <span
+          class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block"
+        >
+          {{ description }}
+        </span>
+      </div>
+      <div>
+        <slot name="action" />
+      </div>
     </div>
-    <div>
-      <slot name="action" />
-    </div>
+    <slot />
   </div>
 </template>

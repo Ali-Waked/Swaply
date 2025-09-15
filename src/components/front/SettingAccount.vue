@@ -1,5 +1,5 @@
 <script setup >
-import { inject, reactive, ref } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SelectListBox from "./global/SelectListBox.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
@@ -9,9 +9,12 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import axiosClient from "../../axiosClient";
 import { watch } from "vue";
+import { useCityStore } from "../../stores/city";
 
 const userStore = useAuthStore();
 const { user } = storeToRefs(userStore);
+const cityStore = useCityStore();
+const { cities } = storeToRefs(cityStore);
 const items = reactive([
   {
     id: "name",
@@ -109,7 +112,17 @@ watch(storeImage, async (newImage) => {
     }
   }
 });
+const city = computed({
+  get: () => user.value.store?.city,
+  set: (val) => (user.value.store.city = val),
+});
 
+watch(
+  () => user.value.store?.city,
+  (newVal) => {
+    merchantUpdate({ id: "city_id", value: newVal.id });
+  }
+);
 const update = async (data) => {
   await userStore.update({
     [data.id]: data.value,
@@ -131,6 +144,9 @@ const merchantUpdate = async (data) => {
     console.error("Error updating account type:", error);
   }
 };
+onMounted(async () => {
+  await cityStore.fetchAllCities();
+});
 </script>
 
 <template>
@@ -184,6 +200,23 @@ const merchantUpdate = async (data) => {
           @update="merchantUpdate"
         />
       </template>
+      <div
+        class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
+      >
+        <div class="flex flex-col gap-2">
+          <span
+            class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block"
+          >
+            موقع المتجر
+          </span>
+          <SelectListBox
+            class="w-full"
+            v-model="city"
+            :options="cities"
+            label="اختر المدينة التي بها متجرك "
+          />
+        </div>
+      </div>
       <div
         class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
       >

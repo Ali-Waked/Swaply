@@ -3,7 +3,6 @@ import Pusher from 'pusher-js';
 import axiosClient from './axiosClient';
 
 window.Pusher = Pusher;
-
 export const echo = new Echo({
   broadcaster: 'pusher',
   cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
@@ -19,6 +18,7 @@ export const echo = new Echo({
             channel_name: channel.name,
           })
           .then((response) => {
+            console.log(response);
             callback(false, response.data);
           })
           .catch((error) => {

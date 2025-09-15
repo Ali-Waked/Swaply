@@ -3,6 +3,8 @@ import {
   ArchiveBoxIcon,
   ArrowRightStartOnRectangleIcon,
   Bars3Icon,
+  BuildingStorefrontIcon,
+  FlagIcon,
   HomeIcon,
   ShoppingBagIcon,
   UsersIcon,
@@ -40,9 +42,19 @@ const links = [
     icon: ShoppingBagIcon,
   },
   {
+    label: "المتاجر",
+    link_name: "dashboard-store",
+    icon: BuildingStorefrontIcon,
+  },
+  {
     label: "المستخدمين",
     link_name: "dashboard-user",
     icon: UsersIcon,
+  },
+  {
+    label: "الابلاغات",
+    link_name: "dashboard-report",
+    icon: FlagIcon,
   },
 ];
 

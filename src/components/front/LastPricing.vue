@@ -87,7 +87,7 @@ onMounted(async () => {
   </div>
   <ShowProductDialog
     v-model="showProductDialog.dialog"
-    :product-id="+showProductDialog.product_id"
+    :productId="+showProductDialog.product_id"
   />
 </template>
 

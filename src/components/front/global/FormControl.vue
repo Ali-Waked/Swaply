@@ -20,7 +20,7 @@
         :type="type"
         :placeholder="placeholder"
         :required="isRequired"
-        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
+        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-[400] pr-3"
         :class="{
           'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
             errorMessage,
