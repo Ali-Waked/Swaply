@@ -52,23 +52,13 @@ const baseSchema = {
       return true;
     }),
 
-  password: yup
-    .string()
-    .required("كلمة المرور مطلوبة")
-    .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
+  // password: yup
+  //   .string()
+  //   .required("كلمة المرور مطلوبة")
+  //   .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
 };
 const schema = computed(() => {
-  if (isLoginPage.value) {
-    // ✅ تسجيل دخول فقط
-    return yup.object(baseSchema);
-  } else {
-    // ✅ تسجيل جديد: أضف first_name + last_name
-    return yup.object({
-      ...baseSchema,
-      first_name: yup.string().required("الاسم الأول مطلوب"),
-      last_name: yup.string().required("الاسم الأخير مطلوب"),
-    });
-  }
+  return yup.object(baseSchema);
 });
 const { handleSubmit, errors, defineField, resetForm } = useForm({
   validationSchema: schema,
@@ -144,8 +134,11 @@ const onSubmit = handleSubmit(async (values) => {
     credentials.email = emailOrPhone.value;
   }
   await authStore.forgotPassword(credentials);
-
-  // هنا تعمل request للـ backend مثلاً axios.post("/login", values)
+  if (credentials.phone) {
+    localStorage.setItem("resetIdentifier", credentials.phone);
+  } else {
+    localStorage.setItem("resetIdentifier", credentials.email);
+  }
 });
 
 const firstError = (field) => {
@@ -173,16 +166,22 @@ onMounted(async () => {
         alt="logo"
       />
     </div>
-    <div
+    <form
+      @submit.prevent="onSubmit"
       class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 max-w-[450px] w-[95%]"
     >
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />
       </div>
-      <span class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1"
-        >استعادة كلمة المرور</span>
-       <span class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4"
-        >ادخل البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة المرور</span>
+      <span
+        class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1"
+        >استعادة كلمة المرور</span
+      >
+      <span
+        class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4"
+        >ادخل البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة
+        المرور</span
+      >
       <div
         class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[13px] flex items-center gap-x-0.5 mb-4"
       >
@@ -259,6 +258,6 @@ onMounted(async () => {
           <VueSpinnerIos v-if="loading" size="20" class="text-gray-50 ml-2" />
         </template>
       </MainButton>
-    </div>
+    </form>
   </div>
 </template>

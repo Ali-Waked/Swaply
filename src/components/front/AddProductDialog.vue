@@ -200,11 +200,12 @@ const isEditPage = computed(() => {
 
 const submit = handleSubmit(async (values) => {
   const formData = new FormData();
-  if (values.product_id) formData.append("product_id", values.name.id);
+  // console.log(values);
+  if (values.name) formData.append("product_id", values.name.id);
   if (values.price) formData.append("price", values.price);
   if (values.description) formData.append("description", values.description);
   if (values.image) formData.append("image", values.image);
-
+  console.log(formData);
   try {
     if (isEditPage.value) {
       formData.append("_method", "PUT");

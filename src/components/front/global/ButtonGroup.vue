@@ -7,6 +7,8 @@ import { BellIcon } from "@heroicons/vue/24/outline";
 import SingleButtonGroup from "./SingleButtonGroup.vue";
 import { inject, onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useNotificationStore } from "../../../stores/notification";
 
 // const buttonGroup = ref("buttonGroup");
 
@@ -26,6 +28,9 @@ const handleScroll = () => {
   // لو نزلنا أكثر من مكان العنصر الأصلي - 20px، خليه fixed
   isFixed.value = scrollY >= 80;
 };
+
+const notificationStore = useNotificationStore();
+const { lastNotificationUnreadCount } = storeToRefs(notificationStore);
 
 // const handleScroll = () => {
 //   if (!buttonGroup.value) return;
@@ -74,8 +79,9 @@ onUnmounted(() => {
       <template #icon>
         <BellIcon class="w-6 h-6 text-black dark:text-white" />
         <span
+          v-if="lastNotificationUnreadCount > 0"
           class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]"
-          >3</span
+          >{{ lastNotificationUnreadCount }}</span
         >
       </template>
     </single-button-group>

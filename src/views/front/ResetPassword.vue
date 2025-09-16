@@ -3,15 +3,21 @@ import { LockClosedIcon } from "@heroicons/vue/24/outline";
 import BackButton from "../../components/front/global/BackButton.vue";
 import MainButton from "../../components/front/global/MainButton.vue";
 import { VueSpinnerIos } from "vue3-spinners";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import axiosClient from "../../axiosClient";
+import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
 
+const route = useRoute();
+// const router = useRouter();
 const authStore = useAuthStore();
 const { loading } = storeToRefs(authStore);
+
+const identifier = ref(route.query.identifier || "");
+const token = ref(route.query.token || "");
+
 const schema = yup.object({
   password: yup
     .string()
@@ -26,15 +32,48 @@ const schema = yup.object({
 const { handleSubmit, errors, defineField } = useForm({
   validationSchema: schema,
 });
-
+const emitter = inject("emitter");
 const [password, passwordAttrs] = defineField("password");
 const [confirmPassword, confirmPasswordAttrs] = defineField("confirm_password");
 
 const onSubmit = handleSubmit(async (values) => {
-  await authStore.resetPassword({
+  if (!identifier.value || !token.value) {
+    emitter.emit("showNotificationAlert", [
+      "success",
+      "خطأ: لا يمكن إعادة ضبط كلمة المرور بدون رمز التحقق أو البريد/الهاتف",
+    ]);
+    return;
+  }
+
+  // try {
+  const payload = {
     password: password.value,
-    confirm_password: confirmPassword.value,
-  });
+    password_confirmation: confirmPassword.value,
+    token: token.value,
+  };
+
+  if (identifier.value.includes("@")) {
+    payload.email = identifier.value;
+  } else {
+    payload.phone = identifier.value;
+  }
+
+  await authStore.resetPassword(payload);
+
+  // if (res) {
+  //   emitter.emit("showNotificationAlert", [
+  //     "success",
+  //     "تمت إعادة ضبط كلمة المرور بنجاح",
+  //   ]);
+  //   router.push({ name: "login" });
+  // }
+  // } catch (e) {
+  // console.error(e);
+  // emitter.emit("showNotificationAlert", [
+  //   "error",
+  //   e.response?.data?.message || "حدث خطأ أثناء إعادة ضبط كلمة المرور",
+  // ]);
+  // }
 });
 </script>
 

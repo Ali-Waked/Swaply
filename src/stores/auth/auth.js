@@ -68,13 +68,13 @@ export const useAuthStore = defineStore("auth", () => {
       loading.value = true;
       const response = await axiosClient.post("/forgot-password", credentials);
       if (response.status === 200) {
-        isAuth.value = true;
-        user.value = response.data.user;
-        backErrors.value = null;
-        // router.push({ name: 'login' });
         forgotMessage.value = credentials.email ? 'تم ارسال رسالة الى الايمل الخاص بك' : "تم ارسال رسالة الى رقم هاتفك"
 
         emitter.emit("showNotificationAlert", ["success", "تم اعادة ضبط كلمة المرور بنجاح"]);
+
+        setTimeout(() => {
+          router.push({ name: 'otp-verification' })
+        }, 3000);
         isCheckedAuth.value = true;
       }
       console.log(response);
@@ -85,23 +85,41 @@ export const useAuthStore = defineStore("auth", () => {
       loading.value = false;
     }
   }
+
+  const verifyOtp = async (identifier, otp) => {
+    try {
+      loading.value = true;
+
+      const response = await axiosClient.post("/verify-otp", {
+        otp: otp,
+        identifier: identifier,
+      });
+      if (response.status == 200) {
+        emitter.emit("showNotificationAlert", ["success", " تم التحقق من الكود بنجاح، يمكنك متابعة إعادة كلمة المرور"]);
+        router.push({ name: "reset-password", query: { identifier, token: otp } });
+      }
+    } catch (error) {
+      emitter.emit("showNotificationAlert", ["success", " الكود غير صحيح أو منتهي الصلاحية"]);
+    } finally {
+      loading.value = false;
+    }
+  }
   const resetPassword = async (credentials) => {
     await getCsrfToken();
     try {
       loading.value = true;
       const response = await axiosClient.post("/reset-password", credentials);
       if (response.status === 200) {
-        isAuth.value = true;
-        user.value = response.data.user;
-        backErrors.value = null;
-        router.push({ name: 'login' });
 
         emitter.emit("showNotificationAlert", ["success", "تم اعادة ضبط كلمة المرور بنجاح"]);
-        isCheckedAuth.value = true;
+        router.push({ name: 'login' });
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.error(error);
+      emitter.emit("showNotificationAlert", [
+        "error",
+        e.response?.data?.message || "حدث خطأ أثناء إعادة ضبط كلمة المرور",
+      ]);
       backErrors.value = error.response.data.errors;
     } finally {
       loading.value = false;
@@ -250,5 +268,5 @@ export const useAuthStore = defineStore("auth", () => {
   const firstError = (field) => {
     return Array.isArray(backErrors.value?.[field]) ? backErrors.value[field][0] : null;
   };
-  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, update, deleteAccount, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
+  return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, verifyOtp, update, deleteAccount, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
 });

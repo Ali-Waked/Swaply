@@ -141,8 +141,8 @@ const removeFromFavorite = async () => {
         >
           {{ description }}
         </p>
-        <span class="line-through" v-if="oldPrice">
-          {{ currencyFormat(oldPrice, undefined, "ar", "ILS") }}
+        <span class="line-through" v-if="offer">
+          {{ currencyFormat(price, undefined, "ar", "ILS") }}
         </span>
       </div>
 

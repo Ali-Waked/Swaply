@@ -52,7 +52,7 @@ export const useCityStore = defineStore("city", () => {
             fetchAllCitiesDistances();
         }
         // console.log(distance.value.find(d => (d.city_id_one == cityId && d.city_id_two == user.value.city?.id) || (d.city_id_one == user.value.city?.id && d.city_id_two == cityId)));
-        return distance.value.find(d => (d.city_id_one == cityId && d.city_id_two == user.value.city?.id) || (d.city_id_one == user.value.city?.id && d.city_id_two == cityId))?.distance || 'المسافة غر معروفة';
+        return +distance.value.find(d => (d.city_id_one == cityId && d.city_id_two == user.value.city?.id) || (d.city_id_one == user.value.city?.id && d.city_id_two == cityId))?.distance || 'في منطقتك';
     }
 
     return { cities, loading, errors, fetchAllCities, fetchAllCitiesDistances, distanceToSpecificCity };

@@ -4,6 +4,8 @@ import axiosClient from "../axiosClient";
 
 export const useNotificationStore = defineStore("notification", () => {
     const notifications = ref([]);
+    const lastNotifications = ref([]);
+    const lastNotificationUnreadCount = ref(0);
     const loading = ref(false);
     const status = ref(400);
     const errors = ref({});
@@ -40,5 +42,17 @@ export const useNotificationStore = defineStore("notification", () => {
         }
     }
 
-    return { notifications, loading, errors, status, addNotification, fetchNotification }
+    const fetchLastNotifications = async () => {
+        try {
+            const response = await axiosClient.get('/active-notifications');
+            if (response.status == 200) {
+                lastNotificationUnreadCount.value = response.data.unread_count;
+                lastNotifications.value = response.data.notifications;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    return { notifications, loading, errors, status, lastNotificationUnreadCount, lastNotifications, addNotification, fetchNotification, fetchLastNotifications }
 })

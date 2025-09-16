@@ -114,7 +114,12 @@ watch(storeImage, async (newImage) => {
 });
 const city = computed({
   get: () => user.value.store?.city,
-  set: (val) => (user.value.store.city = val),
+  set: (val) => {
+    if (!user.value.store) {
+      return (user.value.store = { city: val });
+    }
+    return (user.value.store.city = val);
+  },
 });
 
 watch(

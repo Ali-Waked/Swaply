@@ -119,6 +119,15 @@ const routes = [
         },
         component: () => import('../views/front/ResetPassword.vue'),
     },
+    {
+        path: "/otp-verification",
+        name: "otp-verification",
+        meta: {
+            title: "ادخال رمز التحقق",
+            requiresGuest: true,
+        },
+        component: () => import('../views/front/OtpVerification.vue'),
+    },
     //     ],
     // },
     {

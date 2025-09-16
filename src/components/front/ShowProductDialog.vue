@@ -41,9 +41,18 @@
               class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1"
             >
               <span class="name">{{ product.name }}</span>
-              <span class="price">{{
-                currencyFormat(product.price, undefined, "ar", "ILS")
-              }}</span>
+              <div>
+                <span
+                  class="old_price line-through text-sm inline-block ml-1"
+                  v-if="priceAfterOffer && priceAfterOffer != product.price"
+                  >{{
+                    currencyFormat(product.price, undefined, "ar", "ILS")
+                  }}</span
+                >
+                <span class="price">{{
+                  currencyFormat(priceAfterOffer, undefined, "ar", "ILS")
+                }}</span>
+              </div>
             </div>
 
             <!-- الوصف -->
@@ -51,7 +60,15 @@
               class="flex items-center justify-between text-gray-400 dark:text-gray-300"
             >
               <span class="name">{{ product.description }}</span>
-              <span class="price">{{ usdPrice }}</span>
+              <div>
+                <span
+                  class="old_price line-through text-sm inline-block ml-1"
+                  v-if="priceAfterOffer && priceAfterOffer != product.price"
+                >
+                  {{ usdPrice.old_price }}
+                </span>
+                <span class="price">{{ usdPrice.current_price }}</span>
+              </div>
             </div>
 
             <!-- التقييم -->
@@ -65,9 +82,10 @@
                 <StarIcon class="text-amber-400 w-8 h-8" />
               </span>
               <span
-                class="text-[12px] rounded-lg px-4 py-[6px] cursor-default text-amber-700 font-[400] bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400"
+                class="text-[12px] rounded-lg px-4 py-[6px] cursor-default"
+                :class="priceType.style"
               >
-                سعر عادل
+                {{ priceType.rating }}
               </span>
             </div>
 
@@ -85,7 +103,10 @@
                   :icon="mdiNavigationOutline"
                   class="text-gray-600 dark:text-gray-300"
                 />
-                <span>{{ product.distance }}</span>
+                <span>
+                  {{ distance }}
+                  <span v-if="typeof distance == 'number'">كم</span></span
+                >
               </span>
             </div>
 
@@ -175,6 +196,7 @@ import {
   watch,
   computed,
   watchEffect,
+  reactive,
 } from "vue";
 import { ClockIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { CameraIcon } from "@heroicons/vue/24/outline";
@@ -201,12 +223,17 @@ import format from "../../mixins/formats";
 import axiosClient from "../../axiosClient";
 import { useCurrencyStore } from "../../stores/currencyStore";
 import MainButtonForMyProduct from "./MainButtonForMyProduct.vue";
-
+import { useCityStore } from "../../stores/city";
+import usePrice from "../../mixins/price";
+const { calculatePriceRating } = usePrice();
 const isReported = ref(false);
 const product = ref(null);
 const emitter = inject("emitter");
 const data = ref({});
-const usdPrice = ref("");
+const usdPrice = reactive({
+  current_price: 0,
+  old_price: 0,
+});
 const emit = defineEmits([
   "update:modelValue",
   "addDiscount",
@@ -224,7 +251,7 @@ const productButtons = computed(() => {
     },
   ];
 
-  if (!product.value.offer) {
+  if (!product.value.active_offer) {
     buttons.push({
       icon: mdiTagOutline,
       label: "اضافة عرض",
@@ -262,8 +289,16 @@ const productButtons = computed(() => {
   return buttons;
 });
 
-const { currencyFormat, getRelativeTime } = format();
+const { currencyFormat, getRelativeTime, calculatePriceAfterOffer } = format();
 const currencyStore = useCurrencyStore();
+const cityStore = useCityStore();
+const distance = computed(() => {
+  return cityStore.distanceToSpecificCity(product.value?.store?.city_id);
+});
+
+const priceType = computed(() => {
+  return calculatePriceRating(props.price, props.recentPrices);
+});
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -271,9 +306,19 @@ const props = defineProps({
   isForMe: { type: Boolean, default: false },
 });
 
+const priceAfterOffer = computed(() => {
+  return calculatePriceAfterOffer({
+    price: product.value.price,
+    offer: product.value.active_offer,
+  });
+});
+
 watchEffect(async () => {
   if (product.value) {
-    usdPrice.value = await currencyStore.convertToUSD(product.value.price);
+    usdPrice.old_price = await currencyStore.convertToUSD(product.value.price);
+    usdPrice.current_price = await currencyStore.convertToUSD(
+      priceAfterOffer.value
+    );
   }
 });
 

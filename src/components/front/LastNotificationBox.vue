@@ -3,6 +3,7 @@ import {
   ArrowTrendingDownIcon,
   ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/solid";
+import useFormats from "../../mixins/formats";
 
 defineProps({
   title: String,
@@ -20,6 +21,8 @@ defineProps({
     default: false,
   },
 });
+
+const { getRelativeTime } = useFormats();
 </script>
 <template>
   <div
@@ -43,13 +46,13 @@ defineProps({
     </div>
     <div class="flex items-center gap-1">
       <p class="time text-[12px] font-[400] text-gray-500 dark:text-gray-300">
-        {{ time }}
+        {{ getRelativeTime(time).replace("قبل", "منذ") }}
       </p>
       <span>
         <ArrowTrendingUpIcon
           v-if="isIncrease"
           class="w-5 h-5"
-          :class="{ 'text-green-500': !!isUrgent, 'text-red-500': isUrgent }"
+          :class="{ 'text-green-500': !isUrgent, 'text-red-500': isUrgent }"
         />
         <ArrowTrendingDownIcon
           v-if="isDecrease"

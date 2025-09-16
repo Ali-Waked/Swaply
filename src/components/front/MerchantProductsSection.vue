@@ -84,7 +84,9 @@ const confirmDel = async () => {
     console.error(e);
   }
 };
-const productEdit = ref(null);
+const productEdit = ref({
+  product_id: null,
+});
 
 const showConfirmDialog = (product) => {
   showProductDialog.dialog = false;
@@ -183,7 +185,6 @@ onMounted(async () => {
       :last-page="data.last_page"
       v-else
     />
-    <pre>{{ data.current_page }}</pre>
   </div>
   <div class="flex justify-center items-center h-24" v-else>
     <div>
