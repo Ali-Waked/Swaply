@@ -128,13 +128,15 @@ import axiosClient from "../../axiosClient";
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
-  editData: { type: Object, default: null }, // بيانات للتعديل
+  editData: { type: Object, default: null },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 const emitter = inject("emitter");
 
-const isEdit = computed(() => !!props.editData);
+const isEdit = computed(() => {
+  return props.editData?.offer_item ? true : false;
+});
 
 const data = reactive({
   offer_item: "",

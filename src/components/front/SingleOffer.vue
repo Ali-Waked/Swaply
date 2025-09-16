@@ -76,7 +76,7 @@ const requestStatus = computed(() => {
 
 <template>
   <div
-    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition relative my-4 last-of-type:mb-0"
+    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition relative my-4 last-of-type:mb-0 dark:border-gray-600"
   >
     <div class="flex items-center justify-between mb-4">
       <div class="info flex items-center gap-2">
@@ -170,6 +170,7 @@ const requestStatus = computed(() => {
         </button>
 
         <MainButton
+          v-if="item.user.id != user.id"
           class="text-[14px] flex-1"
           label="بدا المحادثة"
           @click="$emit('startChat', item.user)"
@@ -358,8 +359,8 @@ const requestStatus = computed(() => {
           </div>
         </div>
         <div
-          class="cart-details bg-blue-50 border border-blue-100 p-4 rounded-lg mt-4 dark:bg-blue-800 dark:border-blue-700"
-          v-if="user.id == item.user_id"
+          class="cart-details bg-blue-50 border border-blue-100 p-4 rounded-lg mt-4 dark:bg-blue-800/20 dark:border-blue-700/40"
+          v-if="user.id == item.user_id && item.sentResponses.length"
         >
           <div class="flex items-center gap-2 mb-3">
             <span class="font-[500] text-green-800 text-[16px] dark:text-white"
@@ -376,7 +377,7 @@ const requestStatus = computed(() => {
               <li>
                 <ul v-for="response in item.sentResponses" :key="response.id">
                   <li
-                    class="grid grid-cols-3 border-b last-of-type:border-none border-b-gray-200 gap-3"
+                    class="grid grid-cols-3 border-b last-of-type:border-none border-b-gray-200 gap-4 mb-2"
                   >
                     <span class="">{{ response.user.name }}</span>
                     <span>
@@ -436,7 +437,19 @@ const requestStatus = computed(() => {
             </p>
           </div>
         </div>
-
+        <div
+          class="cart-details bg-gray-50 border border-gray-100 p-4 rounded-lg mt-4 dark:bg-gray-800 dark:border-gray-700"
+          v-if="item.image"
+        >
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-[500] text-dark text-[16px] dark:text-white"
+              >الصورة</span
+            >
+          </div>
+          <div class="text-gray-500 text-[14px] font-[400] dark:text-gray-300">
+            <img :src="item.image" :alt="item.name" class="max-h-[250px]" />
+          </div>
+        </div>
         <div
           class="flex flex-col sm:flex-row items-center justify-between mt-4 gap-2"
         >
@@ -473,6 +486,7 @@ const requestStatus = computed(() => {
               </template>
             </ScondButton>
             <ScondButton
+              v-else
               title="تعديل العرض"
               @click="$emit('edit', item)"
               class="text-blue-600 hover:bg-blue-600 hover:text-white border-blue-600"

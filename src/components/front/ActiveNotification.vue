@@ -22,18 +22,27 @@ onMounted(async () => {
     class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
   >
     <NotificationSectionTitle title="التنبيهات النشطة" class="mb-6" />
-    <template v-for="item in notifications" :key="item.title">
-      <ActiveNotificationBox
-        :id="item.id"
-        :title="item.product?.name"
-        v-model:is-active="item.status"
-        :whenRun="
-          item.type === 'lt'
-            ? `اقل من ${+item.target_price}`
-            : `اكبر من ${+item.target_price}`
-        "
-        :alerted="item.is_triggered"
-      />
+    <template v-if="notifications.length">
+      <template v-for="item in notifications" :key="item.title">
+        <ActiveNotificationBox
+          :id="item.id"
+          :title="item.product?.name"
+          v-model:is-active="item.status"
+          :whenRun="
+            item.type === 'lt'
+              ? `اقل من ${+item.target_price}`
+              : `اكبر من ${+item.target_price}`
+          "
+          :alerted="item.is_triggered"
+        />
+      </template>
+    </template>
+    <template v-else>
+      <p
+        class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-200"
+      >
+        لم تقم حتى الان باضافة اي تنيه
+      </p>
     </template>
   </div>
 </template>

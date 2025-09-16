@@ -13,7 +13,7 @@ import SearchSection from "../../components/front/SearchSection.vue";
 import { useAuthStore } from "../../stores/auth/auth";
 
 const authStore = useAuthStore();
-const { isAuth } = storeToRefs(authStore);
+const { isAuth, user } = storeToRefs(authStore);
 </script>
 
 <template>
@@ -32,6 +32,12 @@ const { isAuth } = storeToRefs(authStore);
 
   <div class="dark:bg-gray-800">
     <OfferSection />
+  </div>
+  <div class="dark:bg-gray-800 pt-14" v-if="user?.role == 'merchant'">
+    <MerchantProductsSection />
+  </div>
+  <div class="dark:bg-gray-800 pt-14 pb-4" v-if="isAuth">
+    <MyFavoritesSection />
   </div>
 
   <div class="pt-14 dark:bg-gray-800" v-if="!isAuth">

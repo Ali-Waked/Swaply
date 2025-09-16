@@ -189,11 +189,12 @@ export const useAuthStore = defineStore("auth", () => {
 
     loading.value = true;
     try {
-      console.log('hi');
       await getCsrfToken();
       const response = await axiosClient.get("/auth/user");
-      user.value = response.data;
-      isAuth.value = true;
+      if (response.data) {
+        user.value = response.data;
+        isAuth.value = true;
+      }
     } catch (error) {
       user.value = null;
       isAuth.value = false;
@@ -202,10 +203,10 @@ export const useAuthStore = defineStore("auth", () => {
       loading.value = false;
     }
   };
-  const update = async (data) => {
+  const update = async (data, isShowAlert = true) => {
     try {
       const response = await axiosClient.put("/user", data);
-      if (response.status == 200) {
+      if (response.status == 200 && isShowAlert) {
         emitter.emit("showNotificationAlert", [
           "success",
           "تم تحديث بيانات الحساب بنجاح!",

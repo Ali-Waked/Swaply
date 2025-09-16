@@ -65,7 +65,7 @@ onUnmounted(() => {
         : 'absolute top-20',
     ]"
   >
-    <single-button-group title="الاسعار" name="pricing">
+    <single-button-group title="الاسعار" name="home">
       <template #icon>
         <ArrowTrendingUpIcon class="w-6 h-6 text-black dark:text-white" />
       </template>

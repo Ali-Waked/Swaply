@@ -72,9 +72,12 @@ watch(
 watch(
   () => user.value.share_location,
   async (newVal) => {
-    await authStore.update({
-      share_location: +newVal,
-    });
+    await authStore.update(
+      {
+        share_location: +newVal,
+      },
+      false
+    );
   }
 );
 

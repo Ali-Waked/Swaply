@@ -21,6 +21,7 @@ const { user } = storeToRefs(authStore);
 const props = defineProps({
   isOpen: { type: Boolean, default: true },
   with: { type: Object, default: () => ({}) },
+  isUser: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(["update:isOpen"]);
@@ -81,8 +82,10 @@ const subscribeToChannel = () => {
   channel.value = echo.private(channelName);
 
   channel.value.listen(".MessageSent", (e) => {
+    console.log(e);
     const incoming = e.message ?? e;
     if (!incoming || !incoming.id) return;
+    if (incoming.senderId === user.value.id) return;
     if (messages.value.some((m) => m.id === incoming.id)) return;
     messages.value.push(incoming);
     nextTick(() => {
@@ -93,10 +96,11 @@ const subscribeToChannel = () => {
 
 const fetchChatMessages = async (page = 1) => {
   let route = "";
-  if (props.is_user) {
+  if (props.isUser) {
     route = `/chat/conversations/get-messages/${props.with.id}?page=${page}`;
   } else {
     route = `/chat/conversations/${props.with.conversation_id}/get-messages?page=${page}`;
+    console.log(route);
   }
   if (page === 1) loading.value = true;
   else loadingMore.value = true;
@@ -187,10 +191,13 @@ const sendMessage = async () => {
   await nextTick();
   scrollToBottom();
   try {
-    const res = await axiosClient.post("/chat/messages", {
-      receiver_id: props.with.id,
-      content: body,
-    });
+    const res = await axiosClient.post(
+      `/chat/messages/${conversationId.value}`,
+      {
+        receiver_id: props.with.id,
+        content: body,
+      }
+    );
     if (res.status === 200) {
       const saved = res.data.message ?? res.data;
       const idx = messages.value.findIndex((m) => m.id === tempId);

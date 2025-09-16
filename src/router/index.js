@@ -26,15 +26,15 @@ const routes = [
                 },
                 component: () => import('../views/front/ExchangeView.vue'),
             },
-            {
-                path: "/pricing",
-                name: "pricing",
-                meta: {
-                    title: "الأسعار",
-                    requiresAuth: true,
-                },
-                component: () => import('../views/front/PricingView.vue'),
-            },
+            // {
+            //     path: "/pricing",
+            //     name: "pricing",
+            //     meta: {
+            //         title: "الأسعار",
+            //         requiresAuth: true,
+            //     },
+            //     component: () => import('../views/front/PricingView.vue'),
+            // },
             {
                 path: "/notifications",
                 name: "notifications",

@@ -6,7 +6,7 @@ import { useAuthStore } from "./auth/auth";
 export const useThemeStore = defineStore("theme", () => {
     const currentTheme = ref('light');
     const authStore = useAuthStore();
-    const { user } = storeToRefs(authStore);
+    const { user, isAuth } = storeToRefs(authStore);
 
     const themes = [
         {
@@ -19,10 +19,11 @@ export const useThemeStore = defineStore("theme", () => {
         },
     ];
 
-    const changeTheme = async (value) => {
+    const changeTheme = async (value, updateDatabase = false) => {
         currentTheme.value = value === "dark" ? "dark" : "light";
         if (user.value.theme !== currentTheme.value)
-            await authStore.update({ theme: currentTheme.value });
+            if (updateDatabase)
+                await authStore.update({ theme: currentTheme.value }, false);
         localStorage.setItem("theme", currentTheme.value);
     };
 
@@ -40,10 +41,10 @@ export const useThemeStore = defineStore("theme", () => {
     watch(currentTheme, (newVal) => {
         if (newVal == 'dark') {
             document.body.classList.add("dark");
-            changeTheme('dark');
+            changeTheme('dark', isAuth.value);
         } else {
             document.body.classList.remove("dark");
-            changeTheme('light');
+            changeTheme('light', isAuth.value);
         }
     });
 

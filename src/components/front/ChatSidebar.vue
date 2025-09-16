@@ -80,13 +80,15 @@ const openChat = (conversation) => {
 
     conversation.unread_count = 0;
   }
+  console.log(conversation);
   conversation.user_two.conversation_id = conversation.id;
   conversation.user_one.conversation_id = conversation.id;
+  console.log(conversation);
   emit(
     "chatWith",
     conversation.user_one.id === user.id
-      ? conversation.user_two
-      : conversation.user_one
+      ? conversation.user_one
+      : conversation.user_two
   );
 };
 
@@ -105,6 +107,9 @@ onBeforeUnmount(() => {
     >
       محادثاتك
     </div>
+    <!-- <pre>
+      {{ conversations }}
+    </pre> -->
     <div>
       <template v-if="conversations.length">
         <template v-for="conversation in conversations" :key="conversation.id">
