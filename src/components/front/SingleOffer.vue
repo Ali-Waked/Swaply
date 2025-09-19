@@ -91,6 +91,7 @@ const requestStatus = computed(() => {
               item.user.name
             }}</span>
             <span
+              v-if="item.user.is_trusty"
               class="text-[11px] border border-gray-200 dark:border-green-600 py-1.5 px-3 rounded-full flex items-center gap-1 ml-2 w-fit justify-center mr-2"
             >
               <CheckIcon class="w-3 h-3 text-gray-600 dark:text-green-600" />

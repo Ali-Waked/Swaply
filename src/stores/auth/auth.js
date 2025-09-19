@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axiosClient from "../../axiosClient";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import { computed, inject, reactive, ref } from "vue";
+import { computed, inject, reactive, ref, watch } from "vue";
 
 export const useAuthStore = defineStore("auth", () => {
   // state: () => ({
@@ -32,11 +32,14 @@ export const useAuthStore = defineStore("auth", () => {
 
   const login = async (credentials) => {
     loading.value = true;
-    await getCsrfToken();
-    await axiosClient
-      .post("/login", credentials)
-      .then((response) => {
+    try {
+
+      await getCsrfToken();
+      const response = await axiosClient
+        .post("/login", credentials);
+      if (response.status == 200) {
         if (response.status === 200) {
+          // await getCsrfToken();
           isAuth.value = true;
           redirect.value = true;
           user.value = response.data.user;
@@ -53,14 +56,14 @@ export const useAuthStore = defineStore("auth", () => {
           router.push({ name: 'home' });
           emitter.emit("showNotificationAlert", ["success", "تم تسجيل الدخول بنجاح!"]);
         }
-      })
-      .catch((e) => {
-        console.error(e);
-        backErrors.value = e.response.data.errors;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+      }
+    }
+    catch (e) {
+      console.error(e);
+      backErrors.value = e.response.data.errors;
+    } finally {
+      loading.value = false;
+    };
   }
   const forgotPassword = async (credentials) => {
     await getCsrfToken();
@@ -176,6 +179,7 @@ export const useAuthStore = defineStore("auth", () => {
         loading.value = false;
         if (router.currentRoute.value.name != 'home')
           router.push({ name: 'home' })
+        // window.location.reload();
       }
     });
   }
@@ -268,5 +272,6 @@ export const useAuthStore = defineStore("auth", () => {
   const firstError = (field) => {
     return Array.isArray(backErrors.value?.[field]) ? backErrors.value[field][0] : null;
   };
+
   return { user, loading, backErrors, redirect, isAuth, isCustomer, isMerchant, forgotMessage, verifyOtp, update, deleteAccount, forgotPassword, login, checkAuth, loginWith, logout, firstError, register, resetPassword }
 });

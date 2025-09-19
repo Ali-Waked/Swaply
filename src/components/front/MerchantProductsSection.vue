@@ -154,7 +154,7 @@ onMounted(async () => {
 
 <template>
   <TitleProductsSection :icon="ShoppingBagIcon" title="منتجاتي">
-    <template #button v-if="data?.data?.length >= 5">
+    <template #button>
       <!-- <div class="flex-1 mr-4 relative">
         <span
           class="flex plus-icon relative transition-all items-center justify-center border-2 border-blue-700 cursor-pointer h-[26px] w-[26px] rounded-full text-blue-700 hover:text-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white"
@@ -167,8 +167,16 @@ onMounted(async () => {
         </span>
       </div> -->
       <div class="flex gap-4 items-center justify-between">
-        <AddProductButton @add-product="addProduct = true" />
-        <ShowAllProductButton @showAll="($event) => (showAll = $event)" />
+        <AddProductButton
+          @add-product="
+            productEdit.product_id = 0;
+            addProduct = true;
+          "
+        />
+        <ShowAllProductButton
+          v-if="data?.data?.length >= 5"
+          @showAll="($event) => (showAll = $event)"
+        />
       </div>
     </template>
   </TitleProductsSection>

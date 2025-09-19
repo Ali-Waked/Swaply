@@ -55,6 +55,7 @@
               v-model="discount_value"
               :error-message="errors.discount_value"
               placeholder="0"
+              class="pr-6"
             >
               <template #suffix>
                 {{ suffixSymbol }}

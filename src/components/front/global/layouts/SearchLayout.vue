@@ -121,7 +121,7 @@ onMounted(async () => {
   <!-- الفلاتر -->
   <div class="filter flex items-center gap-2 my-4">
     <SelectListBox v-model="dependentPrice" :options="priceOptions" />
-    <SelectListBox v-model="dependentCategories" :options="categoriesOptions" />
+    <!-- <SelectListBox v-model="dependentCategories" :options="categoriesOptions" /> -->
     <div
       class="border search-button rounded-lg py-[6px] relative px-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-700"
       @click="searchFor()"

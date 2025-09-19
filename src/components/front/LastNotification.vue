@@ -85,15 +85,23 @@ onMounted(async () => {
         {{ isShowAll ? "عرض اقل" : "عرض الكل" }}
       </button>
     </div>
-
-    <template v-for="item in lastNotifications.data" :key="item.id">
-      <LastNotificationBox
-        :title="item.data.title"
-        :time="item.created_at"
-        :is-decrease="item.data.status == 'lt'"
-        :is-increase="item.data.status == 'gt'"
-        :is-urgent="item.isUrgent"
-      />
+    <template v-if="lastNotifications.data.length > 0">
+      <template v-for="item in lastNotifications.data" :key="item.id">
+        <LastNotificationBox
+          :title="item.data.title"
+          :time="item.created_at"
+          :is-decrease="item.data.status == 'lt'"
+          :is-increase="item.data.status == 'gt'"
+          :is-urgent="item.isUrgent"
+        />
+      </template>
+    </template>
+    <template v-else>
+      <p
+        class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200"
+      >
+        لا يوجد اي اشعرات حتى الان
+      </p>
     </template>
   </div>
 </template>

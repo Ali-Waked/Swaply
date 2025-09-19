@@ -41,9 +41,10 @@ const conversations = ref([]);
 
 watch(
   dialog,
-  (val) => {
+  async (val) => {
     if (val) {
       document.body.style.overflow = "hidden";
+      await fetchConversations();
     } else {
       document.body.style.overflow = "";
     }
@@ -52,8 +53,7 @@ watch(
     immediate: true,
   }
 );
-onMounted(async () => {
-  // await nextTick();
+const fetchConversations = async () => {
   try {
     const response = await axiosClient.get("/chat/conversations");
     if (response.status == 200) {
@@ -66,6 +66,10 @@ onMounted(async () => {
   } catch (e) {
     console.error(e);
   }
+};
+onMounted(async () => {
+  // await nextTick();
+  // await fetchConversations();
 });
 
 const getName = (conversation) => {

@@ -53,6 +53,16 @@ export const useNotificationStore = defineStore("notification", () => {
             console.error(e);
         }
     }
+    const markAsRead = async () => {
+        try {
+            const response = await axiosClient.patch('/notifications/mark-as-read');
+            if (response.status == 200) {
+                lastNotificationUnreadCount.value = 0;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
-    return { notifications, loading, errors, status, lastNotificationUnreadCount, lastNotifications, addNotification, fetchNotification, fetchLastNotifications }
+    return { notifications, loading, errors, status, lastNotificationUnreadCount, lastNotifications, markAsRead, addNotification, fetchNotification, fetchLastNotifications }
 })

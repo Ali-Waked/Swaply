@@ -295,6 +295,7 @@ onBeforeUnmount(() => {
                 props.with.name
               }}</span>
               <span
+                v-if="props.with.is_trusty"
                 class="text-[11px] border border-gray-200 dark:border-gray-600 w-[18px] h-[18px] rounded-full flex items-center gap-1 ml-2 justify-center mr-2"
               >
                 <CheckIcon class="w-3 h-3 text-gray-600 dark:text-gray-300" />

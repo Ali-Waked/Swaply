@@ -49,9 +49,10 @@ const letterImage = computed(() => {
               class="text-[12px] flex items-center gap-2 text-blue-950 dark:text-gray-200"
             >
               <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200" />
-              <span>{{ user.phone ?? "عير مسجل" }}</span>
+              <span>{{ user.phone ?? "غير مسجل" }}</span>
             </span>
             <span
+              v-if="user.is_trusty"
               class="text-[9px] bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 py-[6px] px-[8px] rounded-md flex items-center gap-1 ml-2 w-fit justify-center mr-2"
             >
               <ShieldCheckIcon class="w-3 h-3" />
@@ -94,9 +95,9 @@ const letterImage = computed(() => {
       <div
         class="box flex-1 text-center bg-blue-100 dark:bg-blue-700/60 p-4 rounded-lg"
       >
-        <span class="font-[600] text-[32px] text-blue-600 dark:text-blue-300"
-          >5</span
-        >
+        <span class="font-[600] text-[32px] text-blue-600 dark:text-blue-300">{{
+          user.barters_count
+        }}</span>
         <p class="font-[400] text-[14px] text-blue-800 dark:text-blue-200">
           مقايضات ناجحة
         </p>

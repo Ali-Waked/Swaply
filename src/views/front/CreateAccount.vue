@@ -182,6 +182,10 @@ const firstError = (field) => {
     : null;
 };
 const data = ref({});
+
+const continueWithGoogle = () => {
+  window.location.href = "http://localhost:8000/api/auth/google";
+};
 onMounted(async () => {
   const response = await axiosClient.get("/auth/user");
   data.value = response;
@@ -397,10 +401,12 @@ onMounted(async () => {
         </div>
 
         <button
+          @click="continueWithGoogle"
           class="continue-with-google border mt-3 border-gray-200 dark:border-gray-700 flex items-center justify-center w-full py-3 gap-2 rounded-md font-[400] text-gray-800 dark:text-gray-200 transition-all hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-500"
         >
           <MdiIcon
             :icon="mdiGoogle"
+            type="button"
             class="w-6 h-6 font-[500]"
             stroke-width="100"
           />

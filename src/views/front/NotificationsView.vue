@@ -5,15 +5,22 @@ import NotificationSetting from "../../components/front/NotificationSetting.vue"
 import LastNotification from "../../components/front/LastNotification.vue";
 import ActiveNotification from "../../components/front/ActiveNotification.vue";
 import AddNotification from "../../components/front/AddNotification.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import LogoSection from "../../components/front/global/LogoSection.vue";
+import { storeToRefs } from "pinia";
+import { useNotificationStore } from "../../stores/notification";
 
 const showAll = ref(false);
 
 // const showAllNotifications = () => {
 //   showAll.value = true;
 // };
+const notificationStore = useNotificationStore();
+
+onMounted(async () => {
+  await notificationStore.markAsRead();
+});
 </script>
 
 <template>

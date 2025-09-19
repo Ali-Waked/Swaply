@@ -53,7 +53,7 @@
               v-for="user in users"
               :key="user.id"
             >
-              <span class="text-center">{{ user.id }}#</span>
+              <span class="text-center">{{ user.id }}</span>
               <span>{{ user.name }}</span>
               <span class="col-span-2 text-center">{{ user.email }}</span>
               <span>{{ user.phone }}</span>
@@ -68,34 +68,50 @@
     </div>
 
     <div
-      class="bg-white border border-gray-200 dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 h-[394px] overflow-y-auto min-w-[240px] transition-colors duration-200"
+      class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[416px] min-w-[280px] transition-colors duration-200"
+      :class="{ 'overflow-y-auto': showAll }"
     >
       <div class="flex justify-between items-center gap-6 mb-6">
-        <h4 class="text-blue-500 text-[20px] font-[500]">اخر الاشعارات</h4>
+        <h4 class="text-blue-500 text-[20px] font-[500] text-nowrap">
+          اخر الاشعارات
+        </h4>
         <button
-          class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
+          v-if="notifications.data?.length > 4"
+          @click="showAll = !showAll"
+          class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
-          عرض الكل
+          {{ showAll ? "عرض اقل" : "عرض الكل" }}
         </button>
       </div>
-      <div
-        class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700 last-of-type:border-none"
-        v-for="notification in notifications"
-        :key="notification.title"
-      >
-        <component
-          :is="notification.icon"
-          class="w-6 text-gray-800 dark:text-gray-200"
-        />
-        <div class="flex flex-col gap-[2px]">
-          <span class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]">
-            {{ notification.title }}
-          </span>
-          <span class="text-gray-600 dark:text-gray-400 text-[12px]">
-            {{ notification.text }}
-          </span>
+      <template v-if="notifications.data?.length > 0">
+        <div
+          class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700 last-of-type:border-none"
+          v-for="notification in notifications.data"
+          :key="notification.id"
+        >
+          <component
+            :is="getIcon(notification.data.icon_type)"
+            class="w-6 text-gray-800 dark:text-gray-200"
+          />
+          <div class="flex flex-col gap-[2px]">
+            <span
+              class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]"
+            >
+              {{ notification.data.title }}
+            </span>
+            <span class="text-gray-600 dark:text-gray-400 text-[12px]">
+              {{ notification.data.text }}
+            </span>
+          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <p
+          class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200"
+        >
+          لا يوجد اي اشعرات حتى الان
+        </p>
+      </template>
     </div>
   </div>
 </template>
@@ -103,8 +119,11 @@
 <script setup>
 import {
   ArchiveBoxIcon,
+  BellIcon,
+  FlagIcon,
   ShoppingBagIcon,
   UserIcon,
+  BuildingStorefrontIcon,
   UsersIcon,
 } from "@heroicons/vue/24/outline";
 import HeaderPage from "../../components/dashboard/global/HeaderPage.vue";
@@ -113,6 +132,7 @@ import axiosClient from "../../axiosClient";
 import format from "../../mixins/formats";
 
 const { formatDate, cleanId } = format();
+const showAll = ref(false);
 const cardItems = reactive([
   {
     title: "المنتجات",
@@ -136,23 +156,22 @@ const cardItems = reactive([
 
 const users = ref([]);
 
-const notifications = [
-  {
-    icon: UserIcon,
-    title: "مستخدم جديد",
-    text: "مستخدم جديد عمل lgoin",
-  },
-  {
-    icon: UserIcon,
-    title: "مستخدم جديد",
-    text: "مستخدم جديد عمل lgoin",
-  },
-  {
-    icon: UserIcon,
-    title: "مستخدم جديد",
-    text: "مستخدم جديد عمل lgoin",
-  },
-];
+const notifications = ref([]);
+// {
+//   icon: UserIcon,
+//   title: "مستخدم جديد",
+//   text: "مستخدم جديد عمل lgoin",
+// },
+// {
+//   icon: UserIcon,
+//   title: "مستخدم جديد",
+//   text: "مستخدم جديد عمل lgoin",
+// },
+// {
+//   icon: UserIcon,
+//   title: "مستخدم جديد",
+//   text: "مستخدم جديد عمل lgoin",
+// },
 const translateRole = (role) => {
   switch (role) {
     case "admin":
@@ -163,6 +182,20 @@ const translateRole = (role) => {
       return "مستهلك";
     default:
       return "غير معروف";
+  }
+};
+const getIcon = (icon) => {
+  switch (icon) {
+    case "user":
+      return UserIcon;
+    case "report":
+      return FlagIcon;
+    // case "role":
+    // return UserIcon;
+    case "store":
+      return BuildingStorefrontIcon;
+    default:
+      return BellIcon;
   }
 };
 
@@ -185,16 +218,34 @@ onMounted(async () => {
   } catch (e) {
     console.error(e);
   }
+
+  try {
+    const response = await axiosClient.get("admin/notifications");
+    if (response.status == 200) {
+      notifications.value = response.data.notifications;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 });
 </script>
 
 <style lang="scss" scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Firefox */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 </style>

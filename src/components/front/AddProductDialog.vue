@@ -21,72 +21,78 @@
               }}
             </p>
           </DialogTitle>
-          <ComboboxComponent
-            v-model="selectedProduct"
-            :items="availableProducts"
-            placeholder="مثال: حليب"
-          />
-          <ErrorInputText :error-message="nameError" />
+          <form @submit.prevent="submit">
+            <ComboboxComponent
+              v-model="selectedProduct"
+              :items="availableProducts"
+              placeholder="مثال: حليب"
+            />
+            <ErrorInputText :error-message="nameError" />
 
-          <!-- category (disabled auto) -->
-          <FormControl
-            label="التصنيف"
-            id="category"
-            :value="categoryForProductSelected"
-            disabled
-          />
+            <!-- category (disabled auto) -->
+            <FormControl
+              label="التصنيف"
+              id="category"
+              :value="categoryForProductSelected"
+              disabled
+            />
 
-          <FormControl
-            label="سعر المنتج"
-            type="number"
-            id="product-price"
-            class="bg-transparent"
-            :value="price"
-            @input="price = $event.target.valueAsNumber"
-            placeholder="100"
-          />
+            <FormControl
+              label="سعر المنتج"
+              type="number"
+              id="product-price"
+              class="bg-transparent"
+              :value="price"
+              @input="price = $event.target.valueAsNumber"
+              placeholder="100"
+            />
 
-          <ErrorInputText :error-message="priceError" />
+            <ErrorInputText :error-message="priceError" />
 
-          <!-- description -->
-          <FormControl
-            label="الوصف"
-            id="الوصف"
-            :value="description"
-            @input="description = $event.target.value"
-            class="bg-transparent"
-            placeholder="تفاصيل اضافية عن المنتج"
-            type="textarea"
-          />
-          <ErrorInputText :error-message="descriptionError" />
+            <!-- description -->
+            <FormControl
+              label="الوصف"
+              id="الوصف"
+              :value="description"
+              @input="description = $event.target.value"
+              class="bg-transparent"
+              placeholder="تفاصيل اضافية عن المنتج"
+              type="textarea"
+            />
+            <ErrorInputText :error-message="descriptionError" />
 
-          <!-- image -->
-          <div class="mb-3">
-            <label
-              for="file_image"
-              class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md"
-            >
-              <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
-              <span class="font-[400] dark:text-white">{{
-                imagePreview ? "تعديل الصورة" : "اضافة صورة"
-              }}</span>
-            </label>
-            <input type="file" id="file_image" hidden @change="onFileChange" />
-            <div v-if="imagePreview" class="mt-2">
-              <img
-                :src="imagePreview"
-                class="w-32 h-32 object-cover rounded-md"
+            <!-- image -->
+            <div class="mb-3">
+              <label
+                for="file_image"
+                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md"
+              >
+                <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                <span class="font-[400] dark:text-white">{{
+                  imagePreview ? "تعديل الصورة" : "اضافة صورة"
+                }}</span>
+              </label>
+              <input
+                type="file"
+                id="file_image"
+                hidden
+                @change="onFileChange"
               />
+              <div v-if="imagePreview" class="mt-2">
+                <img
+                  :src="imagePreview"
+                  class="w-32 h-32 object-cover rounded-md"
+                />
+              </div>
+              <ErrorInputText :error-message="imageError" />
             </div>
-            <ErrorInputText :error-message="imageError" />
-          </div>
 
-          <MainButton
-            :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'"
-            class="bg-gray-800 hover:bg-gray-800/95"
-            @click="submit"
-          />
-
+            <MainButton
+              :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'"
+              class="bg-gray-800 hover:bg-gray-800/95"
+              type="submit"
+            />
+          </form>
           <!-- زر الاغلاق -->
           <div class="absolute top-[20px] right-[20px]">
             <span
@@ -132,7 +138,7 @@ import * as yup from "yup";
 import axios from "axios";
 
 const props = defineProps({
-  modelValue: { type: Boolean, required: true },
+  modelValue: { type: [Boolean, Object], required: true },
   productsIds: { type: Array, default: [] },
   productEdit: { type: Number, default: null },
 });
@@ -190,6 +196,10 @@ const resetForm = () => {
   image.value = null;
   imagePreview.value = null;
   selectedProduct.value = "";
+  nameError.value = "";
+  priceError.value = "";
+  imageError.value = "";
+  descriptionError.value = "";
 };
 
 const isEditPage = computed(() => {
@@ -264,6 +274,7 @@ watch(
     await productStore.fetchAllProductsIds();
     console.log("product_ids", isEditPage.value);
     if (isEditPage.value) {
+      console.log("edit");
       // const response = await axiosClient.get(
       //   `merchant/store/products/${props.editProductId}`
       // );

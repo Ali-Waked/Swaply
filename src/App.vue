@@ -7,15 +7,23 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useThemeStore } from "./stores/theme";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { useAuthStore } from "./stores/auth/auth";
+import { useNotificationStore } from "./stores/notification";
 
 const themeStore = useThemeStore();
 const theme = storeToRefs(themeStore);
 
 const authStore = useAuthStore();
-const { user } = storeToRefs(authStore);
+const { user, isAuth } = storeToRefs(authStore);
+const notificationStore = useNotificationStore();
 
+watch(
+  () => isAuth.value,
+  async (newVal) => {
+    if (newVal) await notificationStore.fetchLastNotifications();
+  }
+);
 onMounted(async () => {
   await authStore.checkAuth();
   if (!user.value) {

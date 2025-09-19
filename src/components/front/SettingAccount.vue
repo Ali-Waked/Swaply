@@ -169,6 +169,7 @@ onMounted(async () => {
       />
     </template>
     <div
+      v-if="user.role != 'admin'"
       class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
     >
       <span
