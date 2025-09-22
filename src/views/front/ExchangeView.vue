@@ -238,9 +238,9 @@ onMounted(async () => {
         </template>
         <template v-else>
           <p
-            class="text-gray-700 text-center font-semibold text-sm mt-12 dark:text-gray-300"
+            class="text-gray-700 text-center  text-sm mt-12 dark:text-gray-300"
           >
-            لا يوجد حتى الان اي عروض للمقايضة. قم باضافة العرضك
+            لا يوجد حتى الان اي عروض للمقايضة. قم باضافة عرضك الخاص بك
           </p>
         </template>
       </div>

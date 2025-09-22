@@ -39,9 +39,9 @@ onMounted(async () => {
     </template>
     <template v-else>
       <p
-        class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-200"
+        class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-300 dark:text-gray-200"
       >
-        لم تقم حتى الان باضافة اي تنيه
+        لم تقم حتى الان باضافة اي تنبيه
       </p>
     </template>
   </div>

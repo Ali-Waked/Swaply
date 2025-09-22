@@ -109,7 +109,7 @@
         <p
           class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200"
         >
-          لا يوجد اي اشعرات حتى الان
+          لا يوجد اي اشعارات حتى الان
         </p>
       </template>
     </div>

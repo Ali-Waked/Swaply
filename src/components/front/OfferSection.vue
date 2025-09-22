@@ -91,8 +91,8 @@ onMounted(async () => {
   </div>
   <div class="flex justify-center items-center h-24" v-else>
     <div>
-      <span class="text-gray-700 font-[400] block mb-4"
-        >لا توجد الان اي عروض</span
+      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4"
+        >لا توجد الآن أي عروض</span
       >
     </div>
   </div>

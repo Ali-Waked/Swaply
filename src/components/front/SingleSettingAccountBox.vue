@@ -62,13 +62,13 @@ const cancelEdit = () => {
           @click="saveEdit"
           class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
         >
-          <CheckIcon class="w-5 h-5" />
+          <CheckIcon class="w-5 h-5 dark:text-white" />
         </span>
         <span
           @click="cancelEdit"
           class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
         >
-          <XMarkIcon class="w-5 h-5" />
+          <XMarkIcon class="w-5 h-5 dark:text-white" />
         </span>
       </div>
     </div>

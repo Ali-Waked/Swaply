@@ -31,7 +31,7 @@
 
       <!-- empty message slot -->
       <template #empty-message>
-        <div class="text-center text-gray-500 py-4">لا توجد بيانات لعرضها</div>
+        <div class="text-center text-gray-500 dark:text-gray-300 py-4 ">لا توجد بيانات لعرضها</div>
       </template>
     </EasyDataTable>
     <!-- Footer -->
