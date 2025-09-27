@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { FunnelIcon, MapPinIcon } from "@heroicons/vue/24/outline";
 import { useRoute, useRouter } from "vue-router";
 import ButtonTab from "../../ButtonTab.vue";
@@ -52,7 +52,7 @@ const categoriesOptions = computed(() => {
 });
 const dependentCategories = ref({ id: 1, name: "جميع الفئات", value: "all" });
 
-const updateRoute = () => {};
+const updateRoute = () => { };
 
 const searchFor = async () => {
   const query = {
@@ -111,9 +111,7 @@ onMounted(async () => {
     <LogoSection />
   </HeaderPage>
   <!-- العنوان -->
-  <div
-    class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16"
-  >
+  <div class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16">
     <span>نتائج البحث:</span>
     <span>{{ search }}</span>
   </div>
@@ -124,45 +122,29 @@ onMounted(async () => {
     <!-- <SelectListBox v-model="dependentCategories" :options="categoriesOptions" /> -->
     <div
       class="border search-button rounded-lg py-[6px] relative px-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-700"
-      @click="searchFor()"
-    >
+      @click="searchFor()">
       <FunnelIcon class="w-6" />
       <span
-        class="absolute -top-7 left-1/2 hidden -translate-x-1/2 bg-gray-500/50 text-[12px] px-2 py-1 font-[500] rounded-md text-white transition-all"
-      >
+        class="absolute -top-7 left-1/2 hidden -translate-x-1/2 bg-gray-500/50 text-[12px] px-2 py-1 font-[500] rounded-md text-white transition-all">
         بحث
       </span>
     </div>
   </div>
 
   <!-- أزرار العرض -->
-  <div
-    class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[16px] flex items-center gap-1 mb-4"
-  >
-    <ButtonTab
-      label="قائمة"
-      :is-active="isListStorePage"
-      @click="
-        router.replace({
-          name: 'search-list-stores',
-          query: route.query,
-        })
-      "
-      class="py-2 rounded-full"
-      :icon="ListBulletIcon"
-    />
-    <ButtonTab
-      label="خريطة"
-      :is-active="!isListStorePage"
-      @click="
-        router.replace({
-          name: 'search-map',
-          query: route.query,
-        })
-      "
-      class="py-2 rounded-full"
-      :icon="MapPinIcon"
-    />
+  <div class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[16px] flex items-center gap-1 mb-4">
+    <ButtonTab label="قائمة" :is-active="isListStorePage" @click="
+      router.replace({
+        name: 'search-list-stores',
+        query: route.query,
+      })
+      " class="py-2 rounded-full" :icon="ListBulletIcon" />
+    <ButtonTab label="خريطة" :is-active="!isListStorePage" @click="
+      router.replace({
+        name: 'search-map',
+        query: route.query,
+      })
+      " class="py-2 rounded-full" :icon="MapPinIcon" />
   </div>
 
   <!-- المحتوى -->
