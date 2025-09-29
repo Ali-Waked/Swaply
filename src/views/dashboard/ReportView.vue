@@ -44,6 +44,8 @@ import useFormats from "../../mixins/formats";
 
 const headers = [
   { text: "رقم المنتج", value: "product_id", sortable: true },
+  { text: "اسم المنتج", value: "product_name", sortable: true },
+  { text: "سعر المنتج", value: "product_price", sortable: true },
   { text: "صاحب المنتج", value: "owner_name", sortable: true },
   { text: "عدد مرات الإبلاغ", value: "report_count", sortable: true },
   { text: "إجراءات", value: "actions" },
@@ -68,7 +70,9 @@ const fetchReports = async () => {
       id: ele.id,
       product_id: `#${ele.product_id}`,
       owner_name: ele.product.store.user.name,
+      product_price: `${Math.round(ele.product.price)}`,
       report_count: ele.report_count,
+      product_name: ele.product.name,
       status: ele.status,
     }));
   } catch (e) {

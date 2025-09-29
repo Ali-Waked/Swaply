@@ -76,7 +76,7 @@ const requestStatus = computed(() => {
 
 <template>
   <div
-    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition relative my-4 last-of-type:mb-0 dark:border-gray-600"
+    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-sm border border-gray-300 transition relative my-4 last-of-type:mb-0 dark:border-gray-600"
   >
     <div class="flex items-center justify-between mb-4">
       <div class="info flex items-center gap-2">
@@ -457,7 +457,7 @@ const requestStatus = computed(() => {
           <template v-if="user && user.id !== item.user_id">
             <ScondButton
               title="رسالة سريعة"
-              class="text-gray-600 hover:bg-gray-200 hover:text-black border-gray-300"
+              class="text-black hover:bg-gray-200 dark:text-white hover:text-black dark:hover:text-black border-gray-300"
               @click="$emit('startChat', item.user)"
             >
               <template #icon>
