@@ -25,7 +25,7 @@
           </DialogTitle>
           <form @submit.prevent="submit">
             <div class="mb-4">
-              <label class="block mb-1 font-[400]">نوع الخصم</label>
+              <label class="block mb-1 font-[400] text-black dark:text-white">نوع الخصم</label>
               <select
                 v-model="discountType"
                 class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
@@ -62,7 +62,7 @@
               </template>
             </FormControl>
             <div>
-              <span class="font-[400]">الحالة:</span>
+              <span class="font-[400]  text-black dark:text-white">الحالة:</span>
               <div class="flex justify-evenly items-center">
                 <div class="flex gap-1 items-center text-gray-700">
                   <input
@@ -72,7 +72,7 @@
                     :value="true"
                     name="status"
                   />
-                  <label for="active">نشط</label>
+                  <label for="active" class="text-black dark:text-white">نشط</label>
                 </div>
                 <div class="flex gap-1 items-center text-gray-700">
                   <input
@@ -82,7 +82,7 @@
                     :value="false"
                     name="status"
                   />
-                  <label for="in-active">غير نشط</label>
+                  <label for="in-active" class="text-black dark:text-white">غير نشط</label>
                 </div>
               </div>
             </div>

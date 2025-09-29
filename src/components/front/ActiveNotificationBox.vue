@@ -35,7 +35,7 @@ const removeFromNotification = async () => {
   if (response.status == 200) {
     emitter.emit("showNotificationAlert", [
       "success",
-      "تم حذف اتلتنبيه بنجاح!",
+      "تم حذف التنبيه بنجاح!",
     ]);
     box.value.remove();
   }

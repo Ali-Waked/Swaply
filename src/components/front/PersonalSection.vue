@@ -38,7 +38,7 @@ const letterImage = computed(() => {
       </div>
       <div>
         <span class="font-[500]">
-          <p class="text-blue-950 dark:text-white">{{ user.name }}</p>
+          <p class="text-blue-950 dark:text-white text-xl">{{ user.name }}</p>
           <p
             class="degree text-gray-700 dark:text-gray-300 text-[12px] font-[500] mt-1"
           >
@@ -48,8 +48,8 @@ const letterImage = computed(() => {
             <span
               class="text-[12px] flex items-center gap-2 text-blue-950 dark:text-gray-200"
             >
-              <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200" />
-              <span>{{ user.phone ?? "غير مسجل" }}</span>
+              <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200"  />
+              <span dir="ltr">{{ user.phone ?? "غير مسجل" }}</span>
             </span>
             <span
               v-if="user.is_trusty"
@@ -89,7 +89,7 @@ const letterImage = computed(() => {
           >11</span
         >
         <p class="font-[400] text-[14px] text-green-800 dark:text-green-200">
-          تقارير دقيقة
+          بلاغات دقيقة
         </p>
       </div>
       <div

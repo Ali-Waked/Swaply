@@ -72,22 +72,17 @@ const searchFor = () => {
 
       <!-- Options -->
       <ComboboxOptions
-        class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg"
+        class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md text-black bg-white dark:bg-gray-800 shadow-lg border-[1px] border-gray-400 custom-scroll"
       >
         <ComboboxOption
           v-for="item in filteredItems"
           :key="item.id"
           :value="item"
-          v-slot="{ active, selected }"
+
         >
           <li
-            class="cursor-pointer select-none py-2 px-3"
-            :class="[
-              active
-                ? 'bg-blue-500 dark:bg-gray-600 text-white'
-                : 'text-gray-900 dark:text-gray-200',
-              selected ? 'bg-gray-200 dark:bg-blue-700 text-gray-600' : '',
-            ]"
+            class="cursor-pointer py-2 px-3 bg-gray-100 text-black dark:text-white  dark:bg-gray-800 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-700
+            "
           >
             {{ item.name }}
           </li>

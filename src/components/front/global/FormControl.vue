@@ -1,6 +1,13 @@
+<style>
+::-webkit-calendar-picker-indicator{
+  filter: invert(1);
+}
+</style>
+
 <template>
+ 
   <div class="mb-3 relative">
-    <MainLabel :id="id" :label="label" />
+    <MainLabel :id="id" :label="label"  />
 
     <div v-if="type === 'textarea'">
       <textarea

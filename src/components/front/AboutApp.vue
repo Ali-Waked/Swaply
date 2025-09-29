@@ -26,7 +26,7 @@ import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
     <SingleFavoriteStraucture
       class="pb-0 border-none -mb-2"
       title="مهمتنا"
-      description="نبض الاسعار هو تطبيق مصمم لخدمة المجتمع في اوقات الازمات من خلال توفير معلومات دقيقة ومحديثة عن اسعارالموارد الاساسية والسلع."
+      description="نبض الاسعار هو تطبيق مصمم لخدمة المجتمع في اوقات الازمات من خلال توفير معلومات دقيقة ومحديثة عن اسعار الموارد الاساسية والسلع."
     />
 
     <div class="mt-4">

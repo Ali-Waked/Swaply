@@ -46,7 +46,7 @@ export const useCityStore = defineStore("city", () => {
     };
     const distanceToSpecificCity = (cityId) => {
         if (!user.value.share_location) {
-            return 'المسافة غر معروفة'
+            return 'المسافة غير معروفة'
         }
         if (!distance.value.length) {
             fetchAllCitiesDistances();

@@ -56,7 +56,7 @@
               <span class="text-center">{{ user.id }}</span>
               <span>{{ user.name }}</span>
               <span class="col-span-2 text-center">{{ user.email }}</span>
-              <span>{{ user.phone }}</span>
+              <span class="text-end" dir="ltr">{{ user.phone }}</span>
               <span>{{ user.role }}</span>
               <span class="col-span-2">{{
                 user.created_at ?? "8-8-2020"

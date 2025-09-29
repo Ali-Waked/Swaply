@@ -104,8 +104,8 @@ const removeFromFavorite = async () => {
     class="border rounded-[18px] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover:shadow-md dark:border-gray-700"
   >
     <!-- Image container -->
-    <div class="bg-gray-300/70 dark:bg-gray-700/30 py-4 px-6 relative group">
-      <img :src="image" class="w-[250px]" alt="product image" />
+    <div class="bg-[radial-gradient(circle,_#d1d5dbb3,_#9ca3af)] dark:bg-[radial-gradient(circle,_#1f293780,_#111827)] relative group ">
+      <img :src="image" class="w-full aspect-[4/3] object-contain" alt="product image" />
       <StarSolidIcon
         @click.stop="isFavorite = false"
         class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-500"

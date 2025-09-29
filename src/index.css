@@ -88,3 +88,10 @@ body {
     max-width: 5.5rem;
   }
 }
+
+.custom-scroll::-webkit-scrollbar-track{
+  width: 5px;
+}
+.custom-scroll::-webkit-scrollbar-thumb{
+  width: 5px;
+}

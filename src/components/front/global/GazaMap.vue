@@ -33,7 +33,7 @@
       <text
         x="14"
         y="-6"
-        class="font-bold text-[6px] fill-white dark:fill-black cursor-pointer stroke-black dark:stroke-white stroke-[0.5px]" style="paint-order: stroke;"
+        class="font-bold text-[6px] fill-black dark:fill-white cursor-pointer stroke-white dark:stroke-black stroke-[0.5px]" style="paint-order: stroke;"
       >
         {{ city.name }}
       </text>
