@@ -101,21 +101,21 @@ const removeFromFavorite = async () => {
 
 <template>
   <div
-    class="border rounded-[18px] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover:shadow-md dark:border-gray-700"
+    class="border rounded-[18px] h-[22rem] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover:shadow-md dark:border-gray-700"
   >
     <!-- Image container -->
     <div class="bg-[radial-gradient(circle,_#d1d5dbb3,_#9ca3af)] dark:bg-[radial-gradient(circle,_#1f293780,_#111827)] relative group ">
       <img :src="image" class="w-full aspect-[4/3] object-contain" alt="product image" />
       <StarSolidIcon
         @click.stop="isFavorite = false"
-        class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-500"
+        class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-yellow-300 hover:text-yellow-400 dark:text-yellow-400 dark:hover:text-yellow-500"
         v-if="isFavorite"
         @click="removeFromFavorite"
       />
 
       <StarIcon
         @click.stop="isFavorite = true"
-        class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-red-400 hover:text-red-500 dark:text-gray-300 dark:hover:text-gray-200"
+        class="w-6 absolute top-3 -right-20 transition-all duration-300 group-hover:right-3 text-yellow-400 hover:text-yellow-500 dark:text-gray-300 dark:hover:text-gray-200"
         @click="addToFavorite"
         v-else
       />
@@ -137,7 +137,7 @@ const removeFromFavorite = async () => {
 
       <div class="flex items-center justify-between">
         <p
-          class="description mb-1 text-gray-500 dark:text-gray-400 text-[14px]"
+          class="description mb-1 text-nowrap w-full overflow-hidden text-ellipsis text-gray-500 dark:text-gray-400 text-[14px]"
         >
           {{ description }}
         </p>

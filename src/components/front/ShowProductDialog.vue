@@ -71,8 +71,13 @@
               </div>
             </div>
 
+            <!-- اسم المحل -->
+            <div class="flex justify-between mt-2 items-center">
+              <span class="owner text-gray-700 dark:text-white">{{ product.store?.name }} - {{ product.store?.address }}</span>
+               
+            </div>
             <!-- التقييم -->
-            <div class="flex justify-between mt-1 items-center">
+            <div class="flex justify-end mt-1 items-center">
               <span class="flex items-center gap-2">
                 <span
                   class="font-[400] text-gray-800 dark:text-gray-100 text-[28px]"

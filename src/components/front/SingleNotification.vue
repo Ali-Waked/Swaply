@@ -43,7 +43,7 @@ watch(
 
 <template>
   <div
-    class="flex bg-white dark:bg-gray-900 shadow-md w-full items-center rounded-2xl justify-between px-8 py-4 mb-4 transition-colors"
+    class="flex bg-white dark:bg-gray-900 shadow-md shadow-slate-200 w-full items-center rounded-2xl justify-between px-8 py-4 mb-4 transition-colors"
   >
     <div class="flex items-center gap-4">
       <div class="icon">

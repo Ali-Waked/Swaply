@@ -25,7 +25,7 @@ const { getRelativeTime } = useFormats();
   <div class="mt-2 overflow-x-hidden" v-if="products.length">
     <Swiper
       :slidesPerView="5"
-      class="mt-6 overflow-visible"
+      class="mt-6 overflow-visible mx-auto container"
       :spaceBetween="20"
       :modules="[Pagination, Autoplay, Navigation]"
       :pagination="{ el: '.pagination', clickable: true }"
@@ -70,11 +70,11 @@ const { getRelativeTime } = useFormats();
       </swiper-slide>
       <!-- <div class="pagination"></div> -->
       <div
-        class="swiper-button-prev w-10 h-10 flex items-center justify-center bg-transparent border-2 border-blue-400 dark:border-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        class="swiper-button-prev w-10 h-10 flex items-center justify-center rounded-full hover:bg-[rgba(0,0,0,0.35)]  bg-[rgba(0,0,0,0.25)] dark:bg-[rgba(255,255,255,0.35)] dark:hover:bg-[rgba(255,255,255,0.25)] backdrop-blur-sm transition"
       ></div>
 
       <div
-        class="swiper-button-next w-10 h-10 flex items-center justify-center bg-transparent border-2 border-blue-400 dark:border-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        class="swiper-button-next  w-10 h-10 flex items-center justify-center rounded-full hover:bg-[rgba(0,0,0,0.35)]  bg-[rgba(0,0,0,0.25)] dark:bg-[rgba(255,255,255,0.35)] dark:hover:bg-[rgba(255,255,255,0.25)] backdrop-blur-sm transition"
       ></div>
     </Swiper>
   </div>
@@ -91,13 +91,13 @@ const { getRelativeTime } = useFormats();
 .swiper-button-next {
   width: 46px !important;
   height: 46px !important;
-  top: calc(50% - 24px) !important;
+  top: calc(50%) !important;
 }
 .swiper-button-prev::after,
 .swiper-button-next::after {
   /* margin-top: -24px !important; */
   font-size: 18px !important;
   font-weight: bold;
-  color: currentColor !important;
+  color: white !important;
 }
 </style>

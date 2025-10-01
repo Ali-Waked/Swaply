@@ -19,7 +19,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+    class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md shadow-slate-200 h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
   >
     <NotificationSectionTitle title="التنبيهات النشطة" class="mb-6" />
     <template v-if="notifications.length">
