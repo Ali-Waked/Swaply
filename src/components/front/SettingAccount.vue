@@ -15,7 +15,7 @@ const userStore = useAuthStore();
 const { user } = storeToRefs(userStore);
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
-const items = reactive([
+const items = ref([
   {
     id: "name",
     label: "الاسم",
@@ -128,10 +128,60 @@ watch(
     merchantUpdate({ id: "city_id", value: newVal.id });
   }
 );
+// const update = async (data) => {
+//   await userStore.update({
+//     [data.id]: data.value,
+//   });
+// };
+
 const update = async (data) => {
-  await userStore.update({
-    [data.id]: data.value,
+  const index = ref(-1);
+  const item = items.value.find((i, ind) => {
+    index.value = ind;
+    return i.id === data.id;
   });
+  const oldValue = item?.value;
+
+  if (data.id === "email") {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (data.value && !emailRegex.test(data.value)) {
+      items.value[index.value].value = oldValue;
+      emitter.emit("showNotificationAlert", [
+        "error",
+        "صيغة البريد الإلكتروني غير صحيحة",
+      ]);
+      return;
+    }
+  }
+
+  if (data.id === "phone") {
+    const phoneRegex = /^\+97[0-9]{7,12}$/;
+    if (data.value && !phoneRegex.test(data.value)) {
+      emitter.emit("showNotificationAlert", [
+        "error",
+        "رقم الهاتف يجب أن يبدأ بـ +97 ويتبعه 7-12 رقم",
+      ]);
+      items.value[index.value].value = oldValue;
+      return;
+    }
+  }
+
+  try {
+    await userStore.update({
+      [data.id]: data.value,
+    });
+
+    emitter.emit("showNotificationAlert", [
+      "success",
+      "تم تحديث بيانات المتجر بنجاح!",
+    ]);
+  } catch (error) {
+    item.value = oldValue;
+    emitter.emit("showNotificationAlert", [
+      "error",
+      "حدث خطأ أثناء تحديث البيانات. حاول مرة أخرى.",
+    ]);
+  }
 };
 
 const merchantUpdate = async (data) => {

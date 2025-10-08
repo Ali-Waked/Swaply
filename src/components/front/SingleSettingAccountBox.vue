@@ -8,6 +8,10 @@ const props = defineProps({
   value: { type: String, required: true },
   buttonLabel: { type: String, default: "تعديل" },
   inputType: { type: String, default: "text" },
+  error: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["update", "update:value"]);
@@ -57,6 +61,7 @@ const cancelEdit = () => {
         v-model="localValue"
         class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
       />
+      <p v-if="error" class="text-red-500 text-sm mt-1">{{ error }}</p>
       <div class="action flex justify-end gap-1">
         <span
           @click="saveEdit"
