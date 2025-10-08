@@ -81,7 +81,7 @@ const confirmDel = async () => {
       }
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 const productEdit = ref({
@@ -108,7 +108,7 @@ const editProduct = (product) => {
 //   product: {},
 // });
 const deleteDiscountDialog = (product) => {
-  console.log(product);
+  // console.log(product);
   showProductDialog.dialog = false;
   confirmDelDialog.product = product;
   confirmDelDialog.title = "هل أنت متأكد من حذف العرض؟";
@@ -140,7 +140,7 @@ const fetchProducts = async (page = 1) => {
     data.value = response.data.products;
     store.value = response.data.store;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
   }
 };

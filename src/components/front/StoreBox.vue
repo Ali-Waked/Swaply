@@ -40,8 +40,8 @@ const priceType = computed(() => {
 
 const cityStore = useCityStore();
 const distance = computed(() => {
-  console.log("Calculating distance for city ID:", props.cityId);
-  console.log(cityStore.distanceToSpecificCity(props.cityId));
+  // console.log("Calculating distance for city ID:", props.cityId);
+  // console.log(cityStore.distanceToSpecificCity(props.cityId));
   return cityStore.distanceToSpecificCity(props.cityId);
 });
 onMounted(async () => {

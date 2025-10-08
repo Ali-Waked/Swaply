@@ -14,10 +14,10 @@ export const useCategoryStore = defineStore("category", () => {
 
         try {
             loading.value = true;
-            const response = await axiosClient.get("/categories");
+            const response = await axiosClient.get("/categories", { cache: { ttl: 10 * 60 * 1000 } });
             categories.value = response.data.categories;
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             errors.value = e;
         } finally {
             loading.value = false;

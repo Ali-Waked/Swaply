@@ -66,7 +66,7 @@ onMounted(() => {
     ([type = "info", message, duration = 4000]) => {
       const id = Date.now() + Math.random();
       notifications.push({ id, message, type, duration });
-      console.log("hi");
+      // console.log("hi");
 
       setTimeout(() => {
         const index = notifications.findIndex((n) => n.id === id);

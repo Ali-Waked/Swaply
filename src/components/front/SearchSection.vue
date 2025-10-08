@@ -53,7 +53,7 @@ const filteredItems = computed(() => {
 const searchFor = () => {
   if (search.value.name) {
     router.push({
-      name: "search-map",
+      name: "search-list-stores",
       query: { for: search.value.name, id: search.value.id },
     });
   }

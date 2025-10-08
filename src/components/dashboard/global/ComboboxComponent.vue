@@ -31,7 +31,7 @@ const query = ref("");
 
 watch(selectedItem, (val) => {
   emit("update:modelValue", val);
-  console.log(val);
+  // console.log(val);
   query.value = val?.name || "";
 });
 

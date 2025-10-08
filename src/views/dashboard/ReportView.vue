@@ -76,10 +76,9 @@ const fetchReports = async () => {
       status: ele.status,
     }));
   } catch (e) {
-    console.error(e);
   }
 };
-
+// Review Report
 const markAsReviewed = async (item) => {
   try {
     const response = await axiosClient.put(
@@ -95,7 +94,6 @@ const markAsReviewed = async (item) => {
       emitter.emit("showNotificationAlert", ["success", "تمت مراجعة البلاغ"]);
     }
   } catch (e) {
-    console.error(e);
   }
 };
 

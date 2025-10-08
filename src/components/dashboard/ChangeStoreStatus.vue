@@ -61,7 +61,7 @@ const updateStore = async () => {
     }
     closeDialog();
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
     loading.value = false;
   }

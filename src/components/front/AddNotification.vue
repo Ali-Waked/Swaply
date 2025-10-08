@@ -78,7 +78,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="px-6 pt-8 pb-6 rounded-[20px] shadow-md bg-white dark:bg-gray-900 mt-6"
+    class="px-6 pt-8 pb-6 rounded-[20px] shadow-md dark:shadow-[inset_0_4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 bg-white dark:bg-gray-900 mt-6"
   >
     <NotificationSectionTitle title="اضافة تنبيه جديد" />
 

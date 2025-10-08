@@ -126,7 +126,7 @@ const fetchCategories = async () => {
       created_at: formatDate(ele.created_at),
     }));
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 

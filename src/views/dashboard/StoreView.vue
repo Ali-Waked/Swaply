@@ -126,7 +126,7 @@ const toggleStatus = async (store) => {
       await fetchStores();
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 
@@ -147,7 +147,7 @@ const fetchStores = async () => {
       };
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 

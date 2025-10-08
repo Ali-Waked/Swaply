@@ -57,6 +57,7 @@ const baseSchema = {
   //   .required("كلمة المرور مطلوبة")
   //   .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
 };
+// Forgot Password Validation Schema
 const schema = computed(() => {
   return yup.object(baseSchema);
 });
@@ -168,7 +169,7 @@ onMounted(async () => {
     </div>
     <form
       @submit.prevent="onSubmit"
-      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 max-w-[450px] w-[95%]"
+      class="bg-white dark:bg-gray-900  shadow-md dark:shadow-lg  dark:shadow-slate-700 rounded-lg px-6 py-10 max-w-[450px] w-[95%]"
     >
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />

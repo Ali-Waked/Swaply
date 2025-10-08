@@ -46,7 +46,7 @@ const fetchProducts = async (page = 1) => {
     data.value = response.data;
     // store.value = response.data.store;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
   }
 };

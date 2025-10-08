@@ -94,7 +94,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     <form
       @submit.prevent="onSubmit"
-      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-600 rounded-lg px-6 py-10 min-w-[250px] w-[30%]"
+      class="bg-white dark:bg-gray-900 shadow-md dark:shadow-[inset_0_-4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 rounded-lg px-6 py-10 min-w-[250px] w-[30%]"
     >
       <div class="icon">
         <LockClosedIcon class="w-28 mx-auto text-blue-600" />

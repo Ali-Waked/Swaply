@@ -84,7 +84,7 @@ const confirm = async () => {
       );
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 const acceptDialog = reactive({
@@ -108,7 +108,7 @@ const acceptBarter = async () => {
       await fetchBarters();
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 const acceptUserDialog = reactive({
@@ -116,12 +116,12 @@ const acceptUserDialog = reactive({
   data: {},
 });
 const showConfirmAcceptUserDialog = (data) => {
-  console.log(data);
+  // console.log(data);
   acceptUserDialog.dialog = true;
   acceptUserDialog.data = data;
 };
 const acceptUser = async () => {
-  console.log("accept");
+  // console.log("accept");
   try {
     const response = await axiosClient.post(
       `/barters/${acceptUserDialog.data.barter_id}/respond/${acceptUserDialog.data.id}`
@@ -134,7 +134,7 @@ const acceptUser = async () => {
       await fetchBarters();
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 const completedBarter = async (barterId) => {
@@ -151,7 +151,7 @@ const completedBarter = async (barterId) => {
       data.value.data = data.value.data.filter((el) => el.id !== barterId);
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -164,7 +164,7 @@ const fetchBarters = async () => {
       data.value = response.data.barters;
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
     loading.value = false;
   }

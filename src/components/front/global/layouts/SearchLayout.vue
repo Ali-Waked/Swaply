@@ -59,7 +59,7 @@ const searchFor = async () => {
     dependent: dependentPrice.value.name,
     categories: dependentCategories.value.name,
   };
-  console.log(dependentCategories.value.value);
+  // console.log(dependentCategories.value.value);
   // console.log(dependentCategories.value.)
   await searchStore.fetchAllStoresHasProdcut(
     route.query.id,
@@ -69,7 +69,7 @@ const searchFor = async () => {
       dependent: dependentPrice.value.value,
     })
   );
-  console.log(query);
+  // console.log(query);
   router.replace({
     name: router.currentRoute.value.name,
     query: { ...route.query, ...query },
@@ -96,7 +96,7 @@ onMounted(() => {
   if (categories) {
     dependentCategories.value = categories;
   }
-  console.log("categoru", categories);
+  // console.log("categoru", categories);
 });
 
 onMounted(async () => {

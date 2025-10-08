@@ -148,10 +148,10 @@ const fetchProducts = async () => {
           created_at: formatDate(ele.created_at),
         };
       });
-      console.log(response);
+      // console.log(response);
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 

@@ -45,7 +45,7 @@ export const useAuthStore = defineStore("auth", () => {
           user.value = response.data.user;
           console.log(response);
           isCheckedAuth.value = true;
-          console.log('admin role', user.value.role == 'admin')
+          // console.log('admin role', user.value.role == 'admin')
           if (user.value.role == 'admin') {
             router.push({ name: 'dashboard' });
             return;
@@ -59,7 +59,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
     }
     catch (e) {
-      console.error(e);
+      // console.error(e);
       backErrors.value = e.response.data.errors;
     } finally {
       loading.value = false;
@@ -80,9 +80,9 @@ export const useAuthStore = defineStore("auth", () => {
         }, 3000);
         isCheckedAuth.value = true;
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       backErrors.value = error.response.data.errors;
     } finally {
       loading.value = false;
@@ -145,9 +145,9 @@ export const useAuthStore = defineStore("auth", () => {
       }
       // Store the token in localStorage or cookies if needed
       // localStorage.setItem("token", this.token);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       backErrors.value = error.response.data.errors;
     } finally {
       loading.value = false;
@@ -184,7 +184,7 @@ export const useAuthStore = defineStore("auth", () => {
     });
   }
   const getCsrfToken = async () => {
-    console.log('csrf')
+    // console.log('csrf')
     await axios
       .get("http://localhost:8000/sanctum/csrf-cookie", {
         withCredentials: true,
@@ -203,7 +203,7 @@ export const useAuthStore = defineStore("auth", () => {
         }
       })
       .catch((e) => {
-        console.error("error", e);
+        // console.error("error", e);
       });
   }
   const checkAuth = async () => {
@@ -235,7 +235,7 @@ export const useAuthStore = defineStore("auth", () => {
         ]);
       }
     } catch (error) {
-      console.error("Error updating account type:", error);
+      // console.error("Error updating account type:", error);
       emitter.emit("showNotificationAlert", [
         "error",
         error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",
@@ -261,7 +261,7 @@ export const useAuthStore = defineStore("auth", () => {
         ]);
       }
     } catch (error) {
-      console.error("Error deleting account:", error);
+      // console.error("Error deleting account:", error);
       emitter.emit("showNotificationAlert", [
         "error",
         error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",

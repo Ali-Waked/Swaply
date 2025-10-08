@@ -19,7 +19,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md shadow-slate-200 h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+    class="px-6 pt-8 pb-6 rounded-[20px] overflow-y-auto shadow-md dark:shadow-[inset_0_4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 shadow-slate-200 h-full max-h-[644px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
   >
     <NotificationSectionTitle title="التنبيهات النشطة" class="mb-6" />
     <template v-if="notifications.length">
@@ -39,7 +39,7 @@ onMounted(async () => {
     </template>
     <template v-else>
       <p
-        class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-300 dark:text-gray-200"
+        class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-200"
       >
         لم تقم حتى الان باضافة اي تنبيه
       </p>

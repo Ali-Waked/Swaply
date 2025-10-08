@@ -18,10 +18,10 @@ export const useCityStore = defineStore("city", () => {
 
         try {
             loading.value = true;
-            const response = await axiosClient.get(`/cities`);
+            const response = await axiosClient.get(`/cities`, { cache: { ttl: 15 * 60 * 1000 } });
             cities.value = response.data.cities;
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             errors.value = e;
         } finally {
             loading.value = false;
@@ -35,10 +35,10 @@ export const useCityStore = defineStore("city", () => {
 
         try {
             loading.value = true;
-            const response = await axiosClient.get(`/cities/distances`);
+            const response = await axiosClient.get(`/cities/distances`, { cache: { ttl: 15 * 60 * 1000 } });
             distance.value = response.data.distances;
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             errors.value = e;
         } finally {
             loading.value = false;

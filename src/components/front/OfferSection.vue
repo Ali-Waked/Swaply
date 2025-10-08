@@ -53,11 +53,11 @@ watch(
 const fetchProducts = async (page = 1) => {
   try {
     const response = await axiosClient.get(`/product/has-offer?page=${page}`);
-    console.log("offers", response.data);
+    // console.log("offers", response.data);
     data.value = response.data;
     // store.value = response.data.store;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
   }
 };

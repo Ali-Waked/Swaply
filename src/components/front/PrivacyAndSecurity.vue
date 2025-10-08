@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, inject } from "vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
@@ -19,6 +19,7 @@ const password = ref("password");
 const currentPassword = ref("");
 const currentPasswordDialog = ref(false);
 const isDeleteAccount = ref(false);
+const emitter = inject("emitter");
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
 
@@ -41,14 +42,37 @@ const openConfirmPasswordDialog = () => {
 
 const update = async () => {
   if (isDeleteAccount.value) {
+    if (!currentPassword.value) {
+      emitter?.emit("showNotificationAlert", [
+        "error",
+        "يرجى إدخال كلمة المرور الحالية",
+      ]);
+      return;
+    }
     await deleteAccount(currentPassword.value);
     return;
   }
-  if (
-    (password.value == "" && password.value == "password") ||
-    currentPassword.value == ""
-  ) {
-    password.value = "password";
+  if (password.value === "" || password.value === "password") {
+    emitter?.emit("showNotificationAlert", [
+      "error",
+      "يرجى إدخال كلمة مرور جديدة",
+    ]);
+    return;
+  }
+
+  if (password.value.length < 6) {
+    emitter?.emit("showNotificationAlert", [
+      "error",
+      "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+    ]);
+    return;
+  }
+
+  if (currentPassword.value === "") {
+    emitter?.emit("showNotificationAlert", [
+      "error",
+      "يرجى إدخال كلمة المرور الحالية",
+    ]);
     return;
   }
   try {
@@ -57,8 +81,10 @@ const update = async () => {
       current_password: currentPassword.value,
     });
     password.value = "password";
+    currentPassword.value = "";
+    currentPasswordDialog.value = false;
   } catch (error) {
-    console.error("Error updating password:", error);
+    // console.error("Error updating password:", error);
   }
 };
 watch(
@@ -86,7 +112,7 @@ const deleteAccount = async (password) => {
     await authStore.deleteAccount(password);
     deleteDialog.value.dialog = false;
   } catch (error) {
-    console.error("Error deleting account:", error);
+    // console.error("Error deleting account:", error);
   }
 };
 onMounted(async () => {

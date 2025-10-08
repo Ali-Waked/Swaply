@@ -76,12 +76,12 @@ const label = computed(() => {
 // });
 
 const submit = async () => {
-  console.log(props.category.id);
+  // console.log(props.category.id);
   try {
     loading.value = true;
 
     if (currentMode.value === "create") {
-      console.log(localCategoryName.value);
+      // console.log(localCategoryName.value);
       const response = await axiosClient.post("/admin/categories", {
         name: localCategoryName.value,
       });
@@ -111,7 +111,7 @@ const submit = async () => {
     }
   } catch (e) {
     errors.value = e.response?.data?.errors || {};
-    console.error(e);
+    // console.error(e);
   } finally {
     loading.value = false;
   }

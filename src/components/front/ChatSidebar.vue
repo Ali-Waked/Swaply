@@ -84,10 +84,10 @@ const openChat = (conversation) => {
 
     conversation.unread_count = 0;
   }
-  console.log(conversation);
+  // console.log(conversation);
   conversation.user_two.conversation_id = conversation.id;
   conversation.user_one.conversation_id = conversation.id;
-  console.log(conversation);
+  // console.log(conversation);
   emit(
     "chatWith",
     conversation.user_one.id === user.id

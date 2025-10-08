@@ -33,7 +33,7 @@ onMounted(async () => {
     subtitle="تتبع تغييرات الاسعار و احصل على اشعارات فورية"
   />
   <div class="flex gap-8 mt-12 flex-col lg:flex-row">
-    <div class="left-site flex-1">
+    <div class="flex-1">
       <div class="notification-setting w-full">
         <NotificationSetting />
         <LastNotification v-model="showAll" />

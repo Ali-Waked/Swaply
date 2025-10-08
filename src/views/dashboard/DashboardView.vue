@@ -216,7 +216,7 @@ onMounted(async () => {
     cardItems[1].number = response.data.categories_count;
     cardItems[2].number = response.data.users_count;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 
   try {
@@ -225,7 +225,7 @@ onMounted(async () => {
       notifications.value = response.data.notifications;
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 });
 </script>

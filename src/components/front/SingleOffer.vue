@@ -76,7 +76,7 @@ const requestStatus = computed(() => {
 
 <template>
   <div
-    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-sm border border-gray-300 transition relative my-4 last-of-type:mb-0 dark:border-gray-600"
+    class="single-offer p-4 bg-white dark:bg-gray-800 rounded-[10px] hover:shadow-md border border-gray-300 transition relative my-4 last-of-type:mb-0 dark:border-gray-600"
   >
     <div class="flex items-center justify-between mb-4">
       <div class="info flex items-center gap-2">

@@ -27,7 +27,7 @@ export const useSearchStore = defineStore("search", () => {
             last_page.value = response.data.stores.last_page;
 
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             errors.value = e;
         } finally {
             loading.value = false;

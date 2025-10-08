@@ -164,7 +164,7 @@ const onSubmit = handleSubmit(async (values) => {
   } else {
     credentials.email = emailOrPhone.value;
   }
-  console.log("creadentails", credentials, routeName);
+  // console.log("creadentails", credentials, routeName);
   if (routeName == "login") {
     await authStore.login(credentials);
   }

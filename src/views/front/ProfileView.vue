@@ -96,7 +96,7 @@ onMounted(() => {
           const id = entry.target.id;
           activeId.value = id;
           const label = getLabelById(id);
-          console.log(label);
+          // console.log(label);
           if (label) sectionTitle.value = label;
         }
       });

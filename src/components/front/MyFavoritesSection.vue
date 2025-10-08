@@ -62,7 +62,7 @@ const fetchProducts = async (page = 1) => {
     paginations.last_page = response.data.favorites.last_page;
     // store.value = response.data.store;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
   }
 };

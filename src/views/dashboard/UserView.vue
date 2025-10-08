@@ -4,16 +4,10 @@
   <GenericDataTable :headers="headers" :items="items">
     <template #actions="item">
       <div class="flex gap-2 justify-center">
-        <button
-          @click="openEditModal(item.item)"
-          class="bg-blue-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="openEditModal(item.item)" class="bg-blue-500 text-white px-3 py-1 rounded">
           تعديل
         </button>
-        <button
-          @click="deleteUser(item.item)"
-          class="bg-red-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="deleteUser(item.item)" class="bg-red-500 text-white px-3 py-1 rounded">
           حذف
         </button>
       </div>
@@ -28,19 +22,10 @@
     </template>
   </GenericDataTable>
 
-  <EditUserDialog
-    v-model="showDialog"
-    v-model:userRole="user.role"
-    :user="user"
-    v-model:userStatus="user.status"
-    @fetchUsers="fetchUsers"
-  />
+  <EditUserDialog v-model="showDialog" v-model:userRole="user.role" :user="user" v-model:userStatus="user.status"
+    @fetchUsers="fetchUsers" />
 
-  <ConfirmDeleteDialog
-    v-model="showDeleteDialog"
-    :message="confirmMessage"
-    @confirm="ConfirmDelete"
-  />
+  <ConfirmDeleteDialog v-model="showDeleteDialog" :message="confirmMessage" @confirm="ConfirmDelete" />
 </template>
 
 <script setup>
@@ -117,14 +102,14 @@ const showDeleteDialog = ref(false);
 const confirmMessage = ref("");
 const selectedUser = reactive({});
 const emitter = inject("emitter");
-
+// Delete User
 const deleteUser = ({ id, name = "" }) => {
   confirmMessage.value = `هل أنت متأكد من رغبتك بحذف المستخدم "${name}"؟`;
   selectedUser.username = name;
   selectedUser.userId = id;
   showDeleteDialog.value = true;
 };
-
+// Confirm Delete
 const ConfirmDelete = async () => {
   const response = await axiosClient.delete(
     `admin/users/${cleanId(selectedUser.userId)}`
@@ -137,7 +122,7 @@ const ConfirmDelete = async () => {
     ]);
   }
 };
-
+// Fetch Users
 const fetchUsers = async () => {
   try {
     await axiosClient.get("/admin/users").then((response) => {
@@ -153,13 +138,11 @@ const fetchUsers = async () => {
           created_at: formatDate(ele.created_at),
         };
       });
-      console.log(response);
+      // console.log(response);
     });
   } catch (e) {
-    console.error(e);
   }
 };
-
 onMounted(async () => {
   await fetchUsers();
 });

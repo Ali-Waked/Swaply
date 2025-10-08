@@ -27,7 +27,7 @@ export const useNotificationStore = defineStore("notification", () => {
                 ]);
             }
         } catch (e) {
-            console.error(e);
+            // console.error(e);
         } finally {
             loading.value = false;
         }
@@ -38,7 +38,7 @@ export const useNotificationStore = defineStore("notification", () => {
             const response = await axiosClient.get("/notifications");
             notifications.value = response.data.notifications;
         } catch (e) {
-            console.error(e);
+            // console.error(e);
         }
     }
 
@@ -50,7 +50,7 @@ export const useNotificationStore = defineStore("notification", () => {
                 lastNotifications.value = response.data.notifications;
             }
         } catch (e) {
-            console.error(e);
+            // console.error(e);
         }
     }
     const markAsRead = async () => {
@@ -60,7 +60,7 @@ export const useNotificationStore = defineStore("notification", () => {
                 lastNotificationUnreadCount.value = 0;
             }
         } catch (e) {
-            console.error(e);
+            // console.error(e);
         }
     }
 

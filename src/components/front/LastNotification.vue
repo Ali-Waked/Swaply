@@ -71,7 +71,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="px-6 pt-8 h-[330px] pb-2 rounded-[20px] shadow-md shadow-slate-200 bg-white dark:bg-gray-900"
+    class="px-6 pt-8 h-[330px] pb-2 rounded-[20px] dark:shadow-[inset_0_4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 bg-white dark:bg-gray-900"
     :class="{ 'overflow-y-auto': isShowAll, 'overflow-y-hidden': !isShowAll }"
     v-if="lastNotifications.data"
   >

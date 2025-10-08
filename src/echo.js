@@ -18,11 +18,11 @@ export const echo = new Echo({
             channel_name: channel.name,
           })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             callback(false, response.data);
           })
           .catch((error) => {
-            console.error('Pusher auth failed', error);
+            // console.error('Pusher auth failed', error);
             callback(true, error);
           });
       },

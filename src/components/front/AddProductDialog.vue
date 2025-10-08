@@ -5,15 +5,12 @@
 
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel
-          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative"
-        >
+          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
           <DialogTitle class="pt-6 mb-3">
             <h3 class="title font-[500] text-[20px] text-black dark:text-white">
               {{ isEditPage ? "تعديل المنتج" : "اضافة منتج" }}
             </h3>
-            <p
-              class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300"
-            >
+            <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300">
               {{
                 isEditPage
                   ? "قم بتعديل بيانات المنتج "
@@ -22,82 +19,45 @@
             </p>
           </DialogTitle>
           <form @submit.prevent="submit">
-            <ComboboxComponent
-              v-model="selectedProduct"
-              :items="availableProducts"
-              placeholder="مثال: حليب"
-            />
+            <ComboboxComponent v-model="selectedProduct" :items="availableProducts" placeholder="مثال: حليب" />
             <ErrorInputText :error-message="nameError" />
 
             <!-- category (disabled auto) -->
-            <FormControl
-              label="التصنيف"
-              id="category"
-              :value="categoryForProductSelected"
-              disabled
-            />
+            <FormControl label="التصنيف" id="category" :value="categoryForProductSelected" disabled />
 
-            <FormControl
-              label="سعر المنتج"
-              type="number"
-              id="product-price"
-              class="bg-transparent"
-              :value="price"
-              @input="price = $event.target.valueAsNumber"
-              placeholder="100"
-            />
+            <FormControl label="سعر المنتج" type="number" id="product-price" class="bg-transparent" :value="price"
+              @input="price = $event.target.valueAsNumber" placeholder="100" />
 
             <ErrorInputText :error-message="priceError" />
 
             <!-- description -->
-            <FormControl
-              label="الوصف"
-              id="الوصف"
-              :value="description"
-              @input="description = $event.target.value"
-              class="bg-transparent"
-              placeholder="تفاصيل اضافية عن المنتج"
-              type="textarea"
-            />
+            <FormControl label="الوصف" id="الوصف" :value="description" @input="description = $event.target.value"
+              class="bg-transparent" placeholder="تفاصيل اضافية عن المنتج" type="textarea" />
             <ErrorInputText :error-message="descriptionError" />
 
             <!-- image -->
             <div class="mb-3">
-              <label
-                for="file_image"
-                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md"
-              >
+              <label for="file_image"
+                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md">
                 <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 <span class="font-[400] dark:text-white">{{
                   imagePreview ? "تعديل الصورة" : "اضافة صورة"
                 }}</span>
               </label>
-              <input
-                type="file"
-                id="file_image"
-                hidden
-                @change="onFileChange"
-              />
+              <input type="file" id="file_image" hidden @change="onFileChange" />
               <div v-if="imagePreview" class="mt-2">
-                <img
-                  :src="imagePreview"
-                  class="w-32 h-32 object-cover rounded-md"
-                />
+                <img :src="imagePreview" class="w-32 h-32 object-cover rounded-md" />
               </div>
               <ErrorInputText :error-message="imageError" />
             </div>
 
-            <MainButton
-              :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'"
-              class="bg-gray-800 hover:bg-gray-800/95"
-              type="submit"
-            />
+            <MainButton :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'" class="bg-gray-800 hover:bg-gray-800/95"
+              type="submit" />
           </form>
           <!-- زر الاغلاق -->
           <div class="absolute top-[20px] right-[20px]">
             <span
-              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer"
-            >
+              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer">
               <XMarkIcon class="h-5 w-5" @click="closeDialog()" />
             </span>
           </div>
@@ -150,7 +110,7 @@ const productStore = useProductStore();
 const { products } = storeToRefs(productStore);
 
 const imagePreview = ref(null);
-// schema
+//Add or Edit Product  Validation Schema (Merchant) 
 const schema = yup.object({
   name: yup.object().required("اسم المنتج مطلوب"),
   price: yup
@@ -207,24 +167,20 @@ const isEditPage = computed(() => {
     props.productEdit.product_id
   );
 });
-
+// Add or Edit Product (Merchant)
 const submit = handleSubmit(async (values) => {
   const formData = new FormData();
-  // console.log(values);
   if (values.name) formData.append("product_id", values.name.id);
   if (values.price) formData.append("price", values.price);
   if (values.description) formData.append("description", values.description);
   if (values.image) formData.append("image", values.image);
-  console.log(formData);
   try {
     if (isEditPage.value) {
       formData.append("_method", "PUT");
       const response = await axiosClient.post(
         `merchant/store/products/${props.productEdit.id}`,
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" }, }
       );
       if (response.status == 200) {
         emitter.emit("showNotificationAlert", [
@@ -233,31 +189,19 @@ const submit = handleSubmit(async (values) => {
         ]);
         emit("fetchProducts");
         closeDialog();
-      }
-      return;
-    }
+      } return;}
     const response = await axiosClient.post(
       "merchant/store/products",
       formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+      { headers: { "Content-Type": "multipart/form-data" }, });
     if (response.status == 200) {
       emitter.emit("showNotificationAlert", [
         "success",
         `تم اضافة المنتج ${values.name.name} بنجاح الى متجرك!`,
-      ]);
-      emit("fetchProducts");
-      closeDialog();
-    }
-  } catch (e) {
-    console.error(e);
-  }
-});
+      ]);emit("fetchProducts"); closeDialog();}} catch (e) { }});
 
+      
 const availableProducts = computed(() => {
-  console.log("product_ids", props.productsIds);
   return products.value.filter((p) => !props.productsIds.includes(p.id));
 });
 
@@ -272,9 +216,9 @@ watch(
   async (val) => {
     if (!val) return;
     await productStore.fetchAllProductsIds();
-    console.log("product_ids", isEditPage.value);
+    // console.log("product_ids", isEditPage.value);
     if (isEditPage.value) {
-      console.log("edit");
+      // console.log("edit");
       // const response = await axiosClient.get(
       //   `merchant/store/products/${props.editProductId}`
       // );
@@ -313,9 +257,11 @@ watch(
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.5);
   border-radius: 3px;

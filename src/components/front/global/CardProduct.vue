@@ -84,7 +84,7 @@ const addToFavorite = async () => {
       isFavorite.value = true;
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 const removeFromFavorite = async () => {
@@ -94,14 +94,14 @@ const removeFromFavorite = async () => {
       isFavorite.value = false;
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 </script>
 
 <template>
   <div
-    class="border rounded-[18px] h-[22rem] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover:shadow-md dark:border-gray-700"
+    class="border rounded-[18px] h-[22rem] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover: dark:hover:shadow-lg dark:hover:shadow-slate-700 dark:border-gray-700"
   >
     <!-- Image container -->
     <div class="bg-[radial-gradient(circle,_#d1d5dbb3,_#9ca3af)] dark:bg-[radial-gradient(circle,_#1f293780,_#111827)] relative group ">

@@ -104,7 +104,7 @@ watch(storeImage, async (newImage) => {
         ]);
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
+      // console.error("Error uploading image:", error);
       emitter.emit("showNotificationAlert", [
         "error",
         "حدث خطأ أثناء رفع الصورة. حاول مرة أخرى.",
@@ -146,7 +146,7 @@ const merchantUpdate = async (data) => {
       ]);
     }
   } catch (error) {
-    console.error("Error updating account type:", error);
+    // console.error("Error updating account type:", error);
   }
 };
 onMounted(async () => {

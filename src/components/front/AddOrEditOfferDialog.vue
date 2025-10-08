@@ -257,7 +257,7 @@ const submit = handleSubmit(async (values) => {
       closeDialog();
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 });
 const formatDate = (datetime) => datetime?.split(" ")[0] ?? "";

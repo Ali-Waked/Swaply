@@ -17,7 +17,7 @@ export const useProductStore = defineStore("product", () => {
             const response = await axiosClient.get('/products');
             products.value = response.data.products;
         } catch (e) {
-            console.error(e)
+            // console.error(e)
         } finally {
             loading.value = false;
         }

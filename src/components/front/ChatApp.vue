@@ -41,7 +41,7 @@ const currentUserId = ref(null);
 const conversationId = ref(null);
 
 const getChannelName = () => {
-  console.log(`private-conversation.${conversationId.value}`);
+  // console.log(`private-conversation.${conversationId.value}`);
   if (conversationId.value) {
     return `private-conversation.${conversationId.value}`;
   }
@@ -82,7 +82,7 @@ const subscribeToChannel = () => {
   channel.value = echo.private(channelName);
 
   channel.value.listen(".MessageSent", (e) => {
-    console.log(e);
+    // console.log(e);
     const incoming = e.message ?? e;
     if (!incoming || !incoming.id) return;
     if (incoming.senderId === user.value.id) return;
@@ -104,7 +104,7 @@ const fetchChatMessages = async (page = 1) => {
   }
   if (page === 1) loading.value = true;
   else loadingMore.value = true;
-  console.log(props.with.id);
+  // console.log(props.with.id);
   try {
     const response = await axiosClient.get(route);
 
@@ -143,7 +143,7 @@ const fetchChatMessages = async (page = 1) => {
       }
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   } finally {
     loading.value = false;
     loadingMore.value = false;
@@ -210,7 +210,7 @@ const sendMessage = async () => {
   } catch (e) {
     const idx = messages.value.findIndex((m) => m.id === tempId);
     if (idx !== -1) messages.value[idx].status = "failed";
-    console.error(e);
+    // console.error(e);
   }
 };
 

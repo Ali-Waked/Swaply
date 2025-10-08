@@ -17,7 +17,7 @@ export const useCurrencyStore = defineStore("currency", () => {
                 rateUSD.value = 0;
             }, 15 * 60 * 1000);
         } catch (err) {
-            console.error(err);
+            // console.error(err);
             rateUSD.value = 0;
         }
     };
