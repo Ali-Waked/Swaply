@@ -2,6 +2,9 @@
   <HeaderPage title="المتاجر" :is-has-add-button="false" />
 
   <GenericDataTable :headers="headers" :items="items">
+    <template #id="{ item }">
+      <span># {{ item.id }}</span>
+    </template>
     <template #image="{ item }">
       <img
         :src="item.image"
@@ -136,7 +139,7 @@ const fetchStores = async () => {
     stores.value = response.data.data;
     items.value = response.data.data.map((ele) => {
       return {
-        id: `# ${ele.id}`,
+        id: ele.id,
         name: ele.name,
         phone: ele.user.phone ?? "غير مسجل",
         location: ele.city?.name ?? "غير محدد",

@@ -244,6 +244,7 @@ const emit = defineEmits([
   "addDiscount",
   "deleteDiscount",
   "deleteProduct",
+  "editProduct",
 ]);
 const productButtons = computed(() => {
   const buttons = [

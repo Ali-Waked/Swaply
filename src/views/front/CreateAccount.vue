@@ -41,11 +41,12 @@ const baseSchema = {
     .test("emailOrPhone", function (value) {
       if (!value) return false;
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const phoneRegex = /^[0-9]{10}$/;
 
       const isPhone = isPhoneNumber.value;
-      const isValid = isPhone ? phoneRegex.test(value) : emailRegex.test(value);
+      const isValid = isPhone
+        ? phoneRegex.test(value)
+        : yup.string().email().isValidSync(value);
 
       if (!isValid) {
         return this.createError({
@@ -152,7 +153,8 @@ watch(
   }
 );
 
-const onSubmit = handleSubmit(async (values) => {
+const onSubmit = handleSubmit(async (values) => { 
+  
   const routeName = router.currentRoute.value.name;
   const credentials = {
     password: password.value,
@@ -198,18 +200,18 @@ onMounted(async () => {
       <!-- --OLD-- -->
       <!-- <img src="../../../public/Logo.png" class="w-32" /> -->
 
-      <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
+      <img src="/Logo.png" class="w-32 dark:hidden" alt="logo" />
       <img
-        src="../../../public/Logo-black.png"
+        src="/Logo-black.png"
         class="w-32 hidden dark:block"
         alt="logo"
       />
       <!-- --NEW-- -->
     </div>
     <div
-      class="container mx-auto p-2 sm:p-0 -mt-3 h-screen flex items-center justify-center"
+      class="container mx-auto p-2 sm:p-0 mt-9 h-screen flex items-start justify-center"
     >
-      <form
+      <form 
         @submit.prevent="onSubmit"
         class="bg-white dark:bg-gray-900 rounded-[22px] border border-gray-300 dark:border-gray-700 p-6 w-full sm:w-[420px]"
       >
@@ -239,11 +241,14 @@ onMounted(async () => {
           <div class="relative">
             <input
               type="text"
+              id="nameinput"
+              pattern="[\u0600-\u06FF\s]*"
+              title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاول"
               v-model="first_name"
               class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
               :class="{
-                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/10 transition duration-300 placeholder:text-red-500':
                   errors.first_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
                   !errors.first_name,
@@ -254,11 +259,14 @@ onMounted(async () => {
           <div class="relative">
             <input
               type="text"
+              id="nameinput"
+              pattern="[\u0600-\u06FF\s]*"
+              title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاخير"
               v-model="last_name"
               class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]"
               :class="{
-                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
+                'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600  bg-red-100/10 transition duration-300 placeholder:text-red-500':
                   errors.last_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
                   !errors.last_name,
@@ -435,6 +443,6 @@ onMounted(async () => {
         <BackButton @click="router.push({ name: 'home' })" />
       </div>
     </div>
-  </div>
+  </div> 
 </template>
 

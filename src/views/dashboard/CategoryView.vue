@@ -15,6 +15,9 @@
   </div>
 
   <GenericDataTable :headers="headers" :items="filteredItems">
+    <template #id="{ item }">
+      <span># {{ item.id }}</span>
+    </template>
     <template #actions="item">
       <div class="flex gap-2 justify-center">
         <button
@@ -120,7 +123,7 @@ const fetchCategories = async () => {
   try {
     const response = await axiosClient.get("/admin/categories");
     items.value = response.data.categories.map((ele) => ({
-      id: `# ${ele.id}`,
+      id: ele.id,
       name: ele.name,
       description: ele.description,
       created_at: formatDate(ele.created_at),

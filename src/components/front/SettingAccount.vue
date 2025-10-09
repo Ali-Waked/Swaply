@@ -10,6 +10,7 @@ import { computed } from "vue";
 import axiosClient from "../../axiosClient";
 import { watch } from "vue";
 import { useCityStore } from "../../stores/city";
+import * as yup from "yup";
 
 const userStore = useAuthStore();
 const { user } = storeToRefs(userStore);
@@ -143,8 +144,8 @@ const update = async (data) => {
   const oldValue = item?.value;
 
   if (data.id === "email") {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (data.value && !emailRegex.test(data.value)) {
+    const isValidEmail = yup.string().email().isValidSync(data.value);
+    if (data.value && !isValidEmail) {
       items.value[index.value].value = oldValue;
       emitter.emit("showNotificationAlert", [
         "error",
@@ -155,11 +156,11 @@ const update = async (data) => {
   }
 
   if (data.id === "phone") {
-    const phoneRegex = /^\+97[0-9]{7,12}$/;
+    const phoneRegex = /^\+97[0-9]{10}$/;
     if (data.value && !phoneRegex.test(data.value)) {
       emitter.emit("showNotificationAlert", [
         "error",
-        "رقم الهاتف يجب أن يبدأ بـ +97 ويتبعه 7-12 رقم",
+        "رقم الهاتف يجب أن يبدأ بـ +97 ويتبعه 10 أرقام",
       ]);
       items.value[index.value].value = oldValue;
       return;

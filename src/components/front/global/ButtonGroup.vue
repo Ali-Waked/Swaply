@@ -32,12 +32,6 @@ const handleScroll = () => {
 const notificationStore = useNotificationStore();
 const { lastNotificationUnreadCount } = storeToRefs(notificationStore);
 
-// const handleScroll = () => {
-//   if (!buttonGroup.value) return;
-//   const rect = buttonGroup.value.getBoundingClientRect();
-//   // إذا وصل للأعلى أقل من 20px خليه fixed
-//   isFixed.value = rect.top <= 20;
-// };
 
 onMounted(() => {
   emitter.on("hiddenButton", (event) => {

@@ -39,9 +39,9 @@ const onSubmit = handleSubmit(async () => {
     <BackButton class="absolute right-6 top-8" />
 
     <div class="logo flex items-center justify-center pt-6 absolute top-1">
-      <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
+      <img src="/Logo.png" class="w-32 dark:hidden" alt="logo" />
       <img
-        src="../../../public/Logo-black.png"
+        src="/Logo-black.png"
         class="w-32 hidden dark:block"
         alt="logo"
       />

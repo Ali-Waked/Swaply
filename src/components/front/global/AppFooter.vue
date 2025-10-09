@@ -69,12 +69,12 @@ const columnsData = [
         class="logo flex-1 flex justify-center sm:justify-start items-center"
       >
         <img
-          src="../../../../public/Logo.png"
+          src="/Logo.png"
           class="w-28 block dark:hidden"
           alt="logo"
         />
         <img
-          src="../../../../public/Logo-black.png"
+          src="/Logo-black.png"
           class="w-28 hidden dark:block"
           alt="logo"
         />

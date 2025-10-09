@@ -16,7 +16,7 @@ import axiosClient from "../../axiosClient";
 
 const items = [
   {
-    image: "../../../public/flour.webp",
+    image: "/flour.webp",
     price: "",
     name: "",
     storeName: "",
@@ -56,7 +56,7 @@ watch(
 const fetchProducts = async (page = 1) => {
   try {
     const response = await axiosClient.get(`/favorites?page=${page}`);
-    console.log("offers", response.data);
+    // console.log("offers", response.data);
     products.value = response.data.favorites.data.map((el) => el.product);
     paginations.current_page = response.data.favorites.current_page;
     paginations.last_page = response.data.favorites.last_page;

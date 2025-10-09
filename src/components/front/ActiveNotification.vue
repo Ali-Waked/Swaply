@@ -30,10 +30,10 @@ onMounted(async () => {
           v-model:is-active="item.status"
           :whenRun="
             item.type === 'lt'
-              ? `اقل من ${+item.target_price}`
-              : `اكبر من ${+item.target_price}`
+              ? `أقل من ${+item.target_price}`
+              : `أكبر من ${+item.target_price}`
           "
-          :alerted="item.is_triggered"
+          :alerted="Boolean(item.is_triggered)"
         />
       </template>
     </template>

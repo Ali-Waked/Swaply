@@ -59,7 +59,7 @@ const cancelEdit = () => {
       <input
         :type="inputType"
         v-model="localValue"
-        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
+        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right" dir="ltr"
       />
       <p v-if="error" class="text-red-500 text-sm mt-1">{{ error }}</p>
       <div class="action flex justify-end gap-1">
@@ -81,12 +81,13 @@ const cancelEdit = () => {
     <div
       v-else
       class="font-[500] flex items-center justify-between text-blue-950 dark:text-white"
-    >
-      <p>{{ displayValue }}</p>
+      >
+      <p dir="ltr">{{ displayValue }}</p>
       <button
         @click="isEdit = true"
         class="w-fit border rounded-lg py-2 px-4 text-[12px] font-[500] transition border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
-      >
+        dir="ltr"
+        >
         {{ buttonLabel }}
       </button>
     </div>

@@ -9,7 +9,8 @@ const props = defineProps({
     type: String,
   },
   whenRun: String,
-  isActive: Boolean,
+  // accepts 'active' | 'inactive'
+  isActive: String,
   alerted: Boolean,
 });
 const box = ref(null);

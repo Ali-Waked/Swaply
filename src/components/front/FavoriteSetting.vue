@@ -14,7 +14,7 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 // const apperenceSelected = ref("ligth");
 
-const enabled = ref(user.value?.recive_notification ?? false);
+const enabled = ref(Boolean(user.value?.recive_notification));
 const currencySelected = ref(user.value?.currency || "ILS");
 const langs = [
   {

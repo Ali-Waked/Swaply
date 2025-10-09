@@ -82,7 +82,7 @@ onMounted(async () => {
         @click="isShowAll = !isShowAll"
         class="show-more text-gray-600 dark:text-gray-300 border border-gray-400 dark:border-gray-600 rounded-lg text-[12px] w-[94px] h-8 font-[500] bg-gray-100 dark:bg-gray-700 transition-all hover:bg-gray-200 dark:hover:bg-gray-600"
       >
-        {{ isShowAll ? "عرض اقل" : "عرض الكل" }}
+        {{ isShowAll ? "عرض أقل" : "عرض الكل" }}
       </button>
     </div>
     <template v-if="lastNotifications.data.length > 0">

@@ -16,7 +16,7 @@ import axiosClient from "../../axiosClient";
 
 const items = [
   {
-    image: "../../../public/flour.webp",
+    image: "/flour.webp",
     price: "",
     name: "",
     storeName: "",

@@ -15,7 +15,7 @@ const showAllProduct = () => {
     return;
   }
   showAll.value = true;
-  buttonLabel.value = "عرض اقل";
+  buttonLabel.value = "عرض أقل";
   emit("showAll", true);
 };
 </script>

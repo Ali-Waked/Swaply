@@ -31,7 +31,7 @@ const { loading, status } = storeToRefs(notificationStore);
 
 const notification = reactive({
   price: "",
-  selected: { id: 2, name: "اقل من", value: "lt" },
+  selected: { id: 2, name: "أقل من", value: "lt" },
 });
 
 // const items = [
@@ -41,8 +41,8 @@ const notification = reactive({
 //   { id: 4, name: "كفتة" },
 // ];
 const options = [
-  { id: 1, name: "اكبر من", value: "gt" },
-  { id: 2, name: "اقل من", value: "lt" },
+  { id: 1, name: "أكبر من", value: "gt" },
+  { id: 2, name: "أقل من", value: "lt" },
 ];
 
 const selectedItem = ref(null);
@@ -66,7 +66,7 @@ const addNotification = async () => {
     query.value = "";
     selectedItem.value = "";
     notification.price = "";
-    notification.selected = { id: 2, name: "اقل من", value: "lt" };
+    notification.selected = { id: 2, name: "أقل من", value: "lt" };
     status.value = 400;
   }
 };

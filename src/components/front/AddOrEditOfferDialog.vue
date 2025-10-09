@@ -158,7 +158,7 @@ const schema = yup.object({
       is: "percent",
       then: (schema) =>
         schema
-          .min(1, "اقل نسبة 1%")
+          .min(1, "أقل نسبة 1%")
           .max(100, "اقصى نسبة 100%")
           .required("النسبة مطلوبة"),
     }),

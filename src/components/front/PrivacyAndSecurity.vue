@@ -52,7 +52,7 @@ const update = async () => {
     await deleteAccount(currentPassword.value);
     return;
   }
-  if (password.value === "" || password.value === "password") {
+  if (password.value === "") {
     emitter?.emit("showNotificationAlert", [
       "error",
       "يرجى إدخال كلمة مرور جديدة",
@@ -145,10 +145,13 @@ onMounted(async () => {
       description="السماح بمشاركة موقعك"
     >
       <template #action>
-        <BaseSwitch v-model:model-value="user.share_location" />
+        <BaseSwitch
+          :model-value="!!user.share_location"
+          @update:modelValue="(val) => (user.share_location = val ? 1 : 0)"
+        />
       </template>
       <SelectListBox
-        v-if="user.share_location"
+        v-if="!!user.share_location"
         class="w-full"
         v-model="user.city"
         :options="cities"
@@ -185,7 +188,7 @@ onMounted(async () => {
     <input
       type="password"
       v-model="currentPassword"
-      class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
+      class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right" dir="ltr"
       placeholder="كلمة المرور"
     />
   </ConfirmDeleteDialog>

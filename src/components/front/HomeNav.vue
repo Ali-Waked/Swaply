@@ -55,7 +55,7 @@ const changeTheme = (value) => {
       >
         <div
           class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-transparent"
-          @click="changeTheme('ligth')"
+          @click="changeTheme('light')"
         >
           <SunIcon class="w-5 h-5" />
         </div>
@@ -109,9 +109,9 @@ const changeTheme = (value) => {
 
     <!-- Logo -->
     <div class="logo">
-      <img src="../../../public/Logo.png" class="w-28 dark:hidden" alt="logo" />
+      <img src="/Logo.png" class="w-28 dark:hidden" alt="logo" />
       <img
-        src="../../../public/Logo-black.png"
+        src="/Logo-black.png"
         class="w-28 hidden dark:block"
         alt="logo"
       />

@@ -20,7 +20,7 @@
           </DialogTitle>
           <form @submit.prevent="submit">
             <ComboboxComponent v-model="selectedProduct" :items="availableProducts" placeholder="مثال: حليب" />
-            <ErrorInputText :error-message="nameError" />
+            <ErrorInputText :error-message="(nameMeta.touched || submitCount > 0) ? nameError : ''" />
 
             <!-- category (disabled auto) -->
             <FormControl label="التصنيف" id="category" :value="categoryForProductSelected" disabled />
@@ -28,12 +28,12 @@
             <FormControl label="سعر المنتج" type="number" id="product-price" class="bg-transparent" :value="price"
               @input="price = $event.target.valueAsNumber" placeholder="100" />
 
-            <ErrorInputText :error-message="priceError" />
+            <ErrorInputText :error-message="(priceMeta.touched || submitCount > 0) ? priceError : ''" />
 
             <!-- description -->
             <FormControl label="الوصف" id="الوصف" :value="description" @input="description = $event.target.value"
               class="bg-transparent" placeholder="تفاصيل اضافية عن المنتج" type="textarea" />
-            <ErrorInputText :error-message="descriptionError" />
+            <ErrorInputText :error-message="(descriptionMeta.touched || submitCount > 0) ? descriptionError : ''" />
 
             <!-- image -->
             <div class="mb-3">
@@ -48,7 +48,7 @@
               <div v-if="imagePreview" class="mt-2">
                 <img :src="imagePreview" class="w-32 h-32 object-cover rounded-md" />
               </div>
-              <ErrorInputText :error-message="imageError" />
+              <ErrorInputText :error-message="(imageMeta.touched || submitCount > 0) ? imageError : ''" />
             </div>
 
             <MainButton :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'" class="bg-gray-800 hover:bg-gray-800/95"
@@ -100,7 +100,7 @@ import axios from "axios";
 const props = defineProps({
   modelValue: { type: [Boolean, Object], required: true },
   productsIds: { type: Array, default: [] },
-  productEdit: { type: Number, default: null },
+  productEdit: { type: Object, default: null },
 });
 const emit = defineEmits(["update:modelValue", "fetchProducts"]);
 const emitter = inject("emitter");
@@ -116,19 +116,20 @@ const schema = yup.object({
   price: yup
     .number()
     .typeError("السعر يجب ان يكون رقم")
-    .positive("السعر يجب ان يكون اكبر من 0")
+    .positive("السعر يجب ان يكون أكبر من 0")
     .required("السعر مطلوب"),
   description: yup.string().required("الوصف مطلوب"),
-  image: !imagePreview.value ? null : yup.mixed().required("الصورة مطلوبة"),
+  // image optional; if provided must be a file
+  image: yup.mixed().nullable(),
 });
 
-const { handleSubmit } = useForm({ validationSchema: schema });
+const { handleSubmit, submitCount } = useForm({ validationSchema: schema });
 
-const { value: name, errorMessage: nameError } = useField("name");
-const { value: price, errorMessage: priceError } = useField("price");
-const { value: description, errorMessage: descriptionError } =
+const { value: name, errorMessage: nameError, meta: nameMeta } = useField("name");
+const { value: price, errorMessage: priceError, meta: priceMeta } = useField("price");
+const { value: description, errorMessage: descriptionError, meta: descriptionMeta } =
   useField("description");
-const { value: image, errorMessage: imageError } = useField("image");
+const { value: image, errorMessage: imageError, meta: imageMeta } = useField("image");
 
 const categoryForProductSelected = computed(() => {
   if (name.value && name.value.category) {
@@ -155,7 +156,7 @@ const resetForm = () => {
   description.value = "";
   image.value = null;
   imagePreview.value = null;
-  selectedProduct.value = "";
+  selectedProduct.value = null;
   nameError.value = "";
   priceError.value = "";
   imageError.value = "";
@@ -189,7 +190,8 @@ const submit = handleSubmit(async (values) => {
         ]);
         emit("fetchProducts");
         closeDialog();
-      } return;}
+      } return;
+    }
     const response = await axiosClient.post(
       "merchant/store/products",
       formData,
@@ -198,9 +200,12 @@ const submit = handleSubmit(async (values) => {
       emitter.emit("showNotificationAlert", [
         "success",
         `تم اضافة المنتج ${values.name.name} بنجاح الى متجرك!`,
-      ]);emit("fetchProducts"); closeDialog();}} catch (e) { }});
+      ]); emit("fetchProducts"); closeDialog();
+    }
+  } catch (e) { }
+});
 
-      
+
 const availableProducts = computed(() => {
   return products.value.filter((p) => !props.productsIds.includes(p.id));
 });

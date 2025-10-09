@@ -43,7 +43,7 @@ export const useAuthStore = defineStore("auth", () => {
           isAuth.value = true;
           redirect.value = true;
           user.value = response.data.user;
-          console.log(response);
+          // console.log(response);
           isCheckedAuth.value = true;
           // console.log('admin role', user.value.role == 'admin')
           if (user.value.role == 'admin') {
@@ -123,6 +123,7 @@ export const useAuthStore = defineStore("auth", () => {
         "error",
         e.response?.data?.message || "حدث خطأ أثناء إعادة ضبط كلمة المرور",
       ]);
+      
       backErrors.value = error.response.data.errors;
     } finally {
       loading.value = false;
@@ -186,7 +187,7 @@ export const useAuthStore = defineStore("auth", () => {
   const getCsrfToken = async () => {
     // console.log('csrf')
     await axios
-      .get("http://localhost:8000/sanctum/csrf-cookie", {
+      .get("/sanctum/csrf-cookie", {
         withCredentials: true,
       })
       .then((response) => {
@@ -228,7 +229,7 @@ export const useAuthStore = defineStore("auth", () => {
   const update = async (data, isShowAlert = true) => {
     try {
       const response = await axiosClient.put("/user", data);
-      if (response.status == 200 && isShowAlert) {
+      if (response.status == 200 && isShowAlert && isAuth.value) {
         emitter.emit("showNotificationAlert", [
           "success",
           "تم تحديث بيانات الحساب بنجاح!",
@@ -236,10 +237,12 @@ export const useAuthStore = defineStore("auth", () => {
       }
     } catch (error) {
       // console.error("Error updating account type:", error);
-      emitter.emit("showNotificationAlert", [
-        "error",
-        error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",
-      ]);
+      if (isAuth.value) {
+        emitter.emit("showNotificationAlert", [
+          "error",
+          error.response.data.message || "حدث خطأ ما، يرجى المحاولة لاحقاً.",
+        ]);
+      }
     }
   };
 

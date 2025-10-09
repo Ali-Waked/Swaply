@@ -2,6 +2,9 @@
   <HeaderPage title="البلاغات" :is-has-add-button="false" />
 
   <GenericDataTable :headers="headers" :items="filteredItems">
+    <template #product_id="{ item }">
+      <span>#{{ item.product_id }}</span>
+    </template>
     <template #actions="item">
       <div class="flex justify-center">
         <button
@@ -68,7 +71,7 @@ const fetchReports = async () => {
     const response = await axiosClient.get("/admin/reports");
     items.value = response.data.data.map((ele) => ({
       id: ele.id,
-      product_id: `#${ele.product_id}`,
+      product_id: ele.product_id,
       owner_name: ele.product.store.user.name,
       product_price: `${Math.round(ele.product.price)}`,
       report_count: ele.report_count,

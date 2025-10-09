@@ -162,6 +162,11 @@ const fetchBarters = async () => {
     const response = await axiosClient.get("/barters");
     if (response.status == 200) {
       data.value = response.data.barters;
+      if (Array.isArray(data.value?.data)) {
+        data.value.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+      }
     }
   } catch (e) {
     // console.error(e);

@@ -22,7 +22,7 @@
     <div
       class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md dark:shadow-gray-700 rounded-lg"
     >
-      <div class="min-w-[750px] h-full">
+      <div class="min-w-[750px] h-[25rem]">
         <div
           class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200"
         >
@@ -53,7 +53,7 @@
               v-for="user in users"
               :key="user.id"
             >
-              <span class="text-center">{{ user.id }}</span>
+              <span class="text-center"># {{ user.id }}</span>
               <span>{{ user.name }}</span>
               <span class="col-span-2 text-center">{{ user.email }}</span>
               <span class="text-end" dir="ltr">{{ user.phone }}</span>
@@ -68,7 +68,7 @@
     </div>
 
     <div
-      class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[416px] min-w-[280px] transition-colors duration-200"
+      class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[25rem] min-w-[280px] transition-colors duration-200"
       :class="{ 'overflow-y-auto': showAll }"
     >
       <div class="flex justify-between items-center gap-6 mb-6">
@@ -80,7 +80,7 @@
           @click="showAll = !showAll"
           class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
-          {{ showAll ? "عرض اقل" : "عرض الكل" }}
+          {{ showAll ? "عرض أقل" : "عرض الكل" }}
         </button>
       </div>
       <template v-if="notifications.data?.length > 0">
@@ -204,7 +204,7 @@ onMounted(async () => {
     const response = await axiosClient.get("/admin/dashboard");
     users.value = response.data.last_users_register.map((ele) => {
       return {
-        id: `# ${ele.id}`,
+        id: ele.id,
         name: ele.name,
         email: ele.email ?? "غير مسجل",
         phone: ele.phone ?? "غير مسجل",

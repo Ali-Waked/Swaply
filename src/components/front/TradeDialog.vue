@@ -39,25 +39,33 @@
           <!-- Form Fields -->
           <div class="space-y-4">
             <FormControl
+              id="offer_item"
               label="ماذا تعرض؟"
               placeholder="مثال: 5 لتر بنزين"
               v-model="data.offer_item"
+              :error-message="errors.offer_item"
             />
             <FormControl
+              id="request_item"
               label="ماذا تريد؟"
               placeholder="مثال: حليب اطفال"
               v-model="data.request_item"
+              :error-message="errors.request_item"
             />
             <FormControl
+              id="description"
               label="الوصف"
               placeholder="تفاصيل اضافية عن العرض"
               type="textarea"
               v-model="data.description"
+              :error-message="errors.description"
             />
             <FormControl
+              id="location"
               label="الموقع"
               placeholder="المنطقة او الحي"
               v-model="data.location"
+              :error-message="errors.location"
             />
 
             <!-- Product Details -->
@@ -107,7 +115,6 @@
 <script setup>
 import {
   defineProps,
-  defineEmits,
   reactive,
   ref,
   watch,
@@ -152,15 +159,23 @@ const data = reactive({
   image_url: null,
 });
 
+function sanitize(value) {
+  if (value === null || value === undefined) return "";
+  if (typeof value === "string" && value.trim().toLowerCase() === "undefined") {
+    return "";
+  }
+  return value;
+}
+
 watch(
   () => props.modelValue,
   (newVal) => {
     if (newVal && props.editData) {
       Object.assign(data, {
-        offer_item: props.editData.offer_item,
-        request_item: props.editData.request_item,
-        description: props.editData.description,
-        location: props.editData.location,
+        offer_item: sanitize(props.editData.offer_item),
+        request_item: sanitize(props.editData.request_item),
+        description: sanitize(props.editData.description),
+        location: sanitize(props.editData.location),
         quantity: props.editData.quantity,
         contact_method: props.editData.contact_method,
         availability: props.editData.availability,
@@ -201,9 +216,47 @@ function closeDialog() {
 
 const loading = ref(false);
 
+const errors = reactive({
+  offer_item: "",
+  request_item: "",
+  description: "",
+  location: "",
+});
+
+function validateRequired(value) {
+  return value !== null && value !== undefined && String(value).trim() !== "" && String(value).trim() !== "null" && String(value).trim() !== "undefined" && String(value).trim().length > 0;
+}
+
 const submit = async () => {
   try {
     loading.value = true;
+    // normalize values before validation
+    data.offer_item = sanitize(data.offer_item);
+    data.request_item = sanitize(data.request_item);
+    data.description = sanitize(data.description);
+    data.location = sanitize(data.location);
+    // basic validation
+    errors.offer_item = validateRequired(data.offer_item)
+      ? ""
+      : "هذا الحقل مطلوب";
+    errors.request_item = validateRequired(data.request_item)
+      ? ""
+      : "هذا الحقل مطلوب";
+    errors.description = validateRequired(data.description)
+      ? ""
+      : "هذا الحقل مطلوب";
+    errors.location = validateRequired(data.location)
+      ? ""
+      : "هذا الحقل مطلوب";
+
+    if (
+      errors.offer_item ||
+      errors.request_item ||
+      errors.description ||
+      errors.location
+    ) {
+      return;
+    }
     const formData = new FormData();
     formData.append("offer_item", data.offer_item);
     formData.append("request_item", data.request_item);

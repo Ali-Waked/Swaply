@@ -37,11 +37,12 @@ const baseSchema = {
     .test("emailOrPhone", function (value) {
       if (!value) return false;
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const phoneRegex = /^[0-9]{10}$/;
 
       const isPhone = isPhoneNumber.value;
-      const isValid = isPhone ? phoneRegex.test(value) : emailRegex.test(value);
+      const isValid = isPhone
+        ? phoneRegex.test(value)
+        : yup.string().email().isValidSync(value);
 
       if (!isValid) {
         return this.createError({
@@ -160,9 +161,9 @@ onMounted(async () => {
   >
     <BackButton class="absolute right-6 top-8" />
     <div class="logo flex items-center justify-center pt-6 absolute top-1">
-      <img src="../../../public/Logo.png" class="w-32 dark:hidden" alt="logo" />
+      <img src="/Logo.png" class="w-32 dark:hidden" alt="logo" />
       <img
-        src="../../../public/Logo-black.png"
+        src="/Logo-black.png"
         class="w-32 hidden dark:block"
         alt="logo"
       />

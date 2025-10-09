@@ -6,11 +6,11 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid";
 import MainLabel from "./MainLabel.vue";
 
 const props = defineProps({
-  quantity: { type: String, default: "" },
-  contact_method: { type: String, default: "" },
-  availability: { type: String, default: "" },
-  exchange_preferences: { type: String, default: "" },
-  offer_status: { type: String, default: "" },
+  quantity: { type: [String, Object], default: "" },
+  contact_method: { type: [String, Object], default: "" },
+  availability: { type: [String, Object], default: "" },
+  exchange_preferences: { type: [String, Object], default: "" },
+  offer_status: { type: [String, Object], default: "" },
 });
 
 const emits = defineEmits([
@@ -75,7 +75,10 @@ const exchangeDetails = [
 
 const selectedContact = computed({
   get() {
-    return contactOptions.filter((el) => el.name == props.contact_method)[0];
+    if (props.contact_method && typeof props.contact_method === "object") {
+      return props.contact_method;
+    }
+    return contactOptions.find((el) => el.name == props.contact_method);
   },
   set(value) {
     emits("update:contact_method", value);
@@ -83,7 +86,10 @@ const selectedContact = computed({
 });
 const selectedStatus = computed({
   get() {
-    return statusOptions.filter((el) => el.name == props.offer_status)[0];
+    if (props.offer_status && typeof props.offer_status === "object") {
+      return props.offer_status;
+    }
+    return statusOptions.find((el) => el.name == props.offer_status);
   },
   set(value) {
     emits("update:offer_status", value);
@@ -91,7 +97,10 @@ const selectedStatus = computed({
 });
 const selectedQuantity = computed({
   get() {
-    return quantityOptions.filter((el) => el.name == props.quantity)[0];
+    if (props.quantity && typeof props.quantity === "object") {
+      return props.quantity;
+    }
+    return quantityOptions.find((el) => el.name == props.quantity);
   },
   set(value) {
     emits("update:quantity", value);
@@ -99,9 +108,13 @@ const selectedQuantity = computed({
 });
 const selectedExchange = computed({
   get() {
-    return exchangeDetails.filter(
-      (el) => el.name == props.exchange_preferences
-    )[0];
+    if (
+      props.exchange_preferences &&
+      typeof props.exchange_preferences === "object"
+    ) {
+      return props.exchange_preferences;
+    }
+    return exchangeDetails.find((el) => el.name == props.exchange_preferences);
   },
   set(value) {
     emits("update:exchange_preferences", value);
@@ -109,7 +122,10 @@ const selectedExchange = computed({
 });
 const selectedAvailability = computed({
   get() {
-    return availabilityOptions.filter((el) => el.name == props.availability)[0];
+    if (props.availability && typeof props.availability === "object") {
+      return props.availability;
+    }
+    return availabilityOptions.find((el) => el.name == props.availability);
   },
   set(value) {
     emits("update:availability", value);

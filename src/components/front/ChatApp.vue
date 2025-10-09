@@ -100,7 +100,7 @@ const fetchChatMessages = async (page = 1) => {
     route = `/chat/conversations/get-messages/${props.with.id}?page=${page}`;
   } else {
     route = `/chat/conversations/${props.with.conversation_id}/get-messages?page=${page}`;
-    console.log(route);
+    // console.log(route);
   }
   if (page === 1) loading.value = true;
   else loadingMore.value = true;

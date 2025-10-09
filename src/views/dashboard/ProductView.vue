@@ -15,6 +15,9 @@
   </div>
 
   <GenericDataTable :headers="headers" :items="filteredItems">
+    <template #id="{ item }">
+      <span># {{ item.id }}</span>
+    </template>
     <template #actions="item">
       <div class="flex gap-2 justify-center">
         <button
@@ -95,7 +98,7 @@ const openEditModal = (prod) => {
   const selectedPro = products.value.filter(
     (ele) => ele.id == cleanId(prod.id)
   )[0];
-  console.log(selectedPro);
+  // console.log(selectedPro);
   openDialog("edit", selectedPro);
 };
 
@@ -141,7 +144,7 @@ const fetchProducts = async () => {
       products.value = response.data.products;
       items.value = response.data.products.map((ele) => {
         return {
-          id: `# ${ele.id}`,
+          id: ele.id,
           name: ele.name,
           category_name: ele.category.name,
           price: currencyFormat(ele.price, undefined, "ar", "ILS"),

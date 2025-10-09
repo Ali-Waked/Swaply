@@ -5,7 +5,7 @@ import MdiIcon from "./MdiIcon.vue";
 import axiosClient from "../../axiosClient";
 
 const props = defineProps({
-  icon: [Object, String],
+  icon: [Object, String, Function],
   title: String,
   description: String,
   isEnable: Boolean,
