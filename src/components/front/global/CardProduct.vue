@@ -101,7 +101,24 @@ const removeFromFavorite = async () => {
 
 <template>
   <div
-    class="border rounded-[18px] h-[22rem] text-gray-700 dark:text-gray-200 overflow-hidden z-[100000000000000000] cursor-pointer transition-all duration-300 hover:-translate-y-4 hover: dark:hover:shadow-lg dark:hover:shadow-slate-700 dark:border-gray-700"
+    class="border
+      rounded-[18px]
+      h-[22rem]
+      text-gray-700
+      dark:text-gray-200
+      overflow-hidden
+      z-[100000000000000000]
+      cursor-pointer
+      transition-all
+      duration-300
+      hover:-translate-y-4
+      bg-white
+      dark:bg-gray-700
+      hover:shadow-lg
+      hover:shadow-blue-200/60
+      dark:hover:shadow-lg
+      dark:hover:shadow-blue-400/20
+      dark:border-gray-700"
   >
     <!-- Image container -->
     <div class="bg-[radial-gradient(circle,_#d1d5dbb3,_#9ca3af)] dark:bg-[radial-gradient(circle,_#1f293780,_#111827)] relative group ">

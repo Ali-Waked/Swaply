@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 defineProps({
   title: {
     type: String,
@@ -12,8 +12,8 @@ defineProps({
 </script>
 
 <template>
-  <div class="p-4 rounded-lg bg-[#fefce8] border border-[#fab005]">
-    <h5 class="title text-[#89530c] font-[500] mb-1">{{ title }}</h5>
-    <p class="text text-[#89530c] text-[14px]">{{ text }}</p>
+  <div class="p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/40 border border-yellow-300 dark:border-yellow-700">
+    <h5 class="title text-yellow-800 dark:text-yellow-200 font-medium mb-1">{{ title }}</h5>
+    <p class="text text-yellow-800 dark:text-yellow-200 text-[14px] font-extralight">{{ text }}</p>
   </div>
 </template>

@@ -39,11 +39,15 @@ export const useThemeStore = defineStore("theme", () => {
     };
 
     watch(currentTheme, (newVal) => {
+        const root = document.documentElement; // <html>
         if (newVal == 'dark') {
-            document.body.classList.add("dark");
+            // Apply to both html and body for full coverage
+            root.classList.add('dark');
+            document.body.classList.add('dark');
             changeTheme('dark', isAuth.value);
         } else {
-            document.body.classList.remove("dark");
+            root.classList.remove('dark');
+            document.body.classList.remove('dark');
             changeTheme('light', isAuth.value);
         }
     });

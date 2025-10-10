@@ -9,19 +9,21 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 const joinedAt = computed(() => {
-  const date = new Date(user.value.created_at);
+  const createdAt = user.value && user.value.created_at;
+  if (!createdAt) return "";
+  const date = new Date(createdAt);
+  if (isNaN(date.getTime())) return "";
   const month = date.toLocaleDateString("ar-EG", { month: "long" });
   const year = date.getFullYear();
   return `انضم في ${month} ${year}`;
 });
 
 const letterImage = computed(() => {
-  const parts = user.value.name.trim().split(" ");
-
-  const first = parts[0]?.charAt(0).toUpperCase() || "";
-  const second = parts[1]?.charAt(0).toUpperCase() || "";
-
-  return first + second;
+  const fullName = (user.value && user.value.name) ? String(user.value.name) : "";
+  const parts = fullName.trim().split(" ").filter(Boolean);
+  const first = (parts[0]?.charAt(0) || "").toUpperCase();
+  const second = (parts[1]?.charAt(0) || "").toUpperCase();
+  return (first + second) || "";
 });
 </script>
 
@@ -29,6 +31,7 @@ const letterImage = computed(() => {
   <SecandryTitle label="الملف الشخصي" class="mb-3" />
   <div
     class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+    v-if="user"
   >
     <div class="info flex items-center gap-4 mb-7">
       <div
@@ -38,7 +41,7 @@ const letterImage = computed(() => {
       </div>
       <div>
         <span class="font-[500]">
-          <p class="text-blue-950 dark:text-white text-xl">{{ user.name }}</p>
+          <p class="text-blue-950 dark:text-white text-xl">{{ user?.name || '' }}</p>
           <p
             class="degree text-gray-700 dark:text-gray-300 text-[12px] font-[500] mt-1"
           >
@@ -49,10 +52,10 @@ const letterImage = computed(() => {
               class="text-[12px] flex items-center gap-2 text-blue-950 dark:text-gray-200"
             >
               <PhoneIcon class="w-4 h-4 text-blue-950 dark:text-gray-200"  />
-              <span dir="ltr">{{ user.phone ?? "غير مسجل" }}</span>
+              <span dir="ltr">{{ (user?.phone) || "غير مسجل" }}</span>
             </span>
             <span
-              v-if="user.is_trusty"
+              v-if="user?.is_trusty"
               class="text-[9px] bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 py-[6px] px-[8px] rounded-md flex items-center gap-1 ml-2 w-fit justify-center mr-2"
             >
               <ShieldCheckIcon class="w-3 h-3" />
@@ -96,7 +99,7 @@ const letterImage = computed(() => {
         class="box flex-1 text-center bg-blue-100 dark:bg-blue-700/60 p-4 rounded-lg"
       >
         <span class="font-[600] text-[32px] text-blue-600 dark:text-blue-300">{{
-          user.barters_count
+          (user?.barters_count) ?? 0
         }}</span>
         <p class="font-[400] text-[14px] text-blue-800 dark:text-blue-200">
           مقايضات ناجحة

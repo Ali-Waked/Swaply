@@ -88,13 +88,25 @@ onMounted(async () => {
             v-slot="{ active, selected }"
           >
             <li
-              class="cursor-pointer select-none py-2 px-3"
-              :class="[
-                active
-                  ? 'bg-blue-500 dark:bg-gray-600 text-white'
-                  : 'text-gray-900 dark:text-gray-200',
-                selected ? 'bg-gray-200 dark:bg-blue-700 text-gray-600' : '',
-              ]"
+              class="
+                cursor-pointer 
+                select-none 
+                py-2 
+                px-3 
+                transition 
+                bg-white 
+                dark:bg-gray-800 
+                text-gray-900 
+                dark:text-gray-200
+                data-[active=true]:bg-blue-500 
+                data-[active=true]:dark:bg-gray-600 
+                data-[active=true]:text-white 
+                data-[selected=true]:bg-gray-200 
+                data-[selected=true]:dark:bg-blue-700 
+                data-[selected=true]:text-gray-600
+              "
+              :data-active="active"
+              :data-selected="selected"
             >
               {{ item.name }}
             </li>

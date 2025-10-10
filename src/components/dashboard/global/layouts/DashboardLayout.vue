@@ -105,7 +105,25 @@ const logout = async () => {
         </span>
       </div>
       <span
-        class="cursor-pointer transition-colors flex items-center gap-1 text-red-600 dark:text-red-400 font-[500] text-[14px] border rounded-md py-2 px-4 border-red-600 dark:border-red-400 hover:text-red-800 dark:hover:text-red-200 hover:border-red-800 dark:hover:border-red-200"
+        class="cursor-pointer
+        flex
+        items-center
+        gap-1
+        font-[500]
+        text-[14px]
+        border
+        rounded-md
+        py-2
+        px-4
+        text-white
+        bg-red-600
+        border-red-600
+        outline-red-800
+        outline-2 outline-offset-1 outline-dashed
+        hover:outline-offset-2
+        transition-all
+        duration-300
+        "
         @click="logout"
       >
         <ArrowRightStartOnRectangleIcon class="w-6" />

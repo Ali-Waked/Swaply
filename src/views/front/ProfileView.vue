@@ -150,9 +150,9 @@ const getLabelById = (id) => {
         لوحة التحكم - {{ sectionTitle }}
       </p>
     </div>
-    <div class="name text-gray-500 dark:text-gray-300 text-nowrap">
+    <!-- <div class="name text-gray-500 dark:text-gray-300 text-nowrap">
       {{ user?.name || '' }}
-    </div>
+    </div> -->
   </div>
 
   <div class="flex mt-[127px] h-[calc(100vh - 127px)] overflow-hidden">
