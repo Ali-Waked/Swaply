@@ -115,14 +115,17 @@ const logout = async () => {
         rounded-md
         py-2
         px-4
-        text-white
-        bg-red-600
-        border-red-600
-        outline-red-800
-        outline-2 outline-offset-1 outline-dashed
-        hover:outline-offset-2
-        transition-all
-        duration-300
+      text-white
+      bg-red-600
+      border-red-600
+        ring-1
+      ring-red-600
+        ring-offset-0
+      ring-offset-white
+      dark:ring-offset-gray-900
+        hover:ring-offset-2
+        transition
+        duration-200
         "
         @click="logout"
       >

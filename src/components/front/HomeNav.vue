@@ -120,7 +120,27 @@ const changeTheme = (value) => {
     <!-- Right button -->
     <div class="right absolute left-4" @click="logout()" v-if="isAuth">
       <button
-        class="text-white bg-red-600 transition-colors flex items-center gap-2 py-2 px-4 font-[400] rounded-lg text-[14px] hover:bg-red-700 dark:hover:bg-red-500"
+        class="text-white
+        flex
+        items-center
+        gap-2
+        py-2
+        px-4
+        font-[400]
+        rounded-lg
+        text-[14px]
+        bg-red-600
+      border-red-600
+        ring-1
+      ring-red-600
+        ring-offset-0
+      ring-offset-white
+      dark:ring-offset-gray-900
+        hover:ring-offset-2
+        transition
+        duration-200
+        dark:hover:saturate-[120%]
+        "
       >
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
         <span>تسجيل الخروج</span>
@@ -132,8 +152,25 @@ const changeTheme = (value) => {
       v-else
     >
       <button
-        class="transition-colors rounded-lg px-4 py-2 font-[400] text-white bg-blue-600 hover:bg-blue-800 dark:text-gray-200 dark:bg-blue-500 dark:hover:bg-blue-700"
-      >
+        class="
+        rounded-lg
+        px-4
+        py-2
+        font-[400]
+         text-white
+        border-red-600
+        ring-1
+        bg-blue-600
+        dark:bg-blue-500
+        ring-blue-600
+        ring-offset-0
+        ring-offset-white
+        dark:ring-offset-gray-800
+        transition
+        duration-200
+        hover:ring-offset-2
+        "
+        >
         تسجيل الدخول
       </button>
     </div>

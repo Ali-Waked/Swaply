@@ -203,7 +203,30 @@ const getLabelById = (id) => {
         ></span>
       </ul>
       <button
-        class="text-white bg-red-600 w-full flex items-center justify-center gap-3 py-2 font-[500] rounded-lg text-[14px] mt-8 hover:bg-red-700 dark:hover:bg-red-500"
+        class="text-white
+        w-full
+        flex
+        items-center
+        justify-center
+        gap-3
+        py-2
+        font-[500]
+        rounded-lg
+        text-[14px]
+        mt-8
+        bg-red-600
+        hover:bg-red-700
+        dark:hover:saturate-[120%]        
+        border-red-600
+        ring-1
+        ring-red-600
+        ring-offset-0
+      ring-offset-white
+      dark:ring-offset-gray-900
+        hover:ring-offset-2
+        transition
+        duration-200
+        "
         @click="authStore.logout()"
       >
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
