@@ -1,5 +1,5 @@
 <template>
-  <TransitionRoot :show="modelValue" as="template" v-if="product">
+  <TransitionRoot :show="modelValue" as="template">
     <Dialog
       @close="closeDialog"
       class="relative overflow-visible z-[100000000]"
@@ -16,7 +16,7 @@
         <DialogPanel
           class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg"
         >
-          <DialogTitle class="mb-3 px-6 pt-12 pb-1">
+          <DialogTitle class="mb-3 px-6 pt-12 pb-1" v-if="product">
             <h3
               class="title font-[500] text-[24px] text-gray-800 dark:text-white"
             >
@@ -25,17 +25,17 @@
           </DialogTitle>
 
           <!-- صورة -->
-          <div
-            class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-4 py-8"
+          <div v-if="product"
+            class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64"
           >
             <img
               :src="product.image"
-              class="max-w-[180px]"
+              class="w-full h-full object-contain"
               :alt="product.name"
             />
           </div>
 
-          <div class="p-6 pt-5">
+          <div class="p-6 pt-5" v-if="product">
             <!-- الاسم والسعر -->
             <div
               class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1"
@@ -184,6 +184,7 @@
             >
               <XMarkIcon class="h-5 w-5" @click="closeDialog()" />
             </span>
+            <button class="sr-only" @click="closeDialog()">close</button>
           </div>
         </DialogPanel>
       </div>

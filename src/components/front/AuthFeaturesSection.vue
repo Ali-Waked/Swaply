@@ -48,30 +48,18 @@ const data = [
 <template>
   <div class="container mx-auto">
     <div class="bg-sky-100 dark:bg-blue-300/20 px-8 py-12 rounded-3xl">
-      <h4
-        class="title text-gray-950 dark:text-gray-200 font-[400] text-center text-[26px] mb-12"
-      >
+      <h4 class="title text-gray-950 dark:text-gray-200 font-[400] text-center text-[26px] mb-12">
         سجل الدخول للحصول على مزايا متقدمة
       </h4>
 
       <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-        <div
-          class="box flex flex-col items-center text-center box"
-          v-for="item in data"
-          :key="item.title"
-          :class="{
-            'row-start-4 col-start-1 col-end-3 sm:row-start-auto sm:col-start-auto sm:col-end-auto':
-              !item.icon,
-          }"
-        >
+        <div class="box flex flex-col items-center text-center box" v-for="item in data" :key="item.title" :class="{
+          'row-start-4 col-start-1 col-end-3 sm:row-start-auto sm:col-start-auto sm:col-end-auto':
+            !item.icon,
+        }">
           <template v-if="item.icon">
-            <component
-              :is="item.icon"
-              class="w-16 h-16 text-gray-700 dark:text-gray-300"
-            />
-            <p
-              class="title text-gray-700 dark:text-gray-200 font-[500] text-[18px] my-2"
-            >
+            <component :is="item.icon" class="w-16 h-16 text-gray-700 dark:text-gray-300" />
+            <p class="title text-gray-700 dark:text-gray-200 font-[500] text-[18px] my-2">
               {{ item.title }}
             </p>
             <p class="text text-[14px] text-gray-400 dark:text-gray-400">
@@ -80,13 +68,26 @@ const data = [
           </template>
 
           <template v-else>
-            <div
-              class="join-now flex justify-center items-center h-full"
-              @click="router.push({ name: 'login' })"
-            >
-              <button
-                class="border border-sky-600 rounded-lg px-7 py-[10px] font-[400] text-sky-600 transition-all hover:text-blue-800 hover:border-blue-800 dark:border-blue-400 dark:text-blue-400 dark:hover:text-blue-300 dark:hover:border-blue-300"
-              >
+            <div class="join-now flex justify-center items-center h-full" @click="router.push({ name: 'login' })">
+              <button class="
+                  border
+                  rounded-lg
+                  px-7
+                  py-[10px]
+                  font-[400]
+                  transition-all
+                text-white
+                  ring-1
+                border-blue-500
+                dark:border-blue-500
+                bg-blue-500
+                ring-blue-500
+                  ring-offset-0
+                  ring-offset-[#e0f2fe]
+                  dark:ring-offset-[#36485f]
+                  duration-200
+                  hover:ring-offset-2
+                ">
                 {{ item.title }}
               </button>
             </div>
@@ -100,6 +101,7 @@ const data = [
 <style lang="scss" scoped>
 .box:nth-child(2) {
   position: relative;
+
   &::after {
     content: "";
     left: 0;
@@ -109,6 +111,7 @@ const data = [
     top: 0;
     background: #a7a4beb0;
   }
+
   &::before {
     content: "";
     right: 0;
@@ -118,11 +121,13 @@ const data = [
     top: 0;
     background: #a7a4beb0;
   }
+
   @media (max-width: 1025px) {
+
     &::before,
     &::after {
       display: none;
     }
   }
 }
-</style>
+</style>600

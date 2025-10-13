@@ -45,14 +45,24 @@ export const useCityStore = defineStore("city", () => {
         }
     };
     const distanceToSpecificCity = (cityId) => {
-        if (!user.value.share_location) {
-            return 'المسافة غير معروفة'
+        const currentUser = user?.value || null;
+        if (!currentUser || !currentUser.share_location) {
+            return 'المسافة غير معروفة';
         }
+        if (!cityId) return 'المسافة غير معروفة';
         if (!distance.value.length) {
             fetchAllCitiesDistances();
         }
-        // console.log(distance.value.find(d => (d.city_id_one == cityId && d.city_id_two == user.value.city?.id) || (d.city_id_one == user.value.city?.id && d.city_id_two == cityId)));
-        return +distance.value.find(d => (d.city_id_one == cityId && d.city_id_two == user.value.city?.id) || (d.city_id_one == user.value.city?.id && d.city_id_two == cityId))?.distance || 'في منطقتك';
+        const userCityId = currentUser.city?.id;
+        if (!userCityId) return 'المسافة غير معروفة';
+        const match = distance.value.find(d => (
+            d.city_id_one == cityId && d.city_id_two == userCityId
+        ) || (
+            d.city_id_one == userCityId && d.city_id_two == cityId
+        ));
+        if (!match) return 'في منطقتك';
+        const km = Number(match.distance);
+        return Number.isFinite(km) ? km : 'في منطقتك';
     }
 
     return { cities, loading, errors, fetchAllCities, fetchAllCitiesDistances, distanceToSpecificCity };

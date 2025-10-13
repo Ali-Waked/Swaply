@@ -21,8 +21,10 @@ const showProductDialog = reactive({
 const buttonLabel = ref("عرض الكل");
 
 const showProduct = (productId) => {
-  showProductDialog.dialog = true;
   showProductDialog.product_id = productId;
+  Promise.resolve().then(() => {
+    showProductDialog.dialog = true;
+  });
 };
 const data = ref({});
 const loading = ref(false);
