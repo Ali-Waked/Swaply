@@ -43,9 +43,9 @@ const addDiscount = reactive({
   product: {},
 });
 
-const showProduct = (productId) => {
+const showProduct = (payload) => {
   showProductDialog.dialog = true;
-  showProductDialog.product_id = productId;
+  showProductDialog.product_id = typeof payload === 'object' && payload !== null ? payload.id : payload;
 };
 const addDiscountDialog = (product) => {
   showProductDialog.dialog = false;

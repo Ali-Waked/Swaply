@@ -21,7 +21,7 @@ export const useThemeStore = defineStore("theme", () => {
 
     const changeTheme = async (value, updateDatabase = false) => {
         currentTheme.value = value === "dark" ? "dark" : "light";
-        if (user.value.theme !== currentTheme.value)
+        if (user.value?.theme !== currentTheme.value)
             if (updateDatabase)
                 await authStore.update({ theme: currentTheme.value }, false);
         localStorage.setItem("theme", currentTheme.value);

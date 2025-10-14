@@ -6,15 +6,16 @@
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel
           class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
+          <button type="button" tabindex="0" class="sr-only">focus</button>
           <DialogTitle class="pt-6 mb-3">
             <h3 class="title font-[500] text-[20px] text-black dark:text-white">
-              {{ isEditPage ? "تعديل المنتج" : "اضافة منتج" }}
+              {{ isEditPage ? "تعديل المنتج" : "إضافة منتج" }}
             </h3>
             <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300">
               {{
                 isEditPage
                   ? "قم بتعديل بيانات المنتج "
-                  : "اضف منتج جديد الى مجموعة منتجاتك"
+                  : "أضف منتج جديد إلى مجموعة منتجاتك"
               }}
             </p>
           </DialogTitle>
@@ -58,7 +59,7 @@
           <div class="absolute top-[20px] right-[20px]">
             <span
               class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer">
-              <XMarkIcon class="h-5 w-5" @click="closeDialog()" />
+              <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
             </span>
           </div>
         </DialogPanel>
@@ -123,7 +124,7 @@ const schema = yup.object({
   image: yup.mixed().nullable(),
 });
 
-const { handleSubmit, submitCount } = useForm({ validationSchema: schema });
+const { handleSubmit, submitCount, resetForm: resetVeeForm } = useForm({ validationSchema: schema });
 
 const { value: name, errorMessage: nameError, meta: nameMeta } = useField("name");
 const { value: price, errorMessage: priceError, meta: priceMeta } = useField("price");
@@ -157,10 +158,7 @@ const resetForm = () => {
   image.value = null;
   imagePreview.value = null;
   selectedProduct.value = null;
-  nameError.value = "";
-  priceError.value = "";
-  imageError.value = "";
-  descriptionError.value = "";
+  resetVeeForm({ values: { name: null, price: "", description: "", image: null }, errors: {} });
 };
 
 const isEditPage = computed(() => {
@@ -207,7 +205,7 @@ const submit = handleSubmit(async (values) => {
 
 
 const availableProducts = computed(() => {
-  return products.value.filter((p) => !props.productsIds.includes(p.id));
+  return products.value.filter((p) => !props.productsIds.includes(p.id) || p.id === props.productEdit?.product_id);
 });
 
 const selectedProduct = ref(null);
@@ -248,6 +246,7 @@ watch(
       selectedProduct.value = products.value.find(
         (p) => p.id === props.productEdit?.product_id
       );
+      name.value = selectedProduct.value.name;
       price.value = props.productEdit.price;
       description.value = props.productEdit.description;
       imagePreview.value = props.productEdit.image;

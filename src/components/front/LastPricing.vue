@@ -20,8 +20,10 @@ const showProductDialog = reactive({
 
 const buttonLabel = ref("عرض الكل");
 
-const showProduct = (productId) => {
-  showProductDialog.product_id = productId;
+const showProduct = (payload) => {
+  const id = typeof payload === 'object' && payload !== null ? payload.id : payload;
+  if (!id || Number.isNaN(Number(id))) return;
+  showProductDialog.product_id = id;
   Promise.resolve().then(() => {
     showProductDialog.dialog = true;
   });

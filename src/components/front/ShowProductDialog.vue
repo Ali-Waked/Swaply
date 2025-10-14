@@ -14,6 +14,7 @@
         class="fixed inset-0 flex items-center justify-center p-4 overflow-auto"
       >
         <DialogPanel
+          :key="productId"
           class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg"
         >
           <DialogTitle class="mb-3 px-6 pt-12 pb-1" v-if="product">
@@ -182,7 +183,7 @@
             <span
               class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer"
             >
-              <XMarkIcon class="h-5 w-5" @click="closeDialog()" />
+              <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
             </span>
             <button class="sr-only" @click="closeDialog()">close</button>
           </div>
@@ -338,17 +339,21 @@ function closeDialog() {
 watch(
   () => props.productId,
   async () => {
+    // Optimistic seed: if we can find the product in the list via injected cache later
+    product.value = null;
+    usdPrice.current_price = 0;
+    usdPrice.old_price = 0;
     if (props.isForMe) {
-      const resposne = await axiosClient.get(
+      const response = await axiosClient.get(
         `merchant/store/products/${props.productId}`
       );
-      if (resposne.status == 200) {
-        product.value = resposne.data.product;
+      if (response.status == 200) {
+        product.value = response.data.product;
       }
     } else {
-      const resposne = await axiosClient.get(`product/view/${props.productId}`);
-      if (resposne.status == 200) {
-        product.value = resposne.data.product;
+      const response = await axiosClient.get(`product/view/${props.productId}`, { cache: { ttl: 5 * 60 * 1000 } });
+      if (response.status == 200) {
+        product.value = response.data.product;
       }
     }
   }

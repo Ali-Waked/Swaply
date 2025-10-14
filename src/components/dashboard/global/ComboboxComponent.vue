@@ -29,6 +29,14 @@ const selectedItem = ref(props.modelValue);
 
 const query = ref("");
 
+watch(
+  () => props.modelValue,
+  (val) => {
+    selectedItem.value = val;
+    query.value = val?.name || "";
+  }
+);
+
 watch(selectedItem, (val) => {
   emit("update:modelValue", val);
   // console.log(val);

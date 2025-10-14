@@ -65,7 +65,7 @@ const { getRelativeTime } = useFormats();
           :time="getRelativeTime(product.updated_at)"
           v-model:is-favorite="product.is_favorite"
           :offer="product.active_offer"
-          @click="$emit('showProduct', product.id)"
+          @click="$emit('showProduct', product)"
         />
       </swiper-slide>
       <!-- <div class="pagination"></div> -->

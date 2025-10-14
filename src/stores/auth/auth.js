@@ -50,17 +50,13 @@ export const useAuthStore = defineStore("auth", () => {
             router.push({ name: 'dashboard' });
             return;
           }
-          // a fix ,i guess?!
-          // router.push({ name: 'pricing' });
-          // don't forget to put the nav bar in the pricing tag with logout and change them 
           router.push({ name: 'home' });
           emitter.emit("showNotificationAlert", ["success", "تم تسجيل الدخول بنجاح!"]);
         }
       }
     }
     catch (e) {
-      // console.error(e);
-      backErrors.value = e.response.data.errors;
+      
     } finally {
       loading.value = false;
     };
@@ -121,10 +117,10 @@ export const useAuthStore = defineStore("auth", () => {
     } catch (error) {
       emitter.emit("showNotificationAlert", [
         "error",
-        e.response?.data?.message || "حدث خطأ أثناء إعادة ضبط كلمة المرور",
+        error?.response?.data?.message || "حدث خطأ أثناء إعادة ضبط كلمة المرور",
       ]);
       
-      backErrors.value = error.response.data.errors;
+      backErrors.value = error?.response?.data?.errors || {};
     } finally {
       loading.value = false;
     }
@@ -149,7 +145,7 @@ export const useAuthStore = defineStore("auth", () => {
       // console.log(response);
     } catch (error) {
       // console.error(error);
-      backErrors.value = error.response.data.errors;
+      backErrors.value = error?.response?.data?.errors ;
     } finally {
       loading.value = false;
     }

@@ -17,7 +17,7 @@ const props = defineProps({
     default: 1,
   },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "showProduct"]);
 const currentPage = computed({
   get: () => props.modelValue,
   set: (value) => emit("update:modelValue", value),

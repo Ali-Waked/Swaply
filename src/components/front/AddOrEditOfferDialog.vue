@@ -40,7 +40,8 @@
                   v-for="option in discountOptions"
                   :key="option.id"
                   :value="option.id"
-                  class="text-sm text-gray-700"
+                  class="text-sm text-gray-700 dark:text-white
+                  "
                 >
                   {{ option.name }}
                 </option>
@@ -108,7 +109,7 @@
 
             <div class="absolute top-[20px] right-[20px]">
               <XMarkIcon
-                class="h-5 w-5 cursor-pointer"
+                class="h-5 w-5 cursor-pointer stroke-[4px] dark:stroke-white" style="stroke-width: 3px;" 
                 @click="closeDialog()"
               />
             </div>
