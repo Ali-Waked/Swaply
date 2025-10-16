@@ -7,7 +7,7 @@ const props = defineProps({
   activeId: { type: String, required: true },
 });
 
-const emit = defineEmits(["update:activeId"]);
+const emit = defineEmits(["update:activeId", "scrollTo"]);
 
 const isActive = ref(false);
 

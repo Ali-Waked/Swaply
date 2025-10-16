@@ -10,8 +10,8 @@ import usePrice from "../../mixins/price";
 const props = defineProps({
   storeName: String,
   isCertified: Boolean,
-  price: Number,
-  rating: Number,
+  price: [Number, String],
+  rating: [Number, String],
   cityId: Number,
   // usdPrice: Number,
   lastUpdate: String,
@@ -24,8 +24,10 @@ const { calculatePriceRating } = usePrice();
 const { currencyFormat } = format();
 const currencyStore = useCurrencyStore();
 const priceUSD = ref(0);
+const numericPrice = computed(() => Number(props.price));
+const numericRating = computed(() => Number(props.rating));
 const priceType = computed(() => {
-  return calculatePriceRating(props.price, props.recentPrices);
+  return calculatePriceRating(numericPrice.value, props.recentPrices);
 });
 // computed(() => {
 //   return currencyStore.convertToUSD(props.price);
@@ -45,7 +47,7 @@ const distance = computed(() => {
   return cityStore.distanceToSpecificCity(props.cityId);
 });
 onMounted(async () => {
-  priceUSD.value = await currencyStore.convertToUSD(props.price);
+  priceUSD.value = await currencyStore.convertToUSD(numericPrice.value);
 });
 </script>
 

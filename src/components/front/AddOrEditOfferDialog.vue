@@ -31,9 +31,9 @@
                 class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
                 :class="{
                   'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
-                    errorMessage,
+                    errors.discount_type,
                   'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-                    !errorMessage,
+                    !errors.discount_type,
                 }"
               >
                 <option
@@ -46,6 +46,7 @@
                   {{ option.name }}
                 </option>
               </select>
+              <ErrorInputText :error-message="errors.discount_type" />
             </div>
             <FormControl
               id="discount"
@@ -89,12 +90,14 @@
             </div>
 
             <FormControl
+              id="start_date"
               label="تاريخ البداية"
               type="date"
               v-model="startDate"
               :error-message="errors.start_date"
             />
             <FormControl
+              id="end_date"
               label="تاريخ النهاية"
               type="date"
               v-model="endDate"

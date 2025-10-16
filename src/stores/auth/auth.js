@@ -43,6 +43,7 @@ export const useAuthStore = defineStore("auth", () => {
           isAuth.value = true;
           redirect.value = true;
           user.value = response.data.user;
+          backErrors.value = {};
           // console.log(response);
           isCheckedAuth.value = true;
           // console.log('admin role', user.value.role == 'admin')
@@ -56,7 +57,11 @@ export const useAuthStore = defineStore("auth", () => {
       }
     }
     catch (e) {
-      
+      backErrors.value = e?.response?.data?.errors || {};
+      const message = e?.response?.data?.message;
+      if (message) {
+        emitter.emit("showNotificationAlert", ["error", message]);
+      }
     } finally {
       loading.value = false;
     };

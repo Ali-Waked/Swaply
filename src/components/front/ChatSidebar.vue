@@ -34,7 +34,7 @@ const dialog = computed({
 });
 const emit = defineEmits([
   "update:modelValue",
-  "udpate:numberOfUnRedChat",
+  "update:numberOfUnRedChat",
   "chatWith",
 ]);
 const conversations = ref([]);
@@ -69,7 +69,7 @@ const fetchConversations = async () => {
 };
 onMounted(async () => {
   // await nextTick();
-  // await fetchConversations();
+  await fetchConversations();
 });
 
 const getName = (conversation) => {
@@ -90,11 +90,11 @@ const openChat = (conversation) => {
   // console.log(conversation);
   emit(
     "chatWith",
-    conversation.user_one.id === user.id
-      ? conversation.user_one
-      : conversation.user_two
-  );
-};
+    conversation.user_one.id === user.value.id
+      ? conversation.user_two
+      : conversation.user_one
+    );
+    };
 
 onBeforeUnmount(() => {
   document.body.style.overflow = "";

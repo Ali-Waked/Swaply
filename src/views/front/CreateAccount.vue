@@ -189,14 +189,15 @@ const continueWithGoogle = () => {
   window.location.href = "http://localhost:8000/api/auth/google";
 };
 onMounted(async () => {
-  try {
-    const hasSession = document?.cookie?.split('; ').some((c) => c.startsWith('laravel_session='));
-    if (!hasSession) return;
-    const response = await axiosClient.get("/auth/user");
-    data.value = response;
-    console.log(data.value);
-  } catch (e) {}
-});
+  // try {
+  //   const hasSession = document?.cookie?.split('; ').some((c) => c.startsWith('laravel_session='));
+  //   if (!hasSession) return;
+  //   const response = await axiosClient.get("/auth/user");
+  //   data.value = response;
+  //   console.log(data.value);
+  // } catch (e) {}
+}
+);
 </script>
 
 <template>

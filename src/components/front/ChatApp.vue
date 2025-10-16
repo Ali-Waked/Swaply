@@ -214,7 +214,7 @@ const sendMessage = async () => {
   }
 };
 
-const colse = () => {
+const closeChat = () => {
   emit("update:isOpen", false);
   if (chatApp.value) chatApp.value.style.top = "196px";
   isOpenFull.value = true;
@@ -223,11 +223,11 @@ const colse = () => {
 
 const reizeChat = () => {
   if (isOpenFull.value) {
-    if (chatApp.value) chatApp.value.style.top = "520px";
+    if (chatApp.value) chatApp.value.style.bottom = "-21rem";
     isOpenFull.value = false;
     return;
   }
-  if (chatApp.value) chatApp.value.style.top = "196px";
+  if (chatApp.value) chatApp.value.style.bottom = "1rem";
   isOpenFull.value = true;
 };
 
@@ -270,11 +270,11 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    class="fixed bottom-4 right-9 bg-white dark:bg-gray-800 shadow-xl z-50 rounded-lg w-80 transition-all"
+    class="fixed bottom-4 right-9 bg-white dark:bg-gray-800 shadow-2xl z-50 rounded-lg w-80 transition-all"
     ref="chatApp"
     v-if="isOpen"
   >
-    <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
+    <div class="border-b border-gray-200 dark:border-gray-700 mb-0">
       <div class="p-5 flex items-center justify-between">
         <div class="info flex items-center gap-2">
           <div
@@ -321,14 +321,14 @@ onBeforeUnmount(() => {
           />
           <XMarkIcon
             class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
-            @click="colse()"
+            @click="closeChat()"
           />
         </div>
       </div>
     </div>
 
     <div
-      class="content has-scroll p-5 h-56 overflow-y-auto scrollbar-hide"
+      class="content has-scroll p-5 h-64 overflow-y-auto scrollbar-hide"
       ref="contentEl"
     >
       <div v-if="loading" class="text-center py-2 text-gray-500">
@@ -341,12 +341,7 @@ onBeforeUnmount(() => {
           class="send-message bg-black dark:bg-blue-600 rounded-xl p-3 w-fit mb-4 max-w-56 pb-2 ml-auto text-right"
         >
           <p class="text-white text-[13px]">{{ msg.body }}</p>
-          <span class="time text-gray-400 text-[11px]">{{
-            new Date(msg.created_at).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          }}</span>
+          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
         </div>
 
         <div
@@ -354,12 +349,7 @@ onBeforeUnmount(() => {
           class="recived-message bg-gray-200 dark:bg-gray-700 rounded-xl p-3 pb-2 w-fit mb-4 max-w-56 mr-auto"
         >
           <p class="text-black dark:text-white text-[13px]">{{ msg.body }}</p>
-          <span class="time text-gray-400 text-[11px]">{{
-            new Date(msg.created_at).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          }}</span>
+          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
         </div>
       </template>
 

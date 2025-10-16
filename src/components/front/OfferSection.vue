@@ -28,13 +28,14 @@ const items = [
 const showProductDialog = reactive({
   dialog: false,
   data: {},
+  product_id: 0,
 });
 
 const buttonLabel = ref("عرض الكل");
 
-const showProduct = (productId) => {
+const showProduct = (payload) => {
   showProductDialog.dialog = true;
-  showProductDialog.product_id = productId;
+  showProductDialog.product_id = typeof payload === 'object' && payload !== null ? payload.id : payload;
 };
 const data = ref({});
 const loading = ref(false);

@@ -86,7 +86,7 @@ const requestStatus = computed(() => {
           <UserIcon class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </div>
         <div class="">
-          <span class="font-[500] flex">
+          <span class="font-[500] flex items-center">
             <span class="text-gray-800 dark:text-white">{{
               item.user.name
             }}</span>
@@ -99,7 +99,7 @@ const requestStatus = computed(() => {
             </span>
           </span>
           <div
-            class="degree text-gray-400 dark:text-gray-300 text-[12px] font-[500] mt-1"
+            class="degree text-gray-400 dark:text-gray-300 text-[12px] font-[500]"
           >
             درجة الموثوقية 80%
           </div>
