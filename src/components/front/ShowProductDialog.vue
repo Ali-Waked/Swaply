@@ -98,33 +98,34 @@
             <!-- المسافة -->
             <div>
               <span
-                class="text-gray-800 dark:text-gray-100 font-[400] block text-[20px] mt-2"
+                class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2"
               >
                 المسافة
               </span>
               <span
-                class="text-gray-600 dark:text-gray-300 font-[400] flex items-center gap-1"
+                class="text-gray-600 dark:text-gray-300 font-[300] flex items-center gap-1"
               >
                 <MdiIcon
                   :icon="mdiNavigationOutline"
-                  class="text-gray-600 dark:text-gray-300"
+                  class="!size-5 text-gray-600
+                  dark:!text-gray-300"
                 />
-                <span>
+                <span class="text-sm">
                   {{ distance }}
                   <span v-if="typeof distance == 'number'">كم</span></span
                 >
               </span>
             </div>
 
-            <!-- اخر تحديث -->
+            <!-- آخر تحديث -->
             <div>
               <span
-                class="text-gray-800 dark:text-gray-100 font-[400] block text-[20px] mt-2"
+                class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2"
               >
-                اخر تحديث
+                آخر تحديث
               </span>
               <div
-                class="flex items-center text-[14px] mt-1 text-gray-600 dark:text-gray-300 gap-1"
+                class="flex items-center text-sm mt-1 text-gray-600 dark:text-gray-300 gap-1"
               >
                 <ClockIcon class="w-4 h-4" />
                 <span>{{ getRelativeTime(product.updated_at) }}</span>

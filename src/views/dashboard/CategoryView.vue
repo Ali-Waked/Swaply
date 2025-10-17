@@ -119,6 +119,13 @@ const openDialog = (type, cat = {}) => {
   showDialog.value = true;
 };
 
+const openEditModal = (cat) => {
+  const selectedCat = items.value.filter(
+    (ele) => ele.id == cleanId(cat.id)
+  )[0];
+  openDialog("edit", selectedCat);
+};
+
 const fetchCategories = async () => {
   try {
     const response = await axiosClient.get("/admin/categories");

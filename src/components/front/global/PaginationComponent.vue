@@ -49,7 +49,7 @@ const pages = computed(() => {
 <template>
   <div class="flex items-center justify-center gap-2 mt-6 select-none">
     <button
-      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800"
+      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
       :disabled="modelValue === 1"
       @click="changePage(modelValue - 1)"
     >
@@ -74,7 +74,7 @@ const pages = computed(() => {
     </button>
 
     <button
-      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800"
+      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
       :disabled="modelValue === lastPage"
       @click="changePage(modelValue + 1)"
     >

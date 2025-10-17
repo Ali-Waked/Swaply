@@ -150,8 +150,12 @@ const firstError = (field) => {
 };
 const data = ref({});
 onMounted(async () => {
-  const response = await axiosClient.get("/auth/user");
-  data.value = response;
+  try {
+    const response = await axiosClient.get("/auth/user");
+    data.value = response;
+  } catch (error) {
+    // Error is handled by axios interceptor
+  }
 });
 </script>
 
