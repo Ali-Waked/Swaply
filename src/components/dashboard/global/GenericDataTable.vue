@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div>
     <EasyDataTable
       ref="dataTable"
       :headers="headers"
@@ -217,6 +217,8 @@ const updateRowsPerPageSelect = (e) => {
   --easy-table-body-row-background-color: #1f2937; /* bg-gray-800 */
   --easy-table-body-even-row-background-color: #374151; /* bg-gray-700 */
   --easy-table-body-row-font-color: #f9fafb; /* text-gray-100 */
+  --easy-table-body-row-hover-background-color: #e6e6e630; 
+  --easy-table-body-row-hover-font-color: #ffffff; 
   --easy-table-footer-background-color: #1f2937;
   --easy-table-footer-font-color: #f9fafb;
   --easy-table-border: 1px solid #374151;

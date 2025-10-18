@@ -265,7 +265,7 @@ onMounted(async () => {
           <div class="relative">
             <input
               type="text"
-              id="nameinput"
+              id="nameinput2"
               pattern="[\u0600-\u06FF\s]*"
               title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاخير"
@@ -304,6 +304,7 @@ onMounted(async () => {
         <div class="relative" dir="ltr">
           <div class="relative">
             <input
+              id="emailOrPhoneInput"
               :type="type"
               :placeholder="placeholderInput"
               v-model="emailOrPhone"
@@ -350,6 +351,7 @@ onMounted(async () => {
         <div class="relative">
           <div class="relative w-full mt-3">
             <input
+              id="passwordInput"
               :type="showPassword ? 'text' : 'password'"
               v-model="password"
               placeholder="كلمة المرور"

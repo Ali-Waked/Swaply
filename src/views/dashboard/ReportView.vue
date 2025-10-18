@@ -10,7 +10,7 @@
         <button
           v-if="item.item.status !== 'reviewed'"
           @click="markAsReviewed(item.item)"
-          class="text-blue-600 hover:underline"
+          class="text-blue-600 dark:text-slate-50 hover:underline"
         >
           مراجعة البلاغ
         </button>

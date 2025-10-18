@@ -132,7 +132,7 @@ const fetchUsers = async () => {
           id: `# ${ele.id}`,
           name: ele.name,
           email: ele.email ?? "غير مسجل",
-          phone: ele.phone ?? "غير مسجل",
+          phone: ele.phone ? `\u2066${ele.phone}\u2069` : "غير مسجل",
           role: translateRole(ele.role),
           status: translateStatus(ele.status),
           created_at: formatDate(ele.created_at),
