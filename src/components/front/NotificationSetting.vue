@@ -36,9 +36,6 @@ const items = reactive([
   },
 ]);
 onMounted(() => {
-  // items[0].isEnable = user.notification_methods.sms;
-  // items[1].isEnable = user.notification_methods.email;
-  // items[2].isEnable = user.notification_methods.whats;
 });
 </script>
 
@@ -46,14 +43,8 @@ onMounted(() => {
   <div class="w-full">
     <pre></pre>
     <template v-for="item in items" :key="item.id">
-      <SingleNotification
-        :title="item.title"
-        :description="item.description"
-        :icon="item.icon"
-        :from="item.from"
-        :id="item.id"
-        v-model:is-enable="item.isEnable"
-      />
+      <SingleNotification :title="item.title" :description="item.description" :icon="item.icon" :from="item.from"
+        :id="item.id" v-model:is-enable="item.isEnable" />
     </template>
   </div>
 </template>

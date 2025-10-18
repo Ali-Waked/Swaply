@@ -61,7 +61,6 @@ const updateStore = async () => {
     }
     closeDialog();
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -71,21 +70,11 @@ const submit = () => updateStore();
 </script>
 
 <template>
-  <MainDialog
-    v-model="showDialog"
-    :button-label="label"
-    @submit-data="submit"
-    :loading="loading"
-  >
+  <MainDialog v-model="showDialog" :button-label="label" @submit-data="submit" :loading="loading">
     <template #title> تعديل بيانات المتجر </template>
 
     <template #content>
-      <SelectListBox
-        label="اختر حالة المتجر"
-        v-model="storeStatus"
-        :options="StatusOptions"
-        class="w-full"
-      />
+      <SelectListBox label="اختر حالة المتجر" v-model="storeStatus" :options="StatusOptions" class="w-full" />
     </template>
   </MainDialog>
 </template>

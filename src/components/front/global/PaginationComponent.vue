@@ -48,36 +48,24 @@ const pages = computed(() => {
 
 <template>
   <div class="flex items-center justify-center gap-2 mt-6 select-none">
-    <button
-      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
-      :disabled="modelValue === 1"
-      @click="changePage(modelValue - 1)"
-    >
+    <button class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
+      :disabled="modelValue === 1" @click="changePage(modelValue - 1)">
       السابق
     </button>
 
-    <button
-      v-for="(page, index) in pages"
-      :key="index"
-      @click="typeof page === 'number' && changePage(page)"
-      class="px-3 py-1 border rounded"
-      :class="[
+    <button v-for="(page, index) in pages" :key="index" @click="typeof page === 'number' && changePage(page)"
+      class="px-3 py-1 border rounded" :class="[
         typeof page === 'number'
           ? page === modelValue
             ? 'bg-blue-600 text-white'
             : 'bg-white'
           : 'bg-gray-100 cursor-default',
-      ]"
-      :disabled="page === '...'"
-    >
+      ]" :disabled="page === '...'">
       {{ page }}
     </button>
 
-    <button
-      class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
-      :disabled="modelValue === lastPage"
-      @click="changePage(modelValue + 1)"
-    >
+    <button class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
+      :disabled="modelValue === lastPage" @click="changePage(modelValue + 1)">
       التالي
     </button>
   </div>

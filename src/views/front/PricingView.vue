@@ -49,10 +49,4 @@ const { user } = storeToRefs(authStore);
     <AppFooter />
   </div>
 
-  <!-- <div class="bg-white py-14 dark:bg-gray-800">
-    <AuthFeaturesSection />
-  </div> -->
-  <!-- <div class="bg-gray-100 dark:bg-gray-700">
-    <AppFooter />
-  </div> -->
 </template>

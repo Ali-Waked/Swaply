@@ -53,10 +53,6 @@ const baseSchema = {
       return true;
     }),
 
-  // password: yup
-  //   .string()
-  //   .required("كلمة المرور مطلوبة")
-  //   .min(6, "كلمة المرور يجب أن تكون 6 خانات على الأقل"),
 };
 // Forgot Password Validation Schema
 const schema = computed(() => {
@@ -73,7 +69,6 @@ watch(
   isPhoneNumber,
   (newVal) => {
     const routeValue = route.query.using;
-    // console.log(newVal && routeValue == "phone_number");
     if (newVal) {
       placeholderInput.value = "0 59 123 4567";
       using.value = "phone_number";
@@ -128,8 +123,7 @@ watch(
 const onSubmit = handleSubmit(async (values) => {
   const routeName = router.currentRoute.value.name;
   const credentials = {};
-  // const filedName = isPhoneNumber.value ? "phone" : "email";
-  // credentials[filedName] = emailOrPhone.value;
+
   if (isPhoneNumber.value) {
     credentials.phone = "+97" + emailOrPhone.value;
   } else {
@@ -154,62 +148,37 @@ onMounted(async () => {
     const response = await axiosClient.get("/auth/user");
     data.value = response;
   } catch (error) {
-    // Error is handled by axios interceptor
   }
 });
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-center bg-gray-50 dark:bg-gray-800 h-screen"
-  >
+  <div class="flex items-center justify-center bg-gray-50 dark:bg-gray-800 h-screen">
     <BackButton class="absolute right-6 top-8" />
     <div class="logo flex items-center justify-center pt-6 absolute top-1">
       <img src="/Logo.png" class="w-32 dark:hidden" alt="logo" />
-      <img
-        src="/Logo-black.png"
-        class="w-32 hidden dark:block"
-        alt="logo"
-      />
+      <img src="/Logo-black.png" class="w-32 hidden dark:block" alt="logo" />
     </div>
-    <form
-      @submit.prevent="onSubmit"
-      class="bg-white dark:bg-gray-900  shadow-md dark:shadow-lg  dark:shadow-slate-700 rounded-lg px-6 py-10 max-w-[450px] w-[95%]"
-    >
+    <form @submit.prevent="onSubmit"
+      class="bg-white dark:bg-gray-900  shadow-md dark:shadow-lg  dark:shadow-slate-700 rounded-lg px-6 py-10 max-w-[450px] w-[95%]">
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />
       </div>
+      <span class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1">استعادة كلمة
+        المرور</span>
       <span
-        class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1"
-        >استعادة كلمة المرور</span
-      >
-      <span
-        class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4"
-        >ادخل البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة
-        المرور</span
-      >
+        class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4">ادخل
+        البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة
+        المرور</span>
       <div
-        class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[13px] flex items-center gap-x-0.5 mb-4"
-      >
-        <ButtonTab
-          label="البريد الالكتروني"
-          :is-active="!isPhoneNumber"
-          @click="isPhoneNumber = false"
-          class="py-1 rounded-full"
-        />
-        <ButtonTab
-          label="الهاتف"
-          :is-active="isPhoneNumber"
-          @click="isPhoneNumber = true"
-          class="py-1 rounded-full"
-        />
+        class="buttons bg-gray-200 dark:bg-gray-700 p-[2px] rounded-full text-[13px] flex items-center gap-x-0.5 mb-4">
+        <ButtonTab label="البريد الالكتروني" :is-active="!isPhoneNumber" @click="isPhoneNumber = false"
+          class="py-1 rounded-full" />
+        <ButtonTab label="الهاتف" :is-active="isPhoneNumber" @click="isPhoneNumber = true" class="py-1 rounded-full" />
       </div>
       <div class="relative" dir="ltr">
         <div class="relative">
-          <input
-            :type="type"
-            :placeholder="placeholderInput"
-            v-model="emailOrPhone"
+          <input :type="type" :placeholder="placeholderInput" v-model="emailOrPhone"
             class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
             :class="{
               'pl-[35px]': type === 'text',
@@ -222,44 +191,26 @@ onMounted(async () => {
                 !errors.emailOrPhone &&
                 !firstError('email') &&
                 !firstError('phone'),
-            }"
-          />
-          <span
-            v-if="type == 'text'"
-            class="absolute left-2.5 top-1/2 -translate-y-[50%] leading-none"
-            :class="{
-              'text-red-500':
-                errors.emailOrPhone ||
-                firstError('email') ||
-                firstError('phone'),
-              'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
-                emailOrPhone === '',
-              'text-black dark:text-white':
-                emailOrPhone !== '' &&
-                !firstError('email') &&
-                !firstError('phone'),
-            }"
-            >+97</span
-          >
+            }" />
+          <span v-if="type == 'text'" class="absolute left-2.5 top-1/2 -translate-y-[50%] leading-none" :class="{
+            'text-red-500':
+              errors.emailOrPhone ||
+              firstError('email') ||
+              firstError('phone'),
+            'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
+              emailOrPhone === '',
+            'text-black dark:text-white':
+              emailOrPhone !== '' &&
+              !firstError('email') &&
+              !firstError('phone'),
+          }">+97</span>
         </div>
-        <ErrorInputText
-          :error-message="
-            errors.emailOrPhone || firstError('email') || firstError('phone')
-          "
-        />
-        <span
-          v-if="forgotMessage"
-          class="text-[14px] font-[400] text-green-600"
-          >{{ forgotMessage }}</span
-        >
+        <ErrorInputText :error-message="errors.emailOrPhone || firstError('email') || firstError('phone')
+          " />
+        <span v-if="forgotMessage" class="text-[14px] font-[400] text-green-600">{{ forgotMessage }}</span>
       </div>
-      <MainButton
-        type="submit"
-        label="ارسال"
-        class="mt-6 select-none"
-        :style="{ opacity: loading ? 0.8 : 1 }"
-        :class="{ 'pointer-events-none': loading }"
-      >
+      <MainButton type="submit" label="ارسال" class="mt-6 select-none" :style="{ opacity: loading ? 0.8 : 1 }"
+        :class="{ 'pointer-events-none': loading }">
         <template #icon>
           <VueSpinnerIos v-if="loading" size="20" class="text-gray-50 ml-2" />
         </template>

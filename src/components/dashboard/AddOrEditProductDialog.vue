@@ -43,7 +43,6 @@ const localCategory = computed({
     props.product?.category
       ? props.categories.find((c) => c.id === props.product.categoryId)
       : null,
-  // set: (val) => emit("update:productCategoryId", val?.name || ""),
 });
 
 const category = ref(localCategory.value);
@@ -101,7 +100,6 @@ const saveProduct = async () => {
     }
     closeDialog();
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -115,42 +113,23 @@ onMounted(async () => {
 </script>
 
 <template>
-  <MainDialog
-    v-model="showDialog"
-    :button-label="label"
-    @submit-data="submit"
-    :loading="loading"
-  >
+  <MainDialog v-model="showDialog" :button-label="label" @submit-data="submit" :loading="loading">
     <template #title>
       {{ currentMode === "create" ? "إضافة منتج جديد" : "تعديل المنتج" }}
     </template>
 
     <template #content>
-      <input
-        v-model="product.name"
-        type="text"
-        placeholder="اسم المنتج"
-        class="w-full border rounded-lg px-3 py-2 mb-3 focus:ring-2 focus:ring-blue-400 outline-none"
-      />
+      <input v-model="product.name" type="text" placeholder="اسم المنتج"
+        class="w-full border rounded-lg px-3 py-2 mb-3 focus:ring-2 focus:ring-blue-400 outline-none" />
       <div class="relative w-full">
-        <input
-          v-model="product.price"
-          type="number"
-          placeholder="سعر المنتج"
-          class="w-full border rounded-lg pr-7 py-2 mb-3 focus:ring-2 focus:ring-blue-400 outline-none appearance-none"
-        />
-        <span
-          class="absolute right-1 text-[25px] -mt-2 top-1/2 -translate-y-1/2 text-gray-700 dark:text-gray-200 px-2"
-        >
+        <input v-model="product.price" type="number" placeholder="سعر المنتج"
+          class="w-full border rounded-lg pr-7 py-2 mb-3 focus:ring-2 focus:ring-blue-400 outline-none appearance-none" />
+        <span class="absolute right-1 text-[25px] -mt-2 top-1/2 -translate-y-1/2 text-gray-700 dark:text-gray-200 px-2">
           ₪
         </span>
       </div>
 
-      <ComboboxComponent
-        placeholder="اختر اسم التصنيف"
-        v-model="category"
-        :items="categories"
-      />
+      <ComboboxComponent placeholder="اختر اسم التصنيف" v-model="category" :items="categories" />
     </template>
   </MainDialog>
 </template>

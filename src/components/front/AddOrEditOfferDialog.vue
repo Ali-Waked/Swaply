@@ -1,22 +1,15 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
-    <Dialog
-      @close="closeDialog"
-      class="relative z-[1000000000]"
-      v-if="product.id"
-    >
+    <Dialog @close="closeDialog" class="relative z-[1000000000]" v-if="product.id">
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel
-          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative"
-        >
+          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
           <DialogTitle class="pt-6 mb-3">
             <h3 class="title font-[500] text-[20px] text-black dark:text-white">
               {{ isEditPage ? "تعديل العرض" : "اضافة عرض" }}
             </h3>
-            <p
-              class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300"
-            >
+            <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300">
               {{
                 isEditPage ? "تعديل تفاصيل العرض للمنتج" : "اضف عرض جديد لمنتجك"
               }}
@@ -26,39 +19,23 @@
           <form @submit.prevent="submit">
             <div class="mb-4">
               <label class="block mb-1 font-[400] text-black dark:text-white">نوع الخصم</label>
-              <select
-                v-model="discountType"
-                class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8"
-                :class="{
+              <select v-model="discountType"
+                class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8" :class="{
                   'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
                     errors.discount_type,
                   'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
                     !errors.discount_type,
-                }"
-              >
-                <option
-                  v-for="option in discountOptions"
-                  :key="option.id"
-                  :value="option.id"
-                  class="text-sm text-gray-700 dark:text-white
-                  "
-                >
+                }">
+                <option v-for="option in discountOptions" :key="option.id" :value="option.id" class="text-sm text-gray-700 dark:text-white
+                  ">
                   {{ option.name }}
                 </option>
               </select>
               <ErrorInputText :error-message="errors.discount_type" />
             </div>
-            <FormControl
-              id="discount"
-              :label="
-                discountType === 'fixed' ? 'الخصم بالمبلغ' : 'الخصم بالنسبة'
-              "
-              type="number"
-              v-model="discount_value"
-              :error-message="errors.discount_value"
-              placeholder="0"
-              class="pr-6"
-            >
+            <FormControl id="discount" :label="discountType === 'fixed' ? 'الخصم بالمبلغ' : 'الخصم بالنسبة'
+              " type="number" v-model="discount_value" :error-message="errors.discount_value" placeholder="0"
+              class="pr-6">
               <template #suffix>
                 {{ suffixSymbol }}
               </template>
@@ -67,54 +44,26 @@
               <span class="font-[400]  text-black dark:text-white">الحالة:</span>
               <div class="flex justify-evenly items-center">
                 <div class="flex gap-1 items-center text-gray-700">
-                  <input
-                    id="active"
-                    type="radio"
-                    v-model="is_active"
-                    :value="true"
-                    name="status"
-                  />
+                  <input id="active" type="radio" v-model="is_active" :value="true" name="status" />
                   <label for="active" class="text-black dark:text-white">نشط</label>
                 </div>
                 <div class="flex gap-1 items-center text-gray-700">
-                  <input
-                    id="in-active"
-                    type="radio"
-                    v-model="is_active"
-                    :value="false"
-                    name="status"
-                  />
+                  <input id="in-active" type="radio" v-model="is_active" :value="false" name="status" />
                   <label for="in-active" class="text-black dark:text-white">غير نشط</label>
                 </div>
               </div>
             </div>
 
-            <FormControl
-              id="start_date"
-              label="تاريخ البداية"
-              type="date"
-              v-model="startDate"
-              :error-message="errors.start_date"
-            />
-            <FormControl
-              id="end_date"
-              label="تاريخ النهاية"
-              type="date"
-              v-model="endDate"
-              :error-message="errors.end_date"
-            />
+            <FormControl id="start_date" label="تاريخ البداية" type="date" v-model="startDate"
+              :error-message="errors.start_date" />
+            <FormControl id="end_date" label="تاريخ النهاية" type="date" v-model="endDate"
+              :error-message="errors.end_date" />
 
-            <MainButton
-              :label="isEditPage ? 'تعديل العرض' : 'اضافة العرض'"
-              class="bg-gray-800 mt-4"
-              type="submit"
-            />
+            <MainButton :label="isEditPage ? 'تعديل العرض' : 'اضافة العرض'" class="bg-gray-800 mt-4" type="submit" />
 
             <div class="absolute top-[20px] right-[20px]">
-              <XMarkIcon
-                class="h-5 w-5 cursor-pointer stroke-[4px] dark:stroke-white" style="stroke-width: 3px;" 
-                @click="closeDialog()"
-              />
+              <XMarkIcon class="h-5 w-5 cursor-pointer stroke-[4px] dark:stroke-white" style="stroke-width: 3px;"
+                @click="closeDialog()" />
             </div>
           </form>
         </DialogPanel>
@@ -177,8 +126,6 @@ const { handleSubmit, defineField, errors, resetForm } = useForm({
   validationSchema: schema,
 });
 
-const [discountPrice] = defineField("discount_price");
-const [discountPercent] = defineField("discount_percent");
 const [discountType] = defineField("discount_type"); // fixed | percent
 const [discount_value] = defineField("discount_value");
 const [startDate] = defineField("start_date");
@@ -208,17 +155,6 @@ const suffixSymbol = computed(() =>
 const isEditPage = computed(() => {
   return props.product.offer;
 });
-// const discountValue = computed({
-//   get() {
-//     return discountType.value === "fixed"
-//       ? discountPrice.value
-//       : discountPercent.value;
-//   },
-//   set(val) {
-//     if (discountType.value === "fixed") discountPrice.value = val;
-//     else discountPercent.value = val;
-//   },
-// });
 
 const closeDialog = () => {
   emit("update:modelValue", false);
@@ -261,7 +197,6 @@ const submit = handleSubmit(async (values) => {
       closeDialog();
     }
   } catch (e) {
-    // console.error(e);
   }
 });
 const formatDate = (datetime) => datetime?.split(" ")[0] ?? "";
@@ -291,9 +226,11 @@ watch(
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.5);
   border-radius: 3px;

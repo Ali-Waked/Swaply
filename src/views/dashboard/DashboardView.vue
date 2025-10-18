@@ -7,8 +7,7 @@
     <template v-for="item in cardItems" :key="item.title">
       <div
         class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-[400] w-[280px] lg:w-[340px] transition-colors duration-200"
-        :class="item.style"
-      >
+        :class="item.style">
         <component :is="item.icon" class="w-12 lg:w-14" />
         <div class="flex items-center flex-col justify-center gap-4">
           <span>{{ item.title }}</span>
@@ -19,28 +18,21 @@
   </div>
 
   <div class="flex flex-col items-stretch lg:flex-row gap-4 mt-8 pb-6 h-full">
-    <div
-      class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md dark:shadow-gray-700 rounded-lg"
-    >
+    <div class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md dark:shadow-gray-700 rounded-lg">
       <div class="min-w-[750px] h-[25rem]">
         <div
-          class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200"
-        >
+          class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200">
           <div class="flex justify-between items-center mb-6">
             <h4 class="text-blue-500 text-[20px] font-[500]">
               اخر المستخدمين انضماما
             </h4>
-            <button
-              @click="$router.push({ name: 'dashboard-user' })"
-              class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
-            >
+            <button @click="$router.push({ name: 'dashboard-user' })"
+              class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white">
               عرض المزيد
             </button>
           </div>
           <div class="text-[14px]">
-            <div
-              class="row grid grid-cols-8 gap-4 mb-2 font-[400] text-gray-800 dark:text-gray-200"
-            >
+            <div class="row grid grid-cols-8 gap-4 mb-2 font-[400] text-gray-800 dark:text-gray-200">
               <span>رقم المستخدم</span>
               <span>اسم المستخدم</span>
               <span class="col-span-2 text-center">ايميل المستخدم</span>
@@ -50,9 +42,7 @@
             </div>
             <div
               class="row grid grid-cols-8 gap-4 py-4 border-b last-of-type:border-none text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
-              v-for="user in users"
-              :key="user.id"
-            >
+              v-for="user in users" :key="user.id">
               <span class="text-center"># {{ user.id }}</span>
               <span>{{ user.name }}</span>
               <span class="col-span-2 text-center">{{ user.email }}</span>
@@ -69,34 +59,23 @@
 
     <div
       class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[25rem] min-w-[280px] transition-colors duration-200"
-      :class="{ 'overflow-y-auto': showAll }"
-    >
+      :class="{ 'overflow-y-auto': showAll }">
       <div class="flex justify-between items-center gap-6 mb-6">
         <h4 class="text-blue-500 text-[20px] font-[500] text-nowrap">
           اخر الاشعارات
         </h4>
-        <button
-          v-if="notifications.data?.length > 4"
-          @click="showAll = !showAll"
-          class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white"
-        >
+        <button v-if="notifications.data?.length > 4" @click="showAll = !showAll"
+          class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white">
           {{ showAll ? "عرض أقل" : "عرض الكل" }}
         </button>
       </div>
       <template v-if="notifications.data?.length > 0">
         <div
           class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700 last-of-type:border-none"
-          v-for="notification in notifications.data"
-          :key="notification.id"
-        >
-          <component
-            :is="getIcon(notification.data.icon_type)"
-            class="w-6 text-gray-800 dark:text-gray-200"
-          />
+          v-for="notification in notifications.data" :key="notification.id">
+          <component :is="getIcon(notification.data.icon_type)" class="w-6 text-gray-800 dark:text-gray-200" />
           <div class="flex flex-col gap-[2px]">
-            <span
-              class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]"
-            >
+            <span class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]">
               {{ notification.data.title }}
             </span>
             <span class="text-gray-600 dark:text-gray-400 text-[12px]">
@@ -106,9 +85,7 @@
         </div>
       </template>
       <template v-else>
-        <p
-          class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200"
-        >
+        <p class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200">
           لا يوجد اي اشعارات حتى الان
         </p>
       </template>
@@ -157,21 +134,6 @@ const cardItems = reactive([
 const users = ref([]);
 
 const notifications = ref([]);
-// {
-//   icon: UserIcon,
-//   title: "مستخدم جديد",
-//   text: "مستخدم جديد عمل lgoin",
-// },
-// {
-//   icon: UserIcon,
-//   title: "مستخدم جديد",
-//   text: "مستخدم جديد عمل lgoin",
-// },
-// {
-//   icon: UserIcon,
-//   title: "مستخدم جديد",
-//   text: "مستخدم جديد عمل lgoin",
-// },
 const translateRole = (role) => {
   switch (role) {
     case "admin":
@@ -190,8 +152,6 @@ const getIcon = (icon) => {
       return UserIcon;
     case "report":
       return FlagIcon;
-    // case "role":
-    // return UserIcon;
     case "store":
       return BuildingStorefrontIcon;
     default:
@@ -216,7 +176,6 @@ onMounted(async () => {
     cardItems[1].number = response.data.categories_count;
     cardItems[2].number = response.data.users_count;
   } catch (e) {
-    // console.error(e);
   }
 
   try {
@@ -225,7 +184,6 @@ onMounted(async () => {
       notifications.value = response.data.notifications;
     }
   } catch (e) {
-    // console.error(e);
   }
 });
 </script>
@@ -243,6 +201,7 @@ onMounted(async () => {
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 /* Firefox */
 .overflow-y-auto {
   scrollbar-width: thin;

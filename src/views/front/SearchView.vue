@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { FunnelIcon } from "@heroicons/vue/24/outline";
 import ButtonTab from "../../components/front/ButtonTab.vue";
 import { CheckIcon } from "@heroicons/vue/24/solid";
@@ -15,38 +15,6 @@ import { useCityStore } from "../../stores/city";
 import useFormats from "../../mixins/formats";
 
 const { timeAgo } = useFormats();
-// const items = [
-//   {
-//     storeName: "سوق الشجاعية",
-//     price: "55",
-//     usdPrice: "14.85",
-//     priceType: "سعر عادل",
-//     distance: "0.8",
-//     rating: "4.5",
-//     isCertified: true,
-//     lastUpdate: "منذ 30 دقيقة",
-//   },
-//   {
-//     storeName: "محل ابو سامر",
-//     price: "52",
-//     usdPrice: "14.5",
-//     priceType: "سعر جيد",
-//     distance: "1.2",
-//     isCertified: true,
-//     rating: "4.2",
-//     lastUpdate: "منذ ساعة",
-//   },
-//   {
-//     storeName: "السوق المركزي",
-//     price: "68",
-//     usdPrice: "18.83",
-//     // priceType: "3.8",
-//     distance: "2.1",
-//     rating: "سعر مرتفع",
-//     isCertified: false,
-//     lastUpdate: "منذ 3 ساعات",
-//   },
-// ];
 const searchStore = useSearchStore();
 const { stores, current_page, last_page, loading, errors } =
   storeToRefs(searchStore);
@@ -90,21 +58,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col-reverse lg:grid lg:gap-5 lg:grid-cols-3 lg:max-h-screen lg:overflow-scroll scrollbar-hide"
-  >
+  <div class="flex flex-col-reverse lg:grid lg:gap-5 lg:grid-cols-3 lg:max-h-screen lg:overflow-scroll scrollbar-hide">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 lg:block lg:mt-0">
       <template v-for="store in stores" :key="store.id">
         <template v-for="product in store.products" :key="product.id">
-          <StoreBox
-            :price="product.price"
-            :store-name="store.name"
-            :last-update="timeAgo(product.updated_at)"
-            :is-certified="true"
-            :city-id="store.city_id"
-            :recent-prices="product.recent_prices"
-            rating="5"
-          />
+          <StoreBox :price="product.price" :store-name="store.name" :last-update="timeAgo(product.updated_at)"
+            :is-certified="true" :city-id="store.city_id" :recent-prices="product.recent_prices" rating="5" />
         </template>
       </template>
       <div ref="loadMoreTrigger" class="w-full h-1"></div>

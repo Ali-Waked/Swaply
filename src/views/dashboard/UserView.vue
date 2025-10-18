@@ -138,7 +138,6 @@ const fetchUsers = async () => {
           created_at: formatDate(ele.created_at),
         };
       });
-      // console.log(response);
     });
   } catch (e) {
   }

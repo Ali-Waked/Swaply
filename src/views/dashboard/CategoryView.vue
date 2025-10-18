@@ -1,17 +1,9 @@
 <template>
-  <HeaderPage
-    title="التصنيفات"
-    ButtonLabel="اضافة تصنيف جديد"
-    @button-add-click="openDialog('create')"
-  />
+  <HeaderPage title="التصنيفات" ButtonLabel="اضافة تصنيف جديد" @button-add-click="openDialog('create')" />
 
   <div class="mb-4">
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="ابحث عن تصنيف..."
-      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-    />
+    <input v-model="searchQuery" type="text" placeholder="ابحث عن تصنيف..."
+      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none" />
   </div>
 
   <GenericDataTable :headers="headers" :items="filteredItems">
@@ -20,16 +12,10 @@
     </template>
     <template #actions="item">
       <div class="flex gap-2 justify-center">
-        <button
-          @click="openEditModal(item.item)"
-          class="bg-blue-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="openEditModal(item.item)" class="bg-blue-500 text-white px-3 py-1 rounded">
           تعديل
         </button>
-        <button
-          @click="deleteCategory(item.item)"
-          class="bg-red-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="deleteCategory(item.item)" class="bg-red-500 text-white px-3 py-1 rounded">
           حذف
         </button>
       </div>
@@ -44,17 +30,9 @@
     </template>
   </GenericDataTable>
 
-  <AddOrEditCategoryDialog
-    v-model="showDialog"
-    :mode="mode"
-    v-model:category="category"
-    @fetch-categories="fetchCategories"
-  />
-  <ConfirmDeleteDialog
-    v-model="showDeleteDialog"
-    :message="confirmMessage"
-    @confirm="ConfirmDelete"
-  />
+  <AddOrEditCategoryDialog v-model="showDialog" :mode="mode" v-model:category="category"
+    @fetch-categories="fetchCategories" />
+  <ConfirmDeleteDialog v-model="showDeleteDialog" :message="confirmMessage" @confirm="ConfirmDelete" />
 </template>
 
 <script setup>
@@ -136,7 +114,6 @@ const fetchCategories = async () => {
       created_at: formatDate(ele.created_at),
     }));
   } catch (e) {
-    // console.error(e);
   }
 };
 

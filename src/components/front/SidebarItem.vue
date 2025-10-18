@@ -19,16 +19,12 @@ const handleClick = () => {
 
 <template>
   <li>
-    <a
-      :href="'#' + id"
-      @click.prevent="handleClick"
-      :class="[
-        'flex items-center gap-3 p-[10px] rounded-lg transition-colors font-[500] text-[16px]',
-        activeId === id
-          ? 'text-white bg-blue-700 dark:bg-gray-600'
-          : 'text-blue-950 hover:bg-blue-100 dark:text-gray-200 dark:hover:bg-gray-700',
-      ]"
-    >
+    <a :href="'#' + id" @click.prevent="handleClick" :class="[
+      'flex items-center gap-3 p-[10px] rounded-lg transition-colors font-[500] text-[16px]',
+      activeId === id
+        ? 'text-white bg-blue-700 dark:bg-gray-600'
+        : 'text-blue-950 hover:bg-blue-100 dark:text-gray-200 dark:hover:bg-gray-700',
+    ]">
       <span class="icon">
         <slot name="icon" />
       </span>

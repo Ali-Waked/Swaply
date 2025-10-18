@@ -48,9 +48,7 @@ const fetchProducts = async (page = 1) => {
       `/product/last-products?page=${page}`
     );
     data.value = response.data;
-    // store.value = response.data.store;
   } catch (e) {
-    // console.error(e);
   } finally {
   }
 };
@@ -69,33 +67,19 @@ onMounted(async () => {
     </template>
   </TitleProductsSection>
   <div class="" v-if="!loading && data?.data?.length">
-    <ProductsSwaperDispaly
-      v-if="!showAll"
-      @showProduct="showProduct($event)"
-      :products="data.data"
-    />
-    <ProductGridDisplay
-      :products="data.data"
-      v-model="data.current_page"
-      :last-page="data.last_page"
-      @showProduct="showProduct($event)"
-      v-else
-    />
+    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="data.data" />
+    <ProductGridDisplay :products="data.data" v-model="data.current_page" :last-page="data.last_page"
+      @showProduct="showProduct($event)" v-else />
   </div>
   <div class="flex justify-center items-center h-24" v-else>
     <div>
-      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4"
-        >لم يتم حتى الان اضافة اي منتجات</span
-      >
+      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4">لم يتم حتى الان اضافة اي منتجات</span>
     </div>
   </div>
-  <ShowProductDialog
-    v-model="showProductDialog.dialog"
-    :productId="+showProductDialog.product_id"
-  />
+  <ShowProductDialog v-model="showProductDialog.dialog" :productId="+showProductDialog.product_id" />
 </template>
 
-<style scoped >
+<style scoped>
 .swiper,
 .swiper-wrapper,
 .swiper-slide {

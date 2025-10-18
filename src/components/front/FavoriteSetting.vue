@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { ref, watch } from "vue";
 import RadioComponent from "./global/RadioComponent.vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
@@ -9,11 +9,8 @@ import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../../stores/auth/auth";
 
-const langSelected = ref("ar");
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
-// const apperenceSelected = ref("ligth");
-
 const enabled = ref(Boolean(user.value?.recive_notification));
 const currencySelected = ref(user.value?.currency || "ILS");
 const langs = [
@@ -35,16 +32,6 @@ watch(enabled, async (newVal) => {
   await authStore.update({ recive_notification: +newVal });
   user.value.recive_notification = newVal;
 });
-// const apperences = [
-//   {
-//     label: "فاتح",
-//     id: "ligth",
-//   },
-//   {
-//     label: "داكن",
-//     id: "dark",
-//   },
-// ];
 const currency = [
   {
     label: "دولار",
@@ -55,13 +42,6 @@ const currency = [
     id: "ILS",
   },
 ];
-// watch(apperenceSelected, (newVal) => {
-//   if (newVal === "dark") {
-//     document.body.classList.add("dark");
-//   } else {
-//     document.body.classList.remove("dark");
-//   }
-// });
 
 const themeStore = useThemeStore();
 const theme = storeToRefs(themeStore);
@@ -71,40 +51,18 @@ const themes = themeStore.themes;
 
 <template>
   <SecandryTitle label="التفضيلات" class="mb-3" />
-  <div
-    class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
-  >
-    <!-- <SingleFavoriteStraucture title="اللغة" description="اختر لغة التطبيق">
-      <template #action>
-        <RadioComponent
-          :items="langs"
-          name="lang"
-          v-model:selected="langSelected"
-        />
-      </template>
-    </SingleFavoriteStraucture> -->
+  <div class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
     <SingleFavoriteStraucture title="المظهر" description="اختر مظهر التطبيق">
       <template #action>
-        <RadioComponent
-          :items="themes"
-          name="theme"
-          v-model:selected="currentTheme"
-        />
+        <RadioComponent :items="themes" name="theme" v-model:selected="currentTheme" />
       </template>
     </SingleFavoriteStraucture>
     <SingleFavoriteStraucture title="الوحدة" description="وحدة قياس الاسعار">
       <template #action>
-        <RadioComponent
-          :items="currency"
-          name="currency"
-          v-model:selected="currencySelected"
-        />
+        <RadioComponent :items="currency" name="currency" v-model:selected="currencySelected" />
       </template>
     </SingleFavoriteStraucture>
-    <SingleFavoriteStraucture
-      title="التنبيهات"
-      description="تفعيل اشعارات الاسعار"
-    >
+    <SingleFavoriteStraucture title="التنبيهات" description="تفعيل اشعارات الاسعار">
       <template #action>
         <BaseSwitch v-model:model-value="enabled" />
       </template>

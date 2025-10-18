@@ -1,7 +1,7 @@
-import { useProductStore } from '../stores/product';
-import { useCategoryStore } from '../stores/category';
-import { useCityStore } from '../stores/city';
-import { useNotificationStore } from '../stores/notification';
+import { useProductStore } from "../stores/product";
+import { useCategoryStore } from "../stores/category";
+import { useCityStore } from "../stores/city";
+import { useNotificationStore } from "../stores/notification";
 
 class DataLoader {
   constructor() {
@@ -9,8 +9,8 @@ class DataLoader {
   }
 
   async loadHomePageData() {
-    const cacheKey = 'homePageData';
-    
+    const cacheKey = "homePageData";
+
     // Check if already loading
     if (this.loadingPromises.has(cacheKey)) {
       return this.loadingPromises.get(cacheKey);
@@ -18,7 +18,7 @@ class DataLoader {
 
     const loadingPromise = this._loadHomePageData();
     this.loadingPromises.set(cacheKey, loadingPromise);
-    
+
     try {
       const result = await loadingPromise;
       return result;
@@ -49,27 +49,26 @@ class DataLoader {
       await Promise.allSettled(promises);
       return {
         success: true,
-        loadedStores: ['product', 'category', 'city', 'notification']
+        loadedStores: ["product", "category", "city", "notification"],
       };
     } catch (error) {
-      // console.error('Error loading home page data:', error);
       return {
         success: false,
-        error
+        error,
       };
     }
   }
 
   async loadUserSpecificData() {
-    const cacheKey = 'userSpecificData';
-    
+    const cacheKey = "userSpecificData";
+
     if (this.loadingPromises.has(cacheKey)) {
       return this.loadingPromises.get(cacheKey);
     }
 
     const loadingPromise = this._loadUserSpecificData();
     this.loadingPromises.set(cacheKey, loadingPromise);
-    
+
     try {
       const result = await loadingPromise;
       return result;
@@ -80,10 +79,10 @@ class DataLoader {
 
   async _loadUserSpecificData() {
     const notificationStore = useNotificationStore();
-    
+
     try {
       const promises = [];
-      
+
       if (notificationStore) {
         promises.push(notificationStore.fetchLastNotifications());
       }
@@ -91,7 +90,6 @@ class DataLoader {
       await Promise.allSettled(promises);
       return { success: true };
     } catch (error) {
-      // console.error('Error loading user specific data:', error);
       return { success: false, error };
     }
   }

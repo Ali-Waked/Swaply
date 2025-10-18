@@ -46,48 +46,33 @@ const cancelEdit = () => {
 </script>
 
 <template>
-  <div
-    class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700"
-  >
-    <span
-      class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block"
-    >
+  <div class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700">
+    <span class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block">
       {{ label }}
     </span>
 
     <div v-if="isEdit" class="flex items-center gap-4 mt-3">
-      <input
-        :type="inputType"
-        v-model="localValue"
-        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right" dir="ltr"
-      />
+      <input :type="inputType" v-model="localValue"
+        class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right"
+        dir="ltr" />
       <p v-if="error" class="text-red-500 text-sm mt-1">{{ error }}</p>
       <div class="action flex justify-end gap-1">
-        <span
-          @click="saveEdit"
-          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
-        >
+        <span @click="saveEdit"
+          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600">
           <CheckIcon class="w-5 h-5 dark:text-white" />
         </span>
-        <span
-          @click="cancelEdit"
-          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600"
-        >
+        <span @click="cancelEdit"
+          class="cursor-pointer w-9 h-7 rounded-md flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-600">
           <XMarkIcon class="w-5 h-5 dark:text-white" />
         </span>
       </div>
     </div>
 
-    <div
-      v-else
-      class="font-[500] flex items-center justify-between text-blue-950 dark:text-white"
-      >
+    <div v-else class="font-[500] flex items-center justify-between text-blue-950 dark:text-white">
       <p dir="ltr">{{ displayValue }}</p>
-      <button
-        @click="isEdit = true"
+      <button @click="isEdit = true"
         class="w-fit border rounded-lg py-2 px-4 text-[12px] font-[500] transition border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
-        dir="ltr"
-        >
+        dir="ltr">
         {{ buttonLabel }}
       </button>
     </div>

@@ -22,21 +22,16 @@ const localValue = computed({
 </script>
 
 <template>
-  <Switch
-    v-model="localValue"
-    :class="[
-      localValue
-        ? 'bg-blue-800 dark:bg-blue-700' // عند التفعيل: أسود في الوضع العادي، فاتح في الداكن
-        : 'bg-gray-200 dark:bg-gray-700', // عند الإيقاف: رمادي فاتح في العادي، غامق في الداكن
-      'relative inline-flex h-6 w-11 items-center rounded-full transition-colors rotate-[180deg]',
-    ]"
-  >
+  <Switch v-model="localValue" :class="[
+    localValue
+      ? 'bg-blue-800 dark:bg-blue-700'
+      : 'bg-gray-200 dark:bg-gray-700',
+    'relative inline-flex h-6 w-11 items-center rounded-full transition-colors rotate-[180deg]',
+  ]">
     <span class="sr-only"></span>
-    <span
-      :class="[
-        localValue ? '-translate-x-6' : '-translate-x-1',
-        'inline-block h-4 w-4 transform rounded-full bg-white dark:bg-gray-300 transition-transform',
-      ]"
-    />
+    <span :class="[
+      localValue ? '-translate-x-6' : '-translate-x-1',
+      'inline-block h-4 w-4 transform rounded-full bg-white dark:bg-gray-300 transition-transform',
+    ]" />
   </Switch>
 </template>

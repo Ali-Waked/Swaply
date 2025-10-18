@@ -38,12 +38,6 @@ const priceOptions = [
 ];
 const dependentPrice = ref({ id: 1, name: "حسب السعر", value: "ar" });
 
-// const categoriesOptions = [
-//   { id: 1, name: "جميع الفئات", value: "all" },
-//   { id: 2, name: "مواد اساسية", value: "pk" },
-//   { id: 3, name: "مواد غذائية", value: "fk" },
-//   { id: 4, name: "ادوية", value: "ek" },
-// ];
 const categoriesOptions = computed(() => {
   const allCategories = categories.value.map((cat) => {
     return { id: cat.id, name: cat.name, value: cat.id };
@@ -59,8 +53,6 @@ const searchFor = async () => {
     dependent: dependentPrice.value.name,
     categories: dependentCategories.value.name,
   };
-  // console.log(dependentCategories.value.value);
-  // console.log(dependentCategories.value.)
   await searchStore.fetchAllStoresHasProdcut(
     route.query.id,
     current_page.value,
@@ -69,13 +61,11 @@ const searchFor = async () => {
       dependent: dependentPrice.value.value,
     })
   );
-  // console.log(query);
   router.replace({
     name: router.currentRoute.value.name,
     query: { ...route.query, ...query },
   });
 
-  // updateRoute();
 };
 
 onMounted(() => {
@@ -96,7 +86,6 @@ onMounted(() => {
   if (categories) {
     dependentCategories.value = categories;
   }
-  // console.log("categoru", categories);
 });
 
 onMounted(async () => {
@@ -119,7 +108,6 @@ onMounted(async () => {
   <!-- الفلاتر -->
   <div class="filter flex items-center gap-2 my-4">
     <SelectListBox v-model="dependentPrice" :options="priceOptions" />
-    <!-- <SelectListBox v-model="dependentCategories" :options="categoriesOptions" /> -->
     <div
       class="border search-button rounded-lg py-[6px] relative px-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-700"
       @click="searchFor()">

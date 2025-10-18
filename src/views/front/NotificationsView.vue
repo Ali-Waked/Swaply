@@ -13,9 +13,7 @@ import { useNotificationStore } from "../../stores/notification";
 
 const showAll = ref(false);
 
-// const showAllNotifications = () => {
-//   showAll.value = true;
-// };
+
 const notificationStore = useNotificationStore();
 
 onMounted(async () => {
@@ -28,10 +26,7 @@ onMounted(async () => {
     <LogoSection />
   </HeaderPage>
 
-  <HeaderTitle
-    title="مركز التنبيهات"
-    subtitle="تتبع تغييرات الاسعار و احصل على اشعارات فورية"
-  />
+  <HeaderTitle title="مركز التنبيهات" subtitle="تتبع تغييرات الاسعار و احصل على اشعارات فورية" />
   <div class="flex gap-8 mt-12 flex-col lg:flex-row">
     <div class="flex-1">
       <div class="notification-setting w-full">
@@ -42,8 +37,7 @@ onMounted(async () => {
     <div class="right-site flex-1 relative">
       <ActiveNotification :showScroll="showAll" />
       <span
-        class="absolute w-full left-0 bottom-0 h-8 rounded-bl-[20px] rounded-br-[20px] bg-gradient-to-t from-white to-transparent dark:from-gray-900"
-      ></span>
+        class="absolute w-full left-0 bottom-0 h-8 rounded-bl-[20px] rounded-br-[20px] bg-gradient-to-t from-white to-transparent dark:from-gray-900"></span>
     </div>
   </div>
   <div class="pb-4">

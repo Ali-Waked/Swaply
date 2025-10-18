@@ -20,10 +20,6 @@ defineProps({
 <template>
   <div class="flex justify-between items-center pt-6 mb-3">
     <PageTitle :title="title" />
-    <ButtonAdd
-      :label="ButtonLabel"
-      v-if="isHasAddButton"
-      @click="$emit('buttonAddClick')"
-    />
+    <ButtonAdd :label="ButtonLabel" v-if="isHasAddButton" @click="$emit('buttonAddClick')" />
   </div>
 </template>

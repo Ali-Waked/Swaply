@@ -43,33 +43,22 @@ watch(
 
 <template>
   <div
-    class="flex bg-white dark:bg-gray-900 shadow-md dark:shadow-[inset_0_-4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 w-full items-center rounded-2xl justify-between px-8 py-4 mb-4 transition-colors"
-  >
+    class="flex bg-white dark:bg-gray-900 shadow-md dark:shadow-[inset_0_-4px_10px_rgba(0,0,0,0.01)] dark:shadow-slate-700 w-full items-center rounded-2xl justify-between px-8 py-4 mb-4 transition-colors">
     <div class="flex items-center gap-4">
       <div class="icon">
         <template v-if="from == 'mdi'">
-          <MdiIcon
-            :icon="icon"
-            class="w-[30px] h-[30px] text-gray-900 dark:text-white"
-          />
+          <MdiIcon :icon="icon" class="w-[30px] h-[30px] text-gray-900 dark:text-white" />
         </template>
         <template v-else>
-          <component
-            :is="icon"
-            class="w-[30px] h-[30px] text-gray-900 dark:text-white"
-          />
+          <component :is="icon" class="w-[30px] h-[30px] text-gray-900 dark:text-white" />
         </template>
       </div>
       <div>
         <div>
-          <span
-            class="text-gray-900 dark:text-white font-[500] text-[16px] mb-1 block"
-          >
+          <span class="text-gray-900 dark:text-white font-[500] text-[16px] mb-1 block">
             {{ title }}
           </span>
-          <span
-            class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block"
-          >
+          <span class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block">
             {{ description }}
           </span>
         </div>

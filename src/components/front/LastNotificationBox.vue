@@ -25,22 +25,18 @@ defineProps({
 const { getRelativeTime } = useFormats();
 </script>
 <template>
-  <div
-    class="px-6 py-[10px] rounded-[10px] mb-4"
-    :class="{
-      'bg-sky-100 dark:bg-sky-900': !isUrgent,
-      'bg-red-100 dark:bg-red-800 border-red-400 dark:border-red-600 border':
-        isUrgent,
-    }"
-  >
+  <div class="px-6 py-[10px] rounded-[10px] mb-4" :class="{
+    'bg-sky-100 dark:bg-sky-900': !isUrgent,
+    'bg-red-100 dark:bg-red-800 border-red-400 dark:border-red-600 border':
+      isUrgent,
+  }">
     <div class="flex justify-between items-center">
       <span class="text-gray-800 dark:text-gray-200 font-[400]">{{
         title
       }}</span>
       <span
         class="bg-red-600 dark:bg-red-500 text-white inline-block px-4 py-1 rounded-md text-[12px] font-[500] cursor-default"
-        v-if="isUrgent"
-      >
+        v-if="isUrgent">
         عاجل
       </span>
     </div>
@@ -49,16 +45,10 @@ const { getRelativeTime } = useFormats();
         {{ getRelativeTime(time).replace("قبل", "منذ") }}
       </p>
       <span>
-        <ArrowTrendingUpIcon
-          v-if="isIncrease"
-          class="w-5 h-5"
-          :class="{ 'text-green-500': !isUrgent, 'text-red-500': isUrgent }"
-        />
-        <ArrowTrendingDownIcon
-          v-if="isDecrease"
-          class="w-5 h-5"
-          :class="{ 'text-green-500': !isUrgent, 'text-red-500': isUrgent }"
-        />
+        <ArrowTrendingUpIcon v-if="isIncrease" class="w-5 h-5"
+          :class="{ 'text-green-500': !isUrgent, 'text-red-500': isUrgent }" />
+        <ArrowTrendingDownIcon v-if="isDecrease" class="w-5 h-5"
+          :class="{ 'text-green-500': !isUrgent, 'text-red-500': isUrgent }" />
       </span>
     </div>
   </div>

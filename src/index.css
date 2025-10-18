@@ -6,14 +6,16 @@
 
 @font-face {
   font-family: "Readex Pro";
-  src: url("/@assets/fonts/ReadexPro/ReadexPro-VariableFont_HEXP,wght.ttf") format("ttf");
+  src: url("/@assets/fonts/ReadexPro/ReadexPro-VariableFont_HEXP,wght.ttf")
+    format("ttf");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Readex Pro";
-  src: url("/@assets/fonts/ReadexPro/ReadexPro-VariableFont_HEXP,wght.ttf") format("ttf");
+  src: url("/@assets/fonts/ReadexPro/ReadexPro-VariableFont_HEXP,wght.ttf")
+    format("ttf");
   font-weight: 700;
   font-style: normal;
 }
@@ -23,13 +25,10 @@ html {
 }
 
 body {
-  /* @apply font-readex; */
-
   font-family: "Readex Pro", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: "HEXP" 0;
-
   direction: rtl;
   text-align: right;
   margin: 0;
@@ -38,7 +37,6 @@ body {
   font-size: 16px;
   line-height: 1.5;
   /* Inner red shadow around the whole page */
-  
 }
 
 .translate-x-rtl {
@@ -56,23 +54,11 @@ body {
   appearance: textfield;
 }
 
-/* @media (min-width: 640px) {
-  .container {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-  }
-
-   .xl\:p-0 {
-        padding: 0.75rem !important;
-    } 
-} */
-
 @media (min-width: 320px) {
   .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
-
 }
 
 @media (max-width: 560px) {

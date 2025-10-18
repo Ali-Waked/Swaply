@@ -3,7 +3,7 @@ class PerformanceMonitor {
     this.metrics = {
       apiCalls: [],
       renderTimes: [],
-      componentLoadTimes: []
+      componentLoadTimes: [],
     };
   }
 
@@ -14,9 +14,8 @@ class PerformanceMonitor {
         const endTime = performance.now();
         const duration = endTime - startTime;
         this.metrics.apiCalls.push({ label, duration, timestamp: Date.now() });
-        console.log(`⏱️ ${label}: ${duration.toFixed(2)}ms`);
         return duration;
-      }
+      },
     };
   }
 
@@ -35,30 +34,29 @@ class PerformanceMonitor {
   getMetrics() {
     return {
       ...this.metrics,
-      averageApiCallTime: this.calculateAverage(this.metrics.apiCalls.map(m => m.duration)),
+      averageApiCallTime: this.calculateAverage(
+        this.metrics.apiCalls.map((m) => m.duration)
+      ),
       totalApiCalls: this.metrics.apiCalls.length,
-      slowestApiCall: Math.max(...this.metrics.apiCalls.map(m => m.duration))
+      slowestApiCall: Math.max(...this.metrics.apiCalls.map((m) => m.duration)),
     };
   }
 
   calculateAverage(numbers) {
-    return numbers.length > 0 ? numbers.reduce((a, b) => a + b, 0) / numbers.length : 0;
+    return numbers.length > 0
+      ? numbers.reduce((a, b) => a + b, 0) / numbers.length
+      : 0;
   }
 
   logPerformanceReport() {
     const metrics = this.getMetrics();
-    // console.group('Performance Report test');
-    // console.log(`Total API Calls: ${metrics.totalApiCalls}`);
-    // console.log(`Average API Call Time: ${metrics.averageApiCallTime.toFixed(2)}ms`);
-    // console.log(`Slowest API Call: ${metrics.slowestApiCall.toFixed(2)}ms`);
-    // console.groupEnd();
   }
 
   clearMetrics() {
     this.metrics = {
       apiCalls: [],
       renderTimes: [],
-      componentLoadTimes: []
+      componentLoadTimes: [],
     };
   }
 }

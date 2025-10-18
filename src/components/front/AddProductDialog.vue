@@ -219,30 +219,8 @@ watch(
   async (val) => {
     if (!val) return;
     await productStore.fetchAllProductsIds();
-    // console.log("product_ids", isEditPage.value);
     if (isEditPage.value) {
-      // console.log("edit");
-      // const response = await axiosClient.get(
-      //   `merchant/store/products/${props.editProductId}`
-      // );
-      // if (response.status == 200) {
-      //   const productData = response.data.product;
-      //   console.log(
-      //     "product_ids",
-      //     productData,
-      //     response.data,
-      //     props.editProductId
-      //   );
       await nextTick();
-      //   console.log("product_ids", productData);
-
-      //   price.value = productData.price;
-      //   description.value = productData.description;
-      //   imagePreview.value = productData.image;
-      //   name.value = products.value.find(
-      //     (p) => p.id === productData.product_id
-      //   );
-      // }
       selectedProduct.value = products.value.find(
         (p) => p.id === props.productEdit?.product_id
       );

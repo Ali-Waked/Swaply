@@ -9,9 +9,7 @@ defineProps({
 });
 </script>
 <template>
-  <button
-    class="flex items-center justify-center w-full py-2 border-2 rounded-lg min-w-[130px]"
-  >
+  <button class="flex items-center justify-center w-full py-2 border-2 rounded-lg min-w-[130px]">
     <MdiIcon class="text-white" :icon="icon" />
     <span class="font-[400] text-[14px]">{{ label }}</span>
   </button>

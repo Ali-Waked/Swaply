@@ -73,7 +73,6 @@ const updateUser = async () => {
     }
     closeDialog();
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -83,27 +82,12 @@ const submit = () => updateUser();
 </script>
 
 <template>
-  <MainDialog
-    v-model="showDialog"
-    :button-label="label"
-    @submit-data="submit"
-    :loading="loading"
-  >
+  <MainDialog v-model="showDialog" :button-label="label" @submit-data="submit" :loading="loading">
     <template #title> تعديل بيانات المستخدم </template>
 
     <template #content>
-      <SelectListBox
-        label="اختر دور المستخدم"
-        v-model="userRole"
-        :options="rolesOptions"
-        class="w-full"
-      />
-      <SelectListBox
-        label="اختر حالة المستخدم"
-        v-model="userStatus"
-        :options="StatusOptions"
-        class="w-full mt-4"
-      />
+      <SelectListBox label="اختر دور المستخدم" v-model="userRole" :options="rolesOptions" class="w-full" />
+      <SelectListBox label="اختر حالة المستخدم" v-model="userStatus" :options="StatusOptions" class="w-full mt-4" />
     </template>
   </MainDialog>
 </template>

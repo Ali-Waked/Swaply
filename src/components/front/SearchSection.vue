@@ -22,19 +22,6 @@ const categoryStore = useCategoryStore();
 const { categories } = storeToRefs(categoryStore);
 
 const query = ref("");
-// const filteredItems = computed(() => {
-//   let list = Array.isArray(products.value) ? products.value : [];
-//   if (query.value !== "") {
-//     const q = query.value;
-//     if (typeof q === "object") {
-//       list = list.filter((item) => item.category_id === q.id);
-//     } else {
-//       list = list.filter((item) => item.name.toLowerCase().includes(q));
-//     }
-//   }
-//   return list;
-// });
-
 const filteredItems = computed(() => {
   let list = Array.isArray(products.value) ? products.value : [];
 
@@ -75,20 +62,11 @@ onMounted(async () => {
       <div class="relative mt-1">
         <ComboboxInput
           class="focus:border-blue-400 py-3 bg-transparent text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
-          @change="query = $event.target.value"
-          placeholder="ابحث عن اي منتج... (خبز, ارز, حليب)"
-        />
+          @change="query = $event.target.value" placeholder="ابحث عن اي منتج... (خبز, ارز, حليب)" />
         <ComboboxOptions
-          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg"
-        >
-          <ComboboxOption
-            v-for="item in filteredItems"
-            :key="item.id"
-            :value="item"
-            v-slot="{ active, selected }"
-          >
-            <li
-              class="
+          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 shadow-lg">
+          <ComboboxOption v-for="item in filteredItems" :key="item.id" :value="item" v-slot="{ active, selected }">
+            <li class="
                 cursor-pointer 
                 select-none 
                 py-2 
@@ -104,10 +82,7 @@ onMounted(async () => {
                 data-[selected=true]:bg-gray-200 
                 data-[selected=true]:dark:bg-blue-700 
                 data-[selected=true]:text-gray-600
-              "
-              :data-active="active"
-              :data-selected="selected"
-            >
+              " :data-active="active" :data-selected="selected">
               {{ item.name }}
             </li>
           </ComboboxOption>
@@ -119,10 +94,7 @@ onMounted(async () => {
       <ul class="flex items-center gap-1">
         <li
           class="text-blue-800 bg-blue-200 dark:bg-blue-600/30 dark:text-blue-400 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all rounded-lg"
-          v-for="value in categories.slice(0, 4)"
-          :key="value"
-          @click="suggestionClick(value)"
-        >
+          v-for="value in categories.slice(0, 4)" :key="value" @click="suggestionClick(value)">
           {{ value.name }}
         </li>
       </ul>

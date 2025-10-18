@@ -1,46 +1,31 @@
 <style>
-::-webkit-calendar-picker-indicator{
+::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
 </style>
 
 <template>
- 
+
   <div class="mb-3 relative">
-    <MainLabel :id="id" :label="label"  />
+    <MainLabel :id="id" :label="label" />
 
     <div v-if="type === 'textarea'">
-      <textarea
-        v-model="modelValue"
-        v-bind="$attrs"
-        :placeholder="placeholder"
-        :required="isRequired"
-        class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"
-      ></textarea>
+      <textarea v-model="modelValue" v-bind="$attrs" :placeholder="placeholder" :required="isRequired"
+        class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 h-[90px]"></textarea>
       <ErrorInputText :error-message="errorMessage" />
     </div>
 
     <div v-else class="relative">
-      <input
-        v-model="modelValue"
-        v-bind="$attrs"
-        :type="type"
-        :placeholder="placeholder"
-        :required="isRequired"
-        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-[400] pr-3"
-        :class="{
+      <input v-model="modelValue" v-bind="$attrs" :type="type" :placeholder="placeholder" :required="isRequired"
+        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-[400] pr-3" :class="{
           'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 dark:bg-gray-700 placeholder:text-red-600':
             errorMessage,
           'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
             !errorMessage,
-        }"
-      />
+        }" />
 
       <!-- مكان العلامة -->
-      <span
-        v-if="$slots.suffix"
-        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 text-xl"
-      >
+      <span v-if="$slots.suffix" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 text-xl">
         <slot name="suffix" />
       </span>
     </div>

@@ -1,18 +1,10 @@
 <script setup>
-import ButtonGroup from "../ButtonGroup.vue";
 import { useRouter } from "vue-router";
 import NotificationsContainer from "../NotificationsContainer.vue";
 import { inject, onMounted, reactive } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../../../../stores/auth/auth";
 const router = useRouter();
-// const links = [
-// "personal_profile",
-// "home",
-// "search-map",
-// "search-list-stores",
-// "pricing",
-// ];
 const authStore = useAuthStore();
 const { isAuth } = storeToRefs(authStore);
 const emitter = inject("emitter");
@@ -23,7 +15,6 @@ onMounted(() => {
     ([type = "info", message, duration = 3000]) => {
       const id = Date.now() + Math.random();
       notifications.push({ id, message, type, duration });
-      // console.log("hi");
 
       setTimeout(() => {
         const index = notifications.findIndex((n) => n.id === id);
@@ -36,14 +27,11 @@ onMounted(() => {
 
 <template>
   <div class="dark:bg-gray-800 bg-gray-100">
-    <div
-      class="mx-auto"
-      :class="{
-        container: !['home', 'pricing', 'personal_profile'].includes(
-          router.currentRoute.value.name
-        ),
-      }"
-    >
+    <div class="mx-auto" :class="{
+      container: !['home', 'pricing', 'personal_profile'].includes(
+        router.currentRoute.value.name
+      ),
+    }">
       <slot name="title" />
       <slot name="buttons" v-if="isAuth" />
       <slot />

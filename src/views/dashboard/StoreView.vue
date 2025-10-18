@@ -6,20 +6,13 @@
       <span># {{ item.id }}</span>
     </template>
     <template #image="{ item }">
-      <img
-        :src="item.image"
-        alt="store image"
-        class="min-w-16 max-w-20 h-16 object-cover rounded cursor-pointer"
-        @click="openImageDialog(item.image)"
-      />
+      <img :src="item.image" alt="store image" class="min-w-16 max-w-20 h-16 object-cover rounded cursor-pointer"
+        @click="openImageDialog(item.image)" />
     </template>
 
     <template #actions="item">
       <div class="flex gap-2 justify-center">
-        <button
-          @click="changeStatusDialog(item.item)"
-          class="bg-yellow-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="changeStatusDialog(item.item)" class="bg-yellow-500 text-white px-3 py-1 rounded">
           تغيير الحالة
         </button>
       </div>
@@ -34,22 +27,12 @@
     </template>
   </GenericDataTable>
 
-  <div
-    v-if="showImageDialog"
-    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-    @click.self="closeImageDialog"
-  >
-    <img
-      :src="selectedImage"
-      class="max-w-4xl max-h-[90vh] rounded shadow-lg"
-    />
+  <div v-if="showImageDialog" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+    @click.self="closeImageDialog">
+    <img :src="selectedImage" class="max-w-4xl max-h-[90vh] rounded shadow-lg" />
   </div>
-  <ChangeStoreStatus
-    v-model="statusDialog.is_open"
-    :store="statusDialog.data"
-    v-model:store-status="statusDialog.status"
-    @fetch-stores="fetchStores"
-  />
+  <ChangeStoreStatus v-model="statusDialog.is_open" :store="statusDialog.data"
+    v-model:store-status="statusDialog.status" @fetch-stores="fetchStores" />
 </template>
 
 <script setup>
@@ -103,7 +86,6 @@ const stores = ref([]);
 const { formatDate, cleanId } = format();
 const emitter = inject("emitter");
 
-// 🔹 تكبير الصورة
 const showImageDialog = ref(false);
 const selectedImage = ref(null);
 
@@ -129,7 +111,6 @@ const toggleStatus = async (store) => {
       await fetchStores();
     }
   } catch (e) {
-    // console.error(e);
   }
 };
 
@@ -150,7 +131,6 @@ const fetchStores = async () => {
       };
     });
   } catch (e) {
-    // console.error(e);
   }
 };
 

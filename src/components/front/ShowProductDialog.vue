@@ -1,55 +1,32 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
-    <Dialog
-      @close="closeDialog"
-      class="relative overflow-visible z-[100000000]"
-    >
+    <Dialog @close="closeDialog" class="relative overflow-visible z-[100000000]">
       <!-- Overlay -->
-      <div
-        class="fixed inset-0 bg-black/30 dark:bg-black/60"
-        aria-hidden="true"
-      />
+      <div class="fixed inset-0 bg-black/30 dark:bg-black/60" aria-hidden="true" />
 
-      <div
-        class="fixed inset-0 flex items-center justify-center p-4 overflow-auto"
-      >
-        <DialogPanel
-          :key="productId"
-          class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg"
-        >
+      <div class="fixed inset-0 flex items-center justify-center p-4 overflow-auto">
+        <DialogPanel :key="productId"
+          class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg">
           <DialogTitle class="mb-3 px-6 pt-12 pb-1" v-if="product">
-            <h3
-              class="title font-[500] text-[24px] text-gray-800 dark:text-white"
-            >
+            <h3 class="title font-[500] text-[24px] text-gray-800 dark:text-white">
               تفاصيل المنتج
             </h3>
           </DialogTitle>
 
           <!-- صورة -->
-          <div v-if="product"
-            class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64"
-          >
-            <img
-              :src="product.image"
-              class="w-full h-full object-contain"
-              :alt="product.name"
-            />
+          <div v-if="product" class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64">
+            <img :src="product.image" class="w-full h-full object-contain" :alt="product.name" />
           </div>
 
           <div class="p-6 pt-5" v-if="product">
             <!-- الاسم والسعر -->
-            <div
-              class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1"
-            >
+            <div class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1">
               <span class="name">{{ product.name }}</span>
               <div>
-                <span
-                  class="old_price line-through text-sm inline-block ml-1"
-                  v-if="priceAfterOffer && priceAfterOffer != product.price"
-                  >{{
+                <span class="old_price line-through text-sm inline-block ml-1"
+                  v-if="priceAfterOffer && priceAfterOffer != product.price">{{
                     currencyFormat(product.price, undefined, "ar", "ILS")
-                  }}</span
-                >
+                  }}</span>
                 <span class="price">{{
                   currencyFormat(priceAfterOffer, undefined, "ar", "ILS")
                 }}</span>
@@ -57,15 +34,11 @@
             </div>
 
             <!-- الوصف -->
-            <div
-              class="flex items-center justify-between text-gray-400 dark:text-gray-300"
-            >
+            <div class="flex items-center justify-between text-gray-400 dark:text-gray-300">
               <span class="name">{{ product.description }}</span>
               <div>
-                <span
-                  class="old_price line-through text-sm inline-block ml-1"
-                  v-if="priceAfterOffer && priceAfterOffer != product.price"
-                >
+                <span class="old_price line-through text-sm inline-block ml-1"
+                  v-if="priceAfterOffer && priceAfterOffer != product.price">
                   {{ usdPrice.old_price }}
                 </span>
                 <span class="price">{{ usdPrice.current_price }}</span>
@@ -74,116 +47,80 @@
 
             <!-- اسم المحل -->
             <div class="flex justify-between mt-2 items-center">
-              <span class="owner text-gray-700 dark:text-white">{{ product.store?.name }} - {{ product.store?.address }}</span>
-               
+              <span class="owner text-gray-700 dark:text-white">{{ product.store?.name }} - {{ product.store?.address
+                }}</span>
+
             </div>
             <!-- التقييم -->
             <div class="flex justify-end mt-1 items-center">
               <span class="flex items-center gap-2">
-                <span
-                  class="font-[400] text-gray-800 dark:text-gray-100 text-[28px]"
-                >
+                <span class="font-[400] text-gray-800 dark:text-gray-100 text-[28px]">
                   {{ product.rating }}
                 </span>
                 <StarIcon class="text-amber-400 w-8 h-8" />
               </span>
-              <span
-                class="text-[12px] rounded-lg px-4 py-[6px] cursor-default"
-                :class="priceType.style"
-              >
+              <span class="text-[12px] rounded-lg px-4 py-[6px] cursor-default" :class="priceType.style">
                 {{ priceType.rating }}
               </span>
             </div>
 
             <!-- المسافة -->
             <div>
-              <span
-                class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2"
-              >
+              <span class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2">
                 المسافة
               </span>
-              <span
-                class="text-gray-600 dark:text-gray-300 font-[300] flex items-center gap-1"
-              >
-                <MdiIcon
-                  :icon="mdiNavigationOutline"
-                  class="!size-5 text-gray-600
-                  dark:!text-gray-300"
-                />
+              <span class="text-gray-600 dark:text-gray-300 font-[300] flex items-center gap-1">
+                <MdiIcon :icon="mdiNavigationOutline" class="!size-5 text-gray-600
+                  dark:!text-gray-300" />
                 <span class="text-sm">
                   {{ distance }}
-                  <span v-if="typeof distance == 'number'">كم</span></span
-                >
+                  <span v-if="typeof distance == 'number'">كم</span></span>
               </span>
             </div>
 
             <!-- آخر تحديث -->
             <div>
-              <span
-                class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2"
-              >
+              <span class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2">
                 آخر تحديث
               </span>
-              <div
-                class="flex items-center text-sm mt-1 text-gray-600 dark:text-gray-300 gap-1"
-              >
+              <div class="flex items-center text-sm mt-1 text-gray-600 dark:text-gray-300 gap-1">
                 <ClockIcon class="w-4 h-4" />
                 <span>{{ getRelativeTime(product.updated_at) }}</span>
               </div>
             </div>
 
             <!-- فاصل -->
-            <span
-              class="block w-full h-[2px] bg-gray-100 dark:bg-gray-700 my-4"
-            />
+            <span class="block w-full h-[2px] bg-gray-100 dark:bg-gray-700 my-4" />
 
             <!-- زر الابلاغ -->
             <div v-if="!isForMe">
-              <button
-                v-if="!product.is_reported"
-                @click="sendReport"
-                class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400"
-              >
-                <MdiIcon
-                  class="text-red-600 dark:text-red-400"
-                  :icon="mdiFlagOutline"
-                />
+              <button v-if="!product.is_reported" @click="sendReport"
+                class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400">
+                <MdiIcon class="text-red-600 dark:text-red-400" :icon="mdiFlagOutline" />
                 <span>ابلاغ عن غلاء الاسعار</span>
               </button>
 
               <!-- زر تم الابلاغ -->
-              <button
-                v-else
-                class="flex items-center justify-center cursor-default select-none w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500"
-              >
+              <button v-else
+                class="flex items-center justify-center cursor-default select-none w-full py-2 border-2 rounded-lg border-red-600 text-white gap-2 bg-red-600 mt-2 dark:border-red-500 dark:bg-red-500">
                 <MdiIcon class="text-white" :icon="mdiFlagOutline" />
                 <span>تم الابلاغ</span>
               </button>
             </div>
-            <div
-              v-if="isForMe"
-              :class="[
-                'gap-2',
-                productButtons.length >= 4
-                  ? 'grid grid-cols-1  sm:grid-cols-2 gap-1'
-                  : 'flex items-center justify-center flex-wrap sm:flex-nowrap',
-              ]"
-            >
-              <MainButtonForMyProduct
-                v-for="btn in productButtons"
-                :key="btn.label"
-                :icon="btn.icon"
-                :label="btn.label"
-                @click="btn.onClick"
-                :class="btn.class"
-              />
+            <div v-if="isForMe" :class="[
+              'gap-2',
+              productButtons.length >= 4
+                ? 'grid grid-cols-1  sm:grid-cols-2 gap-1'
+                : 'flex items-center justify-center flex-wrap sm:flex-nowrap',
+            ]">
+              <MainButtonForMyProduct v-for="btn in productButtons" :key="btn.label" :icon="btn.icon" :label="btn.label"
+                @click="btn.onClick" :class="btn.class" />
             </div>
           </div>
           <!-- زر الإغلاق -->
           <div class="absolute top-[20px] right-[20px]">
             <span
-              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer"
-            >
+              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer">
               <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
             </span>
             <button class="sr-only" @click="closeDialog()">close</button>
@@ -331,7 +268,6 @@ watchEffect(async () => {
   }
 });
 
-// const emitter = inject("emitter");
 
 function closeDialog() {
   emit("update:modelValue", false);
@@ -340,7 +276,7 @@ function closeDialog() {
 watch(
   () => props.productId,
   async () => {
-    // Optimistic seed: if we can find the product in the list via injected cache later
+    // if we can find the product in the list via injected cache later
     product.value = null;
     usdPrice.current_price = 0;
     usdPrice.old_price = 0;
@@ -372,7 +308,7 @@ const sendReport = async () => {
         "تم الابلاغ عن هذا المنتج!",
       ]);
     }
-  } catch (e) {}
+  } catch (e) { }
 };
 </script>
 

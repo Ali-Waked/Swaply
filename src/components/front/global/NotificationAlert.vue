@@ -1,13 +1,11 @@
 <!-- components/Notification.vue -->
 <template>
   <transition name="slide-fade">
-    <div
-      :class="[
-        'flex items-center gap-2 px-4 py-2 rounded dark:shadow-md dark:shadow-slate-500 text-white font-medium mb-2 transition-all duration-200 absolute top-2 text-nowrap z-[1000000000]',
-        typeClasses,
-        visible ? 'right-2' : '-right-full',
-      ]"
-    >
+    <div :class="[
+      'flex items-center gap-2 px-4 py-2 rounded dark:shadow-md dark:shadow-slate-500 text-white font-medium mb-2 transition-all duration-200 absolute top-2 text-nowrap z-[1000000000]',
+      typeClasses,
+      visible ? 'right-2' : '-right-full',
+    ]">
       <!-- Icon -->
       <span class="w-5 h-5 flex-shrink-0">
         <component :is="iconComponent" class="w-[22px]" />
@@ -73,6 +71,7 @@ onMounted(() => {
 .slide-fade-leave-active {
   transition: all 0.3s ease;
 }
+
 .slide-fade-enter-from,
 .slide-fade-leave-to {
   opacity: 0;

@@ -39,7 +39,6 @@ watch(
 
 watch(selectedItem, (val) => {
   emit("update:modelValue", val);
-  // console.log(val);
   query.value = val?.name || "";
 });
 
@@ -50,12 +49,6 @@ const filteredItems = computed(() => {
   );
 });
 
-// const filteredItems = computed(() => {
-//   if (!query.value) return props.items;
-//   return props.items.filter((item) =>
-//     item.name.toLowerCase().includes(query.value.toLowerCase())
-//   );
-// });
 
 const searchFor = () => {
   emit("search", query.value);
@@ -106,19 +99,23 @@ const searchFor = () => {
   width: 8px;
   height: 8px;
 }
+
 .combobox-scroll::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 6px;
 }
+
 .combobox-scroll::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.5);
-  border-radius: 6px; 
+  border-radius: 6px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
+
 .combobox-scroll::-webkit-scrollbar-thumb:hover {
   background-color: rgba(100, 100, 100, 0.7);
 }
+
 .combobox-scroll::-webkit-scrollbar-corner {
   background: transparent;
 }

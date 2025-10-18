@@ -55,8 +55,6 @@ const currentMode = computed(() => {
   return props.mode;
 });
 
-// const mode = ref("create"); // "create" أو "edit"
-// const categoryName = ref("");
 
 // إغلاق المودال
 const closeDialog = () => {
@@ -68,20 +66,12 @@ const label = computed(() => {
   return loading.value ? base + "..." : base;
 });
 
-// watch(loading, (newVal) => {
-//   console.log("loading");
-//   if (newVal) {
-//     label.value = label.value + "...";
-//   }
-// });
 
 const submit = async () => {
-  // console.log(props.category.id);
   try {
     loading.value = true;
 
     if (currentMode.value === "create") {
-      // console.log(localCategoryName.value);
       const response = await axiosClient.post("/admin/categories", {
         name: localCategoryName.value,
       });
@@ -111,7 +101,6 @@ const submit = async () => {
     }
   } catch (e) {
     errors.value = e.response?.data?.errors || {};
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -119,35 +108,19 @@ const submit = async () => {
 </script>
 
 <template>
-  <MainDialog
-    v-model="showDialog"
-    :button-label="label"
-    :loading="loading"
-    @submitData="submit"
-  >
+  <MainDialog v-model="showDialog" :button-label="label" :loading="loading" @submitData="submit">
     <template #title>
       {{ mode === "create" ? "إضافة تصنيف جديد" : "تعديل التصنيف" }}
     </template>
     <template #content>
-      <input
-        v-model="localCategoryName"
-        type="text"
-        placeholder="اسم التصنيف"
-        class="w-full rounded-lg px-3 py-2 outline-none transition-all duration-200"
-        :class="{
+      <input v-model="localCategoryName" type="text" placeholder="اسم التصنيف"
+        class="w-full rounded-lg px-3 py-2 outline-none transition-all duration-200" :class="{
           'border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-400':
             !errors.name?.[0],
           'border border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500':
             errors.name?.[0],
-        }"
-      />
+        }" />
       <ErrorInputText :error-message="errors.name?.[0]" />
-      <!-- <input
-        v-model="localCategoryName"
-        type="text"
-        placeholder="اسم التصنيف"
-        class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-      /> -->
     </template>
   </MainDialog>
 </template>

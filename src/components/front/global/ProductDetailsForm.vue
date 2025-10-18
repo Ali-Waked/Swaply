@@ -137,63 +137,34 @@ const selectedAvailability = computed({
   <Disclosure>
     <template #default="{ open }">
       <DisclosureButton
-        class="w-full px-4 border py-2 text-right border-gray-500 text-[14px] text-gray-500 font-[400] focus:border-gray-500 dark:text-white focus:ring-gray-500 bg-white dark:bg-gray-700 rounded-md flex justify-between items-center"
-      >
+        class="w-full px-4 border py-2 text-right border-gray-500 text-[14px] text-gray-500 font-[400] focus:border-gray-500 dark:text-white focus:ring-gray-500 bg-white dark:bg-gray-700 rounded-md flex justify-between items-center">
         <span>إضافة تفاصيل</span>
         <span>
-          <ChevronUpIcon
-            v-if="open"
-            class="w-5 h-5 text-gray-500 dark:text-gray-300"
-          />
-          <ChevronDownIcon
-            v-else
-            class="w-5 h-5 text-gray-500 dark:text-gray-300"
-          />
+          <ChevronUpIcon v-if="open" class="w-5 h-5 text-gray-500 dark:text-gray-300" />
+          <ChevronDownIcon v-else class="w-5 h-5 text-gray-500 dark:text-gray-300" />
         </span>
       </DisclosureButton>
       <DisclosurePanel class="mt-2 space-y-3">
         <!-- Select Contact -->
         <MainLabel label="التواصل" />
-        <SelectListBox
-          v-model="selectedContact"
-          :options="contactOptions"
-          class="w-full"
-          label="اختر طريقة التوصل"
-        />
+        <SelectListBox v-model="selectedContact" :options="contactOptions" class="w-full" label="اختر طريقة التوصل" />
 
         <MainLabel label="الحالة" />
         <!-- Select Status -->
-        <SelectListBox
-          v-model="selectedStatus"
-          :options="statusOptions"
-          class="w-full"
-          label="حالة السلعة المعروضة"
-        />
+        <SelectListBox v-model="selectedStatus" :options="statusOptions" class="w-full" label="حالة السلعة المعروضة" />
 
         <MainLabel label="الكمية" />
         <!-- Select Quantity -->
-        <SelectListBox
-          v-model="selectedQuantity"
-          :options="quantityOptions"
-          class="w-full"
-          label="كمية السلعة المعروضة"
-        />
+        <SelectListBox v-model="selectedQuantity" :options="quantityOptions" class="w-full"
+          label="كمية السلعة المعروضة" />
         <MainLabel label="التوفر" />
-        <!-- Select Quantity -->
-        <SelectListBox
-          v-model="selectedAvailability"
-          :options="availabilityOptions"
-          class="w-full"
-          label="متى السلعة متوفرة للتبادل"
-        />
+        <!-- Select Avalibility -->
+        <SelectListBox v-model="selectedAvailability" :options="availabilityOptions" class="w-full"
+          label="متى السلعة متوفرة للتبادل" />
         <MainLabel label="تفضيلات التبادل" />
         <!-- Select Quantity -->
-        <SelectListBox
-          v-model="selectedExchange"
-          :options="exchangeDetails"
-          class="w-full"
-          label="كيف تفضل اتمام التبادل"
-        />
+        <SelectListBox v-model="selectedExchange" :options="exchangeDetails" class="w-full"
+          label="كيف تفضل اتمام التبادل" />
       </DisclosurePanel>
     </template>
   </Disclosure>

@@ -96,7 +96,6 @@ onMounted(() => {
           const id = entry.target.id;
           activeId.value = id;
           const label = getLabelById(id);
-          // console.log(label);
           if (label) sectionTitle.value = label;
         }
       });
@@ -117,42 +116,23 @@ const getLabelById = (id) => {
   }
   return null;
 };
-// watch(
-//   () => isOpen.value,
-//   (newVal) => {
-//     if (newVal) {
-//       emitter.emit("hiddenButton", true);
-//       return;
-//     }
-//     emitter.emit("hiddenButton", false);
-//   }
-// );
+
 </script>
 
 <template>
   <div
-    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 pt-20 border-b dark:border-gray-700 bg-gray-100 dark:bg-gray-800 z-50"
-  >
+    class="header flex items-center justify-between fixed left-0 top-0 right-0 p-4 pt-20 border-b dark:border-gray-700 bg-gray-100 dark:bg-gray-800 z-50">
     <div class="flex items-center gap-5 container mx-auto">
       <div class="flex items-center gap-2">
-        <Bars3Icon
-          class="w-6 h-6 cursor-pointer block lg:hidden text-black dark:text-white"
-          @click="isOpen = !isOpen"
-        />
-        <ArrowRightIcon
-          class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
-          @click="$router.push({ name: 'home' })"
-        />
+        <Bars3Icon class="w-6 h-6 cursor-pointer block lg:hidden text-black dark:text-white"
+          @click="isOpen = !isOpen" />
+        <ArrowRightIcon class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
+          @click="$router.push({ name: 'home' })" />
       </div>
-      <p
-        class="text-black dark:text-white font-[600] text-[16px] sm:text-[20px]"
-      >
+      <p class="text-black dark:text-white font-[600] text-[16px] sm:text-[20px]">
         لوحة التحكم - {{ sectionTitle }}
       </p>
     </div>
-    <!-- <div class="name text-gray-500 dark:text-gray-300 text-nowrap">
-      {{ user?.name || '' }}
-    </div> -->
   </div>
 
   <div class="flex mt-[127px] h-[calc(100vh - 127px)] overflow-hidden">
@@ -161,49 +141,30 @@ const getLabelById = (id) => {
       :class="{
         'bg-white dark:bg-gray-800 h-screen z-[1000000000] right-0': isOpen,
         '-right-full': !isOpen,
-      }"
-    >
+      }">
       <ul class="relative">
         <li v-for="link in links" :key="link.group_name" class="mb-4">
-          <p
-            class="group-name text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3"
-          >
+          <p class="group-name text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3">
             {{ link.group_name }}
           </p>
           <ul>
-            <SidebarItem
-              v-for="item in link.items"
-              :key="item.id"
-              :id="item.id"
-              :label="item.label"
-              :class="{
-                'text-white bg-back rounded-lg': activeId === item.id,
-                'mb-[6px]': true,
-                'text-black dark:text-white': activeId !== item.id,
-              }"
-              :active-id="activeId"
-              @update:activeId="activeId = $event"
-              @scrollTo="scrollToSection($event)"
-            >
+            <SidebarItem v-for="item in link.items" :key="item.id" :id="item.id" :label="item.label" :class="{
+              'text-white bg-back rounded-lg': activeId === item.id,
+              'mb-[6px]': true,
+              'text-black dark:text-white': activeId !== item.id,
+            }" :active-id="activeId" @update:activeId="activeId = $event" @scrollTo="scrollToSection($event)">
               <template #icon>
-                <component
-                  :is="item.icon"
-                  class="h-5 w-5 dark:text-white"
-                  :class="{
-                    'text-white': activeId === item.id,
-                    'text-blue-950': activeId !== item.id,
-                  }"
-                />
+                <component :is="item.icon" class="h-5 w-5 dark:text-white" :class="{
+                  'text-white': activeId === item.id,
+                  'text-blue-950': activeId !== item.id,
+                }" />
               </template>
             </SidebarItem>
           </ul>
         </li>
-        <span
-          class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 left-[0px]"
-        ></span>
+        <span class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 left-[0px]"></span>
       </ul>
-      <button
-        class="text-white
+      <button class="text-white
         w-full
         flex
         items-center
@@ -226,33 +187,21 @@ const getLabelById = (id) => {
         hover:ring-offset-2
         transition
         duration-200
-        "
-        @click="authStore.logout()"
-      >
+        " @click="authStore.logout()">
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
         <span>تسجيل الخروج</span>
       </button>
     </nav>
 
-    <span
-      class="overlay w-screen h-screen transition-all duration-[0.4s] absolute top-0 left-0 z-[100000000]"
-      :class="{
-        'block lg:hidden bg-black bg-opacity-25 dark:bg-white dark:bg-opacity-25':
-          isOpen,
-        hidden: !isOpen,
-      }"
-      @click="isOpen = false"
-    />
+    <span class="overlay w-screen h-screen transition-all duration-[0.4s] absolute top-0 left-0 z-[100000000]" :class="{
+      'block lg:hidden bg-black bg-opacity-25 dark:bg-white dark:bg-opacity-25':
+        isOpen,
+      hidden: !isOpen,
+    }" @click="isOpen = false" />
 
-    <main
-      class="container mx-auto lg:mr-0 lg:ml-auto max-h-[calc(100vh-127px)] overflow-y-auto scrollbar-hide lg:w-3/4"
-      ref="scrollContainer"
-    >
-      <div
-        class="mt-4"
-        id="personal_page"
-        :ref="setSectionRef('personal_page')"
-      >
+    <main class="container mx-auto lg:mr-0 lg:ml-auto max-h-[calc(100vh-127px)] overflow-y-auto scrollbar-hide lg:w-3/4"
+      ref="scrollContainer">
+      <div class="mt-4" id="personal_page" :ref="setSectionRef('personal_page')">
         <PersonalSection />
       </div>
       <div class="mt-6" id="setting" :ref="setSectionRef('setting')">
@@ -261,25 +210,13 @@ const getLabelById = (id) => {
       <div class="mt-6" id="preferences" :ref="setSectionRef('preferences')">
         <FavoriteSetting />
       </div>
-      <div
-        class="mt-6"
-        id="privacy-security"
-        :ref="setSectionRef('privacy-security')"
-      >
+      <div class="mt-6" id="privacy-security" :ref="setSectionRef('privacy-security')">
         <PrivacyAndSecurity />
       </div>
-      <div
-        class="mt-6"
-        id="privacy-policy"
-        :ref="setSectionRef('privacy-policy')"
-      >
+      <div class="mt-6" id="privacy-policy" :ref="setSectionRef('privacy-policy')">
         <PrivacyPolicy />
       </div>
-      <div
-        class="mt-6"
-        id="terms-conditions"
-        :ref="setSectionRef('terms-conditions')"
-      >
+      <div class="mt-6" id="terms-conditions" :ref="setSectionRef('terms-conditions')">
         <TermsAndConditions />
       </div>
       <div class="my-6" id="about" :ref="setSectionRef('about')">
@@ -298,9 +235,11 @@ const getLabelById = (id) => {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .side-bar {
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
-  direction: rtl; /* يحرك scrollbar للجهة الأخرى */
+  direction: rtl;
+  /* يحرك scrollbar للجهة الأخرى */
 }
 </style>

@@ -33,10 +33,7 @@ const { isAuth, user } = storeToRefs(authStore);
   <div class="dark:bg-gray-800">
     <OfferSection />
   </div>
-  <div
-    class="dark:bg-gray-800 pt-14"
-    v-if="user?.role == 'merchant' && user?.store?.status == 'active'"
-  >
+  <div class="dark:bg-gray-800 pt-14" v-if="user?.role == 'merchant' && user?.store?.status == 'active'">
     <MerchantProductsSection />
   </div>
   <div class="dark:bg-gray-800 pt-14 pb-4" v-if="isAuth">

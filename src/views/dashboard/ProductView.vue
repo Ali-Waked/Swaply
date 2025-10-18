@@ -1,17 +1,9 @@
 <template>
-  <HeaderPage
-    title="المنتجات"
-    ButtonLabel="اضافة منتج جديد"
-    @button-add-click="openDialog('create')"
-  />
+  <HeaderPage title="المنتجات" ButtonLabel="اضافة منتج جديد" @button-add-click="openDialog('create')" />
 
   <div class="mb-4">
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="ابحث عن منتج معين..."
-      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-    />
+    <input v-model="searchQuery" type="text" placeholder="ابحث عن منتج معين..."
+      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none" />
   </div>
 
   <GenericDataTable :headers="headers" :items="filteredItems">
@@ -20,16 +12,10 @@
     </template>
     <template #actions="item">
       <div class="flex gap-2 justify-center">
-        <button
-          @click="openEditModal(item.item)"
-          class="bg-blue-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="openEditModal(item.item)" class="bg-blue-500 text-white px-3 py-1 rounded">
           تعديل
         </button>
-        <button
-          @click="deleteProduct(item.item)"
-          class="bg-red-500 text-white px-3 py-1 rounded"
-        >
+        <button @click="deleteProduct(item.item)" class="bg-red-500 text-white px-3 py-1 rounded">
           حذف
         </button>
       </div>
@@ -44,18 +30,9 @@
     </template>
   </GenericDataTable>
 
-  <AddOrEditProductDialog
-    v-model="showDialog"
-    :mode="mode"
-    v-model:product="product"
-    @fetchProducts="fetchProducts"
-  />
+  <AddOrEditProductDialog v-model="showDialog" :mode="mode" v-model:product="product" @fetchProducts="fetchProducts" />
 
-  <ConfirmDeleteDialog
-    v-model="showDeleteDialog"
-    :message="confirmMessage"
-    @confirm="ConfirmDelete"
-  />
+  <ConfirmDeleteDialog v-model="showDeleteDialog" :message="confirmMessage" @confirm="ConfirmDelete" />
 </template>
 
 <script setup>
@@ -75,7 +52,7 @@ const headers = [
   { text: "رقم المنتج", value: "id", sortable: true },
   { text: "اسم المنتج", value: "name", sortable: true },
   { text: "سعر المنتج", value: "price", sortable: true },
-  { text: "اسم التصنيف", value: "category_name", sortable: true }, // ✅ جديد
+  { text: "اسم التصنيف", value: "category_name", sortable: true },
   { text: "تاريخ الإضافة", value: "created_at", sortable: true },
   { text: "إجراءات", value: "actions" },
 ];
@@ -98,7 +75,6 @@ const openEditModal = (prod) => {
   const selectedPro = products.value.filter(
     (ele) => ele.id == cleanId(prod.id)
   )[0];
-  // console.log(selectedPro);
   openDialog("edit", selectedPro);
 };
 
@@ -151,10 +127,8 @@ const fetchProducts = async () => {
           created_at: formatDate(ele.created_at),
         };
       });
-      // console.log(response);
     });
   } catch (e) {
-    // console.error(e);
   }
 };
 

@@ -45,24 +45,18 @@ const changeTheme = (value) => {
 </script>
 
 <template>
-  <nav
-    class="flex relative items-center justify-center container mx-auto py-4 dark:bg-gray-800"
-  >
+  <nav class="flex relative items-center justify-center container mx-auto py-4 dark:bg-gray-800">
     <div class="left flex items-center gap-4">
       <!-- Theme toggle -->
-      <div
-        class="mode flex absolute right-4 items-center gap-1 p-1 rounded-lg bg-gray-200 dark:bg-gray-700"
-      >
+      <div class="mode flex absolute right-4 items-center gap-1 p-1 rounded-lg bg-gray-200 dark:bg-gray-700">
         <div
           class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-transparent"
-          @click="changeTheme('light')"
-        >
+          @click="changeTheme('light')">
           <SunIcon class="w-5 h-5" />
         </div>
         <div
           class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-transparent dark:bg-gray-600"
-          @click="changeTheme('dark')"
-        >
+          @click="changeTheme('dark')">
           <MoonIcon class="w-5 h-5" />
         </div>
       </div>
@@ -110,17 +104,12 @@ const changeTheme = (value) => {
     <!-- Logo -->
     <div class="logo">
       <img src="/Logo.png" class="w-28 dark:hidden" alt="logo" />
-      <img
-        src="/Logo-black.png"
-        class="w-28 hidden dark:block"
-        alt="logo"
-      />
+      <img src="/Logo-black.png" class="w-28 hidden dark:block" alt="logo" />
     </div>
 
     <!-- Right button -->
     <div class="right absolute left-4" @click="logout()" v-if="isAuth">
-      <button
-        class="text-white
+      <button class="text-white
         flex
         items-center
         gap-2
@@ -140,19 +129,13 @@ const changeTheme = (value) => {
         transition
         duration-200
         dark:hover:saturate-[120%]
-        "
-      >
+        ">
         <ArrowRightStartOnRectangleIcon class="w-5 h-5" />
         <span>تسجيل الخروج</span>
       </button>
     </div>
-    <div
-      class="right absolute left-4"
-      @click="router.push({ name: 'login' })"
-      v-else
-    >
-      <button
-        class="
+    <div class="right absolute left-4" @click="router.push({ name: 'login' })" v-else>
+      <button class="
         rounded-lg
         px-4
         py-2
@@ -169,8 +152,7 @@ const changeTheme = (value) => {
         transition
         duration-200
         hover:ring-offset-2
-        "
-        >
+        ">
         تسجيل الدخول
       </button>
     </div>

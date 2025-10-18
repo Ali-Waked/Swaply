@@ -84,7 +84,6 @@ const confirm = async () => {
       );
     }
   } catch (e) {
-    // console.error(e);
   }
 };
 const acceptDialog = reactive({
@@ -108,7 +107,6 @@ const acceptBarter = async () => {
       await fetchBarters();
     }
   } catch (e) {
-    // console.log(e);
   }
 };
 const acceptUserDialog = reactive({
@@ -116,12 +114,10 @@ const acceptUserDialog = reactive({
   data: {},
 });
 const showConfirmAcceptUserDialog = (data) => {
-  // console.log(data);
   acceptUserDialog.dialog = true;
   acceptUserDialog.data = data;
 };
 const acceptUser = async () => {
-  // console.log("accept");
   try {
     const response = await axiosClient.post(
       `/barters/${acceptUserDialog.data.barter_id}/respond/${acceptUserDialog.data.id}`
@@ -134,7 +130,6 @@ const acceptUser = async () => {
       await fetchBarters();
     }
   } catch (e) {
-    // console.log(e);
   }
 };
 const completedBarter = async (barterId) => {
@@ -151,7 +146,6 @@ const completedBarter = async (barterId) => {
       data.value.data = data.value.data.filter((el) => el.id !== barterId);
     }
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -169,7 +163,6 @@ const fetchBarters = async () => {
       }
     }
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -184,29 +177,15 @@ onMounted(async () => {
     <HeaderPage>
       <LogoSection />
     </HeaderPage>
-    <HeaderTitle
-      title="لوحة المقايضة"
-      subtitle="تبادل السلع و الخدمات مع المجتمع"
-    />
-    <MainButton
-      class="mt-4 py-4"
-      label="اعرض مقايضة جديدة"
-      @click="isDialogOpen = true"
-    >
+    <HeaderTitle title="لوحة المقايضة" subtitle="تبادل السلع و الخدمات مع المجتمع" />
+    <MainButton class="mt-4 py-4" label="اعرض مقايضة جديدة" @click="isDialogOpen = true">
       <template #icon>
         <PlusIcon class="h-5 w-5" />
       </template>
     </MainButton>
-    <WoringAlert
-      class="my-4"
-      title="تنبيه أمني"
-      text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل"
-    />
-    <TradeDialog
-      :model-value="isDialogOpen"
-      @update:modelValue="(val) => (isDialogOpen = val)"
-      :editData="editData"
-    />
+    <WoringAlert class="my-4" title="تنبيه أمني"
+      text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل" />
+    <TradeDialog :model-value="isDialogOpen" @update:modelValue="(val) => (isDialogOpen = val)" :editData="editData" />
     <div class="offers">
       <div class="flex justify-between items-center">
         <h5 class="title font-[500] text-[20px] text-black dark:text-white">
@@ -214,83 +193,43 @@ onMounted(async () => {
         </h5>
         <div
           class="message-icon relative left-4 cursor-pointer text-white bg-gray-600 flex items-center justify-center w-10 h-10 rounded-full font-bold"
-          @click="dialog = true"
-        >
+          @click="dialog = true">
           <button>
             <ChatBubbleLeftEllipsisIcon class="w-6" />
           </button>
-          <span
-            v-if="numberOfUnRedChat"
-            class="text-white bg-red-600 text-[9px] w-5 h-5 rounded-full absolute -top-[7px] -right-2 flex justify-center items-center text-center p-1 text-wrap"
-            >{{ numberOfUnRedChat }}</span
-          >
+          <span v-if="numberOfUnRedChat"
+            class="text-white bg-red-600 text-[9px] w-5 h-5 rounded-full absolute -top-[7px] -right-2 flex justify-center items-center text-center p-1 text-wrap">{{
+            numberOfUnRedChat }}</span>
         </div>
       </div>
 
       <div class="offers-list pb-8">
         <template v-if="data?.data?.length">
           <template v-for="item in data.data" :key="item.id">
-            <SingleOffer
-              :item="item"
-              @startChat="startChat($event)"
-              @delete="confirmDelete($event)"
-              @edit="edit($event)"
-              @send-accept-response="showAcceptDialog($event)"
-              @accept-user="showConfirmAcceptUserDialog($event)"
-              @mark-as-complete="completedBarter($event)"
-            />
+            <SingleOffer :item="item" @startChat="startChat($event)" @delete="confirmDelete($event)"
+              @edit="edit($event)" @send-accept-response="showAcceptDialog($event)"
+              @accept-user="showConfirmAcceptUserDialog($event)" @mark-as-complete="completedBarter($event)" />
           </template>
         </template>
         <template v-else>
-          <p
-            class="text-gray-700 text-center  text-sm mt-12 dark:text-gray-300"
-          >
+          <p class="text-gray-700 text-center  text-sm mt-12 dark:text-gray-300">
             لا يوجد حتى الان اي عروض للمقايضة. قم باضافة عرضك الخاص بك
           </p>
         </template>
       </div>
     </div>
-    <ChatApp
-      v-model:is-open="chat.isOpen"
-      v-model:with="chat.with"
-      v-model:is-user="chat.is_user"
-    />
-    <ChatSidebar
-      v-model="dialog"
-      @chatWith="chatWith($event)"
-      v-model:numberOfUnRedChat="numberOfUnRedChat"
-    />
+    <ChatApp v-model:is-open="chat.isOpen" v-model:with="chat.with" v-model:is-user="chat.is_user" />
+    <ChatSidebar v-model="dialog" @chatWith="chatWith($event)" v-model:numberOfUnRedChat="numberOfUnRedChat" />
 
-    <ConfirmDeleteDialog
-      v-model="deleteDialog.dialog"
-      title="حدف العرض"
-      message="هل انت متاكد من حذف هذا العرض؟"
-      button-label="حذف العرض"
-      @confirm="confirm"
-    />
-    <ConfirmDeleteDialog
-      v-model="acceptDialog.dialog"
-      title="قبول عملة التبادل"
-      message="هل انت متاكد من ارسال طلب لقبول هذه المقايضة؟"
-      button-label="قبول"
-      @confirm="acceptBarter"
-    />
-    <ConfirmDeleteDialog
-      v-model="acceptUserDialog.dialog"
-      title="الموافقة على عملية التبادل"
+    <ConfirmDeleteDialog v-model="deleteDialog.dialog" title="حدف العرض" message="هل انت متاكد من حذف هذا العرض؟"
+      button-label="حذف العرض" @confirm="confirm" />
+    <ConfirmDeleteDialog v-model="acceptDialog.dialog" title="قبول عملة التبادل"
+      message="هل انت متاكد من ارسال طلب لقبول هذه المقايضة؟" button-label="قبول" @confirm="acceptBarter" />
+    <ConfirmDeleteDialog v-model="acceptUserDialog.dialog" title="الموافقة على عملية التبادل"
       message="هل انت متاكد على ارسال رد الموافقة على عملية التبادل هذه؟ عند ارسال رد الموافقة لن تتمكن من تغيير الشخص."
-      button-label="ارسال"
-      @confirm="acceptUser"
-    />
+      button-label="ارسال" @confirm="acceptUser" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-// .message-icon {
-//   &:hover {
-//     span {
-//       display: block;
-//     }
-//   }
-// }
 </style>

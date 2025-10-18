@@ -6,18 +6,14 @@
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       <!-- Container -->
-      <div
-        class="fixed inset-0 flex items-center justify-center p-4 overflow-auto"
-      >
+      <div class="fixed inset-0 flex items-center justify-center p-4 overflow-auto">
         <DialogPanel
-          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg relative max-h-[90vh] overflow-auto shadow-lg"
-        >
+          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg relative max-h-[90vh] overflow-auto shadow-lg">
           <!-- Close button -->
           <div class="absolute top-4 right-4">
             <span
               class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white cursor-pointer transition-all"
-              @click="closeDialog"
-            >
+              @click="closeDialog">
               <XMarkIcon class="w-5 h-5" />
             </span>
           </div>
@@ -38,50 +34,23 @@
 
           <!-- Form Fields -->
           <div class="space-y-4">
-            <FormControl
-              id="offer_item"
-              label="ماذا تعرض؟"
-              placeholder="مثال: 5 لتر بنزين"
-              v-model="data.offer_item"
-              :error-message="errors.offer_item"
-            />
-            <FormControl
-              id="request_item"
-              label="ماذا تريد؟"
-              placeholder="مثال: حليب اطفال"
-              v-model="data.request_item"
-              :error-message="errors.request_item"
-            />
-            <FormControl
-              id="description"
-              label="الوصف"
-              placeholder="تفاصيل اضافية عن العرض"
-              type="textarea"
-              v-model="data.description"
-              :error-message="errors.description"
-            />
-            <FormControl
-              id="location"
-              label="الموقع"
-              placeholder="المنطقة او الحي"
-              v-model="data.location"
-              :error-message="errors.location"
-            />
+            <FormControl id="offer_item" label="ماذا تعرض؟" placeholder="مثال: 5 لتر بنزين" v-model="data.offer_item"
+              :error-message="errors.offer_item" />
+            <FormControl id="request_item" label="ماذا تريد؟" placeholder="مثال: حليب اطفال" v-model="data.request_item"
+              :error-message="errors.request_item" />
+            <FormControl id="description" label="الوصف" placeholder="تفاصيل اضافية عن العرض" type="textarea"
+              v-model="data.description" :error-message="errors.description" />
+            <FormControl id="location" label="الموقع" placeholder="المنطقة او الحي" v-model="data.location"
+              :error-message="errors.location" />
 
             <!-- Product Details -->
-            <ProductDetailsForm
-              v-model:quantity="data.quantity"
-              v-model:contact_method="data.contact_method"
-              v-model:availability="data.availability"
-              v-model:exchange_preferences="data.exchange_preferences"
-              v-model:offer_status="data.offer_status"
-            />
+            <ProductDetailsForm v-model:quantity="data.quantity" v-model:contact_method="data.contact_method"
+              v-model:availability="data.availability" v-model:exchange_preferences="data.exchange_preferences"
+              v-model:offer_status="data.offer_status" />
             <!-- File input -->
             <div>
-              <label
-                for="file_image"
-                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all rounded-md"
-              >
+              <label for="file_image"
+                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all rounded-md">
                 <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 <span class="dark:text-white">
                   {{ isEdit ? "تغيير الصورة" : "إضافة صورة" }}
@@ -89,22 +58,14 @@
               </label>
               <input type="file" id="file_image" @change="uploadImage" hidden />
               <div v-if="data.image_url" class="mt-2">
-                <img
-                  :src="data.image_url"
-                  alt="Preview"
-                  class="w-auto mx-auto h-auto max-h-48 object-cover rounded-md"
-                />
+                <img :src="data.image_url" alt="Preview"
+                  class="w-auto mx-auto h-auto max-h-48 object-cover rounded-md" />
               </div>
             </div>
 
             <!-- Submit Button -->
-            <MainButton
-              :label="
-                loading ? 'جاري الحفظ...' : isEdit ? 'تحديث العرض' : 'نشر العرض'
-              "
-              class="py-3"
-              @click="submit"
-            />
+            <MainButton :label="loading ? 'جاري الحفظ...' : isEdit ? 'تحديث العرض' : 'نشر العرض'
+              " class="py-3" @click="submit" />
           </div>
         </DialogPanel>
       </div>
@@ -297,7 +258,6 @@ const submit = async () => {
       closeDialog();
     }
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
   }
@@ -310,9 +270,11 @@ const submit = async () => {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.5);
   border-radius: 3px;

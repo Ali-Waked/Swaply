@@ -14,11 +14,8 @@ const props = defineProps({
   price: [Number, String],
   rating: [Number, String],
   cityId: Number,
-  // usdPrice: Number,
   lastUpdate: String,
   image: String,
-  // distance: Number,
-  // priceType: String,
   recentPrices: Array,
 });
 
@@ -42,21 +39,15 @@ onMounted(async () => {
 
 <template>
   <div
-    class="flex flex-col-reverse lg:grid lg:grid-cols-3 border border-gray-200 dark:border-gray-700 rounded-xl mt-3 gap-6 overflow-hidden bg-white dark:bg-gray-900"
-  >
+    class="flex flex-col-reverse lg:grid lg:grid-cols-3 border border-gray-200 dark:border-gray-700 rounded-xl mt-3 gap-6 overflow-hidden bg-white dark:bg-gray-900">
     <!-- محتوى المتجر -->
     <div class="py-8 px-6 rounded-xl mb-2">
-      <div
-        class="flex justify-between items-center font-[400] text-[22px] xl:text-[26px]"
-      >
-        <div
-          class="flex gap-2 items-center font-[400] text-[22px] xl:text-[26px]"
-        >
+      <div class="flex justify-between items-center font-[400] text-[22px] xl:text-[26px]">
+        <div class="flex gap-2 items-center font-[400] text-[22px] xl:text-[26px]">
           <span class="text-gray-900 dark:text-gray-100">{{ storeName }}</span>
           <span
             class="cursor-default border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 gap-[2px] text-[10px] py-1 pr-1 flex items-center"
-            v-if="isCertified"
-          >
+            v-if="isCertified">
             <span class="font-[500]">معتمد</span>
             <CheckIcon class="w-4 h-4" />
           </span>
@@ -66,9 +57,7 @@ onMounted(async () => {
         }}</span>
       </div>
 
-      <div
-        class="flex items-center justify-between text-gray-700 dark:text-gray-300 font-[400]"
-      >
+      <div class="flex items-center justify-between text-gray-700 dark:text-gray-300 font-[400]">
         <span class="flex items-center gap-2 mt-3">
           <span>{{ rating }}</span>
           <StarIcon class="w-5 h-5 text-amber-400" />
@@ -77,27 +66,16 @@ onMounted(async () => {
       </div>
 
       <div class="flex justify-between flex-col items-start gap-2 mt-3">
-        <span
-          class="text-[12px] rounded-lg px-4 py-[6px] cursor-default"
-          :class="priceType.style"
-        >
+        <span class="text-[12px] rounded-lg px-4 py-[6px] cursor-default" :class="priceType.style">
           {{ priceType.rating }}
         </span>
 
         <div>
-          <span
-            class="font-[400] text-gray-700 dark:text-gray-200 block mb-1 text-[18px]"
-            >المسافة</span
-          >
-          <div
-            class="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-[400]"
-          >
+          <span class="font-[400] text-gray-700 dark:text-gray-200 block mb-1 text-[18px]">المسافة</span>
+          <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-[400]">
             <span> {{ distance }} كم </span>
             <span>
-              <MdiIcon
-                :icon="mdiNavigationOutline"
-                class="text-gray-600 dark:text-gray-300"
-              />
+              <MdiIcon :icon="mdiNavigationOutline" class="text-gray-600 dark:text-gray-300" />
             </span>
           </div>
         </div>
@@ -112,11 +90,7 @@ onMounted(async () => {
     <!-- الصورة أو الخريطة -->
     <div class="col-span-2 bg-gray-100 dark:bg-gray-800">
       <div class="p-0">
-        <img
-          :src="image"
-          :alt="storeName + ' صورة'"
-          class="max-h-[350px] w-full object-cover"
-        />
+        <img :src="image" :alt="storeName + ' صورة'" class="max-h-[350px] w-full object-cover" />
       </div>
     </div>
   </div>

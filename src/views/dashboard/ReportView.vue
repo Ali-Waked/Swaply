@@ -7,17 +7,11 @@
     </template>
     <template #actions="item">
       <div class="flex justify-center">
-        <button
-          v-if="item.item.status !== 'reviewed'"
-          @click="markAsReviewed(item.item)"
-          class="text-blue-600 dark:text-slate-50 hover:underline"
-        >
+        <button v-if="item.item.status !== 'reviewed'" @click="markAsReviewed(item.item)"
+          class="text-blue-600 dark:text-slate-50 hover:underline">
           مراجعة البلاغ
         </button>
-        <span
-          v-else
-          class="px-3 py-1 rounded bg-green-600 text-white cursor-default"
-        >
+        <span v-else class="px-3 py-1 rounded bg-green-600 text-white cursor-default">
           تمت المراجعة
         </span>
       </div>

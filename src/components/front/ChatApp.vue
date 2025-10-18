@@ -1,8 +1,6 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import axiosClient from "../../axiosClient";
-// import Echo from "laravel-echo";
-// import Pusher from "pusher-js";
 import { CheckIcon } from "@heroicons/vue/24/solid";
 import {
   ChatBubbleBottomCenterIcon,
@@ -41,16 +39,9 @@ const currentUserId = ref(null);
 const conversationId = ref(null);
 
 const getChannelName = () => {
-  // console.log(`private-conversation.${conversationId.value}`);
   if (conversationId.value) {
     return `private-conversation.${conversationId.value}`;
   }
-  // const authId = currentUserId.value || (user.value && user.value.id);
-  // const otherId = props.with?.id;
-  // if (authId && otherId) {
-  //   const ids = [String(authId), String(otherId)].sort();
-  //   return `private-chat.${ids.join(".")}`;
-  // }
   return null;
 };
 
@@ -61,9 +52,9 @@ const destroyEcho = () => {
       if (lastChannelName.value && echo) {
         try {
           echo.leave(lastChannelName.value);
-        } catch (e) {}
+        } catch (e) { }
       }
-    } catch (e) {}
+    } catch (e) { }
     channel.value = null;
     lastChannelName.value = null;
   }
@@ -82,7 +73,6 @@ const subscribeToChannel = () => {
   channel.value = echo.private(channelName);
 
   channel.value.listen(".MessageSent", (e) => {
-    // console.log(e);
     const incoming = e.message ?? e;
     if (!incoming || !incoming.id) return;
     if (incoming.senderId === user.value.id) return;
@@ -100,11 +90,9 @@ const fetchChatMessages = async (page = 1) => {
     route = `/chat/conversations/get-messages/${props.with.id}?page=${page}`;
   } else {
     route = `/chat/conversations/${props.with.conversation_id}/get-messages?page=${page}`;
-    // console.log(route);
   }
   if (page === 1) loading.value = true;
   else loadingMore.value = true;
-  // console.log(props.with.id);
   try {
     const response = await axiosClient.get(route);
 
@@ -143,7 +131,6 @@ const fetchChatMessages = async (page = 1) => {
       }
     }
   } catch (e) {
-    // console.error(e);
   } finally {
     loading.value = false;
     loadingMore.value = false;
@@ -210,7 +197,6 @@ const sendMessage = async () => {
   } catch (e) {
     const idx = messages.value.findIndex((m) => m.id === tempId);
     if (idx !== -1) messages.value[idx].status = "failed";
-    // console.error(e);
   }
 };
 
@@ -249,16 +235,6 @@ watch(
   }
 );
 
-// watch(
-//   () => props.with.id,
-//   async (newVal, oldVal) => {
-//     if (!newVal) return;
-//     conversationId.value = props.with?.id ?? null;
-//     destroyEcho();
-//     await fetchChatMessages(1);
-//     subscribeToChannel();
-//   }
-// );
 
 onBeforeUnmount(() => {
   const el = contentEl.value;
@@ -269,17 +245,13 @@ onBeforeUnmount(() => {
 
 
 <template>
-  <div
-    class="fixed bottom-4 right-9 bg-white dark:bg-gray-800 shadow-2xl z-50 rounded-lg w-80 transition-all"
-    ref="chatApp"
-    v-if="isOpen"
-  >
+  <div class="fixed bottom-4 right-9 bg-white dark:bg-gray-800 shadow-2xl z-50 rounded-lg w-80 transition-all"
+    ref="chatApp" v-if="isOpen">
     <div class="border-b border-gray-200 dark:border-gray-700 mb-0">
       <div class="p-5 flex items-center justify-between">
         <div class="info flex items-center gap-2">
           <div
-            class="icon text-black dark:text-white text-[12px] font-[500] bg-gray-100 dark:bg-gray-700 h-9 w-9 flex items-center justify-center rounded-full"
-          >
+            class="icon text-black dark:text-white text-[12px] font-[500] bg-gray-100 dark:bg-gray-700 h-9 w-9 flex items-center justify-center rounded-full">
             <span>{{
               (props.with.name || "")
                 .split(" ")
@@ -294,62 +266,45 @@ onBeforeUnmount(() => {
               <span class="text-black dark:text-white text-[14px]">{{
                 props.with.name
               }}</span>
-              <span
-                v-if="props.with.is_trusty"
-                class="text-[11px] border border-gray-200 dark:border-gray-600 w-[18px] h-[18px] rounded-full flex items-center gap-1 ml-2 justify-center mr-2"
-              >
+              <span v-if="props.with.is_trusty"
+                class="text-[11px] border border-gray-200 dark:border-gray-600 w-[18px] h-[18px] rounded-full flex items-center gap-1 ml-2 justify-center mr-2">
                 <CheckIcon class="w-3 h-3 text-gray-600 dark:text-gray-300" />
               </span>
             </span>
-            <div
-              class="degree text-gray-600 dark:text-gray-400 text-[12px] font-[500] mt-1"
-            >
+            <div class="degree text-gray-600 dark:text-gray-400 text-[12px] font-[500] mt-1">
               درجة الثقة 80%
             </div>
           </div>
         </div>
         <div class="icon flex items-center gap-2">
-          <MinusIcon
-            class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
-            @click="reizeChat()"
-            v-if="isOpenFull"
-          />
-          <ChatBubbleOvalLeftIcon
-            v-else
-            class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
-            @click="reizeChat()"
-          />
-          <XMarkIcon
-            class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
-            @click="closeChat()"
-          />
+          <MinusIcon class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
+            @click="reizeChat()" v-if="isOpenFull" />
+          <ChatBubbleOvalLeftIcon v-else
+            class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70" @click="reizeChat()" />
+          <XMarkIcon class="h-[18px] w-[18px] cursor-pointer text-black dark:text-white hover:opacity-70"
+            @click="closeChat()" />
         </div>
       </div>
     </div>
 
-    <div
-      class="content has-scroll p-5 h-64 overflow-y-auto scrollbar-hide"
-      ref="contentEl"
-    >
+    <div class="content has-scroll p-5 h-64 overflow-y-auto scrollbar-hide" ref="contentEl">
       <div v-if="loading" class="text-center py-2 text-gray-500">
         جاري التحميل...
       </div>
 
       <template v-for="msg in messages" :key="msg.id">
-        <div
-          v-if="msg.sender_id === user.id"
-          class="send-message bg-black dark:bg-blue-600 rounded-xl p-3 w-fit mb-4 max-w-56 pb-2 ml-auto text-right"
-        >
+        <div v-if="msg.sender_id === user.id"
+          class="send-message bg-black dark:bg-blue-600 rounded-xl p-3 w-fit mb-4 max-w-56 pb-2 ml-auto text-right">
           <p class="text-white text-[13px]">{{ msg.body }}</p>
-          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
+          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new
+            Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
         </div>
 
-        <div
-          v-else
-          class="recived-message bg-gray-200 dark:bg-gray-700 rounded-xl p-3 pb-2 w-fit mb-4 max-w-56 mr-auto"
-        >
+        <div v-else
+          class="recived-message bg-gray-200 dark:bg-gray-700 rounded-xl p-3 pb-2 w-fit mb-4 max-w-56 mr-auto">
           <p class="text-black dark:text-white text-[13px]">{{ msg.body }}</p>
-          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
+          <span class="time text-gray-400 text-[11px]">{{ msg.created_at && !isNaN(new Date(msg.created_at)) ? new
+            Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "الآن" }}</span>
         </div>
       </template>
 
@@ -358,24 +313,14 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div
-      class="send p-4 flex items-center gap-2 border-t border-gray-200 dark:border-gray-700"
-    >
-      <input
-        type="text"
-        v-model="message"
-        @keyup.enter="sendMessage()"
-        placeholder="اكتب رسالتك..."
-        class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 text-black dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] placeholder:text-gray-500 dark:placeholder:text-gray-400"
-      />
-      <button
-        @click="sendMessage"
-        class="text-white rounded-lg w-14 h-10 inline-flex items-center justify-center transition"
-        :class="{
+    <div class="send p-4 flex items-center gap-2 border-t border-gray-200 dark:border-gray-700">
+      <input type="text" v-model="message" @keyup.enter="sendMessage()" placeholder="اكتب رسالتك..."
+        class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 text-black dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] placeholder:text-gray-500 dark:placeholder:text-gray-400" />
+      <button @click="sendMessage"
+        class="text-white rounded-lg w-14 h-10 inline-flex items-center justify-center transition" :class="{
           'bg-black dark:bg-blue-600': message.length,
           'bg-gray-500 cursor-not-allowed': !message.length,
-        }"
-      >
+        }">
         <PaperAirplaneIcon class="w-[22px] h-[22px] -rotate-[45deg]" />
       </button>
     </div>
@@ -386,6 +331,7 @@ onBeforeUnmount(() => {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

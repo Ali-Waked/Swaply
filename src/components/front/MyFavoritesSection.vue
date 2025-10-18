@@ -57,13 +57,10 @@ watch(
 const fetchProducts = async (page = 1) => {
   try {
     const response = await axiosClient.get(`/favorites?page=${page}`);
-    // console.log("offers", response.data);
     products.value = response.data.favorites.data.map((el) => el.product);
     paginations.current_page = response.data.favorites.current_page;
     paginations.last_page = response.data.favorites.last_page;
-    // store.value = response.data.store;
   } catch (e) {
-    // console.error(e);
   } finally {
   }
 };
@@ -82,33 +79,20 @@ onMounted(async () => {
     </template>
   </TitleProductsSection>
   <div class="" v-if="!loading && products.length">
-    <ProductsSwaperDispaly
-      v-if="!showAll"
-      @showProduct="showProduct($event)"
-      :products="products"
-    />
-    <ProductGridDisplay
-      @showProduct="showProduct($event)"
-      :products="products"
-      v-model="paginations.current_page"
-      :last-page="paginations.last_page"
-      v-else
-    />
+    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="products" />
+    <ProductGridDisplay @showProduct="showProduct($event)" :products="products" v-model="paginations.current_page"
+      :last-page="paginations.last_page" v-else />
   </div>
   <div class="flex justify-center items-center h-24" v-else>
     <div>
-      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4"
-        >لم تقم حتى الان باضافة اي منتج الى قائمتك المفضلة</span
-      >
+      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4">لم تقم حتى الان باضافة اي منتج الى قائمتك
+        المفضلة</span>
     </div>
   </div>
-  <ShowProductDialog
-    v-model="showProductDialog.dialog"
-    :product-id="+showProductDialog.product_id"
-  />
+  <ShowProductDialog v-model="showProductDialog.dialog" :product-id="+showProductDialog.product_id" />
 </template>
 
-<style scoped >
+<style scoped>
 .swiper,
 .swiper-wrapper,
 .swiper-slide {
