@@ -27,23 +27,22 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       await getCsrfToken();
       const response = await axiosClient.post("/login", credentials);
-      if (response.status == 200) {
-        if (response.status === 200) {
-          isAuth.value = true;
-          redirect.value = true;
-          user.value = response.data.user;
-          backErrors.value = {};
-          isCheckedAuth.value = true;
-          if (user.value.role == "admin") {
-            router.push({ name: "dashboard" });
-            return;
-          }
-          router.push({ name: "home" });
-          emitter.emit("showNotificationAlert", [
-            "success",
-            "تم تسجيل الدخول بنجاح!",
-          ]);
+      if (response.status === 200) {
+        isAuth.value = true;
+        redirect.value = true;
+        user.value = response.data.user;
+        backErrors.value = {};
+        isCheckedAuth.value = true;
+        if (user.value.role == "admin") {
+          router.push({ name: "dashboard" });
+          return;
         }
+
+        router.push({ name: "home" });
+        emitter.emit("showNotificationAlert", [
+          "success",
+          "تم تسجيل الدخول بنجاح!",
+        ]);
       }
     } catch (e) {
       backErrors.value = e?.response?.data?.errors || {};
@@ -102,7 +101,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
     } catch (error) {
       emitter.emit("showNotificationAlert", [
-        "success",
+        "error",
         " الكود غير صحيح أو منتهي الصلاحية",
       ]);
     } finally {
@@ -185,8 +184,7 @@ export const useAuthStore = defineStore("auth", () => {
           redirect.value = true;
         }
       })
-      .catch((e) => {
-      });
+      .catch((e) => {});
   };
   const checkAuth = async () => {
     if (isCheckedAuth.value) return;

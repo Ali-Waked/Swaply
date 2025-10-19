@@ -1,3 +1,4 @@
+<!-- views/layouts/SearchLayout.vue -->
 <template>
   <search-layout>
     <router-view />

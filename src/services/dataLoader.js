@@ -1,3 +1,4 @@
+// services/dataLoader.js
 import { useProductStore } from "../stores/product";
 import { useCategoryStore } from "../stores/category";
 import { useCityStore } from "../stores/city";

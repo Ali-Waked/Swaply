@@ -72,7 +72,7 @@
   </TransitionRoot>
 </template>
 <script setup>
-import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import axiosClient from "../../axiosClient";
@@ -87,7 +87,6 @@ import {
 import FormControl from "./global/FormControl.vue";
 import ErrorInputText from "./global/ErrorInputText.vue";
 import MainButton from "./global/MainButton.vue";
-import RadioComponent from "./global/RadioComponent.vue";
 
 const props = defineProps({
   modelValue: Boolean,

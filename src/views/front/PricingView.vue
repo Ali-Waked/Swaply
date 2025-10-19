@@ -1,16 +1,12 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import AuthFeaturesSection from "../../components/front/AuthFeaturesSection.vue";
 import AppFooter from "../../components/front/global/AppFooter.vue";
-import BackButton from "../../components/front/global/BackButton.vue";
 import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import LogoSection from "../../components/front/global/LogoSection.vue";
-import HomeNav from "../../components/front/HomeNav.vue";
 import LastPricing from "../../components/front/LastPricing.vue";
 import MerchantProductsSection from "../../components/front/MerchantProductsSection.vue";
 import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
 import OfferSection from "../../components/front/OfferSection.vue";
-import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
 import { useAuthStore } from "../../stores/auth/auth";
 

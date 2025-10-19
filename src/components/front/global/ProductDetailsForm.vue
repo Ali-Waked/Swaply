@@ -1,7 +1,7 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import SelectListBox from "./SelectListBox.vue";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid";
 import MainLabel from "./MainLabel.vue";
 

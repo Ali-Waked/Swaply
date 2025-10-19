@@ -1,8 +1,7 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import {ref, onMounted } from "vue";
 import LastNotificationBox from "./LastNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
-import { ref } from "vue";
 import { useNotificationStore } from "../../stores/notification";
 import { storeToRefs } from "pinia";
 

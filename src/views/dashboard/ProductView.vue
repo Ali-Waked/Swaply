@@ -1,3 +1,4 @@
+<!-- views/dashboard/ProductView.vue -->
 <template>
   <HeaderPage title="المنتجات" ButtonLabel="اضافة منتج جديد" @button-add-click="openDialog('create')" />
 

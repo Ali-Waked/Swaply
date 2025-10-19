@@ -1,7 +1,7 @@
+// stores/city.js
 import { defineStore, storeToRefs } from "pinia";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import axiosClient from "../axiosClient";
-import { walkIdentifiers } from "vue/compiler-sfc";
 import { useAuthStore } from "./auth/auth";
 
 export const useCityStore = defineStore("city", () => {

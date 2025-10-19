@@ -1,3 +1,4 @@
+<!-- views/layouts/DashboardLayout.vue -->
 <template>
   <dashboard-layout>
     <router-view />

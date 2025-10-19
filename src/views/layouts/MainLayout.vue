@@ -1,3 +1,4 @@
+<!-- views/layouts/MainLayout.vue -->
 <template>
   <app-layout>
     <template #title>

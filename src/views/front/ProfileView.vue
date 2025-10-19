@@ -8,7 +8,7 @@ import {
 import SidebarItem from "../../components/front/SidebarItem.vue";
 import { UserIcon, Cog6ToothIcon } from "@heroicons/vue/24/outline";
 
-import { inject, isProxy, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { inject, onBeforeUnmount, onMounted, ref } from "vue";
 import { AdjustmentsVerticalIcon } from "@heroicons/vue/24/solid";
 import {
   ArrowRightStartOnRectangleIcon,

@@ -1,3 +1,4 @@
+// mixins/price.js
 const usePrice = () => {
   const calculatePriceRating = (merchantPrice, recentPrices) => {
     if (!recentPrices || recentPrices.length < 5) {

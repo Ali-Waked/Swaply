@@ -1,8 +1,10 @@
+// stores/store.js
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { ref} from "vue";
 import axiosClient from "../axiosClient";
 
 export const useStore = defineStore("store", () => {
+  const categories = ref([]);
   const loading = ref(false);
   const errors = ref({});
 

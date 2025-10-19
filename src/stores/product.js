@@ -1,4 +1,4 @@
-// stores/theme.js
+// stores/product.js
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import axiosClient from "../axiosClient";

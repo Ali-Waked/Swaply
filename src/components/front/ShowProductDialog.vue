@@ -133,8 +133,6 @@
 
 <script setup>
 import {
-  defineProps,
-  defineEmits,
   inject,
   ref,
   onMounted,

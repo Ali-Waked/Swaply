@@ -1,3 +1,4 @@
+<!-- views/dashboard/DashboardView.vue -->
 <template>
   <div>
     <HeaderPage title="لوحة التحكم-الرئيسية" :is-has-add-button="false" />
@@ -108,7 +109,7 @@ import { onMounted, reactive, ref } from "vue";
 import axiosClient from "../../axiosClient";
 import format from "../../mixins/formats";
 
-const { formatDate, cleanId } = format();
+const { formatDate } = format();
 const showAll = ref(false);
 const cardItems = reactive([
   {
@@ -163,6 +164,8 @@ onMounted(async () => {
   try {
     const response = await axiosClient.get("/admin/dashboard");
     users.value = response.data.last_users_register.map((ele) => {
+      console.log(ele.role);
+      console.log(translateRole(ele.role));
       return {
         id: ele.id,
         name: ele.name,

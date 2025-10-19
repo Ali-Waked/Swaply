@@ -1,3 +1,4 @@
+// router/index.js
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/front/HomeView.vue";
 import { useAuthStore } from "../stores/auth/auth";

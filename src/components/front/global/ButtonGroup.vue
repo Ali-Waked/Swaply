@@ -1,7 +1,6 @@
 <script setup>
-import { ArrowTrendingUpIcon, UserCircleIcon } from "@heroicons/vue/24/solid";
+import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
 import { ArrowsRightLeftIcon, UserIcon } from "@heroicons/vue/24/outline";
-import { StarIcon } from "@heroicons/vue/24/outline";
 import { BellIcon } from "@heroicons/vue/24/outline";
 import SingleButtonGroup from "./SingleButtonGroup.vue";
 import { inject, onMounted, onUnmounted, ref } from "vue";
@@ -11,11 +10,8 @@ import { useNotificationStore } from "../../../stores/notification";
 
 
 const emitter = inject("emitter");
-
 const isFixed = ref(false);
 const buttonGroup = ref(null);
-const topValue = ref("80px");
-let initialOffset = 0;
 const route = useRoute();
 
 const handleScroll = () => {
@@ -36,11 +32,6 @@ onMounted(() => {
       buttonGroup.value.style.zIndex = "1";
       return;
     }
-    if (buttonGroup.value) {
-      // احفظ مكان العنصر الأصلي
-      initialOffset = buttonGroup.value.offsetTop;
-    }
-
     buttonGroup.value.style.zIndex = "100000";
   });
   window.addEventListener("scroll", handleScroll);
@@ -68,7 +59,7 @@ onUnmounted(() => {
         <BellIcon class="w-6 h-6 text-black dark:text-white" />
         <span v-if="lastNotificationUnreadCount > 0"
           class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]">{{
-          lastNotificationUnreadCount }}</span>
+            lastNotificationUnreadCount }}</span>
       </template>
     </single-button-group>
     <single-button-group title="المقايضة" name="exchange">

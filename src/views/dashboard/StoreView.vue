@@ -122,7 +122,7 @@ const fetchStores = async () => {
       return {
         id: ele.id,
         name: ele.name,
-        phone: ele.user.phone ?? "غير مسجل",
+        phone: ele.user.phone ? `\u2066${ele.user.phone}\u2069` : "غير مسجل",
         location: ele.city?.name ?? "غير محدد",
         address: ele.address ?? "غير محدد",
         image: ele.image,

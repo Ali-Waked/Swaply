@@ -6,7 +6,6 @@ import { VueSpinnerIos } from "vue3-spinners";
 import { inject, ref } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
 

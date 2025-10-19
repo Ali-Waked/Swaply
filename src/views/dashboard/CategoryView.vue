@@ -1,3 +1,4 @@
+<!-- views/dashboard/CategoryView.vue -->
 <template>
   <HeaderPage title="التصنيفات" ButtonLabel="اضافة تصنيف جديد" @button-add-click="openDialog('create')" />
 

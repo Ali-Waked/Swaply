@@ -1,3 +1,4 @@
+// stores/category.js
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 import axiosClient from "../axiosClient";

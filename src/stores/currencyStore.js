@@ -1,3 +1,4 @@
+// stores/currencyStore.js
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import useFormats from "../mixins/formats";

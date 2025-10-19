@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import MainButton from "../../components/front/global/MainButton.vue";
 import { mdiGoogle } from "@mdi/js";
 import MdiIcon from "../../components/front/MdiIcon.vue";
@@ -17,7 +17,6 @@ import { storeToRefs } from "pinia";
 const authStore = useAuthStore();
 const { loading, backErrors } = storeToRefs(authStore);
 const showPassword = ref(false);
-const props = defineProps({});
 const type = ref("text");
 const placeholderInput = ref("0 59 123 4567");
 const buttonTitle = ref("مرحبا بعودتك");
@@ -164,15 +163,13 @@ const firstError = (field) => {
     ? backErrors.value[field][0]
     : null;
 };
-const data = ref({});
 
 const continueWithGoogle = () => {
-  window.location.href = "http://localhost:8000/api/auth/google";
+  // Use environment variable or axiosClient
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
+window.location.href = `${baseURL}/auth/google`;
 };
-onMounted(async () => {
 
-}
-);
 </script>
 
 <template>
