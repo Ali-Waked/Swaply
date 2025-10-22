@@ -16,7 +16,7 @@ const items = reactive([
     from: "heroicons",
     title: "اشعارات الرسائل النصية",
     description: "تلقي التنبيهات عبر القصيرة SMS",
-    isEnable: user.value.notification_methods?.sms,
+    isEnable: user.value?.notification_methods?.sms,
   },
   {
     id: "email",
@@ -24,7 +24,7 @@ const items = reactive([
     from: "mdi",
     title: "اشعارات البريد الالكتروني",
     description: "تلقي التنبيهات عبر رسائل البريد",
-    isEnable: user.value.notification_methods?.email,
+    isEnable: user.value?.notification_methods?.email,
   },
   {
     id: "whats",
@@ -32,7 +32,7 @@ const items = reactive([
     from: "mdi",
     title: "اشعارات الواتساب (WhatsApp)",
     description: "تلقي التنبيهات عبر رسائل البريد",
-    isEnable: user.value.notification_methods?.whats,
+    isEnable: user.value?.notification_methods?.whats,
   },
 ]);
 onMounted(() => {

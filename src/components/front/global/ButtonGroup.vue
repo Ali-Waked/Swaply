@@ -12,7 +12,9 @@ import { useNotificationStore } from "../../../stores/notification";
 const emitter = inject("emitter");
 const isFixed = ref(false);
 const buttonGroup = ref(null);
+let initialOffset = 0;
 const route = useRoute();
+let hiddenButtonHandler = null;
 
 const handleScroll = () => {
   if (route.name == "personal_profile") {
@@ -27,16 +29,28 @@ const { lastNotificationUnreadCount } = storeToRefs(notificationStore);
 
 
 onMounted(() => {
-  emitter.on("hiddenButton", (event) => {
+  hiddenButtonHandler = (event) => {
+    // Guard clause: ensure buttonGroup ref is available
+    if (!buttonGroup.value) return;
+    
     if (event) {
       buttonGroup.value.style.zIndex = "1";
       return;
     }
+    
+    // احفظ مكان العنصر الأصلي
+    initialOffset = buttonGroup.value.offsetTop;
     buttonGroup.value.style.zIndex = "100000";
-  });
+  };
+  
+  emitter.on("hiddenButton", hiddenButtonHandler);
   window.addEventListener("scroll", handleScroll);
 });
+
 onUnmounted(() => {
+  if (hiddenButtonHandler) {
+    emitter.off("hiddenButton", hiddenButtonHandler);
+  }
   window.removeEventListener("scroll", handleScroll);
 });
 </script>
@@ -59,7 +73,7 @@ onUnmounted(() => {
         <BellIcon class="w-6 h-6 text-black dark:text-white" />
         <span v-if="lastNotificationUnreadCount > 0"
           class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]">{{
-            lastNotificationUnreadCount }}</span>
+          lastNotificationUnreadCount }}</span>
       </template>
     </single-button-group>
     <single-button-group title="المقايضة" name="exchange">

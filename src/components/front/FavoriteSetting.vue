@@ -25,12 +25,16 @@ const langs = [
 ];
 
 watch(currencySelected, async (newVal) => {
-  await authStore.update({ currency: newVal });
-  user.value.currency = newVal;
+  if (user.value) {
+    await authStore.update({ currency: newVal });
+    user.value.currency = newVal;
+  }
 });
 watch(enabled, async (newVal) => {
-  await authStore.update({ recive_notification: +newVal });
-  user.value.recive_notification = newVal;
+  if (user.value) {
+    await authStore.update({ recive_notification: +newVal });
+    user.value.recive_notification = newVal;
+  }
 });
 const currency = [
   {

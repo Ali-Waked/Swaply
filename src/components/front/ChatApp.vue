@@ -75,7 +75,7 @@ const subscribeToChannel = () => {
   channel.value.listen(".MessageSent", (e) => {
     const incoming = e.message ?? e;
     if (!incoming || !incoming.id) return;
-    if (incoming.senderId === user.value.id) return;
+    if (incoming.senderId === user.value?.id) return;
     if (messages.value.some((m) => m.id === incoming.id)) return;
     messages.value.push(incoming);
     nextTick(() => {
@@ -169,7 +169,7 @@ const sendMessage = async () => {
   const tempMsg = {
     id: tempId,
     body,
-    sender_id: user.value.id,
+    sender_id: user.value?.id,
     created_at: nowISO,
     status: "sending",
   };

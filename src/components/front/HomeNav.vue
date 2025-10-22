@@ -1,6 +1,4 @@
 <script setup>
-import { mdiWeb } from "@mdi/js";
-import MdiIcon from "./MdiIcon.vue";
 import { MoonIcon, SunIcon } from "@heroicons/vue/24/outline";
 import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
@@ -13,11 +11,9 @@ const menuOpen = ref(false);
 const langRef = ref(null);
 
 const authStore = useAuthStore();
-const { user, isAuth } = storeToRefs(authStore);
+const { isAuth } = storeToRefs(authStore);
 
-const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
+
 const handleClickOutside = (event) => {
   if (langRef.value && !langRef.value.contains(event.target)) {
     menuOpen.value = false;
@@ -159,19 +155,3 @@ const changeTheme = (value) => {
   </nav>
 </template>
 
-<!-- <script setup>
-import { mdiWeb } from "@mdi/js";
-import MdiIcon from "./MdiIcon.vue";
-import { MoonIcon, SunIcon } from "@heroicons/vue/24/outline";
-import { useThemeStore } from "../../stores/theme";
-import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-const themeStore = useThemeStore();
-const { currentTheme } = storeToRefs(themeStore);
-
-const changeTheme = (value) => {
-  themeStore.changeTheme(value);
-};
-</script> -->

@@ -68,12 +68,12 @@ const confirmDel = async () => {
       }
     } else if (confirmDelDialog.type == "offer") {
       const response = await axiosClient.delete(
-        `/merchant/offers/${confirmDelDialog.product.offer.id}`
+        `merchant/offers/${confirmDelDialog.product.offer.id}`
       );
       if (response.status == 200) {
         emitter.emit("showNotificationAlert", [
           "success",
-          `تم حذف المنتج بنجاح من متجرك!`,
+          `تم حذف العرض بنجاح!`,
         ]);
         fetchProducts();
       }

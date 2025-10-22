@@ -164,8 +164,6 @@ onMounted(async () => {
   try {
     const response = await axiosClient.get("/admin/dashboard");
     users.value = response.data.last_users_register.map((ele) => {
-      console.log(ele.role);
-      console.log(translateRole(ele.role));
       return {
         id: ele.id,
         name: ele.name,

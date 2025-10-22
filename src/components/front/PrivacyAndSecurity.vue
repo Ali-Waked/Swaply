@@ -77,22 +77,26 @@ const update = async () => {
   }
 };
 watch(
-  () => user.value.city,
+  () => user.value?.city,
   async (newVal) => {
-    await authStore.update({
-      city_id: newVal.id,
-    });
+    if (newVal?.id) {
+      await authStore.update({
+        city_id: newVal.id,
+      });
+    }
   }
 );
 watch(
-  () => user.value.share_location,
+  () => user.value?.share_location,
   async (newVal) => {
-    await authStore.update(
-      {
-        share_location: +newVal,
-      },
-      false
-    );
+    if (user.value) {
+      await authStore.update(
+        {
+          share_location: +newVal,
+        },
+        false
+      );
+    }
   }
 );
 
@@ -115,10 +119,10 @@ onMounted(async () => {
       @update="openConfirmPasswordDialog" />
     <SingleFavoriteStraucture title="مشاركة الموقع" description="السماح بمشاركة موقعك">
       <template #action>
-        <BaseSwitch :model-value="!!user.share_location"
-          @update:modelValue="(val) => (user.share_location = val ? 1 : 0)" />
+        <BaseSwitch :model-value="!!user?.share_location"
+          @update:modelValue="(val) => { if (user) user.share_location = val ? 1 : 0 }" />
       </template>
-      <SelectListBox v-if="!!user.share_location" class="w-full" v-model="user.city" :options="cities"
+      <SelectListBox v-if="!!user?.share_location && user" class="w-full" v-model="user.city" :options="cities"
         label="اختر المدينة التي تقيم فيها" />
     </SingleFavoriteStraucture>
     <div class="mt-4">

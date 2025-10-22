@@ -205,7 +205,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     if (isAuth.value) {
       if (to.meta.role) {
-        if (to.meta.role.includes(user.value.role)) {
+        if (to.meta.role.includes(user.value?.role)) {
           return next();
         }
         return next({ name: "home" });

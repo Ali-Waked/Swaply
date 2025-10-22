@@ -270,7 +270,7 @@ const requestStatus = computed(() => {
         </div>
         <div
           class="cart-details bg-blue-50 border border-blue-100 p-4 rounded-lg mt-4 dark:bg-blue-800/20 dark:border-blue-700/40"
-          v-if="user.id == item.user_id && item.sentResponses.length">
+          v-if="user?.id == item.user_id && item.sentResponses.length">
           <div class="flex items-center gap-2 mb-3">
             <span class="font-[500] text-green-800 text-[16px] dark:text-white">المستخدمين المستعدون لقبول عملية
               التبادل</span>

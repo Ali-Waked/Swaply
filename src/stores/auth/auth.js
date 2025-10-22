@@ -16,10 +16,10 @@ export const useAuthStore = defineStore("auth", () => {
   const forgotMessage = ref(null);
   const router = useRouter();
   const isCustomer = computed(() => {
-    return user.value.role == "customer";
+    return user.value?.role == "customer";
   });
   const isMerchant = computed(() => {
-    return user.value.role == "merchant";
+    return user.value?.role == "merchant";
   });
 
   const login = async (credentials) => {

@@ -63,7 +63,8 @@ onMounted(() => {
       <template v-for="store in stores" :key="store.id">
         <template v-for="product in store.products" :key="product.id">
           <StoreBox :price="product.price" :store-name="store.name" :last-update="timeAgo(product.updated_at)"
-            :is-certified="true" :city-id="store.city_id" :recent-prices="product.recent_prices" rating="5" />
+            :is-certified="true" :city-id="store.city_id" :recent-prices="product.recent_prices" 
+            :price-rating="store.price_rating" rating="5" />
         </template>
       </template>
       <div ref="loadMoreTrigger" class="w-full h-1"></div>

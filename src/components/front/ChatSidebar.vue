@@ -71,7 +71,7 @@ onMounted(async () => {
 });
 
 const getName = (conversation) => {
-  return conversation.user_one.id === user.value.id
+  return conversation.user_one.id === user.value?.id
     ? conversation.user_two.name
     : conversation.user_one.name;
 };
@@ -86,7 +86,7 @@ const openChat = (conversation) => {
   conversation.user_one.conversation_id = conversation.id;
   emit(
     "chatWith",
-    conversation.user_one.id === user.value.id
+    conversation.user_one.id === user.value?.id
       ? conversation.user_two
       : conversation.user_one
   );

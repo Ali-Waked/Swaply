@@ -92,7 +92,7 @@ const props = defineProps({
   modelValue: Boolean,
   product: { type: Object, default: () => ({}) },
 });
-const emit = defineEmits(["update:modelValue", "fetchOffers"]);
+const emit = defineEmits(["update:modelValue", "fetch-products"]);
 const emitter = inject("emitter");
 const is_active = ref(true);
 // validation schema
@@ -161,41 +161,46 @@ const closeDialog = () => {
 
 // submit
 const submit = handleSubmit(async (values) => {
-  const formData = new FormData();
-  formData.append("product_id", props.product.id);
-  if (discountType.value == "fixed")
-    formData.append("discount_price", discount_value.value);
-  else formData.append("discount_percent", discount_value.value);
-  formData.append("start_date", values.start_date);
-  formData.append("end_date", values.end_date);
-  formData.append("active", +is_active.value);
+  const payload = {
+    product_id: props.product.id,
+    start_date: values.start_date,
+    end_date: values.end_date,
+    active: is_active.value ? 1 : 0,
+  };
+
+  if (discountType.value == "fixed") {
+    payload.discount_price = discount_value.value;
+  } else {
+    payload.discount_percent = discount_value.value;
+  }
 
   try {
     if (isEditPage.value) {
       const response = await axiosClient.put(
         `merchant/offers/${props.product.offer.id}`,
-        formData
+        payload
       );
       if (response.status === 200) {
         emitter.emit("showNotificationAlert", [
           "success",
           "تم تعديل العرض بنجاح!",
         ]);
-        emit("fetchOffers");
+        emit("fetch-products");
         closeDialog();
       }
       return;
     }
-    const response = await axiosClient.post("merchant/offers", formData);
+    const response = await axiosClient.post("merchant/offers", payload);
     if (response.status === 201) {
       emitter.emit("showNotificationAlert", [
         "success",
         "تم اضافة العرض بنجاح!",
       ]);
-      emit("fetchOffers");
+      emit("fetch-products");
       closeDialog();
     }
   } catch (e) {
+    console.error("Error submitting offer:", e);
   }
 });
 const formatDate = (datetime) => datetime?.split(" ")[0] ?? "";

@@ -241,7 +241,7 @@ const distance = computed(() => {
 });
 
 const priceType = computed(() => {
-  return calculatePriceRating(props.price, props.recentPrices);
+  return calculatePriceRating(props.price, props.recentPrices, product.value?.price_rating);
 });
 
 const props = defineProps({

@@ -20,17 +20,17 @@ const items = ref([
   {
     id: "name",
     label: "الاسم",
-    value: user.value.name,
+    value: user.value?.name ?? "",
   },
   {
     id: "email",
     label: "الايميل",
-    value: user.value.email ?? "غير معروف",
+    value: user.value?.email ?? "غير معروف",
   },
   {
     id: "phone",
     label: "رقم الهاتف",
-    value: user.value.phone ?? "غير معروف",
+    value: user.value?.phone ?? "غير معروف",
   },
 ]);
 
@@ -43,23 +43,25 @@ const merchantSettings = reactive([
   {
     id: "name",
     label: "اسم المحل",
-    value: user.value.store?.name ?? "غير معروف",
+    value: user.value?.store?.name ?? "غير معروف",
   },
   {
     id: "address",
     label: "عنوان المحل",
-    value: user.value.store?.address ?? "غير معروف",
+    value: user.value?.store?.address ?? "غير معروف",
   },
 ]);
 
 const selectedAccountType = computed({
   get() {
-    return user.value.role === "merchant"
+    return user.value?.role === "merchant"
       ? accountOptionsType[1]
       : accountOptionsType[0];
   },
   set(value) {
-    user.value.role = value.name === "تاجر" ? "merchant" : "customer";
+    if (user.value) {
+      user.value.role = value.name === "تاجر" ? "merchant" : "customer";
+    }
   },
 });
 
@@ -76,7 +78,7 @@ watch(
 
 const storeImage = ref(null);
 const emitter = inject("emitter");
-const previewUrl = ref(user.value.store?.image ?? null);
+const previewUrl = ref(user.value?.store?.image ?? null);
 
 const handleImageChange = (event) => {
   const file = event.target.files[0];
@@ -113,8 +115,9 @@ watch(storeImage, async (newImage) => {
   }
 });
 const city = computed({
-  get: () => user.value.store?.city,
+  get: () => user.value?.store?.city,
   set: (val) => {
+    if (!user.value) return;
     if (!user.value.store) {
       return (user.value.store = { city: val });
     }
@@ -123,9 +126,11 @@ const city = computed({
 });
 
 watch(
-  () => user.value.store?.city,
+  () => user.value?.store?.city,
   (newVal) => {
-    merchantUpdate({ id: "city_id", value: newVal.id });
+    if (newVal?.id) {
+      merchantUpdate({ id: "city_id", value: newVal.id });
+    }
   }
 );
 
@@ -206,7 +211,7 @@ onMounted(async () => {
       <SingleSettingAccountBox :label="item.label" v-model:value="item.value" :id="item.id" class="dark:text-white"
         @update="update" />
     </template>
-    <div v-if="user.role != 'admin'"
+    <div v-if="user?.role != 'admin'"
       class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700">
       <span class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block">
         نوع الحساب
@@ -246,7 +251,7 @@ onMounted(async () => {
             <label for="store_image"
               class="w-fit border rounded-lg py-2 px-4 text-[12px] font-[500] transition cursor-pointer border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
               {{
-                user.store?.image || previewUrl ? "تعديل الصورة" : "اضافة صورة"
+                user?.store?.image || previewUrl ? "تعديل الصورة" : "اضافة صورة"
               }}
             </label>
             <input type="file" hidden id="store_image" accept="image/*" @change="handleImageChange" />

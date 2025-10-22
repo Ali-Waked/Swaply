@@ -4,7 +4,7 @@ import { ArrowRightIcon } from "@heroicons/vue/24/solid";
 
 <template>
   <div class="flex items-center py-4">
-    <div class="back-button flex items-center justify-start cursor-pointer gap-2 mb-4"
+    <div class="absolute right-16 back-button flex items-center justify-start cursor-pointer gap-2 mb-4"
       @click="$router.push({ name: 'home' })">
       <ArrowRightIcon class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white" />
       <span class="text-black dark:text-white">الرجوع</span>

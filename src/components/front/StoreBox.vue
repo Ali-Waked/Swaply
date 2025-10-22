@@ -16,6 +16,7 @@ const props = defineProps({
   lastUpdate: String,
   distance: Number,
   recentPrices: Array,
+  priceRating: String, // Backend price rating
 });
 
 const { calculatePriceRating } = usePrice();
@@ -25,7 +26,7 @@ const priceUSD = ref(0);
 const numericPrice = computed(() => Number(props.price));
 const numericRating = computed(() => Number(props.rating));
 const priceType = computed(() => {
-  return calculatePriceRating(numericPrice.value, props.recentPrices);
+  return calculatePriceRating(numericPrice.value, props.recentPrices, props.priceRating);
 });
 
 const cityStore = useCityStore();
