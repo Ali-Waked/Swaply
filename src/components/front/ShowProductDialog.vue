@@ -1,27 +1,100 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
     <Dialog @close="closeDialog" class="relative overflow-visible z-[100000000]">
-      <!-- Overlay -->
-      <div class="fixed inset-0 bg-black/30 dark:bg-black/60" aria-hidden="true" />
+      <!-- Overlay with transition -->
+      <TransitionChild
+        as="template"
+        enter="ease-out duration-200"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="ease-in duration-200"
+        leave-from="opacity-100"
+        leave-to="opacity-0">
+        <div class="fixed inset-0 bg-black/30 dark:bg-black/60" aria-hidden="true" />
+      </TransitionChild>
 
       <div class="fixed inset-0 flex items-center justify-center p-4 overflow-auto">
-        <DialogPanel :key="productId"
-          class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg">
-          <DialogTitle class="mb-3 px-6 pt-12 pb-1" v-if="product">
-            <h3 class="title font-[500] text-[24px] text-gray-800 dark:text-white">
-              تفاصيل المنتج
-            </h3>
-          </DialogTitle>
-
-          <!-- صورة -->
-          <div v-if="product" class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64">
-            <img :src="product.image" class="w-full h-full object-contain" :alt="product.name" />
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-200"
+          enter-from="opacity-0 scale-95"
+          enter-to="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100 scale-100"
+          leave-to="opacity-0 scale-95">
+          <DialogPanel :key="productId"
+            class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg relative max-h-[95vh] scrollbar-hide overflow-auto shadow-lg">
+          
+          <!-- Loading Skeleton -->
+          <div v-if="!product" class="animate-pulse">
+            <!-- Title Skeleton -->
+            <div class="mb-3 px-6 pt-12 pb-1">
+              <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4"></div>
+            </div>
+            
+            <!-- Image Skeleton -->
+            <div class="flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64 ml-2 mr-2 rounded-lg">
+              <div class="w-full h-full bg-gray-300 dark:bg-gray-600 rounded-lg"></div>
+            </div>
+            
+            <!-- Content Skeleton -->
+            <div class="p-6 pt-5 space-y-4">
+              <!-- Name and Price -->
+              <div class="flex justify-between">
+                <div class="h-7 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/2"></div>
+                <div class="h-7 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/4"></div>
+              </div>
+              
+              <!-- Description -->
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full"></div>
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4"></div>
+              
+              <!-- Store Info -->
+              <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded-lg w-2/3"></div>
+              
+              <!-- Rating -->
+              <div class="flex justify-end gap-2">
+                <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded-lg w-20"></div>
+                <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-24"></div>
+              </div>
+              
+              <!-- Distance -->
+              <div class="space-y-2">
+                <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/4"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3"></div>
+              </div>
+              
+              <!-- Last Update -->
+              <div class="space-y-2">
+                <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/4"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3"></div>
+              </div>
+              
+              <!-- Divider -->
+              <div class="h-0.5 bg-gray-200 dark:bg-gray-700 rounded-full w-full my-4"></div>
+              
+              <!-- Button -->
+              <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded-lg w-full"></div>
+            </div>
           </div>
+          
+          <!-- Actual Content -->
+          <div v-else>
+            <DialogTitle class="mb-3 px-6 pt-12 pb-1">
+              <h3 class="title font-[500] text-[24px] text-gray-800 dark:text-white">
+                تفاصيل المنتج
+              </h3>
+            </DialogTitle>
 
-          <div class="p-6 pt-5" v-if="product">
+            <!-- صورة -->
+            <div class="imag flex justify-center items-center bg-gray-100 dark:bg-gray-700 p-2 h-64 ml-2 mr-2 rounded-lg">
+              <img :src="product.image" class="w-full h-full object-contain" :alt="product.name" />
+            </div>
+
+            <div class="p-6 pt-5">
             <!-- الاسم والسعر -->
-            <div class="flex items-center justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1">
-              <span class="name">{{ product.name }}</span>
+            <div class="flex items-start justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1">
+              <span class="name">{{product.description}}</span>
               <div>
                 <span class="old_price line-through text-sm inline-block ml-1"
                   v-if="priceAfterOffer && priceAfterOffer != product.price">{{
@@ -34,9 +107,14 @@
             </div>
 
             <!-- الوصف -->
-            <div class="flex items-center justify-between text-gray-400 dark:text-gray-300">
-              <span class="name">{{ product.description }}</span>
+            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span class="name">
+                {{ product.category_name }} >
+                {{ product.name }}
+               
+              </span>
               <div>
+                
                 <span class="old_price line-through text-sm inline-block ml-1"
                   v-if="priceAfterOffer && priceAfterOffer != product.price">
                   {{ usdPrice.old_price }}
@@ -96,7 +174,7 @@
             <div v-if="!isForMe">
               <button v-if="!product.is_reported" @click="sendReport"
                 class="flex items-center justify-center w-full py-2 border-2 rounded-lg border-red-600 text-red-600 gap-2 bg-white dark:bg-red-900/20 dark:text-red-400 dark:border-red-400">
-                <MdiIcon class="text-red-600 dark:text-red-400" :icon="mdiFlagOutline" />
+                <MdiIcon class="!text-red-600 dark:!text-red-400" :icon="mdiFlagOutline" />
                 <span>ابلاغ عن غلاء الاسعار</span>
               </button>
 
@@ -116,7 +194,9 @@
               <MainButtonForMyProduct v-for="btn in productButtons" :key="btn.label" :icon="btn.icon" :label="btn.label"
                 @click="btn.onClick" :class="btn.class" />
             </div>
+            </div>
           </div>
+          
           <!-- زر الإغلاق -->
           <div class="absolute top-[20px] right-[20px]">
             <span
@@ -125,7 +205,8 @@
             </span>
             <button class="sr-only" @click="closeDialog()">close</button>
           </div>
-        </DialogPanel>
+          </DialogPanel>
+        </TransitionChild>
       </div>
     </Dialog>
   </TransitionRoot>
@@ -145,6 +226,7 @@ import { ClockIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { CameraIcon } from "@heroicons/vue/24/outline";
 import {
   TransitionRoot,
+  TransitionChild,
   Dialog,
   DialogPanel,
   DialogTitle,

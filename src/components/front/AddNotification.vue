@@ -132,9 +132,11 @@ onMounted(async () => {
             ">
           ₪
         </span>
-        <input type="number" v-model="notification.price"
+        <input type="number" min="0" v-model="notification.price"
+          @input="e => { if (e.target.value < 0) e.target.value = 0; notification.price = e.target.value }"
           class="no-spinner focus:border-gray-500 border-none py-3 pl-8 pr-9 flex-1 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
           placeholder="0" />
+          
       </div>
     </div>
 

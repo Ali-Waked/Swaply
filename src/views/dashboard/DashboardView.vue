@@ -63,7 +63,7 @@
       :class="{ 'overflow-y-auto': showAll }">
       <div class="flex justify-between items-center gap-6 mb-6">
         <h4 class="text-blue-500 text-[20px] font-[500] text-nowrap">
-          اخر الاشعارات
+          اخر الإشعارات
         </h4>
         <button v-if="notifications.data?.length > 4" @click="showAll = !showAll"
           class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white">
@@ -87,7 +87,7 @@
       </template>
       <template v-else>
         <p class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200">
-          لا يوجد اي اشعارات حتى الان
+          لا يوجد اي إشعارات حتى الان
         </p>
       </template>
     </div>

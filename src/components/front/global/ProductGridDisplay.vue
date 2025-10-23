@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import useFormats from "../../../mixins/formats";
 import CardProduct from "./CardProduct.vue";
+import CardProductSkeleton from "./CardProductSkeleton.vue";
 import PaginationComponent from "./PaginationComponent.vue";
 const props = defineProps({
   products: {
@@ -16,6 +17,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 const emit = defineEmits(["update:modelValue", "showProduct"]);
 const currentPage = computed({
@@ -27,7 +32,16 @@ const { getRelativeTime } = useFormats();
 
 <template>
   <div class="mt-8">
-    <div
+    <!-- Loading Skeleton -->
+    <div v-if="loading"
+      class="container mx-auto mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+      <div v-for="i in 10" :key="i">
+        <CardProductSkeleton />
+      </div>
+    </div>
+
+    <!-- Actual Products -->
+    <div v-else
       class="container mx-auto mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
       <div v-for="product in products" :key="product.id">
         <CardProduct :id="+product.id" :image="product.image" :price="+product.price" :name="product.name"

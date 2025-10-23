@@ -5,7 +5,7 @@ import ShowMoreButton from "./ShowMoreButton.vue";
 import CardProduct from "./global/CardProduct.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination } from "swiper/modules";
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
 import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
@@ -13,6 +13,7 @@ import TitleProductsSection from "./global/TitleProductsSection.vue";
 import ProductGridDisplay from "./global/ProductGridDisplay.vue";
 import { FireIcon, HeartIcon } from "@heroicons/vue/24/outline";
 import axiosClient from "../../axiosClient";
+import { echo } from "../../echo";
 
 const items = [
   {
@@ -45,14 +46,76 @@ const paginations = reactive({
 const loading = ref(false);
 
 const showAll = ref(false);
+
+// Throttle mechanism to avoid too many updates
+let updateQueue = new Map();
+let updateTimeout = null;
+
+const processUpdateQueue = () => {
+  if (updateQueue.size === 0) return;
+  
+  // Process all queued updates at once
+  updateQueue.forEach((newPrice, productId) => {
+    updateProductPrice(productId, newPrice);
+  });
+  
+  updateQueue.clear();
+};
+
+const updateProductPrice = (productId, newPrice) => {
+  if (!products.value) return;
+  
+  // Find and update the product in the favorites list
+  const productIndex = products.value.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    // Update the price while maintaining reactivity
+    products.value[productIndex].price = newPrice;
+  }
+};
+
+const handlePriceUpdate = (event) => {
+  // Add to queue instead of updating immediately
+  updateQueue.set(event.product_id, event.new_price);
+  
+  // Clear existing timeout and set a new one
+  // This batches multiple updates that happen within 500ms
+  if (updateTimeout) {
+    clearTimeout(updateTimeout);
+  }
+  
+  updateTimeout = setTimeout(() => {
+    processUpdateQueue();
+    updateTimeout = null;
+  }, 500); // Wait 500ms before processing updates
+};
+
 watch(
   () => paginations.current_page,
   async (newPage) => {
     if (newPage !== 1) {
-      await fetchProducts(newPage);
+await fetchProducts(newPage);
     }
   }
 );
+
+const preloadImages = async (products) => {
+  if (!products || !products.length) return;
+  
+  const imagePromises = products.map((product) => {
+    return new Promise((resolve) => {
+      if (!product.image) {
+        resolve();
+        return;
+      }
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => resolve(); // Resolve even on error to not block UI
+      img.src = product.image;
+    });
+  });
+  
+  await Promise.all(imagePromises);
+};
 
 const fetchProducts = async (page = 1) => {
   try {
@@ -60,6 +123,8 @@ const fetchProducts = async (page = 1) => {
     products.value = response.data.favorites.data.map((el) => el.product);
     paginations.current_page = response.data.favorites.current_page;
     paginations.last_page = response.data.favorites.last_page;
+    // Preload images before hiding skeleton
+    await preloadImages(products.value);
   } catch (e) {
   } finally {
   }
@@ -69,6 +134,21 @@ onMounted(async () => {
   loading.value = true;
   await fetchProducts();
   loading.value = false;
+  
+  // Listen to price updates on the prices channel
+  echo.channel('prices')
+    .listen('.PriceUpdated', handlePriceUpdate);
+});
+
+onUnmounted(() => {
+  // Clean up the event listener when component is destroyed
+  echo.leave('prices');
+  
+  // Clear any pending updates
+  if (updateTimeout) {
+    clearTimeout(updateTimeout);
+  }
+  updateQueue.clear();
 });
 </script>
 
@@ -78,12 +158,12 @@ onMounted(async () => {
       <ShowAllProductButton @showAll="($event) => (showAll = $event)" />
     </template>
   </TitleProductsSection>
-  <div class="" v-if="!loading && products.length">
-    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="products" />
+  <div class="" v-if="loading || products.length">
+    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="products" :loading="loading" />
     <ProductGridDisplay @showProduct="showProduct($event)" :products="products" v-model="paginations.current_page"
-      :last-page="paginations.last_page" v-else />
+      :last-page="paginations.last_page" :loading="loading" v-else />
   </div>
-  <div class="flex justify-center items-center h-24" v-else>
+  <div class="flex justify-center items-center h-24" v-else-if="!loading && !products.length">
     <div>
       <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4">لم تقم حتى الان باضافة اي منتج الى قائمتك
         المفضلة</span>

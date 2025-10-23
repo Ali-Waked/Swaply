@@ -1,10 +1,29 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
     <Dialog @close="closeDialog" class="relative z-[1000000000]" v-if="product.id">
-      <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <!-- Overlay with transition -->
+      <TransitionChild
+        as="template"
+        enter="ease-out duration-200"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="ease-in duration-200"
+        leave-from="opacity-100"
+        leave-to="opacity-0">
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+      </TransitionChild>
+      
       <div class="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel
-          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-200"
+          enter-from="opacity-0 scale-95"
+          enter-to="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100 scale-100"
+          leave-to="opacity-0 scale-95">
+          <DialogPanel
+            class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
           <DialogTitle class="pt-6 mb-3">
             <h3 class="title font-[500] text-[20px] text-black dark:text-white">
               {{ isEditPage ? "تعديل العرض" : "اضافة عرض" }}
@@ -66,7 +85,8 @@
                 @click="closeDialog()" />
             </div>
           </form>
-        </DialogPanel>
+          </DialogPanel>
+        </TransitionChild>
       </div>
     </Dialog>
   </TransitionRoot>
@@ -79,6 +99,7 @@ import axiosClient from "../../axiosClient";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 import {
   TransitionRoot,
+  TransitionChild,
   Dialog,
   DialogPanel,
   DialogTitle,

@@ -26,7 +26,7 @@ onMounted(async () => {
     <LogoSection />
   </HeaderPage>
 
-  <HeaderTitle title="مركز التنبيهات" subtitle="تتبع تغييرات الاسعار و احصل على اشعارات فورية" />
+  <HeaderTitle title="مركز التنبيهات" subtitle="تتبع تغييرات الاسعار و احصل على إشعارات فورية" />
   <div class="flex gap-8 mt-12 flex-col lg:flex-row">
     <div class="flex-1">
       <div class="notification-setting w-full">

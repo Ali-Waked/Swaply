@@ -46,7 +46,7 @@ const links = [
     ],
   },
   {
-    group_name: "اخرى",
+    group_name: "أخرى",
     items: [
       { id: "privacy-policy", label: "سياسة الخصوصية", icon: DocumentTextIcon },
       {
@@ -144,7 +144,7 @@ const getLabelById = (id) => {
       }">
       <ul class="relative">
         <li v-for="link in links" :key="link.group_name" class="mb-4">
-          <p class="group-name text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3">
+          <p class="group-name text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-3">
             {{ link.group_name }}
           </p>
           <ul>

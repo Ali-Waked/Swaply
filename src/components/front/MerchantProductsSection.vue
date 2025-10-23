@@ -124,6 +124,25 @@ watch(
   }
 );
 
+const preloadImages = async (products) => {
+  if (!products || !products.length) return;
+  
+  const imagePromises = products.map((product) => {
+    return new Promise((resolve) => {
+      if (!product.image) {
+        resolve();
+        return;
+      }
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => resolve(); // Resolve even on error to not block UI
+      img.src = product.image;
+    });
+  });
+  
+  await Promise.all(imagePromises);
+};
+
 const fetchProducts = async (page = 1) => {
   try {
     const response = await axiosClient.get(
@@ -131,6 +150,8 @@ const fetchProducts = async (page = 1) => {
     );
     data.value = response.data.products;
     store.value = response.data.store;
+    // Preload images before hiding skeleton
+    await preloadImages(data.value.data);
   } catch (e) {
   } finally {
   }
@@ -155,12 +176,12 @@ onMounted(async () => {
       </div>
     </template>
   </TitleProductsSection>
-  <div class="" v-if="!loading && Object.keys(data).length">
-    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="data.data" />
+  <div class="" v-if="loading || Object.keys(data).length">
+    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="data.data" :loading="loading" />
     <ProductGridDisplay @showProduct="showProduct($event)" :products="data.data" v-model="data.current_page"
-      :last-page="data.last_page" v-else />
+      :last-page="data.last_page" :loading="loading" v-else />
   </div>
-  <div class="flex justify-center items-center h-24" v-else>
+  <div class="flex justify-center items-center h-24" v-else-if="!loading && !Object.keys(data).length">
     <div>
       <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4">لا يوجد لديك منتجات</span>
       <AddProductButton @add-product="addProduct = true" />

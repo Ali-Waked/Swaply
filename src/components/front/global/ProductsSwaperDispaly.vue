@@ -5,6 +5,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { reactive, ref } from "vue";
 import ProductSectionTitle from "../ProductSectionTitle.vue";
 import CardProduct from "./CardProduct.vue";
+import CardProductSkeleton from "./CardProductSkeleton.vue";
 import ShowProductDialog from "../ShowProductDialog.vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -16,13 +17,40 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const { getRelativeTime } = useFormats();
 </script>
 
 <template>
-  <div class="mt-2 overflow-x-hidden" v-if="products.length">
+  <!-- Loading Skeleton -->
+  <div class="mt-2 overflow-x-hidden" v-if="loading">
+    <Swiper :slidesPerView="5" class="mt-6 overflow-visible mx-auto container" :spaceBetween="20"
+      :modules="[Navigation]" :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }" :breakpoints="{
+        320: { slidesPerView: 1.5, spaceBetween: 10 },
+        500: { slidesPerView: 2, spaceBetween: 10 },
+        640: { slidesPerView: 3, spaceBetween: 15 },
+        745: { slidesPerView: 3, spaceBetween: 20 },
+        768: { slidesPerView: 3.5, spaceBetween: 20 },
+        950: { slidesPerView: 3.5, spaceBetween: 20 },
+        1024: { slidesPerView: 4, spaceBetween: 20 },
+        1280: { slidesPerView: 5, spaceBetween: 20 },
+      }">
+      <swiper-slide v-for="i in 5" :key="i" class="swiper-wrapper overflow-visible">
+        <CardProductSkeleton />
+      </swiper-slide>
+    </Swiper>
+  </div>
+
+  <!-- Actual Products -->
+  <div class="mt-2 overflow-x-hidden" v-else-if="products.length">
     <Swiper :slidesPerView="5" class="mt-6 overflow-visible mx-auto container" :spaceBetween="20"
       :modules="[Pagination, Autoplay, Navigation]" :pagination="{ el: '.pagination', clickable: true }" :navigation="{
         nextEl: '.swiper-button-next',

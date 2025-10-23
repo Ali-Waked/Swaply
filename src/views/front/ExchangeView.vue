@@ -1,5 +1,4 @@
 <script setup>
-import ButtonGroup from "../../components/front/global/ButtonGroup.vue";
 import HeaderTitle from "../../components/front/global/HeaderTitle.vue";
 import MainButton from "../../components/front/global/MainButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
@@ -12,13 +11,10 @@ import ChatSidebar from "../../components/front/ChatSidebar.vue";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/vue/24/outline";
 import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import LogoSection from "../../components/front/global/LogoSection.vue";
-import useFormats from "../../mixins/formats";
 import axiosClient from "../../axiosClient";
 import ConfirmDeleteDialog from "../../components/dashboard/global/ConfirmDeleteDialog.vue";
-import { reach } from "yup";
 
 const isDialogOpen = ref(false);
-const isOpenChat = ref(false);
 const emitter = inject("emitter");
 const numberOfUnRedChat = ref(0);
 const chat = reactive({
@@ -204,13 +200,63 @@ onMounted(async () => {
       </div>
 
       <div class="offers-list pb-8">
-        <template v-if="data?.data?.length">
+        <!-- Loading Skeleton -->
+        <template v-if="loading">
+          <div v-for="i in 3" :key="i"
+            class="single-offer p-4 bg-white dark:bg-gray-900 rounded-[10px] shadow-sm my-4 animate-pulse">
+            <!-- User Info Skeleton -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="info flex items-center gap-2">
+                <div class="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div class="space-y-2">
+                  <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-32"></div>
+                  <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-lg w-24"></div>
+                </div>
+              </div>
+              <div class="h-6 w-12 bg-red-200 dark:bg-red-900 rounded-md"></div>
+            </div>
+
+            <!-- Exchange Box Skeleton -->
+            <div class="flex items-center justify-center gap-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+              <div class="flex flex-col items-center space-y-2">
+                <div class="h-3 bg-gray-200 dark:bg-gray-600 rounded-lg w-12"></div>
+                <div class="h-4 bg-gray-300 dark:bg-gray-500 rounded-lg w-20"></div>
+              </div>
+              <div class="h-5 w-5 bg-gray-300 dark:bg-gray-600 rounded"></div>
+              <div class="flex flex-col items-center space-y-2">
+                <div class="h-3 bg-gray-200 dark:bg-gray-600 rounded-lg w-12"></div>
+                <div class="h-4 bg-gray-300 dark:bg-gray-500 rounded-lg w-20"></div>
+              </div>
+            </div>
+
+            <!-- Description Skeleton -->
+            <div class="mt-4 space-y-2">
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full"></div>
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4"></div>
+              <div class="flex items-center justify-between mt-2">
+                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-lg w-24"></div>
+                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-lg w-20"></div>
+              </div>
+            </div>
+
+            <!-- Buttons Skeleton -->
+            <div class="flex items-center gap-2 mt-4">
+              <div class="flex-1 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+              <div class="flex-1 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Actual Data -->
+        <template v-else-if="data?.data?.length">
           <template v-for="item in data.data" :key="item.id">
             <SingleOffer :item="item" @startChat="startChat($event)" @delete="confirmDelete($event)"
               @edit="edit($event)" @send-accept-response="showAcceptDialog($event)"
               @accept-user="showConfirmAcceptUserDialog($event)" @mark-as-complete="completedBarter($event)" />
           </template>
         </template>
+
+        <!-- Empty State -->
         <template v-else>
           <p class="text-gray-700 text-center  text-sm mt-12 dark:text-gray-300">
             لا يوجد حتى الان اي عروض للمقايضة. قم باضافة عرضك الخاص بك

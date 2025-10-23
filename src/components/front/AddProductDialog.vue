@@ -1,11 +1,29 @@
 <template>
   <TransitionRoot :show="modelValue" as="template">
     <Dialog @close="closeDialog" class="relative z-[1000000000]">
-      <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <!-- Overlay with transition -->
+      <TransitionChild
+        as="template"
+        enter="ease-out duration-200"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="ease-in duration-200"
+        leave-from="opacity-100"
+        leave-to="opacity-0">
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+      </TransitionChild>
 
       <div class="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel
-          class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-200"
+          enter-from="opacity-0 scale-95"
+          enter-to="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100 scale-100"
+          leave-to="opacity-0 scale-95">
+          <DialogPanel
+            class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
           <button type="button" tabindex="0" class="sr-only">focus</button>
           <DialogTitle class="pt-6 mb-3">
             <h3 class="title font-[500] text-[20px] text-black dark:text-white">
@@ -47,7 +65,7 @@
               </label>
               <input type="file" id="file_image" hidden @change="onFileChange" />
               <div v-if="imagePreview" class="mt-2">
-                <img :src="imagePreview" class="w-32 h-32 object-cover rounded-md" />
+                <img :src="imagePreview" class="w-32 h-32 object-contain rounded-md bg-gray-100 dark:bg-gray-700 p-1" />
               </div>
               <ErrorInputText :error-message="(imageMeta.touched || submitCount > 0) ? imageError : ''" />
             </div>
@@ -62,7 +80,8 @@
               <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
             </span>
           </div>
-        </DialogPanel>
+          </DialogPanel>
+        </TransitionChild>
       </div>
     </Dialog>
   </TransitionRoot>
@@ -81,6 +100,7 @@ import {
 import { XMarkIcon, CameraIcon } from "@heroicons/vue/24/outline";
 import {
   TransitionRoot,
+  TransitionChild,
   Dialog,
   DialogPanel,
   DialogTitle,

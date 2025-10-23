@@ -8,7 +8,6 @@ import LastPricing from "../../components/front/LastPricing.vue";
 import MerchantProductsSection from "../../components/front/MerchantProductsSection.vue";
 import MyFavoritesSection from "../../components/front/MyFavoritesSection.vue";
 import OfferSection from "../../components/front/OfferSection.vue";
-import ReportButton from "../../components/front/ReportButton.vue";
 import SearchSection from "../../components/front/SearchSection.vue";
 import { useAuthStore } from "../../stores/auth/auth";
 

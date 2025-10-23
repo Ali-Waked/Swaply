@@ -1,6 +1,6 @@
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/solid";
-import { inject, onMounted, ref } from "vue";
+import { inject, ref, onMounted } from "vue";
 import axiosClient from "../../axiosClient";
 
 const props = defineProps({
@@ -16,6 +16,14 @@ const box = ref(null);
 const emitter = inject("emitter");
 const emit = defineEmits(["update:isActive"]);
 
+const isNew = ref(true);
+
+onMounted(() => {
+  setTimeout(() => {
+    isNew.value = false;
+  }, 50);
+});
+
 const updateStatus = async () => {
   const status = props.isActive == "active" ? "inactive" : "active";
   const response = await axiosClient.put(`notifications/${props.id}`, {
@@ -30,19 +38,34 @@ const updateStatus = async () => {
   }
 };
 
+const isRemoving = ref(false);
+
 const removeFromNotification = async () => {
+  isRemoving.value = true;
+  
   const response = await axiosClient.delete(`/notifications/${props.id}`);
   if (response.status == 200) {
     emitter.emit("showNotificationAlert", [
       "success",
       "تم حذف التنبيه بنجاح!",
     ]);
-    box.value.remove();
+    
+    // Wait for animation to complete before removing
+    setTimeout(() => {
+      box.value.remove();
+    }, 300);
+  } else {
+    isRemoving.value = false;
   }
 };
 </script>
 <template>
-  <div class="flex justify-between items-center bg-gray-100 dark:bg-gray-700 mb-3 rounded-[16px] p-3 pl-8 pr-4"
+  <div 
+    class="flex justify-between items-center bg-gray-100 dark:bg-gray-700 mb-3 rounded-[16px] p-3 pl-8 pr-4 transition-all duration-300 ease-out"
+    :class="{ 
+      'opacity-0 scale-95 -translate-y-2': isNew,
+      'opacity-0 scale-95 translate-y-2': isRemoving 
+    }"
     ref="box">
     <div>
       <div class="flex">

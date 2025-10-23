@@ -57,10 +57,10 @@ onUnmounted(() => {
 
 <template>
   <div ref="buttonGroup"
-    class="flex items-center justify-center dark:shadow-white/5 bg-white rounded-lg overflow-hidden space-x-4 dark:bg-gray-700 shadow-md flex-1 p-0 left-0 right-0 z-[10000000] mx-auto w-fit"
+    class="flex items-center justify-center dark:shadow-white/5 bg-white/80 backdrop-blur-md h-[4.25rem] rounded-2xl overflow-hidden space-x-4 dark:bg-gray-700/80 shadow-md flex-1 p-0 left-0 right-0 z-[10000000] mx-auto w-fit"
     :class="[
       isFixed || route.name === 'personal_profile'
-        ? 'fixed top-2'
+        ? 'absolute top-2'
         : 'absolute top-20',
     ]">
     <single-button-group title="الاسعار" name="home">

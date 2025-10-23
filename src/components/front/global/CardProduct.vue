@@ -164,7 +164,7 @@ const removeFromFavorite = async () => {
           <ClockIcon class="w-[12px] h-[12px]" />
           <span class="text-[12px] dark:text-gray-300">{{ time }}</span>
         </div>
-        <FireIcon class="w-5 text-orange-600" v-if="offer" />
+        <FireIcon class="w-5 text-orange-600 dark:text-amber-500" v-if="offer" />
       </div>
       <!-- </div> -->
     </div>

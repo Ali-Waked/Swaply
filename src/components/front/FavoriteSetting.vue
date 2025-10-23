@@ -66,7 +66,7 @@ const themes = themeStore.themes;
         <RadioComponent :items="currency" name="currency" v-model:selected="currencySelected" />
       </template>
     </SingleFavoriteStraucture>
-    <SingleFavoriteStraucture title="التنبيهات" description="تفعيل اشعارات الاسعار">
+    <SingleFavoriteStraucture title="التنبيهات" description="تفعيل إشعارات الاسعار">
       <template #action>
         <BaseSwitch v-model:model-value="enabled" />
       </template>
