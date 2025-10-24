@@ -173,7 +173,7 @@ const suffixSymbol = computed(() =>
   discountType.value === "fixed" ? "₪" : "%"
 );
 const isEditPage = computed(() => {
-  return props.product.offer;
+  return props.product.active_offer || props.product.offer;
 });
 
 const closeDialog = () => {
@@ -197,8 +197,9 @@ const submit = handleSubmit(async (values) => {
 
   try {
     if (isEditPage.value) {
+      const offerId = props.product.active_offer?.id || props.product.offer?.id;
       const response = await axiosClient.put(
-        `merchant/offers/${props.product.offer.id}`,
+        `merchant/offers/${offerId}`,
         payload
       );
       if (response.status === 200) {
@@ -206,6 +207,12 @@ const submit = handleSubmit(async (values) => {
           "success",
           "تم تعديل العرض بنجاح!",
         ]);
+        // Emit event to update other sections in real-time
+        emitter.emit("offerUpdated", {
+          productId: props.product.id,
+          offerId: offerId,
+          offerData: response.data.offer
+        });
         emit("fetch-products");
         closeDialog();
       }
@@ -217,16 +224,25 @@ const submit = handleSubmit(async (values) => {
         "success",
         "تم اضافة العرض بنجاح!",
       ]);
+      // Emit event to update other sections in real-time
+      emitter.emit("offerAdded", {
+        productId: props.product.id,
+        offerId: response.data.offer.id,
+        offerData: response.data.offer
+      });
       emit("fetch-products");
       closeDialog();
     }
   } catch (e) {
-    console.error("Error submitting offer:", e);
+    emitter.emit("showNotificationAlert", [
+      "error",
+      "حدث خطأ أثناء حفظ العرض. حاول مرة أخرى.",
+    ]);
   }
 });
 const formatDate = (datetime) => datetime?.split(" ")[0] ?? "";
 watch(
-  () => props.product.offer,
+  () => props.product.active_offer || props.product.offer,
   (newVal) => {
     if (newVal) {
       const offer = newVal;

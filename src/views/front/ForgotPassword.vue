@@ -1,23 +1,18 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import MainButton from "../../components/front/global/MainButton.vue";
-import { mdiGoogle } from "@mdi/js";
-import MdiIcon from "../../components/front/MdiIcon.vue";
 import ButtonTab from "../../components/front/ButtonTab.vue";
-import { useRoute, useRouter } from "vue-router";
-import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/vue/24/outline";
-import IMask from "imask";
-import { VueSpinnerIos, VueSpinnerPuff } from "vue3-spinners";
+import { useRouter } from "vue-router";
+import { VueSpinnerIos } from "vue3-spinners";
 import BackButton from "../../components/front/global/BackButton.vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import ErrorInputText from "../../components/front/global/ErrorInputText.vue";
-import axiosClient from "../../axiosClient";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
 
 const authStore = useAuthStore();
-const { user, loading, redirect, isAuth, backErrors, forgotMessage } =
+const { loading, backErrors, forgotMessage } =
   storeToRefs(authStore);
 
 const props = defineProps({});
@@ -25,7 +20,6 @@ const type = ref("text");
 const placeholderInput = ref("0 59 123 4567");
 const buttonTitle = ref("مرحبا بعودتك");
 const router = useRouter();
-const route = useRoute();
 const isLoginPage = ref(false);
 const isPhoneNumber = ref(true);
 const using = ref("phone_number");
@@ -68,7 +62,6 @@ const [emailOrPhone] = defineField("emailOrPhone");
 watch(
   isPhoneNumber,
   (newVal) => {
-    const routeValue = route.query.using;
     if (newVal) {
       placeholderInput.value = "0 59 123 4567";
       using.value = "phone_number";
@@ -121,7 +114,6 @@ watch(
 );
 
 const onSubmit = handleSubmit(async (values) => {
-  const routeName = router.currentRoute.value.name;
   const credentials = {};
 
   if (isPhoneNumber.value) {
@@ -142,14 +134,7 @@ const firstError = (field) => {
     ? backErrors.value[field][0]
     : null;
 };
-const data = ref({});
-onMounted(async () => {
-  try {
-    const response = await axiosClient.get("/auth/user");
-    data.value = response;
-  } catch (error) {
-  }
-});
+
 </script>
 
 <template>

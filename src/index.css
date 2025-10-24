@@ -55,8 +55,13 @@ body {
   appearance: textfield;
 }
 
+.container {
+transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 @media (min-width: 320px) {
   .container {
+    
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }

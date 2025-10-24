@@ -19,37 +19,53 @@ export const useThemeStore = defineStore("theme", () => {
     },
   ];
 
-  const changeTheme = async (value, updateDatabase = false) => {
-    currentTheme.value = value === "dark" ? "dark" : "light";
-    if (user.value?.theme !== currentTheme.value)
-      if (updateDatabase)
-        await authStore.update({ theme: currentTheme.value }, false);
-    localStorage.setItem("theme", currentTheme.value);
-  };
-
-  const initTheme = (theme) => {
-    if (theme) {
-      currentTheme.value = theme;
-      return;
-    }
-    const saved = localStorage.getItem("theme");
-    if (saved) {
-      currentTheme.value = saved;
-    }
-  };
-
-  watch(currentTheme, (newVal) => {
-    const root = document.documentElement; // <html>
-    if (newVal == "dark") {
-      // Apply to both html and body for full coverage
+  const applyTheme = (theme) => {
+    const root = document.documentElement;
+    if (theme === "dark") {
       root.classList.add("dark");
       document.body.classList.add("dark");
-      changeTheme("dark", isAuth.value);
     } else {
       root.classList.remove("dark");
       document.body.classList.remove("dark");
-      changeTheme("light", isAuth.value);
     }
+  };
+
+  const changeTheme = async (value, updateDatabase = false) => {
+    const newTheme = value === "dark" ? "dark" : "light";
+    currentTheme.value = newTheme;
+    
+    // Save to localStorage
+    localStorage.setItem("theme", newTheme);
+    
+    // Apply CSS classes
+    applyTheme(newTheme);
+    
+    // Update database only if user is authenticated and theme actually changed
+    if (updateDatabase && isAuth.value && user.value?.theme !== newTheme) {
+      await authStore.update({ theme: newTheme }, false);
+    }
+  };
+
+  const initTheme = (userTheme) => {
+    // Priority: 1. User's saved theme, 2. localStorage, 3. default (light)
+    let theme = "light";
+    
+    if (userTheme) {
+      theme = userTheme;
+    } else {
+      const saved = localStorage.getItem("theme");
+      if (saved) {
+        theme = saved;
+      }
+    }
+    
+    currentTheme.value = theme;
+    applyTheme(theme);
+  };
+
+  // Watch for theme changes (e.g., from settings page)
+  watch(currentTheme, (newVal) => {
+    applyTheme(newVal);
   });
 
   return { currentTheme, themes, changeTheme, initTheme };

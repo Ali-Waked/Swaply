@@ -46,7 +46,6 @@ const categoriesOptions = computed(() => {
 });
 const dependentCategories = ref({ id: 1, name: "جميع الفئات", value: "all" });
 
-const updateRoute = () => { };
 
 const searchFor = async () => {
   const query = {

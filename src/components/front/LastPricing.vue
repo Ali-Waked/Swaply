@@ -1,6 +1,6 @@
 <script setup>
 import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
-import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch, inject } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
 import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
@@ -14,8 +14,6 @@ const showProductDialog = reactive({
   product_id: 0,
 });
 
-const buttonLabel = ref("عرض الكل");
-
 const showProduct = (payload) => {
   const id = typeof payload === 'object' && payload !== null ? payload.id : payload;
   if (!id || Number.isNaN(Number(id))) return;
@@ -26,6 +24,7 @@ const showProduct = (payload) => {
 };
 const data = ref({});
 const loading = ref(false);
+const emitter = inject("emitter");
 
 const showAll = ref(false);
 
@@ -112,6 +111,27 @@ const fetchProducts = async (page = 1) => {
   }
 };
 
+const handleOfferDeleted = (payload) => {
+  if (!data.value.data) return;
+  
+  // Update the product to remove the offer information
+  const productIndex = data.value.data.findIndex(p => p.id === payload.productId);
+  if (productIndex !== -1) {
+    // Remove active_offer from the product
+    data.value.data[productIndex].active_offer = null;
+  }
+};
+
+const handleProductDeleted = (productId) => {
+  if (!data.value.data) return;
+  
+  // Remove the product completely if it was deleted
+  const productIndex = data.value.data.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    data.value.data.splice(productIndex, 1);
+  }
+};
+
 onMounted(async () => {
   loading.value = true;
   await fetchProducts();
@@ -120,6 +140,10 @@ onMounted(async () => {
   // Listen to price updates on the prices channel
   echo.channel('prices')
     .listen('.PriceUpdated', handlePriceUpdate);
+  
+  // Listen to offer and product deletion events
+  emitter.on("offerDeleted", handleOfferDeleted);
+  emitter.on("productDeleted", handleProductDeleted);
 });
 
 onUnmounted(() => {
@@ -131,6 +155,10 @@ onUnmounted(() => {
     clearTimeout(updateTimeout);
   }
   updateQueue.clear();
+  
+  // Remove event listeners
+  emitter.off("offerDeleted", handleOfferDeleted);
+  emitter.off("productDeleted", handleProductDeleted);
 });
 </script>
 

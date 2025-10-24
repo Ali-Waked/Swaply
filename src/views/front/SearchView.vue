@@ -1,17 +1,9 @@
 <script setup>
-import { FunnelIcon } from "@heroicons/vue/24/outline";
-import ButtonTab from "../../components/front/ButtonTab.vue";
-import { CheckIcon } from "@heroicons/vue/24/solid";
-import MdiIcon from "../../components/front/MdiIcon.vue";
 import StoreBox from "../../components/front/StoreBox.vue";
-import HeaderPage from "../../components/front/global/HeaderPage.vue";
-import LogoSection from "../../components/front/global/LogoSection.vue";
 import GazaMap from "../../components/front/global/GazaMap.vue";
 import { computed, onMounted, ref } from "vue";
-import axiosClient from "../../axiosClient";
 import { useSearchStore } from "../../stores/search";
 import { storeToRefs } from "pinia";
-import { useCityStore } from "../../stores/city";
 import useFormats from "../../mixins/formats";
 
 const { timeAgo } = useFormats();

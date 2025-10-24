@@ -90,7 +90,7 @@ onMounted(async () => {
     <!-- الصورة أو الخريطة -->
     <div class="col-span-2 bg-gray-100 dark:bg-gray-800">
       <div class="p-0">
-        <img :src="image" :alt="storeName + ' صورة'" class="max-h-[350px] w-full object-cover" />
+        <img :src="image" :alt="storeName + ' صورة'" class="max-h-80 w-full object-cover" />
       </div>
     </div>
   </div>

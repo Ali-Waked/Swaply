@@ -1,9 +1,8 @@
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, watch, onBeforeUnmount, nextTick } from "vue";
 import axiosClient from "../../axiosClient";
 import { CheckIcon } from "@heroicons/vue/24/solid";
 import {
-  ChatBubbleBottomCenterIcon,
   ChatBubbleOvalLeftIcon,
   MinusIcon,
   PaperAirplaneIcon,

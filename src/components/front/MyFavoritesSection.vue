@@ -1,38 +1,19 @@
 <script setup>
-import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
-import ProductSectionTitle from "./ProductSectionTitle.vue";
-import ShowMoreButton from "./ShowMoreButton.vue";
-import CardProduct from "./global/CardProduct.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination } from "swiper/modules";
-import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch, inject } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
 import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
 import TitleProductsSection from "./global/TitleProductsSection.vue";
 import ProductGridDisplay from "./global/ProductGridDisplay.vue";
-import { FireIcon, HeartIcon } from "@heroicons/vue/24/outline";
+import { HeartIcon } from "@heroicons/vue/24/outline";
 import axiosClient from "../../axiosClient";
 import { echo } from "../../echo";
-
-const items = [
-  {
-    image: "/flour.webp",
-    price: "",
-    name: "",
-    storeName: "",
-    description: "",
-    time: "",
-  },
-];
 
 const showProductDialog = reactive({
   dialog: false,
   data: {},
   product_id: 0,
 });
-
-const buttonLabel = ref("عرض الكل");
 
 const showProduct = (payload) => {
   showProductDialog.dialog = true;
@@ -44,6 +25,7 @@ const paginations = reactive({
   last_page: 1,
 });
 const loading = ref(false);
+const emitter = inject("emitter");
 
 const showAll = ref(false);
 
@@ -130,6 +112,27 @@ const fetchProducts = async (page = 1) => {
   }
 };
 
+const handleOfferDeleted = (payload) => {
+  if (!products.value) return;
+  
+  // Update the product to remove the offer information
+  const productIndex = products.value.findIndex(p => p.id === payload.productId);
+  if (productIndex !== -1) {
+    // Remove active_offer from the product
+    products.value[productIndex].active_offer = null;
+  }
+};
+
+const handleProductDeleted = (productId) => {
+  if (!products.value) return;
+  
+  // Remove the product completely if it was deleted
+  const productIndex = products.value.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    products.value.splice(productIndex, 1);
+  }
+};
+
 onMounted(async () => {
   loading.value = true;
   await fetchProducts();
@@ -138,6 +141,10 @@ onMounted(async () => {
   // Listen to price updates on the prices channel
   echo.channel('prices')
     .listen('.PriceUpdated', handlePriceUpdate);
+  
+  // Listen to offer and product deletion events
+  emitter.on("offerDeleted", handleOfferDeleted);
+  emitter.on("productDeleted", handleProductDeleted);
 });
 
 onUnmounted(() => {
@@ -149,6 +156,10 @@ onUnmounted(() => {
     clearTimeout(updateTimeout);
   }
   updateQueue.clear();
+  
+  // Remove event listeners
+  emitter.off("offerDeleted", handleOfferDeleted);
+  emitter.off("productDeleted", handleProductDeleted);
 });
 </script>
 

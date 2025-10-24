@@ -6,7 +6,6 @@ import {
   IdentificationIcon,
   ShieldCheckIcon,
 } from "@heroicons/vue/24/solid";
-import { mdiAccountDetails } from "@mdi/js";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

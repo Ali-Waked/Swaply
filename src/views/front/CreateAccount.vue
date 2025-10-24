@@ -4,7 +4,7 @@ import MainButton from "../../components/front/global/MainButton.vue";
 import { mdiGoogle } from "@mdi/js";
 import MdiIcon from "../../components/front/MdiIcon.vue";
 import ButtonTab from "../../components/front/ButtonTab.vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import { VueSpinnerIos } from "vue3-spinners";
 import BackButton from "../../components/front/global/BackButton.vue";
@@ -21,7 +21,6 @@ const type = ref("text");
 const placeholderInput = ref("0 59 123 4567");
 const buttonTitle = ref("مرحبا بعودتك");
 const router = useRouter();
-const route = useRoute();
 const isLoginPage = ref(false);
 const isPhoneNumber = ref(true);
 const using = ref("phone_number");
@@ -76,10 +75,45 @@ const [password] = defineField("password");
 const [first_name] = defineField("first_name");
 const [last_name] = defineField("last_name");
 
+// Delayed error display
+const displayedErrors = ref({});
+const errorTimeouts = {};
+
+watch(
+  errors,
+  (newErrors) => {
+    // Clear existing timeouts
+    Object.keys(errorTimeouts).forEach((key) => {
+      if (errorTimeouts[key]) {
+        clearTimeout(errorTimeouts[key]);
+      }
+    });
+
+    // Set new timeouts for each field
+    Object.keys(newErrors).forEach((field) => {
+      if (newErrors[field]) {
+        errorTimeouts[field] = setTimeout(() => {
+          displayedErrors.value = { ...displayedErrors.value, [field]: newErrors[field] };
+        }, 500); // 500ms delay
+      } else {
+        // Clear error immediately if validation passes
+        displayedErrors.value = { ...displayedErrors.value, [field]: null };
+      }
+    });
+
+    // Clear errors for fields that are no longer in newErrors
+    Object.keys(displayedErrors.value).forEach((field) => {
+      if (!(field in newErrors)) {
+        displayedErrors.value = { ...displayedErrors.value, [field]: null };
+      }
+    });
+  },
+  { deep: true }
+);
+
 watch(
   isPhoneNumber,
   (newVal) => {
-    const routeValue = route.query.using;
     if (newVal) {
       placeholderInput.value = "0 59 123 4567";
       using.value = "phone_number";
@@ -137,7 +171,7 @@ watch(
   }
 );
 
-const onSubmit = handleSubmit(async (values) => {
+const onSubmit = handleSubmit(async () => {
 
   const routeName = router.currentRoute.value.name;
   const credentials = {
@@ -197,22 +231,22 @@ window.location.href = `${baseURL}/auth/google`;
               placeholder="الاسم الاول" v-model="first_name"
               class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]" :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/10 transition duration-300 placeholder:text-red-500':
-                  errors.first_name,
+                  displayedErrors.first_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-                  !errors.first_name,
+                  !displayedErrors.first_name,
               }" />
-            <ErrorInputText :error-message="errors?.first_name" />
+            <ErrorInputText :error-message="displayedErrors?.first_name" />
           </div>
           <div class="relative">
             <input type="text" id="nameinput2" pattern="[\u0600-\u06FF\s]*" title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاخير" v-model="last_name"
               class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]" :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600  bg-red-100/10 transition duration-300 placeholder:text-red-500':
-                  errors.last_name,
+                  displayedErrors.last_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-                  !errors.last_name,
+                  !displayedErrors.last_name,
               }" />
-            <ErrorInputText :error-message="errors.last_name" />
+            <ErrorInputText :error-message="displayedErrors.last_name" />
           </div>
         </div>
 
@@ -234,17 +268,17 @@ window.location.href = `${baseURL}/auth/google`;
                 'pl-[35px]': type === 'text',
                 'pl-[39px]': emailOrPhone !== '' && type === 'text',
                 'border-red-600 text-red-600  focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
-                  errors.emailOrPhone ||
+                  displayedErrors.emailOrPhone ||
                   firstError('email') ||
                   firstError('phone'),
                 'focus:border-gray-500 border-none  dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-                  !errors.emailOrPhone &&
+                  !displayedErrors.emailOrPhone &&
                   !firstError('email') &&
                   !firstError('phone'),
               }" />
             <span v-if="type == 'text'" class="absolute left-3 top-1/2 -translate-y-1/2" :class="{
               'text-red-500':
-                errors.emailOrPhone ||
+                displayedErrors.emailOrPhone ||
                 firstError('email') ||
                 firstError('phone'),
               'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
@@ -255,7 +289,7 @@ window.location.href = `${baseURL}/auth/google`;
                 !firstError('phone'),
             }">+97</span>
           </div>
-          <ErrorInputText :error-message="errors.emailOrPhone || firstError('email') || firstError('phone')
+          <ErrorInputText :error-message="displayedErrors.emailOrPhone || firstError('email') || firstError('phone')
             " />
         </div>
 
@@ -267,20 +301,20 @@ window.location.href = `${baseURL}/auth/google`;
               class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
               :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
-                  errors.password,
+                  displayedErrors.password,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
-                  !errors.password,
+                  !displayedErrors.password,
               }" />
 
             <button type="button" @click="showPassword = !showPassword"
               class="absolute inset-y-0 left-2 flex items-center px-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               :class="{
-                'text-red-500 hover:text-red-600': errors.password,
+                'text-red-500 hover:text-red-600': displayedErrors.password,
               }">
               <component :is="showPassword ? EyeIcon : EyeSlashIcon" class="w-5 h-5" />
             </button>
           </div>
-          <ErrorInputText :error-message="errors.password" />
+          <ErrorInputText :error-message="displayedErrors.password" />
         </div>
 
         <!-- نسيت كلمة السر -->

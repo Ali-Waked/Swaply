@@ -1,11 +1,5 @@
 <script setup>
-import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
-import ProductSectionTitle from "./ProductSectionTitle.vue";
-import ShowMoreButton from "./ShowMoreButton.vue";
-import CardProduct from "./global/CardProduct.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination } from "swiper/modules";
-import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch, inject } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
 import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
@@ -15,24 +9,11 @@ import { FireIcon } from "@heroicons/vue/24/outline";
 import axiosClient from "../../axiosClient";
 import { echo } from "../../echo";
 
-const items = [
-  {
-    image: "/flour.webp",
-    price: "",
-    name: "",
-    storeName: "",
-    description: "",
-    time: "",
-  },
-];
-
 const showProductDialog = reactive({
   dialog: false,
   data: {},
   product_id: 0,
 });
-
-const buttonLabel = ref("عرض الكل");
 
 const showProduct = (payload) => {
   showProductDialog.dialog = true;
@@ -40,6 +21,7 @@ const showProduct = (payload) => {
 };
 const data = ref({});
 const loading = ref(false);
+const emitter = inject("emitter");
 
 const showAll = ref(false);
 
@@ -115,13 +97,45 @@ const preloadImages = async (products) => {
 
 const fetchProducts = async (page = 1) => {
   try {
-    const response = await axiosClient.get(`/product/has-offer?page=${page}`);
+    // Add timestamp to prevent caching
+    const timestamp = new Date().getTime();
+    const response = await axiosClient.get(`/product/has-offer?page=${page}&_t=${timestamp}`);
     data.value = response.data;
     // Preload images before hiding skeleton
     await preloadImages(data.value.data);
   } catch (e) {
   } finally {
   }
+};
+
+const handleOfferDeleted = (payload) => {
+  if (!data.value.data) return;
+  
+  // Remove the product from the offers list since it no longer has an active offer
+  const productIndex = data.value.data.findIndex(p => p.id === payload.productId);
+  if (productIndex !== -1) {
+    data.value.data.splice(productIndex, 1);
+  }
+};
+
+const handleProductDeleted = (productId) => {
+  if (!data.value.data) return;
+  
+  // Remove the product completely if it was deleted
+  const productIndex = data.value.data.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    data.value.data.splice(productIndex, 1);
+  }
+};
+
+const handleOfferAdded = async () => {
+  // Refresh the offers list when a new offer is added
+  await fetchProducts(data.value.current_page || 1);
+};
+
+const handleOfferUpdated = async () => {
+  // Refresh the offers list when an offer is updated
+  await fetchProducts(data.value.current_page || 1);
 };
 
 onMounted(async () => {
@@ -132,6 +146,12 @@ onMounted(async () => {
   // Listen to price updates on the prices channel
   echo.channel('prices')
     .listen('.PriceUpdated', handlePriceUpdate);
+  
+  // Listen to offer and product events
+  emitter.on("offerDeleted", handleOfferDeleted);
+  emitter.on("productDeleted", handleProductDeleted);
+  emitter.on("offerAdded", handleOfferAdded);
+  emitter.on("offerUpdated", handleOfferUpdated);
 });
 
 onUnmounted(() => {
@@ -143,6 +163,12 @@ onUnmounted(() => {
     clearTimeout(updateTimeout);
   }
   updateQueue.clear();
+  
+  // Remove event listeners
+  emitter.off("offerDeleted", handleOfferDeleted);
+  emitter.off("productDeleted", handleProductDeleted);
+  emitter.off("offerAdded", handleOfferAdded);
+  emitter.off("offerUpdated", handleOfferUpdated);
 });
 </script>
 

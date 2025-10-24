@@ -1,13 +1,8 @@
 <script setup>
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import MainDialog from "./global/MainDialog.vue";
-import ComboboxComponent from "./global/ComboboxComponent.vue";
 import axiosClient from "../../axiosClient";
-import { useCategoryStore } from "../../stores/category";
-import { storeToRefs } from "pinia";
-import { watch } from "vue";
 import SelectListBox from "../front/global/SelectListBox.vue";
-import { UsersIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },

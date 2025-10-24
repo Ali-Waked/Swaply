@@ -1,10 +1,4 @@
 <script setup>
-import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
-import ProductSectionTitle from "./ProductSectionTitle.vue";
-import ShowMoreButton from "./ShowMoreButton.vue";
-import CardProduct from "./global/CardProduct.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination } from "swiper/modules";
 import { computed, inject, onMounted, reactive, ref, watch } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
 import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
@@ -64,21 +58,41 @@ const confirmDel = async () => {
           "success",
           `تم حذف المنتج بنجاح من متجرك!`,
         ]);
-        fetchProducts();
+        // Emit event to update other sections
+        emitter.emit("productDeleted", confirmDelDialog.product.id);
+        await fetchProducts();
       }
     } else if (confirmDelDialog.type == "offer") {
+      const offerId = confirmDelDialog.product.active_offer?.id;
+      
+      if (!offerId) {
+        throw new Error("Offer ID is missing");
+      }
+      
       const response = await axiosClient.delete(
-        `merchant/offers/${confirmDelDialog.product.offer.id}`
+        `merchant/offers/${offerId}`
       );
-      if (response.status == 200) {
+      
+      
+      if (response.status == 200 || response.status == 204) {
         emitter.emit("showNotificationAlert", [
           "success",
           `تم حذف العرض بنجاح!`,
         ]);
-        fetchProducts();
+        // Emit event to update other sections in real-time
+        emitter.emit("offerDeleted", {
+          productId: confirmDelDialog.product.id,
+          offerId: offerId
+        });
+        await fetchProducts();
       }
     }
   } catch (e) {
+    const errorMessage = e.response?.data?.message || "حدث خطأ أثناء الحذف. حاول مرة أخرى.";
+    emitter.emit("showNotificationAlert", [
+      "error",
+      errorMessage,
+    ]);
   }
 };
 const productEdit = ref({
@@ -145,8 +159,10 @@ const preloadImages = async (products) => {
 
 const fetchProducts = async (page = 1) => {
   try {
+    // Add timestamp to prevent caching
+    const timestamp = new Date().getTime();
     const response = await axiosClient.get(
-      `merchant/store/products?page=${page}`
+      `merchant/store/products?page=${page}&_t=${timestamp}`
     );
     data.value = response.data.products;
     store.value = response.data.store;

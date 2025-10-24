@@ -42,10 +42,7 @@ import HeaderPage from "../../components/dashboard/global/HeaderPage.vue";
 import GenericDataTable from "../../components/dashboard/global/GenericDataTable.vue";
 import AddOrEditProductDialog from "../../components/dashboard/AddOrEditProductDialog.vue";
 import ConfirmDeleteDialog from "../../components/dashboard/global/ConfirmDeleteDialog.vue";
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-} from "@heroicons/vue/24/outline";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/vue/24/outline";
 import axiosClient from "../../axiosClient";
 import format from "../../mixins/formats";
 

@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
 import NotificationAlert from "./NotificationAlert.vue";
 defineProps({
   notifications: Object,

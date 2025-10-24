@@ -20,7 +20,7 @@ const { isAuth, user } = storeToRefs(authStore);
     <HeaderPage>
       <HomeNav />
     </HeaderPage>
-    <div class="container mx-auto mt-16">
+    <div class="container mx-auto mt-20">
       <SearchSection class="" />
     </div>
   </div>

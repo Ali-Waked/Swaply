@@ -1,11 +1,7 @@
 <script setup>
-import { FunnelIcon } from "@heroicons/vue/24/outline";
-import ButtonTab from "../../components/front/ButtonTab.vue";
-import { CheckIcon } from "@heroicons/vue/24/solid";
-import MdiIcon from "../../components/front/MdiIcon.vue";
 import SingleStoreBox from "../../components/front/SingleStoreBox.vue";
 import { useSearchStore } from "../../stores/search";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import useFormats from "../../mixins/formats";
 import { useRoute } from "vue-router";
@@ -14,12 +10,8 @@ const { timeAgo } = useFormats();
 const searchStore = useSearchStore();
 const { stores, current_page, last_page, loading, errors } =
   storeToRefs(searchStore);
-const cities = computed(() => {
-  const allCities = stores.value.map((store) => {
-    return store.city?.name;
-  });
-  return [...new Set(allCities)];
-});
+
+
 const route = useRoute();
 
 const loadMoreTrigger = ref(null);

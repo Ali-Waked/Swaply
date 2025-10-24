@@ -8,7 +8,7 @@ import {
 import SidebarItem from "../../components/front/SidebarItem.vue";
 import { UserIcon, Cog6ToothIcon } from "@heroicons/vue/24/outline";
 
-import { inject, onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { AdjustmentsVerticalIcon } from "@heroicons/vue/24/solid";
 import {
   ArrowRightStartOnRectangleIcon,
@@ -22,10 +22,8 @@ import PrivacyPolicy from "../../components/front/PrivacyPolicy.vue";
 import TermsAndConditions from "../../components/front/TermsAndConditions.vue";
 import AboutApp from "../../components/front/AboutApp.vue";
 import { useAuthStore } from "../../stores/auth/auth";
-import { storeToRefs } from "pinia";
 
 const authStore = useAuthStore();
-const { user } = storeToRefs(authStore);
 const links = [
   {
     group_name: "الحساب",
@@ -84,7 +82,6 @@ const scrollToSection = ({ id, label }) => {
   }, 500);
 };
 const isOpen = ref(false);
-const emitter = inject("emitter");
 const scrollContainer = ref(null);
 const sectionTitle = ref("الملف الشخصي");
 onMounted(() => {

@@ -6,7 +6,6 @@ import {
   PaperAirplaneIcon,
   PencilIcon,
   TrashIcon,
-  UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import { UserIcon } from "@heroicons/vue/24/outline";
@@ -15,14 +14,11 @@ import { MapPinIcon } from "@heroicons/vue/24/outline";
 import { ClockIcon } from "@heroicons/vue/24/outline";
 import MainButton from "./global/MainButton.vue";
 import { ChevronDownIcon } from "@heroicons/vue/24/outline";
-import { ChevronUpIcon } from "@heroicons/vue/24/outline";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { StarIcon } from "@heroicons/vue/24/outline";
 import { ShieldCheckIcon } from "@heroicons/vue/24/outline";
 import { CalendarIcon } from "@heroicons/vue/24/outline";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import ScondButton from "./ScondButton.vue";
-import axiosClient from "../../axiosClient";
 import useFormats from "../../mixins/formats";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../../stores/auth/auth";

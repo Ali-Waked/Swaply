@@ -1,23 +1,12 @@
 <script setup>
-import { reactive } from "vue";
 import MdiIcon from "../MdiIcon.vue";
 import FooterColumn from "./FooterColumn.vue";
 import {
   mdiFacebook,
   mdiInstagram,
   mdiTwitter,
-  mdiWeb,
   mdiYoutube,
 } from "@mdi/js";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from "@headlessui/vue";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid";
-
-const langSelected = reactive({ id: 1, name: "العربية", value: "ar" });
 
 const langs = [
   { id: 1, name: "العربية", value: "ar" },

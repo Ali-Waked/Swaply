@@ -5,7 +5,7 @@ import { mdiNavigationOutline } from "@mdi/js";
 import format from "../../mixins/formats";
 import { useCurrencyStore } from "../../stores/currencyStore";
 import { useCityStore } from "../../stores/city";
-import { computed, onMounted, ref, watchEffect } from "vue";
+import { computed, onMounted, ref } from "vue";
 import usePrice from "../../mixins/price";
 const props = defineProps({
   storeName: String,

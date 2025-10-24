@@ -1,12 +1,8 @@
 <script setup>
-import { ArrowTrendingUpIcon } from "@heroicons/vue/24/solid";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { reactive, ref } from "vue";
-import ProductSectionTitle from "../ProductSectionTitle.vue";
 import CardProduct from "./CardProduct.vue";
 import CardProductSkeleton from "./CardProductSkeleton.vue";
-import ShowProductDialog from "../ShowProductDialog.vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";

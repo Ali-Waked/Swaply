@@ -31,10 +31,6 @@ const localProductName = computed({
   get: () => props.product?.name || "",
   set: (val) => emit("update:productName", val),
 });
-const localProductPrice = computed({
-  get: () => props.product?.price || "",
-  set: (val) => emit("update:productPrice", val),
-});
 
 const categoryStore = useCategoryStore();
 const { categories } = storeToRefs(categoryStore);

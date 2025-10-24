@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch, inject } from "vue";
+import { onMounted, ref, watch, inject } from "vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
@@ -9,7 +9,6 @@ import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
 import { useCityStore } from "../../stores/city";
 import SelectListBox from "./global/SelectListBox.vue";
-const twoFA = ref(false);
 const deleteDialog = ref({
   dialog: false,
 });
@@ -23,7 +22,6 @@ const emitter = inject("emitter");
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
 
-const location = ref(false);
 const openConfirmPasswordDialog = () => {
   currentPasswordDialog.value = true;
   currentPassword.value = "";

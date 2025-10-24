@@ -15,14 +15,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { computed } from "vue";
 
 // Heroicons
-import {
-  CheckCircleIcon,
-  XCircleIcon,
-  InformationCircleIcon,
-} from "@heroicons/vue/24/solid";
+import { CheckCircleIcon, XCircleIcon, InformationCircleIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   message: String,

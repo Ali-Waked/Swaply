@@ -90,11 +90,9 @@
 <script setup>
 import {
   ref,
-  onMounted,
   computed,
   inject,
   watch,
-  watchEffect,
   nextTick,
 } from "vue";
 import { XMarkIcon, CameraIcon } from "@heroicons/vue/24/outline";
@@ -116,7 +114,6 @@ import axiosClient from "../../axiosClient";
 // validation
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-import axios from "axios";
 
 const props = defineProps({
   modelValue: { type: [Boolean, Object], required: true },

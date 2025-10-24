@@ -12,7 +12,7 @@ const usePrice = () => {
         rating: "بلا تقييم",
         message: "Insufficient market data to determine fair price.",
         style:
-          "text-gray-600 font-[400] bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400",
+          "text-gray-600 font-[400] bg-gray-50 dark:bg-gray-700 dark:text-gray-300",
       };
     }
 

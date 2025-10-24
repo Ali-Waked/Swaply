@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import axiosClient from "../../axiosClient";
 import { VueSpinnerIos } from "vue3-spinners";
 import MainButton from "../../components/front/global/MainButton.vue";
 import BackButton from "../../components/front/global/BackButton.vue";

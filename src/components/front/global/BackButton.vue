@@ -1,6 +1,5 @@
 <script setup>
 import { ChevronRightIcon } from "@heroicons/vue/24/outline";
-import { ArrowRightIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   label: {

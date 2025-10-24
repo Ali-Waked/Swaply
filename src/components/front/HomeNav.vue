@@ -46,12 +46,18 @@ const changeTheme = (value) => {
       <!-- Theme toggle -->
       <div class="mode flex absolute right-4 items-center gap-1 p-1 rounded-lg bg-gray-200 dark:bg-gray-700">
         <div
-          class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-transparent"
+          :class="[
+            'cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 transition-colors',
+            currentTheme === 'light' ? 'bg-white' : 'bg-transparent'
+          ]"
           @click="changeTheme('light')">
           <SunIcon class="w-5 h-5" />
         </div>
         <div
-          class="cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 bg-transparent dark:bg-gray-600"
+          :class="[
+            'cursor-pointer px-2 py-[6px] rounded-lg text-gray-800 dark:text-gray-200 transition-colors',
+            currentTheme === 'dark' ? 'dark:bg-gray-600' : 'dark:bg-transparent'
+          ]"
           @click="changeTheme('dark')">
           <MoonIcon class="w-5 h-5" />
         </div>

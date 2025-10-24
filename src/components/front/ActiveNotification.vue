@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted } from "vue";
 import ActiveNotificationBox from "./ActiveNotificationBox.vue";
 import NotificationSectionTitle from "./NotificationSectionTitle.vue";
-import axios from "axios";
-import axiosClient from "../../axiosClient";
 import { useNotificationStore } from "../../stores/notification";
 import { storeToRefs } from "pinia";
 

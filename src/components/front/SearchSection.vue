@@ -7,17 +7,14 @@ import {
 } from "@headlessui/vue";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import axiosClient from "../../axiosClient";
 import { useProductStore } from "../../stores/product";
 import { storeToRefs } from "pinia";
 import { useCategoryStore } from "../../stores/category";
 
 const search = ref(null);
 const router = useRouter();
-const selectedCategory = ref(null);
 const productStore = useProductStore();
 const { products } = storeToRefs(productStore);
-
 const categoryStore = useCategoryStore();
 const { categories } = storeToRefs(categoryStore);
 

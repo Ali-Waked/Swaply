@@ -3,7 +3,6 @@ import { ref, watch } from "vue";
 import RadioComponent from "./global/RadioComponent.vue";
 import SecandryTitle from "./global/SecandryTitle.vue";
 import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
-import { Switch } from "@headlessui/vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
 import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
@@ -51,6 +50,13 @@ const themeStore = useThemeStore();
 const theme = storeToRefs(themeStore);
 const { currentTheme } = theme;
 const themes = themeStore.themes;
+
+// Watch for theme changes and save them
+watch(currentTheme, async (newVal) => {
+  if (user.value) {
+    await themeStore.changeTheme(newVal, true);
+  }
+});
 </script>
 
 <template>

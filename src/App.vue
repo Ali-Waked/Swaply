@@ -12,9 +12,7 @@ import { onMounted, watch } from "vue";
 import { useAuthStore } from "./stores/auth/auth";
 import { useNotificationStore } from "./stores/notification";
 
-const themeStore = useThemeStore();
-const theme = storeToRefs(themeStore);
-
+const themeStore = useThemeStore();  
 const authStore = useAuthStore();
 const { user, isAuth } = storeToRefs(authStore);
 const notificationStore = useNotificationStore();
@@ -26,12 +24,17 @@ watch(
   }
 );
 onMounted(async () => {
-  await authStore.checkAuth();
-  if (!user.value) {
-    // await authStore.checkAuth();
-    // TWEAKS
+  // Initialize theme immediately from localStorage (no flicker)
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    themeStore.initTheme(savedTheme);
   }
-  themeStore.initTheme(user.value?.theme);
+  
+  // Then check auth and apply user's theme if they have one
+  await authStore.checkAuth();
+  if (user.value?.theme) {
+    themeStore.initTheme(user.value.theme);
+  }
 });
 </script>
 

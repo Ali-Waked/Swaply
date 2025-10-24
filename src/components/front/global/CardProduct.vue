@@ -2,14 +2,12 @@
 import {
   ClockIcon,
   FireIcon,
-  MapIcon,
   MapPinIcon,
   StarIcon,
 } from "@heroicons/vue/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/vue/24/solid";
-
 import format from "../../../mixins/formats";
-import { computed, inject, ref, watch } from "vue";
+import { computed, inject, watch } from "vue";
 import axiosClient from "../../../axiosClient";
 
 const { currencyFormat, calculatePriceAfterOffer } = format();

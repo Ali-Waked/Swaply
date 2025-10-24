@@ -1,5 +1,4 @@
 <script setup>
-import { ArrowRightIcon } from "@heroicons/vue/24/solid";
 import HeaderTitle from "../../components/front/global/HeaderTitle.vue";
 import NotificationSetting from "../../components/front/NotificationSetting.vue";
 import LastNotification from "../../components/front/LastNotification.vue";
@@ -8,7 +7,6 @@ import AddNotification from "../../components/front/AddNotification.vue";
 import { onMounted, ref } from "vue";
 import HeaderPage from "../../components/front/global/HeaderPage.vue";
 import LogoSection from "../../components/front/global/LogoSection.vue";
-import { storeToRefs } from "pinia";
 import { useNotificationStore } from "../../stores/notification";
 
 const showAll = ref(false);

@@ -82,8 +82,6 @@ import { useRowsPerPage } from "use-vue3-easy-data-table";
 
 const dataTable = ref();
 const {
-  rowsPerPageOptions,
-  rowsPerPageActiveOption,
   updateRowsPerPageActiveOption,
 } = useRowsPerPage(dataTable);
 const props = defineProps({
@@ -93,10 +91,6 @@ const props = defineProps({
 
 const themeStore = useThemeStore();
 const { currentTheme } = storeToRefs(themeStore);
-
-const changeTheme = (value) => {
-  themeStore.changeTheme(value);
-};
 
 const rowsPerPage = ref(10);
 
