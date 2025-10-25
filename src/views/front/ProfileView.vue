@@ -159,7 +159,7 @@ const getLabelById = (id) => {
             </SidebarItem>
           </ul>
         </li>
-        <span class="absolute block w-[calc(100%+400px)] h-[1px] bg-gray-300 dark:bg-gray-600 left-[0px]"></span>
+        <span class="absolute block w-full h-[2px] rounded bg-gray-300 dark:bg-gray-600"></span>
       </ul>
       <button class="text-white
         w-full

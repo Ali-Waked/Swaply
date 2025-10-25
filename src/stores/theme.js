@@ -4,7 +4,10 @@ import { ref, watch } from "vue";
 import { useAuthStore } from "./auth/auth";
 
 export const useThemeStore = defineStore("theme", () => {
-  const currentTheme = ref("light");
+  // Initialize from localStorage immediately (synchronous with inline script in index.html)
+  const savedTheme = localStorage.getItem("theme");
+  const currentTheme = ref(savedTheme === "dark" ? "dark" : "light");
+  
   const authStore = useAuthStore();
   const { user, isAuth } = storeToRefs(authStore);
 
@@ -20,13 +23,11 @@ export const useThemeStore = defineStore("theme", () => {
   ];
 
   const applyTheme = (theme) => {
-    const root = document.documentElement;
+    // Only need to add/remove 'dark' class on <html> element for Tailwind
     if (theme === "dark") {
-      root.classList.add("dark");
-      document.body.classList.add("dark");
+      document.documentElement.classList.add("dark");
     } else {
-      root.classList.remove("dark");
-      document.body.classList.remove("dark");
+      document.documentElement.classList.remove("dark");
     }
   };
 
@@ -46,27 +47,10 @@ export const useThemeStore = defineStore("theme", () => {
     }
   };
 
-  const initTheme = (userTheme) => {
-    // Priority: 1. User's saved theme, 2. localStorage, 3. default (light)
-    let theme = "light";
-    
-    if (userTheme) {
-      theme = userTheme;
-    } else {
-      const saved = localStorage.getItem("theme");
-      if (saved) {
-        theme = saved;
-      }
-    }
-    
-    currentTheme.value = theme;
-    applyTheme(theme);
-  };
-
   // Watch for theme changes (e.g., from settings page)
   watch(currentTheme, (newVal) => {
     applyTheme(newVal);
   });
 
-  return { currentTheme, themes, changeTheme, initTheme };
+  return { currentTheme, themes, changeTheme };
 });

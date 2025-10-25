@@ -117,7 +117,7 @@ const props = defineProps({
   editData: { type: Object, default: null },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "success"]);
 const emitter = inject("emitter");
 
 const isEdit = computed(() => {
@@ -273,6 +273,7 @@ const submit = async () => {
         "success",
         isEdit.value ? "تم تحديث العرض بنجاح!" : "تم نشر عرض المقايضة بنجاح!",
       ]);
+      emit("success"); // Notify parent to refetch
       closeDialog();
     }
   } catch (e) {

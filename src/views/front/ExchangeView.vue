@@ -174,14 +174,14 @@ onMounted(async () => {
       <LogoSection />
     </HeaderPage>
     <HeaderTitle title="لوحة المقايضة" subtitle="تبادل السلع و الخدمات مع المجتمع" />
-    <MainButton class="mt-4 py-4" label="اعرض مقايضة جديدة" @click="isDialogOpen = true">
+    <MainButton class="mt-4 py-4 leading-none" label="اعرض مقايضة جديدة" @click="isDialogOpen = true">
       <template #icon>
-        <PlusIcon class="h-5 w-5" />
+        <PlusIcon class="h-5 w-5 stroke-2 ml-1" />
       </template>
     </MainButton>
     <WoringAlert class="my-4" title="تنبيه أمني"
       text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل" />
-    <TradeDialog :model-value="isDialogOpen" @update:modelValue="(val) => (isDialogOpen = val)" :editData="editData" />
+    <TradeDialog :model-value="isDialogOpen" @update:modelValue="(val) => (isDialogOpen = val)" :editData="editData" @success="fetchBarters" />
     <div class="offers">
       <div class="flex justify-between items-center">
         <h5 class="title font-[500] text-[20px] text-black dark:text-white">

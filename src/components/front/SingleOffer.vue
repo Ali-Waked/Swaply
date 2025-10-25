@@ -84,12 +84,12 @@ const requestStatus = computed(() => {
               item.user.name
             }}</span>
             <span v-if="item.user.is_trusty"
-              class="text-[11px] border border-gray-200 dark:border-green-600 py-1.5 px-3 rounded-full flex items-center gap-1 ml-2 w-fit justify-center mr-2">
+              class="text-xs border border-gray-200 dark:border-green-600 py-1.5 px-2 bg-green-100/90 dark:bg-green-900/50 rounded-full flex items-center  ml-2 gap-1 w-fit justify-center mr-2">
               <CheckIcon class="w-3 h-3 text-gray-600 dark:text-green-600" />
-              <span class="text-gray-600 dark:text-green-600">موثوق</span>
+              <span class="text-gray-600 dark:text-green-600 leading-none">موثوق</span>
             </span>
           </span>
-          <div class="degree text-gray-400 dark:text-gray-300 text-[12px] font-[500]">
+          <div class="degree text-gray-400 dark:text-gray-300 text-xs font-[400]">
             درجة الموثوقية 80%
           </div>
         </div>
@@ -132,7 +132,7 @@ const requestStatus = computed(() => {
     <div class="flex flex-col gap-2 mt-4">
       <div class="flex items-center gap-2">
         <button @click="toggle"
-          class="flex-1 flex items-center justify-center p-2 border rounded-lg text-[14px] transition-all border-gray-300 bg-white text-black hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+          class="flex-1 flex items-center justify-center p-2 border rounded-lg text-[14px] transition-all border-gray-300 bg-white text-black hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
           <span class="font-[500]">تفاصيل اكثر</span>
           <ChevronDownIcon :class="isOpen ? 'rotate-180 transform' : ''"
             class="w-4 h-4 mr-2 mt-[2px] transition-transform text-black dark:text-white" />
@@ -359,12 +359,12 @@ const requestStatus = computed(() => {
               </template>
             </ScondButton>
             <ScondButton v-else title="تعديل العرض" @click="$emit('edit', item)"
-              class="text-blue-600 hover:bg-blue-600 hover:text-white border-blue-600">
+              class="bg-blue-600 hover:bg-blue-500 text-white border-blue-600">
               <template #icon>
                 <PencilIcon class="w-4 h-4" />
               </template>
             </ScondButton>
-            <ScondButton title="حذف العرض" class="text-red-600 hover:bg-red-600 hover:text-white border-red-600"
+            <ScondButton title="حذف العرض" class="text-white bg-red-600 hover:bg-red-500  border-red-600"
               @click="$emit('delete', item.id)">
               <template #icon>
                 <TrashIcon class="w-4 h-4" />

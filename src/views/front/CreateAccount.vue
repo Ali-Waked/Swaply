@@ -94,7 +94,7 @@ watch(
       if (newErrors[field]) {
         errorTimeouts[field] = setTimeout(() => {
           displayedErrors.value = { ...displayedErrors.value, [field]: newErrors[field] };
-        }, 500); // 500ms delay
+        }, 800); // 500ms delay
       } else {
         // Clear error immediately if validation passes
         displayedErrors.value = { ...displayedErrors.value, [field]: null };

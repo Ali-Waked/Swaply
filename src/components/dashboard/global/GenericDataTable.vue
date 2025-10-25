@@ -23,10 +23,14 @@
       <div class="flex justify-between items-center dark:bg-gray-800 p-3 rounded">
         <!-- Rows per page -->
         <div>
-          <label class="font-[400] text-[14px] text-gray-700 dark:text-gray-300 ml-3">
+          <label
+          for="rows-per-page"
+           class="font-[400] text-[14px] text-gray-700 dark:text-gray-300 ml-3">
             عدد الصفوف لكل صفحة:
           </label>
-          <select v-model="rowsPerPage" @change="updateRowsPerPageSelect"
+          <select
+          id="rows-per-page"
+           v-model="rowsPerPage" @change="updateRowsPerPageSelect"
             class="appearance-none border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 pr-8 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             <option v-for="n in [5, 10, 15, 20]" :key="n" :value="n">
               {{ n }}

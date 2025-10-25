@@ -12,7 +12,6 @@ import { useNotificationStore } from "../../../stores/notification";
 const emitter = inject("emitter");
 const isFixed = ref(false);
 const buttonGroup = ref(null);
-let initialOffset = 0;
 const route = useRoute();
 let hiddenButtonHandler = null;
 
@@ -40,8 +39,6 @@ onMounted(() => {
       return;
     }
 
-    // احفظ مكان العنصر الأصلي
-    initialOffset = buttonGroup.value.offsetTop;
     // Restore original z-index
     buttonGroup.value.style.zIndex = isFixed.value ? "100000" : "10000";
   };

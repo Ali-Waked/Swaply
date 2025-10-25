@@ -61,7 +61,7 @@ onMounted(() => {
       </template>
       <div ref="loadMoreTrigger" class="w-full h-1"></div>
     </div>
-    <div class="col-span-2 bg-gray-200 dark:bg-gray-700 rounded-lg">
+    <div v-if="stores.length > 0" class="col-span-2 bg-gray-200 dark:bg-gray-700 rounded-lg">
       <GazaMap :cities="cities" />
     </div>
   </div>

@@ -18,7 +18,7 @@ const search = ref("");
 const categoryStore = useCategoryStore();
 const { categories } = storeToRefs(categoryStore);
 const searchStore = useSearchStore();
-const { current_page } = storeToRefs(searchStore);
+const { current_page, stores, loading } = storeToRefs(searchStore);
 
 watch(
   () => router.currentRoute.value.name,
@@ -95,17 +95,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <HeaderPage>
-    <LogoSection />
-  </HeaderPage>
-  <!-- العنوان -->
-  <div class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16">
-    <span>نتائج البحث:</span>
-    <span>{{ search }}</span>
-  </div>
+  <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
+    <HeaderPage>
+      <LogoSection />
+    </HeaderPage>
+    <!-- العنوان -->
+    <div class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16">
+      <span>نتائج البحث:</span>
+      <span>{{ search }}</span>
+    </div>
 
-  <!-- الفلاتر -->
-  <div class="filter flex items-center gap-2 my-4">
+    <!-- الفلاتر -->
+    <div class="filter flex items-center gap-2 my-4">
     <SelectListBox v-model="dependentPrice" :options="priceOptions" />
     <div
       class="border search-button rounded-lg py-[6px] relative px-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -134,10 +135,37 @@ onMounted(async () => {
       " class="py-2 rounded-full" :icon="MapPinIcon" />
   </div>
 
-  <!-- المحتوى -->
-  <main>
-    <slot />
-  </main>
+    <!-- المحتوى -->
+    <main>
+      <slot />
+      
+      <!-- Empty State -->
+      <div 
+        v-if="!loading && stores.length === 0" 
+        class="flex flex-col justify-center items-center h-64 text-center px-4">
+        <div class="mb-4">
+          <svg 
+            class="w-20 h-20 mx-auto text-gray-400 dark:text-gray-600" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24">
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="1.5" 
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-[500] text-gray-700 dark:text-gray-200 mb-2">
+          لم نجد نتائج لبحثك
+        </h3>
+        <p class="text-sm font-[400] text-gray-500 dark:text-gray-400">
+          لا توجد متاجر تبيع "{{ search }}" في الوقت الحالي
+        </p>
+      </div>
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -3,9 +3,11 @@
   <HeaderPage title="التصنيفات" ButtonLabel="اضافة تصنيف جديد" @button-add-click="openDialog('create')" />
 
   <div class="mb-4">
-    <input v-model="searchQuery" type="text" placeholder="ابحث عن تصنيف..."
-      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none
+    <input
+    name="category-search"
+    v-model="searchQuery" type="text" placeholder="ابحث عن تصنيف..." class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none
       dark:bg-gray-700 dark:border-gray-600 dark:text-white
+      placeholder:text-gray-600/60 dark:placeholder-gray-400
       " />
   </div>
 
