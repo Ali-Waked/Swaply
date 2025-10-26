@@ -25,7 +25,7 @@ const pages = computed(() => {
   const current = props.modelValue;
   const pages = [];
 
-  if (total <= 7) {
+  if (total <= 9) {
     for (let i = 1; i <= total; i++) pages.push(i);
   } else {
     pages.push(1, 2);
@@ -38,7 +38,6 @@ const pages = computed(() => {
 
     if (current < total - 3) pages.push("...");
 
-    // آخر صفحتين
     pages.push(total - 1, total);
   }
 
@@ -48,13 +47,13 @@ const pages = computed(() => {
 
 <template>
   <div class="flex items-center justify-center gap-2 mt-6 select-none">
-    <button class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
+    <button class="px-3 py-1 border rounded-2xl disabled:opacity-50 text-gray-800 dark:text-white"
       :disabled="modelValue === 1" @click="changePage(modelValue - 1)">
       السابق
     </button>
 
     <button v-for="(page, index) in pages" :key="index" @click="typeof page === 'number' && changePage(page)"
-      class="px-3 py-1 border rounded" :class="[
+      class="px-3 py-1 border rounded-2xl" :class="[
         typeof page === 'number'
           ? page === modelValue
             ? 'bg-blue-600 text-white'
@@ -64,7 +63,7 @@ const pages = computed(() => {
       {{ page }}
     </button>
 
-    <button class="px-3 py-1 border rounded disabled:opacity-50 text-gray-800 dark:text-white"
+    <button class="px-3 py-1 border rounded-2xl disabled:opacity-50 text-gray-800 dark:text-white"
       :disabled="modelValue === lastPage" @click="changePage(modelValue + 1)">
       التالي
     </button>

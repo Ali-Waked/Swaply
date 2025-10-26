@@ -199,7 +199,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  const { isAuth, user, isCheckedAuth } = storeToRefs(authStore);
+  const { isAuth, user } = storeToRefs(authStore);
   await authStore.checkAuth();
 
   if (to.meta.requiresAuth) {

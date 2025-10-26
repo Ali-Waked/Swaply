@@ -5,30 +5,42 @@
   </div>
 
   <div class="flex flex-wrap justify-evenly gap-4 mx-4 mt-6">
-    <template v-for="item in cardItems" :key="item.title">
-      <div
-        class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-[400] w-[280px] lg:w-[340px] transition-colors duration-200"
-        :class="item.style">
-        <component :is="item.icon" class="w-12 lg:w-14" />
+    <template v-if="loading">
+      <div v-for="i in 3" :key="i"
+        class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 w-[280px] lg:w-[340px] bg-gray-100 dark:bg-gray-800 animate-pulse">
+        <div class="w-12 lg:w-14 h-12 lg:h-14 bg-gray-300 dark:bg-gray-700 rounded"></div>
         <div class="flex items-center flex-col justify-center gap-4">
-          <span>{{ item.title }}</span>
-          <span class="font-[500] text-2xl lg:text-4xl">{{ item.number }}</span>
+          <div class="w-24 h-7 bg-gray-300 dark:bg-gray-700 rounded"></div>
+          <div class="w-16 h-10 bg-gray-300 dark:bg-gray-700 rounded"></div>
         </div>
       </div>
+    </template>
+    <template v-else>
+      <template v-for="item in cardItems" :key="item.title">
+        <div
+          class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-[400] w-[280px] lg:w-[340px] transition-colors duration-200"
+          :class="item.style">
+          <component :is="item.icon" class="w-12 lg:w-14" />
+          <div class="flex items-center flex-col justify-center gap-4">
+            <span>{{ item.title }}</span>
+            <span class="font-[500] text-2xl lg:text-4xl">{{ item.number }}</span>
+          </div>
+        </div>
+      </template>
     </template>
   </div>
 
   <div class="flex flex-col items-stretch lg:flex-row gap-4 mt-8 pb-6 h-full">
-    <div class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md dark:shadow-gray-700 rounded-lg">
+    <div class="overflow-x-auto scrollbar-hide h-full self-stretch shadow-md rounded-lg">
       <div class="min-w-[750px] h-[25rem]">
         <div
-          class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200">
+          class="bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200">
           <div class="flex justify-between items-center mb-6">
-            <h4 class="text-blue-500 text-[20px] font-[500]">
-              اخر المستخدمين انضماما
+            <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-[500]">
+              آخر المستخدمين انضماما
             </h4>
             <button @click="$router.push({ name: 'dashboard-user' })"
-              class="border-2 text-[12px] text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white">
+              class="border-2 text-[12px] text-nowrap text-blue-400 border-blue-400 dark:text-blue-200 dark:border-blue-200 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-400 hover:text-white">
               عرض المزيد
             </button>
           </div>
@@ -41,36 +53,61 @@
               <span>الدور</span>
               <span class="col-span-2">تاريخ الاضمام</span>
             </div>
-            <div
-              class="row grid grid-cols-8 gap-4 py-4 border-b last-of-type:border-none text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
-              v-for="user in users" :key="user.id">
-              <span class="text-center"># {{ user.id }}</span>
-              <span>{{ user.name }}</span>
-              <span class="col-span-2 text-center">{{ user.email }}</span>
-              <span class="text-end" dir="ltr">{{ user.phone }}</span>
-              <span>{{ user.role }}</span>
-              <span class="col-span-2">{{
-                user.created_at ?? "8-8-2020"
-              }}</span>
-            </div>
+            <template v-if="loading">
+              <div
+                class="row grid grid-cols-8 gap-4 py-4 border-b border-gray-200 dark:border-gray-700"
+                v-for="i in 5" :key="i">
+                <div class="h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+                <div class="h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+                <div class="col-span-2 h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+                <div class="h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+                <div class="h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+                <div class="col-span-2 h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+              </div>
+            </template>
+            <template v-else>
+              <div
+                class="row grid grid-cols-8 gap-4 py-4 border-b last-of-type:border-none text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
+                v-for="user in users" :key="user.id">
+                <span class="text-center"># {{ user.id }}</span>
+                <span>{{ user.name }}</span>
+                <span class="col-span-2 text-center">{{ user.email }}</span>
+                <span class="text-end" dir="ltr">{{ user.phone }}</span>
+                <span>{{ user.role }}</span>
+                <span class="col-span-2">{{
+                  user.created_at ?? "8-8-2020"
+                }}</span>
+              </div>
+            </template>
           </div>
         </div>
       </div>
     </div>
 
     <div
-      class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-800 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[25rem] min-w-[280px] transition-colors duration-200"
+      class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-700 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[25rem] min-w-[280px] transition-colors duration-200"
       :class="{ 'overflow-y-auto': showAll }">
       <div class="flex justify-between items-center gap-6 mb-6">
-        <h4 class="text-blue-500 text-[20px] font-[500] text-nowrap">
-          اخر الإشعارات
+        <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-[500] text-nowrap">
+          آخر الإشعارات
         </h4>
         <button v-if="notifications.data?.length > 4" @click="showAll = !showAll"
-          class="border-2 text-[12px] text-nowrap text-blue-500 border-blue-500 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white">
+          class="border-2 text-[12px] text-nowrap text-blue-400 dark:text-blue-200 border-blue-500 dark:border-blue-200 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white dark:hover:text-white">
           {{ showAll ? "عرض أقل" : "عرض الكل" }}
         </button>
       </div>
-      <template v-if="notifications.data?.length > 0">
+      <template v-if="loading">
+        <div
+          class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700"
+          v-for="i in 5" :key="i">
+          <div class="w-6 h-6 bg-gray-300 dark:bg-gray-800 rounded animate-pulse"></div>
+          <div class="flex flex-col gap-2 flex-1">
+            <div class="h-4 bg-gray-300 dark:bg-gray-800 rounded animate-pulse w-3/4"></div>
+            <div class="h-3 bg-gray-300 dark:bg-gray-800 rounded animate-pulse w-full"></div>
+          </div>
+        </div>
+      </template>
+      <template v-else-if="notifications.data?.length > 0">
         <div
           class="box-notification flex items-center gap-4 py-4 border-b border-b-gray-200 dark:border-b-gray-700 last-of-type:border-none"
           v-for="notification in notifications.data" :key="notification.id">
@@ -111,6 +148,7 @@ import format from "../../mixins/formats";
 
 const { formatDate } = format();
 const showAll = ref(false);
+const loading = ref(true);
 const cardItems = reactive([
   {
     title: "المنتجات",
@@ -161,6 +199,7 @@ const getIcon = (icon) => {
 };
 
 onMounted(async () => {
+  loading.value = true;
   try {
     const response = await axiosClient.get("/admin/dashboard");
     users.value = response.data.last_users_register.map((ele) => {
@@ -185,6 +224,8 @@ onMounted(async () => {
       notifications.value = response.data.notifications;
     }
   } catch (e) {
+  } finally {
+    loading.value = false;
   }
 });
 </script>

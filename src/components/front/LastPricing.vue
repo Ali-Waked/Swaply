@@ -73,7 +73,7 @@ const handlePriceUpdate = (event) => {
 watch(
   () => data.value.current_page,
   async (newPage) => {
-    if (newPage !== 1) {
+    if (newPage) {
       await fetchProducts(newPage);
     }
   }

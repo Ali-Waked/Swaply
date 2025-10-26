@@ -158,7 +158,7 @@ const requestStatus = computed(() => {
                   <span class="icon flex items-center">
                     <StarIcon class="w-4 h-4 inline-block text-amber-600 dark:text-amber-400" />
                   </span>
-                  <span class="text-gray-500 text-[14px] font-[400] dark:text-gray-400">
+                  <span class="text-gray-600 text-[14px] font-[400] dark:text-gray-400">
                     التقييم:
                   </span>
                 </span>
@@ -172,7 +172,7 @@ const requestStatus = computed(() => {
                   <span class="icon flex items-center">
                     <CalendarIcon class="w-[14px] h-[14px] text-blue-700 dark:text-blue-400 inline-block" />
                   </span>
-                  <span class="text-gray-500 text-[14px] font-[400] dark:text-gray-400">
+                  <span class="text-gray-600 text-[14px] font-[400] dark:text-gray-400">
                     عضو
                     {{
                       getRelativeTime(item.user.created_at).replace(
@@ -190,7 +190,7 @@ const requestStatus = computed(() => {
                   <span class="icon flex items-center">
                     <ChatBubbleOvalLeftIcon class="w-[14px] h-[14px] text-green-700 dark:text-green-400 inline-block" />
                   </span>
-                  <span class="text-gray-500 text-[14px] font-[400] dark:text-gray-400">
+                  <span class="text-gray-600 text-[14px] font-[400] dark:text-gray-400">
                     التواصل:
                   </span>
                 </span>
@@ -203,8 +203,8 @@ const requestStatus = computed(() => {
                   <span class="icon flex items-center">
                     <ShieldCheckIcon class="w-[15px] h-[15px] text-green-700 dark:text-green-400 inline-block" />
                   </span>
-                  <span class="text-gray-500 text-[14px] font-[400] dark:text-gray-400">
-                    درجةالثقة:
+                  <span class="text-gray-600 text-[14px] font-[400] dark:text-gray-400">
+                    درجة الثقة:
                   </span>
                 </span>
                 <span class="value text-green-700 font-[400] text-[14px] dark:text-green-400">
@@ -336,14 +336,14 @@ const requestStatus = computed(() => {
         <div class="flex flex-col sm:flex-row items-center justify-between mt-4 gap-2">
           <template v-if="user && user.id !== item.user_id">
             <ScondButton title="رسالة سريعة"
-              class="text-black hover:bg-gray-200 dark:text-white hover:text-black dark:hover:text-black border-gray-300"
+              class="text-black hover:bg-gray-50 dark:text-white hover:text-black dark:hover:text-black border-gray-300"
               @click="$emit('startChat', item.user)">
               <template #icon>
                 <ChatBubbleOvalLeftIcon class="w-4 h-4" />
               </template>
             </ScondButton>
             <ScondButton v-if="!isSendRequest" title="ارسال طلب لقبول عملة المبادلة"
-              class="text-green-600 hover:bg-green-600 hover:text-white border-green-600"
+              class="text-green-700 hover:bg-green-700 hover:text-white border-green-600"
               @click="$emit('sendAcceptResponse', item)">
               <template #icon>
                 <PaperAirplaneIcon class="w-4 h-4" />

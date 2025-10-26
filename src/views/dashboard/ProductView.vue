@@ -6,10 +6,32 @@
     <input
     name="product-search"
     v-model="searchQuery" type="text" placeholder="ابحث عن منتج معين..."
-      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none" />
+      class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none
+      dark:bg-gray-700 dark:border-gray-600 dark:text-white
+      placeholder:text-gray-600/60 dark:placeholder-gray-400
+      " />
   </div>
 
-  <GenericDataTable :headers="headers" :items="filteredItems">
+  <div v-if="loading" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-200">
+    <div class="space-y-4">
+      <div class="grid grid-cols-6 gap-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+        <div v-for="i in 6" :key="i" class="h-5 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+      </div>
+      <div v-for="i in 8" :key="i" class="grid grid-cols-6 gap-4 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="flex gap-2 justify-center">
+          <div class="h-8 w-16 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+          <div class="h-8 w-16 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <GenericDataTable v-else :headers="headers" :items="filteredItems">
     <template #id="{ item }">
       <span># {{ item.id }}</span>
     </template>
@@ -59,6 +81,7 @@ const headers = [
 const { formatDate, cleanId, currencyFormat } = format();
 // بيانات المنتجات كمثال
 const items = ref([]);
+const loading = ref(true);
 
 // تعديل أو إضافة منتج
 const mode = ref("create"); // create أو edit
@@ -115,6 +138,7 @@ const ConfirmDelete = async () => {
 };
 
 const fetchProducts = async () => {
+  loading.value = true;
   try {
     await axiosClient.get("/admin/products").then((response) => {
       products.value = response.data.products;
@@ -129,6 +153,8 @@ const fetchProducts = async () => {
       });
     });
   } catch (e) {
+  } finally {
+    loading.value = false;
   }
 };
 

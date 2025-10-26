@@ -14,7 +14,7 @@ defineProps({
     </span>
     <ul>
       <li v-for="item in data.items" :key="item"
-        class="text-gray-500 mx-auto sm:mx-0 dark:text-gray-400 block my-[6px] relative w-fit cursor-pointer font-[400] text-[14px] transition-colors hover:text-blue-700 dark:hover:text-blue-400">
+        class="text-gray-600 mx-auto sm:mx-0 dark:text-gray-400 block my-[6px] relative w-fit cursor-pointer font-[400] text-[14px] transition-colors hover:text-blue-700 dark:hover:text-blue-400">
         {{ item.text }}
       </li>
     </ul>

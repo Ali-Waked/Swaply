@@ -1,7 +1,27 @@
 <template>
   <HeaderPage title="المتاجر" :is-has-add-button="false" />
 
-  <GenericDataTable :headers="headers" :items="items">
+  <div v-if="loading" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-200">
+    <div class="space-y-4">
+      <div class="grid grid-cols-8 gap-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+        <div v-for="i in 8" :key="i" class="h-5 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+      </div>
+      <div v-for="i in 8" :key="i" class="grid grid-cols-8 gap-4 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="h-16 w-16 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        <div class="flex gap-2 justify-center">
+          <div class="h-8 w-20 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <GenericDataTable v-else :headers="headers" :items="items">
     <template #id="{ item }">
       <span># {{ item.id }}</span>
     </template>
@@ -80,6 +100,7 @@ const translateStatus = (status) => {
 
 const items = ref([]);
 const stores = ref([]);
+const loading = ref(true);
 const { formatDate, cleanId } = format();
 const emitter = inject("emitter");
 
@@ -112,6 +133,7 @@ const toggleStatus = async (store) => {
 };
 
 const fetchStores = async () => {
+  loading.value = true;
   try {
     const response = await axiosClient.get("/admin/stores");
     stores.value = response.data.data;
@@ -128,6 +150,8 @@ const fetchStores = async () => {
       };
     });
   } catch (e) {
+  } finally {
+    loading.value = false;
   }
 };
 

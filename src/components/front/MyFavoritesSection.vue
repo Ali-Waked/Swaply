@@ -74,8 +74,8 @@ const handlePriceUpdate = (event) => {
 watch(
   () => paginations.current_page,
   async (newPage) => {
-    if (newPage !== 1) {
-await fetchProducts(newPage);
+    if (newPage) {
+      await fetchProducts(newPage);
     }
   }
 );

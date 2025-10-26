@@ -124,9 +124,14 @@ onMounted(async () => {
         label="اختر المدينة التي تقيم فيها" />
     </SingleFavoriteStraucture>
     <div class="mt-4">
-      <p class="text-red-600 font-[500] text-[16px] mb-3 block">منطقة خطر</p>
+      <p
+        class="text-red-700 bg-red-100 dark:text-red-200 dark:bg-red-800/70 font-[500] text-[16px] mb-3 flex w-fit px-3 py-1 rounded-full"
+        
+      >
+        منطقة خطر
+      </p>
       <button @click="deleteDialog.dialog = true"
-        class="font-[500] text-white bg-red-600 hover:bg-red-700 transition-opacity rounded-lg w-full block py-3">
+        class="font-[500] text-white bg-red-600 hover:bg-red-600/90 transition-opacity rounded-lg w-full block py-3">
         حذف الحساب
       </button>
       <p class="text-[12px] text-gray-500 mt-2 text-center font-[400]">
