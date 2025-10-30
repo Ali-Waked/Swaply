@@ -47,7 +47,7 @@ const letterImage = computed(() => {
               <span dir="ltr">{{ (user?.phone) || "غير مسجل" }}</span>
             </span>
             <span v-if="user?.is_trusty"
-              class="text-[9px] bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 py-[6px] px-[8px] rounded-md flex items-center gap-1 ml-2 w-fit justify-center mr-2">
+              class="text-[9px] bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 py-[6px] px-[8px] rounded-2xl flex items-center gap-1 ml-2 w-fit justify-center mr-2">
               <ShieldCheckIcon class="w-3 h-3" />
               <span>موثوق</span>
             </span>

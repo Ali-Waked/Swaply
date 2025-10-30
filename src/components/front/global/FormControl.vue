@@ -11,13 +11,13 @@
 
     <div v-if="type === 'textarea'">
       <textarea v-model="modelValue" v-bind="$attrs" :placeholder="placeholder" :required="isRequired"
-        class="focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 h-[90px]"></textarea>
+        class="border-gray-300 border-1 dark:border-gray-600 focus:border-gray-500 focus:ring-gray-500 rounded-md resize-none bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 h-20"></textarea>
       <ErrorInputText :error-message="errorMessage" />
     </div>
 
     <div v-else class="relative">
       <input v-model="modelValue" v-bind="$attrs" :type="type" :placeholder="placeholder" :required="isRequired"
-        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-normal pr-3" :class="{
+        class="block w-full no-spinner rounded-md placeholder:text-[14px] placeholder:font-normal pr-3 border-gray-300 border-1 dark:border-gray-600" :class="{
           'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 dark:bg-gray-700 placeholder:text-red-600':
             errorMessage,
           'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':

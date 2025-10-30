@@ -137,7 +137,7 @@ const selectedAvailability = computed({
   <Disclosure>
     <template #default="{ open }">
       <DisclosureButton
-        class="w-full px-4 border py-2 text-right border-gray-500 text-[14px] text-gray-500 font-normal focus:border-gray-500 dark:text-white focus:ring-gray-500 bg-white dark:bg-gray-700 rounded-md flex justify-between items-center">
+        class="w-full px-4 border py-2 text-right border-gray-300 text-[14px] text-gray-500 font-normal dark:text-white  focus:border-gray-500 bg-white dark:bg-gray-700 rounded-md flex justify-between items-center">
         <span>إضافة تفاصيل</span>
         <span>
           <ChevronUpIcon v-if="open" class="w-5 h-5 text-gray-500 dark:text-gray-300" />

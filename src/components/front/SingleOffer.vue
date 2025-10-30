@@ -79,14 +79,18 @@ const requestStatus = computed(() => {
           <UserIcon class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </div>
         <div class="">
-          <span class="font-medium flex items-center">
-            <span class="text-gray-800 dark:text-white">{{
+          <span class="font-normal flex items-center">
+            <span class="text-lg text-gray-800 dark:text-white">{{
               item.user.name
             }}</span>
             <span v-if="item.user.is_trusty"
-              class="text-xs border border-gray-200 dark:border-green-600 py-1.5 px-2 bg-green-100/90 dark:bg-green-900/50 rounded-full flex items-center  ml-2 gap-1 w-fit justify-center mr-2">
-              <CheckIcon class="w-3 h-3 text-gray-600 dark:text-green-600" />
-              <span class="text-gray-600 dark:text-green-600 leading-none">موثوق</span>
+              class=" dark:border-green-600 py-1.5 px-2 bg-green-100/90 dark:bg-green-900/50 rounded-full flex items-center  ml-2 gap-1 w-fit justify-center mr-2">
+              <CheckIcon class="w-3 h-3 text-gray-600 dark:text-green-600 hidden" />
+              <span class="
+              text-xs
+              text-green-700
+              dark:text-green-500 
+               leading-none">موثوق</span>
             </span>
           </span>
           <div class="degree text-gray-400 dark:text-gray-300 text-xs font-normal">
@@ -102,14 +106,14 @@ const requestStatus = computed(() => {
     <div class="flex items-center justify-center gap-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
       <div class="flex flex-col items-center">
         <span class="font-normal text-[14px] text-gray-500 dark:text-gray-300">يعرض</span>
-        <span class="text-green-600 dark:text-green-400 font-normal">{{
+        <span class="text-teal-700 dark:text-green-400 font-normal">{{
           item.offer_item
         }}</span>
       </div>
       <ArrowsRightLeftIcon class="w-5 h-5 text-gray-600 dark:text-gray-300" />
       <div class="flex flex-col items-center">
         <span class="font-normal text-[14px] text-gray-500 dark:text-gray-300">يريد</span>
-        <span class="text-blue-600 dark:text-blue-400 font-normal">{{
+        <span class="text-blue-600 dark:text-blue-300 dark:saturate-200 font-normal">{{
           item.request_item
         }}</span>
       </div>
@@ -195,7 +199,7 @@ const requestStatus = computed(() => {
                   </span>
                 </span>
                 <span class="value text-black font-normal text-[14px] dark:text-white">
-                  {{ item.contact_method ?? "غير معروف" }}
+                  {{ item.contact_method ?? "-" }}
                 </span>
               </div>
               <div class="flex flex-1 gap-2 items-center">
@@ -228,26 +232,26 @@ const requestStatus = computed(() => {
               <div class="flex-1">
                 <span class="text-gray-500 text-[14px] font-normal block dark:text-gray-400">الحالة:</span>
                 <span class="text-green-700 text-[14px] font-medium block dark:text-green-300">{{ item.offer_status ??
-                  "غير معروف" }}</span>
+                  "-" }}</span>
               </div>
               <div class="flex-1">
                 <span class="text-gray-500 text-[14px] font-normal block dark:text-gray-400">الكمية:</span>
                 <span class="text-green-700 text-[14px] font-medium block dark:text-green-300">
-                  {{ item.quantity ?? "غير معروف" }}</span>
+                  {{ item.quantity ?? "-" }}</span>
               </div>
             </div>
             <div class="flex items-center jsutify-between mb-2">
               <div class="flex-1">
                 <span class="text-gray-500 text-[14px] font-normal block dark:text-gray-400">التوفر:</span>
                 <span class="text-green-700 text-[14px] font-medium block dark:text-green-300">{{ item.availability ??
-                  "غير معروف" }}</span>
+                  "-" }}</span>
               </div>
             </div>
             <div class="flex items-center jsutify-between">
               <div class="flex-1">
                 <span class="text-gray-500 text-[14px] font-normal block dark:text-gray-400">تفضيلات التبادل:</span>
                 <span class="text-green-700 text-[14px] font-medium block dark:text-green-300">{{
-                  item.exchange_preferences ?? "غير معروف" }}</span>
+                  item.exchange_preferences ?? "-" }}</span>
               </div>
             </div>
           </div>

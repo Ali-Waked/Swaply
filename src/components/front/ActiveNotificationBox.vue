@@ -33,7 +33,8 @@ const updateStatus = async () => {
     emit("update:isActive", status);
     emitter.emit("showNotificationAlert", [
       "success",
-      `تم ${status == "active" ? "تنشيط" : "ايقاف"} بنجاح`,
+      `تم ${status == "active" ? "تنشيط" : "إيقاف"} التنبيه
+  بنجاح`,
     ]);
   }
 };
