@@ -59,7 +59,7 @@ onMounted(async () => {
     <Combobox v-model="search" @keyup.enter="searchFor">
       <div class="relative mt-1">
         <ComboboxInput
-          class="border-blue-200 focus:border-blue-400 py-3 bg-transparent text-gray-900 bg-white dark:text-white rounded-xl  dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pr-12"
+          class="border-blue-200 dark:border-blue-200/30 focus:border-blue-400 py-3 bg-transparent text-gray-900 bg-white dark:text-white rounded-xl  dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 pr-12"
           @change="query = $event.target.value" placeholder="ابحث عن اي منتج... (خبز, ارز, حليب)" />
         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
           <MagnifyingGlassIcon class="h-5 w-5 text-gray-400 dark:text-gray-500" />
@@ -91,7 +91,7 @@ onMounted(async () => {
       </div>
     </Combobox>
     <div class="suggestion flex items-center mt-2">
-      <span class="text-[12px] text-gray-400 font-[400] mx-4">مقترح:</span>
+      <span class="text-[12px] text-gray-400 font-normal mx-4">مقترح:</span>
       <ul class="flex items-center gap-1">
         <li
           class="text-blue-800 bg-blue-200 dark:bg-blue-600/30 dark:text-blue-400 text-[12px] block py-1 px-3 cursor-pointer hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all rounded-lg"

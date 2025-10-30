@@ -126,7 +126,7 @@ const getLabelById = (id) => {
         <ArrowRightIcon class="w-4 h-4 cursor-pointer hidden lg:block text-black dark:text-white"
           @click="$router.push({ name: 'home' })" />
       </div>
-      <p class="text-black dark:text-white font-[600] text-[16px] sm:text-[20px]">
+      <p class="text-black dark:text-white font-semibold text-[16px] sm:text-[20px]">
         لوحة التحكم - {{ sectionTitle }}
       </p>
     </div>
@@ -141,7 +141,7 @@ const getLabelById = (id) => {
       }">
       <ul class="relative">
         <li v-for="link in links" :key="link.group_name" class="mb-4">
-          <p class="group-name text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-3">
+          <p class="group-name text-gray-600 dark:text-gray-300 font-normal text-[14px] mb-3">
             {{ link.group_name }}
           </p>
           <ul>
@@ -168,7 +168,7 @@ const getLabelById = (id) => {
         justify-center
         gap-3
         py-2
-        font-[500]
+        font-medium
         rounded-lg
         text-[14px]
         mt-8
@@ -237,6 +237,5 @@ const getLabelById = (id) => {
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
   direction: rtl;
-  /* يحرك scrollbar للجهة الأخرى */
 }
 </style>

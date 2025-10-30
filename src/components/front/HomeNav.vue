@@ -117,7 +117,7 @@ const changeTheme = (value) => {
         gap-2
         py-2
         px-4
-        font-[400]
+        font-normal
         rounded-lg
         text-[14px]
         bg-red-600
@@ -141,7 +141,7 @@ const changeTheme = (value) => {
         rounded-lg
         px-4
         py-2
-        font-[400]
+        font-normal
          text-white
         border-red-600
         ring-1

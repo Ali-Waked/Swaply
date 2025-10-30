@@ -75,7 +75,7 @@ onUnmounted(() => {
       <template #icon>
         <BellIcon class="w-6 h-6 text-black dark:text-white" />
         <span v-if="lastNotificationUnreadCount > 0"
-          class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-[500]">{{
+          class="absolute -top-[2px] -right-[2px] bg-black dark:bg-blue-700 dark:text-white rounded-lg text-white w-4 h-4 flex items-center justify-center text-[10px] font-medium">{{
             lastNotificationUnreadCount }}</span>
       </template>
     </single-button-group>

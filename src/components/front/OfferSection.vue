@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, reactive, ref, watch, inject } from "vue";
 import ShowProductDialog from "./ShowProductDialog.vue";
-import ProductsSwaperDispaly from "./global/ProductsSwaperDispaly.vue";
+import ProductsSwiperDisplay from "./global/ProductsSwiperDisplay.vue";
 import ShowAllProductButton from "./global/ShowAllProductButton.vue";
 import TitleProductsSection from "./global/TitleProductsSection.vue";
 import ProductGridDisplay from "./global/ProductGridDisplay.vue";
@@ -179,13 +179,13 @@ onUnmounted(() => {
     </template>
   </TitleProductsSection>
   <div class="" v-if="loading || data?.data?.length">
-    <ProductsSwaperDispaly v-if="!showAll" @showProduct="showProduct($event)" :products="data.data" :loading="loading" />
+    <ProductsSwiperDisplay v-if="!showAll" @showProduct="showProduct($event)" :products="data.data" :loading="loading" />
     <ProductGridDisplay :products="data.data" v-model="data.current_page" :last-page="data.last_page"
       @showProduct="showProduct($event)" :loading="loading" v-else />
   </div>
   <div class="flex justify-center items-center h-24" v-else-if="!loading && !data?.data?.length">
     <div>
-      <span class="text-gray-700 dark:text-gray-300 font-[400] block mb-4">لا توجد الآن أي عروض</span>
+      <span class="text-gray-700 dark:text-gray-300 font-normal block mb-4">لا توجد الآن أي عروض</span>
     </div>
   </div>
   <ShowProductDialog v-model="showProductDialog.dialog" :product-id="+showProductDialog.product_id" />

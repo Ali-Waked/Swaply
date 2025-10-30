@@ -60,7 +60,7 @@ const searchFor = () => {
     <div class="relative mt-1">
       <!-- Input -->
       <ComboboxInput @change="query = $event.target.value"
-        class="focus:border-blue-400 py-3 bg-transparent text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+        class="focus:border-blue-400 py-3 bg-transparent text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400"
         :placeholder="placeholder" v-model="query" :display-value="(item) => item?.name || query" />
 
       <!-- Options -->

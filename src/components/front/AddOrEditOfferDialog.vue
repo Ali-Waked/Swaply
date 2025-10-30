@@ -25,21 +25,21 @@
           <DialogPanel
             class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
           <DialogTitle class="pt-6 mb-3">
-            <h3 class="title font-[500] text-[20px] text-black dark:text-white">
+            <h3 class="title font-medium text-[20px] text-black dark:text-white">
               {{ isEditPage ? "تعديل العرض" : "اضافة عرض" }}
             </h3>
-            <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300">
+            <p class="subtitle font-normal text-gray-600 mt-1 text-[14px] dark:text-gray-300">
               {{
                 isEditPage ? "تعديل تفاصيل العرض للمنتج" : "اضف عرض جديد لمنتجك"
               }}
-              <span class="underline font-[500]">{{ product.name }}</span>
+              <span class="underline font-medium">{{ product.name }}</span>
             </p>
           </DialogTitle>
           <form @submit.prevent="submit">
             <div class="mb-4">
-              <label class="block mb-1 font-[400] text-black dark:text-white">نوع الخصم</label>
+              <label class="block mb-1 font-normal text-black dark:text-white">نوع الخصم</label>
               <select v-model="discountType"
-                class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400] pr-8" :class="{
+                class="block w-full rounded-md placeholder:text-[14px] placeholder:font-normal pr-8" :class="{
                   'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
                     errors.discount_type,
                   'focus:border-gray-500 dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
@@ -60,7 +60,7 @@
               </template>
             </FormControl>
             <div>
-              <span class="font-[400]  text-black dark:text-white">الحالة:</span>
+              <span class="font-normal  text-black dark:text-white">الحالة:</span>
               <div class="flex justify-evenly items-center">
                 <div class="flex gap-1 items-center text-gray-700">
                   <input id="active" type="radio" v-model="is_active" :value="true" name="status" />
@@ -263,7 +263,6 @@ watch(
 );
 </script>
 <style scoped>
-/* Scrollbar للـ modal */
 ::-webkit-scrollbar {
   width: 6px;
 }

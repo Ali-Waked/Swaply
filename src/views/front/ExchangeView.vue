@@ -2,7 +2,7 @@
 import HeaderTitle from "../../components/front/global/HeaderTitle.vue";
 import MainButton from "../../components/front/global/MainButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
-import WoringAlert from "../../components/front/global/WoringAlert.vue";
+import WarningAlert from "../../components/front/global/WarningAlert.vue";
 import { inject, onMounted, reactive, ref, watch } from "vue";
 import TradeDialog from "../../components/front/TradeDialog.vue";
 import SingleOffer from "../../components/front/SingleOffer.vue";
@@ -179,12 +179,13 @@ onMounted(async () => {
         <PlusIcon class="h-5 w-5 stroke-2 ml-1" />
       </template>
     </MainButton>
-    <WoringAlert class="my-4" title="تنبيه أمني"
+    <WarningAlert class="my-4" title="تنبيه أمني"
       text="تاكد من لقاء الاشخاص في اماكن امنة. وتحقق من هوية الشخص و درجة الثقة قبل التبادل" />
-    <TradeDialog :model-value="isDialogOpen" @update:modelValue="(val) => (isDialogOpen = val)" :editData="editData" @success="fetchBarters" />
+    <TradeDialog :model-value="isDialogOpen" @update:modelValue="(val) => (isDialogOpen = val)" :editData="editData"
+      @success="fetchBarters" />
     <div class="offers">
       <div class="flex justify-between items-center">
-        <h5 class="title font-[500] text-[20px] text-black dark:text-white">
+        <h5 class="title font-medium text-[20px] text-black dark:text-white">
           العروض المتاحة
         </h5>
         <div
@@ -195,7 +196,7 @@ onMounted(async () => {
           </button>
           <span v-if="numberOfUnRedChat"
             class="text-white bg-red-600 text-[9px] w-5 h-5 rounded-full absolute -top-[7px] -right-2 flex justify-center items-center text-center p-1 text-wrap">{{
-            numberOfUnRedChat }}</span>
+              numberOfUnRedChat }}</span>
         </div>
       </div>
 
@@ -277,5 +278,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

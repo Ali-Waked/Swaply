@@ -149,10 +149,10 @@ const firstError = (field) => {
       <div class="icon">
         <KeyIcon class="w-28 mx-auto text-blue-600" />
       </div>
-      <span class="flex justify-center text-2xl font-[500] dark:text-white text-black mt-2 mb-1">استعادة كلمة
+      <span class="flex justify-center text-2xl font-medium dark:text-white text-black mt-2 mb-1">استعادة كلمة
         المرور</span>
       <span
-        class="flex justify-center text-center text-base font-[300] text-slate-500 dark:text-slate-300 mt-1 mb-4">ادخل
+        class="flex justify-center text-center text-base font-light text-slate-500 dark:text-slate-300 mt-1 mb-4">ادخل
         البريد الالكتروني أو رقم الهاتف المرتبط بحسابك لاستعادة كلمة
         المرور</span>
       <div
@@ -164,7 +164,7 @@ const firstError = (field) => {
       <div class="relative" dir="ltr">
         <div class="relative">
           <input :type="type" :placeholder="placeholderInput" v-model="emailOrPhone"
-            class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+            class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400"
             :class="{
               'pl-[35px]': type === 'text',
               'pl-[39px]': emailOrPhone !== '' && type === 'text',
@@ -182,7 +182,7 @@ const firstError = (field) => {
               errors.emailOrPhone ||
               firstError('email') ||
               firstError('phone'),
-            'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
+            'mt-[1px] text-[14px] dark:text-gray-400 font-normal text-gray-500':
               emailOrPhone === '',
             'text-black dark:text-white':
               emailOrPhone !== '' &&
@@ -192,7 +192,7 @@ const firstError = (field) => {
         </div>
         <ErrorInputText :error-message="errors.emailOrPhone || firstError('email') || firstError('phone')
           " />
-        <span v-if="forgotMessage" class="text-[14px] font-[400] text-green-600">{{ forgotMessage }}</span>
+        <span v-if="forgotMessage" class="text-[14px] font-normal text-green-600">{{ forgotMessage }}</span>
       </div>
       <MainButton type="submit" label="ارسال" class="mt-6 select-none" :style="{ opacity: loading ? 0.8 : 1 }"
         :class="{ 'pointer-events-none': loading }">

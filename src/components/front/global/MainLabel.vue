@@ -5,7 +5,7 @@ const props = defineProps({
 });
 </script>
 <template>
-  <label :for="id" class="block font-[400] mb-2 text-black dark:text-white">{{
+  <label :for="id" class="block font-normal mb-2 text-black dark:text-white">{{
     label
   }}</label>
 </template>

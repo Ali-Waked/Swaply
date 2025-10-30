@@ -31,17 +31,17 @@ const { getRelativeTime } = useFormats();
       isUrgent,
   }">
     <div class="flex justify-between items-center">
-      <span class="text-gray-800 dark:text-gray-200 font-[400]">{{
+      <span class="text-gray-800 dark:text-gray-200 font-normal">{{
         title
       }}</span>
       <span
-        class="bg-red-600 dark:bg-red-500 text-white inline-block px-4 py-1 rounded-md text-[12px] font-[500] cursor-default"
+        class="bg-red-600 dark:bg-red-500 text-white inline-block px-4 py-1 rounded-md text-[12px] font-medium cursor-default"
         v-if="isUrgent">
         عاجل
       </span>
     </div>
     <div class="flex items-center gap-1">
-      <p class="time text-[12px] font-[400] text-gray-500 dark:text-gray-300">
+      <p class="time text-[12px] font-normal text-gray-500 dark:text-gray-300">
         {{ getRelativeTime(time).replace("قبل", "منذ") }}
       </p>
       <span>

@@ -73,7 +73,7 @@ onMounted(async () => {
         <div class="relative mt-1">
           <!-- input -->
           <ComboboxInput
-            class="focus:border-gray-500 border-none py-3 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+            class="focus:border-gray-500 border-none py-3 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400"
             @change="query = $event.target.value" placeholder="اسم المنتج (مثل: بيض, رز, حليب)"
             :displayValue="(item) => item?.name" />
           <ComboboxOptions
@@ -120,7 +120,7 @@ onMounted(async () => {
 
       <div class="relative w-full">
         <span
-          class="absolute inset-y-0 right-4 flex items-center pl-3 -mt-1 text-gray-500 dark:text-gray-300 text-[24px] font-[400]"
+          class="absolute inset-y-0 right-4 flex items-center pl-3 -mt-1 text-gray-500 dark:text-gray-300 text-[24px] font-normal"
           :class="notification.price
             ? 'text-gray-900 dark:text-white'
             : 'text-gray-500 dark:text-gray-400'
@@ -129,7 +129,7 @@ onMounted(async () => {
         </span>
         <input type="number" min="0" v-model="notification.price"
           @input="e => { if (e.target.value < 0) e.target.value = 0; notification.price = e.target.value }"
-          class="no-spinner focus:border-gray-500 border-none py-3 pl-8 pr-9 flex-1 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+          class="no-spinner focus:border-gray-500 border-none py-3 pl-8 pr-9 flex-1 text-gray-900 dark:text-white focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400"
           placeholder="0" />
 
       </div>

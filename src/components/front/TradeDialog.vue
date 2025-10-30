@@ -285,7 +285,6 @@ const submit = async () => {
 
 
 <style scoped>
-/* Scrollbar للـ modal */
 ::-webkit-scrollbar {
   width: 6px;
 }

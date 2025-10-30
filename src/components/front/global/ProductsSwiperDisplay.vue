@@ -98,7 +98,6 @@ const { getRelativeTime } = useFormats();
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  /* margin-top: -24px !important; */
   font-size: 18px !important;
   font-weight: bold;
   color: white !important;

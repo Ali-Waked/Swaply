@@ -12,7 +12,7 @@ const usePrice = () => {
         rating: "بلا تقييم",
         message: "Insufficient market data to determine fair price.",
         style:
-          "text-gray-600 font-[400] bg-gray-50 dark:bg-gray-700 dark:text-gray-300",
+          "text-gray-600 font-normal bg-gray-50 dark:bg-gray-700 dark:text-gray-300",
       };
     }
 
@@ -31,15 +31,15 @@ const usePrice = () => {
     if (merchantPrice <= medianPrice) {
       rating = "عادل";
       style =
-        "text-yellow-700 font-[400] bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400";
+        "text-yellow-700 font-normal bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400";
     } else if (merchantPrice <= upperBound) {
       rating = "جيد";
       style =
-        "text-green-700 font-[400] bg-green-50 dark:bg-green-900/30 dark:text-green-400";
+        "text-green-700 font-normal bg-green-50 dark:bg-green-900/30 dark:text-green-400";
     } else {
       rating = "مرتفع";
       style =
-        "text-red-700 font-[400] bg-red-50 dark:bg-red-900/30 dark:text-red-400";
+        "text-red-700 font-normal bg-red-50 dark:bg-red-900/30 dark:text-red-400";
     }
     return { rating, message: "", style };
   };
@@ -49,23 +49,23 @@ const usePrice = () => {
       case 'best':
         return {
           rating: "عادل",
-          style: "text-yellow-700 font-[400] bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400"
+          style: "text-yellow-700 font-normal bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400"
         };
       case 'good':
         return {
           rating: "جيد", 
-          style: "text-green-700 font-[400] bg-green-50 dark:bg-green-900/30 dark:text-green-400"
+          style: "text-green-700 font-normal bg-green-50 dark:bg-green-900/30 dark:text-green-400"
         };
       case 'high':
         return {
           rating: "مرتفع",
-          style: "text-red-700 font-[400] bg-red-50 dark:bg-red-900/30 dark:text-red-400"
+          style: "text-red-700 font-normal bg-red-50 dark:bg-red-900/30 dark:text-red-400"
         };
       case 'no_rating':
       default:
         return {
           rating: "بلا تقييم",
-          style: "text-gray-600 font-[400] bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
+          style: "text-gray-600 font-normal bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
         };
     }
   };

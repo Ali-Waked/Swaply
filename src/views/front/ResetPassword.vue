@@ -75,13 +75,13 @@ const onSubmit = handleSubmit(async (values) => {
       <div class="icon">
         <LockClosedIcon class="w-28 mx-auto text-blue-600" />
       </div>
-      <span class="block text-xl font-[500] text-blue-600 mt-2 mb-4">
+      <span class="block text-xl font-medium text-blue-600 mt-2 mb-4">
         استعادة كلمة المرور
       </span>
 
       <div class="mb-4">
         <input v-model="password" v-bind="passwordAttrs" type="password" placeholder="كلمة المرور الجديدة"
-          class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
+          class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 pl-10"
           :class="{
             'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
               errors.password,
@@ -96,7 +96,7 @@ const onSubmit = handleSubmit(async (values) => {
       <!-- Confirm Password -->
       <div class="mb-4">
         <input v-model="confirmPassword" v-bind="confirmPasswordAttrs" type="password" placeholder="تأكيد كلمة المرور"
-          class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
+          class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 pl-10"
           :class="{
             'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
               errors.confirm_password,

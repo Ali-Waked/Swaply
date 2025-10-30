@@ -2,84 +2,74 @@
   <TransitionRoot :show="modelValue" as="template">
     <Dialog @close="closeDialog" class="relative z-[1000000000]">
       <!-- Overlay with transition -->
-      <TransitionChild
-        as="template"
-        enter="ease-out duration-200"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="ease-in duration-200"
-        leave-from="opacity-100"
-        leave-to="opacity-0">
+      <TransitionChild as="template" enter="ease-out duration-200" enter-from="opacity-0" enter-to="opacity-100"
+        leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
       </TransitionChild>
 
       <div class="fixed inset-0 flex items-center justify-center p-4">
-        <TransitionChild
-          as="template"
-          enter="ease-out duration-200"
-          enter-from="opacity-0 scale-95"
-          enter-to="opacity-100 scale-100"
-          leave="ease-in duration-200"
-          leave-from="opacity-100 scale-100"
+        <TransitionChild as="template" enter="ease-out duration-200" enter-from="opacity-0 scale-95"
+          enter-to="opacity-100 scale-100" leave="ease-in duration-200" leave-from="opacity-100 scale-100"
           leave-to="opacity-0 scale-95">
           <DialogPanel
             class="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg max-h-[90vh] overflow-y-auto relative">
-          <button type="button" tabindex="0" class="sr-only">focus</button>
-          <DialogTitle class="pt-6 mb-3">
-            <h3 class="title font-[500] text-[20px] text-black dark:text-white">
-              {{ isEditPage ? "تعديل المنتج" : "إضافة منتج" }}
-            </h3>
-            <p class="subtitle font-[400] text-gray-600 mt-1 text-[14px] dark:text-gray-300">
-              {{
-                isEditPage
-                  ? "قم بتعديل بيانات المنتج "
-                  : "أضف منتج جديد إلى مجموعة منتجاتك"
-              }}
-            </p>
-          </DialogTitle>
-          <form @submit.prevent="submit">
-            <ComboboxComponent v-model="selectedProduct" :items="availableProducts" placeholder="مثال: حليب" />
-            <ErrorInputText :error-message="(nameMeta.touched || submitCount > 0) ? nameError : ''" />
+            <button type="button" tabindex="0" class="sr-only">focus</button>
+            <DialogTitle class="pt-6 mb-3">
+              <h3 class="title font-medium text-[20px] text-black dark:text-white">
+                {{ isEditPage ? "تعديل المنتج" : "إضافة منتج" }}
+              </h3>
+              <p class="subtitle font-normal text-gray-600 mt-1 text-[14px] dark:text-gray-300">
+                {{
+                  isEditPage
+                    ? "قم بتعديل بيانات المنتج "
+                    : "أضف منتج جديد إلى مجموعة منتجاتك"
+                }}
+              </p>
+            </DialogTitle>
+            <form @submit.prevent="submit">
+              <ComboboxComponent v-model="selectedProduct" :items="availableProducts" placeholder="مثال: حليب" />
+              <ErrorInputText :error-message="(nameMeta.touched || submitCount > 0) ? nameError : ''" />
 
-            <!-- category (disabled auto) -->
-            <FormControl label="التصنيف" id="category" :value="categoryForProductSelected" disabled />
+              <!-- category (disabled auto) -->
+              <FormControl label="التصنيف" id="category" :value="categoryForProductSelected" disabled />
 
-            <FormControl label="سعر المنتج" type="number" id="product-price" class="bg-transparent" :value="price"
-              @input="price = $event.target.valueAsNumber" placeholder="100" />
+              <FormControl label="سعر المنتج" type="number" id="product-price" class="bg-transparent" :value="price"
+                @input="price = $event.target.valueAsNumber" placeholder="100" />
 
-            <ErrorInputText :error-message="(priceMeta.touched || submitCount > 0) ? priceError : ''" />
+              <ErrorInputText :error-message="(priceMeta.touched || submitCount > 0) ? priceError : ''" />
 
-            <!-- description -->
-            <FormControl label="الوصف" id="الوصف" :value="description" @input="description = $event.target.value"
-              class="bg-transparent" placeholder="تفاصيل اضافية عن المنتج" type="textarea" />
-            <ErrorInputText :error-message="(descriptionMeta.touched || submitCount > 0) ? descriptionError : ''" />
+              <!-- description -->
+              <FormControl label="الوصف" id="الوصف" :value="description" @input="description = $event.target.value"
+                class="bg-transparent" placeholder="تفاصيل اضافية عن المنتج" type="textarea" />
+              <ErrorInputText :error-message="(descriptionMeta.touched || submitCount > 0) ? descriptionError : ''" />
 
-            <!-- image -->
-            <div class="mb-3">
-              <label for="file_image"
-                class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md">
-                <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
-                <span class="font-[400] dark:text-white">{{
-                  imagePreview ? "تعديل الصورة" : "اضافة صورة"
-                }}</span>
-              </label>
-              <input type="file" id="file_image" hidden @change="onFileChange" />
-              <div v-if="imagePreview" class="mt-2">
-                <img :src="imagePreview" class="w-32 h-32 object-contain rounded-md bg-gray-100 dark:bg-gray-700 p-1" />
+              <!-- image -->
+              <div class="mb-3">
+                <label for="file_image"
+                  class="flex items-center gap-2 cursor-pointer justify-center border border-gray-300 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:border-gray-500 active:ring-gray-500 rounded-md">
+                  <CameraIcon class="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                  <span class="font-normal dark:text-white">{{
+                    imagePreview ? "تعديل الصورة" : "اضافة صورة"
+                    }}</span>
+                </label>
+                <input type="file" id="file_image" hidden @change="onFileChange" />
+                <div v-if="imagePreview" class="mt-2">
+                  <img :src="imagePreview"
+                    class="w-32 h-32 object-contain rounded-md bg-gray-100 dark:bg-gray-700 p-1" />
+                </div>
+                <ErrorInputText :error-message="(imageMeta.touched || submitCount > 0) ? imageError : ''" />
               </div>
-              <ErrorInputText :error-message="(imageMeta.touched || submitCount > 0) ? imageError : ''" />
-            </div>
 
-            <MainButton :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'" class="bg-gray-800 hover:bg-gray-800/95"
-              type="submit" />
-          </form>
-          <!-- زر الاغلاق -->
-          <div class="absolute top-[20px] right-[20px]">
-            <span
-              class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer">
-              <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
-            </span>
-          </div>
+              <MainButton :label="isEditPage ? 'تعديل المنتج' : 'نشر المنتج'" class="bg-gray-800 hover:bg-gray-800/95"
+                type="submit" />
+            </form>
+            <!-- زر الاغلاق -->
+            <div class="absolute top-[20px] right-[20px]">
+              <span
+                class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all cursor-pointer">
+                <XMarkIcon class="h-5 w-5 stroke-[4px]" @click="closeDialog()" />
+              </span>
+            </div>
           </DialogPanel>
         </TransitionChild>
       </div>
@@ -252,7 +242,6 @@ watch(
 );
 </script>
 <style scoped>
-/* Scrollbar للـ modal */
 ::-webkit-scrollbar {
   width: 6px;
 }

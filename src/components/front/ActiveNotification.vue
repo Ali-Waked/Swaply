@@ -27,7 +27,7 @@ onMounted(async () => {
       </template>
     </template>
     <template v-else>
-      <p class="flex justify-center items-center h-[90%] text-sm font-[400] text-gray-800 dark:text-gray-200">
+      <p class="flex justify-center items-center h-[90%] text-sm font-normal text-gray-800 dark:text-gray-200">
         لم تقم حتى الآن بإضافة أي تنبيه
       </p>
     </template>
@@ -48,7 +48,6 @@ onMounted(async () => {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Firefox */
 .overflow-y-auto {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;

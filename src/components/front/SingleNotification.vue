@@ -55,10 +55,10 @@ watch(
       </div>
       <div>
         <div>
-          <span class="text-gray-900 dark:text-white font-[500] text-[16px] mb-1 block">
+          <span class="text-gray-900 dark:text-white font-medium text-[16px] mb-1 block">
             {{ title }}
           </span>
-          <span class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] mb-2 block">
+          <span class="text-gray-600 dark:text-gray-300 font-normal text-[14px] mb-2 block">
             {{ description }}
           </span>
         </div>

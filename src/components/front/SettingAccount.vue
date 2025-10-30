@@ -1,6 +1,6 @@
 <script setup>
 import { inject, onMounted, reactive, ref } from "vue";
-import SecandryTitle from "./global/SecandryTitle.vue";
+import SecondaryTitle from "./global/SecondaryTitle.vue";
 import SelectListBox from "./global/SelectListBox.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
 import { ShoppingBagIcon, UserIcon } from "@heroicons/vue/24/outline";
@@ -205,7 +205,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SecandryTitle label="اعدادات الحساب" class="mb-3" />
+  <SecondaryTitle label="اعدادات الحساب" class="mb-3" />
   <div class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
     <template v-for="item in items" :key="item.label">
       <SingleSettingAccountBox :label="item.label" v-model:value="item.value" :id="item.id" class="dark:text-white"
@@ -213,7 +213,7 @@ onMounted(async () => {
     </template>
     <div v-if="user?.role != 'admin'"
       class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700">
-      <span class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block">
+      <span class="text-gray-600 dark:text-gray-300 font-medium text-[14px] mb-3 block">
         نوع الحساب
       </span>
       <div class="flex justify-between items-center">
@@ -223,7 +223,7 @@ onMounted(async () => {
             <UserIcon class="w-5" v-if="selectedAccountType.name === 'مستهلك'" />
             <ShoppingBagIcon class="w-5 h-5" v-else />
           </span>
-          <span class="text-[14px] font-[400] text-gray-600 dark:text-gray-300">
+          <span class="text-[14px] font-normal text-gray-600 dark:text-gray-300">
             {{ selectedAccountType.label }}
           </span>
         </div>
@@ -236,7 +236,7 @@ onMounted(async () => {
       </template>
       <div class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700">
         <div class="flex flex-col gap-2">
-          <span class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block">
+          <span class="text-gray-600 dark:text-gray-300 font-medium text-[14px] mb-3 block">
             موقع المتجر
           </span>
           <SelectListBox class="w-full" v-model="city" :options="cities" label="اختر المدينة التي بها متجرك " />
@@ -245,11 +245,11 @@ onMounted(async () => {
       <div class="last-of-type:border-none border-b last-of-type:p-0 pb-3 mt-4 first-of-type:mt-0 dark:border-gray-700">
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
-            <span class="text-gray-600 dark:text-gray-300 font-[500] text-[14px] mb-3 block">
+            <span class="text-gray-600 dark:text-gray-300 font-medium text-[14px] mb-3 block">
               صورة المتجر
             </span>
             <label for="store_image"
-              class="w-fit border rounded-lg py-2 px-4 text-[12px] font-[500] transition cursor-pointer border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+              class="w-fit border rounded-lg py-2 px-4 text-[12px] font-medium transition cursor-pointer border-gray-200 hover:bg-gray-100 focus:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
               {{
                 user?.store?.image || previewUrl ? "تعديل الصورة" : "اضافة صورة"
               }}

@@ -229,7 +229,7 @@ window.location.href = `${baseURL}/auth/google`;
           <div class="relative">
             <input type="text" id="nameinput" pattern="[\u0600-\u06FF\s]*" title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاول" v-model="first_name"
-              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]" :class="{
+              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-normal" :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/10 transition duration-300 placeholder:text-red-500':
                   displayedErrors.first_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
@@ -240,7 +240,7 @@ window.location.href = `${baseURL}/auth/google`;
           <div class="relative">
             <input type="text" id="nameinput2" pattern="[\u0600-\u06FF\s]*" title="الرجاء إدخال أحرف عربية فقط"
               placeholder="الاسم الاخير" v-model="last_name"
-              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-[400]" :class="{
+              class="block w-full rounded-md placeholder:text-[14px] placeholder:font-normal" :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600  bg-red-100/10 transition duration-300 placeholder:text-red-500':
                   displayedErrors.last_name,
                 'focus:border-gray-500 border-none dark:text-white focus:ring-gray-500  bg-gray-100 dark:bg-gray-700 dark:placeholder-gray-400':
@@ -263,7 +263,7 @@ window.location.href = `${baseURL}/auth/google`;
         <div class="relative" dir="ltr">
           <div class="relative">
             <input id="emailOrPhoneInput" :type="type" :placeholder="placeholderInput" v-model="emailOrPhone"
-              class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400"
+              class="no-spinner focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400"
               :class="{
                 'pl-[35px]': type === 'text',
                 'pl-[39px]': emailOrPhone !== '' && type === 'text',
@@ -281,7 +281,7 @@ window.location.href = `${baseURL}/auth/google`;
                 displayedErrors.emailOrPhone ||
                 firstError('email') ||
                 firstError('phone'),
-              'mt-[1px] text-[14px] dark:text-gray-400 font-[400] text-gray-500':
+              'mt-[1px] text-[14px] dark:text-gray-400 font-normal text-gray-500':
                 emailOrPhone === '',
               'text-black dark:text-white':
                 emailOrPhone !== '' &&
@@ -298,7 +298,7 @@ window.location.href = `${baseURL}/auth/google`;
           <div class="relative w-full mt-3">
             <input id="passwordInput" :type="showPassword ? 'text' : 'password'" v-model="password"
               placeholder="كلمة المرور"
-              class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] dark:placeholder-gray-400 pl-10"
+              class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal dark:placeholder-gray-400 pl-10"
               :class="{
                 'border-red-600 focus:border-red-500 dark:text-white focus:ring-red-600 bg-red-100/70 placeholder:text-red-500':
                   displayedErrors.password,
@@ -333,7 +333,7 @@ window.location.href = `${baseURL}/auth/google`;
         <!-- أو -->
         <div class="relative mt-4">
           <span
-            class="font-[400] text-[16px] text-gray-600 dark:text-gray-300 relative z-40 -top-[4px] w-full flex items-center justify-center">أو</span>
+            class="font-normal text-[16px] text-gray-600 dark:text-gray-300 relative z-40 -top-[4px] w-full flex items-center justify-center">أو</span>
           <span
             class="absolute w-[30px] h-[4px] bg-white dark:bg-gray-900 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"></span>
           <span
@@ -341,9 +341,9 @@ window.location.href = `${baseURL}/auth/google`;
         </div>
 
         <button @click="continueWithGoogle"
-          class="continue-with-google border mt-3 border-gray-200 dark:border-gray-700 flex items-center justify-center w-full py-3 gap-2 rounded-md font-[400] text-gray-800 dark:text-gray-200 transition-all hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-500">
-          <MdiIcon :icon="mdiGoogle" type="button" class="w-6 h-6 font-[500]" stroke-width="100" />
-          <span class="text-[17px] font-[500]">المتابعة مع Google</span>
+          class="continue-with-google border mt-3 border-gray-200 dark:border-gray-700 flex items-center justify-center w-full py-3 gap-2 rounded-md font-normal text-gray-800 dark:text-gray-200 transition-all hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-500">
+          <MdiIcon :icon="mdiGoogle" type="button" class="w-6 h-6 font-medium" stroke-width="100" />
+          <span class="text-[17px] font-medium">المتابعة مع Google</span>
         </button>
 
         <!-- شروط الخدمة -->

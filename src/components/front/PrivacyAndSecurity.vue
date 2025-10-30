@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref, watch, inject } from "vue";
-import SecandryTitle from "./global/SecandryTitle.vue";
+import SecondaryTitle from "./global/SecondaryTitle.vue";
 import SingleSettingAccountBox from "./SingleSettingAccountBox.vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
-import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
+import SingleFavoriteStructure from "./SingleFavoriteStructure.vue";
 import ConfirmDeleteDialog from "../dashboard/global/ConfirmDeleteDialog.vue";
 import { useAuthStore } from "../../stores/auth/auth";
 import { storeToRefs } from "pinia";
@@ -111,30 +111,30 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SecandryTitle label="الخصوصية و الامان" class="mb-3" />
+  <SecondaryTitle label="الخصوصية و الامان" class="mb-3" />
   <div class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
     <SingleSettingAccountBox label="كلمة المرور" v-model:value="password" input-type="password" id="password"
       @update="openConfirmPasswordDialog" />
-    <SingleFavoriteStraucture title="مشاركة الموقع" description="السماح بمشاركة موقعك">
+    <SingleFavoriteStructure title="مشاركة الموقع" description="السماح بمشاركة موقعك">
       <template #action>
         <BaseSwitch :model-value="!!user?.share_location"
           @update:modelValue="(val) => { if (user) user.share_location = val ? 1 : 0 }" />
       </template>
       <SelectListBox v-if="!!user?.share_location && user" class="w-full" v-model="user.city" :options="cities"
         label="اختر المدينة التي تقيم فيها" />
-    </SingleFavoriteStraucture>
+    </SingleFavoriteStructure>
     <div class="mt-4">
       <p
-        class="text-red-700 bg-red-100 dark:text-red-200 dark:bg-red-800/70 font-[500] text-[16px] mb-3 flex w-fit px-3 py-1 rounded-full"
+        class="text-red-700 bg-red-100 dark:text-red-200 dark:bg-red-800/70 font-medium text-[16px] mb-3 flex w-fit px-3 py-1 rounded-full"
         
       >
         منطقة خطر
       </p>
       <button @click="deleteDialog.dialog = true"
-        class="font-[500] text-white bg-red-600 hover:bg-red-600/90 transition-opacity rounded-lg w-full block py-3">
+        class="font-medium text-white bg-red-600 hover:bg-red-600/90 transition-opacity rounded-lg w-full block py-3">
         حذف الحساب
       </button>
-      <p class="text-[12px] text-gray-500 mt-2 text-center font-[400]">
+      <p class="text-[12px] text-gray-500 dark:text-gray-300 mt-2 text-center font-normal">
         حذف الحساب سوف يؤدي الي فقدان جميع البيانات بشكل نهائي
       </p>
     </div>
@@ -145,7 +145,7 @@ onMounted(async () => {
   <ConfirmDeleteDialog v-model="currentPasswordDialog" title="تأكيد كلمة المرور"
     message="يرجى إدخال كلمة المرور الحالية لتأكيد التغيير." button-label="تأكيد" @confirm="update">
     <input type="password" v-model="currentPassword"
-      class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-[500] bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right"
+      class="rounded-md w-full p-[6px] block placeholder:text-[14px] font-medium bg-gray-100 text-blue-950 focus:border-gray-500 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400 text-right"
       dir="ltr" placeholder="كلمة المرور" />
   </ConfirmDeleteDialog>
 </template>

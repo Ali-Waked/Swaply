@@ -93,7 +93,7 @@ const logout = async () => {
           <Bars3Icon class="w-6" />
         </div>
         <span
-          class="text-blue-700 dark:text-blue-400 font-[500] text-[20px] cursor-pointer transition-colors hover:text-blue-800 dark:hover:text-blue-300"
+          class="text-blue-700 dark:text-blue-400 font-medium text-[20px] cursor-pointer transition-colors hover:text-blue-800 dark:hover:text-blue-300"
           @click="router.push({ name: 'dashboard' })">
           لوحة التحكم
         </span>
@@ -102,7 +102,7 @@ const logout = async () => {
         flex
         items-center
         gap-1
-        font-[500]
+        font-medium
         text-[14px]
         border
         rounded-md
@@ -133,11 +133,11 @@ const logout = async () => {
         '-right-full': !sideOpen,
       }">
       <li
-        class="title text-blue-700 dark:text-blue-300 text-[20px] font-[500] border-b border-gray-100 dark:border-gray-700 mt-8 text-center pb-6 block">
+        class="title text-blue-700 dark:text-blue-300 text-[20px] font-medium border-b border-gray-100 dark:border-gray-700 mt-8 text-center pb-6 block">
         لوحة التحكم
       </li>
       <li v-for="link in links" :key="link.link_name"
-        class="link relative px-3 py-4 flex gap-3 font-[400] items-center cursor-pointer text-gray-600 dark:text-gray-300 transition-all duration-300 hover:text-gray-800 dark:hover:text-white border-b border-gray-200 dark:border-gray-700 last-of-type:border-none"
+        class="link relative px-3 py-4 flex gap-3 font-normal items-center cursor-pointer text-gray-600 dark:text-gray-300 transition-all duration-300 hover:text-gray-800 dark:hover:text-white border-b border-gray-200 dark:border-gray-700 last-of-type:border-none"
         :class="{
           'bg-blue-500 text-white dark:bg-blue-700 dark:text-white hover:text-white':
             router.currentRoute.value.name == link.link_name,

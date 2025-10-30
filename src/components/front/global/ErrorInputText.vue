@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <small class="text-red-600 font-[400] opacity" dir="rtl" v-if="errorMessage">{{
+  <small class="text-red-600 font-normal opacity" dir="rtl" v-if="errorMessage">{{
     errorMessage
   }}</small>
 </template>

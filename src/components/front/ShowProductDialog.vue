@@ -70,7 +70,7 @@
             <!-- Actual Content -->
             <div v-else>
               <DialogTitle class="mb-3 px-6 pt-12 pb-1">
-                <h3 class="title font-[500] text-[24px] text-gray-800 dark:text-white">
+                <h3 class="title font-medium text-[24px] text-gray-800 dark:text-white">
                   تفاصيل المنتج
                 </h3>
               </DialogTitle>
@@ -84,7 +84,7 @@
               <div class="p-6 pt-5">
                 <!-- الاسم والسعر -->
                 <div
-                  class="flex items-start justify-between font-[400] text-[24px] text-gray-800 dark:text-gray-100 mb-1">
+                  class="flex items-start justify-between font-normal text-[24px] text-gray-800 dark:text-gray-100 mb-1">
                   <span class="name">{{ product.description }}</span>
                   <div>
                     <span class="old_price line-through text-sm inline-block ml-1"
@@ -124,7 +124,7 @@
                 <!-- التقييم -->
                 <div class="flex justify-end mt-1 items-center">
                   <span class="flex items-center gap-2">
-                    <span class="font-[400] text-gray-800 dark:text-gray-100 text-[28px]">
+                    <span class="font-normal text-gray-800 dark:text-gray-100 text-[28px]">
                       {{ product.rating }}
                     </span>
                     <StarIcon class="text-amber-400 w-8 h-8" />
@@ -136,10 +136,10 @@
 
                 <!-- المسافة -->
                 <div>
-                  <span class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2">
+                  <span class="text-gray-800 dark:text-gray-100 font-normal block text-base mt-2">
                     المسافة
                   </span>
-                  <span class="text-gray-600 dark:text-gray-300 font-[300] flex items-center gap-1">
+                  <span class="text-gray-600 dark:text-gray-300 font-light flex items-center gap-1">
                     <MdiIcon :icon="mdiNavigationOutline" class="!size-5 text-gray-600
                   dark:!text-gray-300" />
                     <span class="text-sm">
@@ -150,7 +150,7 @@
 
                 <!-- آخر تحديث -->
                 <div>
-                  <span class="text-gray-800 dark:text-gray-100 font-[400] block text-base mt-2">
+                  <span class="text-gray-800 dark:text-gray-100 font-normal block text-base mt-2">
                     آخر تحديث
                   </span>
                   <div class="flex items-center text-sm mt-1 text-gray-600 dark:text-gray-300 gap-1">

@@ -189,7 +189,7 @@ const routes = [
         component: () => import("../views/dashboard/UserView.vue"),
       },
     ],
-  },
+  }
 ];
 
 const router = createRouter({

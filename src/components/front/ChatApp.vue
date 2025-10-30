@@ -250,7 +250,7 @@ onBeforeUnmount(() => {
       <div class="p-5 flex items-center justify-between">
         <div class="info flex items-center gap-2">
           <div
-            class="icon text-black dark:text-white text-[12px] font-[500] bg-gray-100 dark:bg-gray-700 h-9 w-9 flex items-center justify-center rounded-full">
+            class="icon text-black dark:text-white text-[12px] font-medium bg-gray-100 dark:bg-gray-700 h-9 w-9 flex items-center justify-center rounded-full">
             <span>{{
               (props.with.name || "")
                 .split(" ")
@@ -261,7 +261,7 @@ onBeforeUnmount(() => {
             }}</span>
           </div>
           <div>
-            <span class="font-[500] flex">
+            <span class="font-medium flex">
               <span class="text-black dark:text-white text-[14px]">{{
                 props.with.name
               }}</span>
@@ -270,7 +270,7 @@ onBeforeUnmount(() => {
                 <CheckIcon class="w-3 h-3 text-gray-600 dark:text-gray-300" />
               </span>
             </span>
-            <div class="degree text-gray-600 dark:text-gray-400 text-[12px] font-[500] mt-1">
+            <div class="degree text-gray-600 dark:text-gray-400 text-[12px] font-medium mt-1">
               درجة الثقة 80%
             </div>
           </div>
@@ -314,7 +314,7 @@ onBeforeUnmount(() => {
 
     <div class="send p-4 flex items-center gap-2 border-t border-gray-200 dark:border-gray-700">
       <input type="text" v-model="message" @keyup.enter="sendMessage()" placeholder="اكتب رسالتك..."
-        class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 text-black dark:text-white block w-full placeholder:text-[14px] placeholder:font-[400] placeholder:text-gray-500 dark:placeholder:text-gray-400" />
+        class="focus:border-gray-500 focus:ring-gray-500 rounded-md bg-gray-100 dark:bg-gray-700 text-black dark:text-white block w-full placeholder:text-[14px] placeholder:font-normal placeholder:text-gray-500 dark:placeholder:text-gray-400" />
       <button @click="sendMessage"
         class="text-white rounded-lg w-14 h-10 inline-flex items-center justify-center transition" :class="{
           'bg-black dark:bg-blue-600': message.length,

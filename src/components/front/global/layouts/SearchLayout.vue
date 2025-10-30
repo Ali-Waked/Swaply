@@ -100,7 +100,7 @@ onMounted(async () => {
       <LogoSection />
     </HeaderPage>
     <!-- العنوان -->
-    <div class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-[500] mt-16">
+    <div class="flex items-center gap-2 text-[24px] text-gray-700 dark:text-white font-medium mt-16">
       <span>نتائج البحث:</span>
       <span>{{ search }}</span>
     </div>
@@ -113,7 +113,7 @@ onMounted(async () => {
       @click="searchFor()">
       <FunnelIcon class="w-6" />
       <span
-        class="absolute -top-7 left-1/2 hidden -translate-x-1/2 bg-gray-500/50 text-[12px] px-2 py-1 font-[500] rounded-md text-white transition-all">
+        class="absolute -top-7 left-1/2 hidden -translate-x-1/2 bg-gray-500/50 text-[12px] px-2 py-1 font-medium rounded-md text-white transition-all">
         بحث
       </span>
     </div>
@@ -157,10 +157,10 @@ onMounted(async () => {
             />
           </svg>
         </div>
-        <h3 class="text-lg font-[500] text-gray-700 dark:text-gray-200 mb-2">
+        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-200 mb-2">
           لم نجد نتائج لبحثك
         </h3>
-        <p class="text-sm font-[400] text-gray-500 dark:text-gray-400">
+        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
           لا توجد متاجر تبيع "{{ search }}" في الوقت الحالي
         </p>
       </div>

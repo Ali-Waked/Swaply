@@ -69,28 +69,28 @@ const removeFromNotification = async () => {
     ref="box">
     <div>
       <div class="flex">
-        <span class="title text-gray-900 dark:text-white font-[500] text-[16px] mb-1 block">
+        <span class="title text-gray-900 dark:text-white font-medium text-[16px] mb-1 block">
           {{ title }}
         </span>
         <span class="status flex items-center gap-2 mr-2">
           <span
-            class="active bg-black dark:bg-green-600 rounded font-[500] text-[12px] text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
+            class="active bg-black dark:bg-green-600 rounded font-medium text-[12px] text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
             v-if="isActive == 'active'" @click="updateStatus">
             نشط
           </span>
           <span
-            class="in-active bg-gray-200 dark:bg-gray-600 rounded font-[500] text-[12px] text-black dark:text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
+            class="in-active bg-gray-200 dark:bg-gray-600 rounded font-medium text-[12px] text-black dark:text-white py-[5px] px-[18px] cursor-pointer transition-opacity hover:opacity-70"
             v-else @click="updateStatus">
             متوقف
           </span>
           <span
-            class="alerted bg-red-600 rounded font-[500] text-[12px] text-white py-[5px] px-2 cursor-default select-none"
+            class="alerted bg-red-600 rounded font-medium text-[12px] text-white py-[5px] px-2 cursor-default select-none"
             v-if="alerted">
             تم التنبيه
           </span>
         </span>
       </div>
-      <span class="text-gray-600 dark:text-gray-300 font-[400] text-[14px] block">
+      <span class="text-gray-600 dark:text-gray-300 font-normal text-[14px] block">
         {{ whenRun }}
       </span>
     </div>

@@ -47,7 +47,7 @@ const data = [
 <template>
   <div class="container mx-auto">
     <div class="bg-sky-100 dark:bg-blue-300/20 px-8 py-12 rounded-3xl">
-      <h4 class="title text-gray-950 dark:text-gray-200 font-[400] text-center text-[26px] mb-12">
+      <h4 class="title text-gray-950 dark:text-gray-200 font-normal text-center text-[26px] mb-12">
         سجل الدخول للحصول على مزايا متقدمة
       </h4>
 
@@ -58,7 +58,7 @@ const data = [
         }">
           <template v-if="item.icon">
             <component :is="item.icon" class="w-16 h-16 text-gray-700 dark:text-gray-300" />
-            <p class="title text-gray-700 dark:text-gray-200 font-[500] text-[18px] my-2">
+            <p class="title text-gray-700 dark:text-gray-200 font-medium text-[18px] my-2">
               {{ item.title }}
             </p>
             <p class="text text-[14px] text-gray-400 dark:text-gray-400">
@@ -73,7 +73,7 @@ const data = [
                   rounded-lg
                   px-7
                   py-[10px]
-                  font-[400]
+                  font-normal
                   transition-all
                 text-white
                   ring-1

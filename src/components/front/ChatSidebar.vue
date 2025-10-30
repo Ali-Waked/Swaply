@@ -101,7 +101,7 @@ onBeforeUnmount(() => {
   <div
     class="scrollbar-hide overflow-auto h-screen fixed top-0 w-[400px] bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 z-[1000000] pt-8"
     :class="{ '-right-full': !dialog, 'right-0': dialog }">
-    <div class="text-center font-[500] text-[24px] mb-4 text-blue-600 dark:text-blue-400">
+    <div class="text-center font-medium text-[24px] mb-4 text-blue-600 dark:text-blue-400">
       محادثاتك
     </div>
     <!-- <pre>
@@ -114,7 +114,7 @@ onBeforeUnmount(() => {
             class="flex items-center relative px-4 gap-4 last-of-type:border-none border-b border-gray-200 dark:border-gray-700 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             @click="openChat(conversation)">
             <div
-              class="image bg-blue-500 dark:bg-blue-700 text-white font-[500] w-12 h-12 rounded-full flex items-center justify-center">
+              class="image bg-blue-500 dark:bg-blue-700 text-white font-medium w-12 h-12 rounded-full flex items-center justify-center">
               {{
                 (getName(conversation) || "")
                   .split(" ")
@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
               }}
             </div>
             <div class="flex flex-col gap-1">
-              <span class="text-gray-900 dark:text-gray-100 font-[400]">{{
+              <span class="text-gray-900 dark:text-gray-100 font-normal">{{
                 getName(conversation)
               }}</span>
               <span class="text-gray-500 dark:text-gray-400 text-[14px]">
@@ -150,7 +150,7 @@ onBeforeUnmount(() => {
         </template>
       </template>
       <template v-else>
-        <p class="text-gray-600 w-fit mx-auto mt-8 font-[400]">
+        <p class="text-gray-600 w-fit mx-auto mt-8 font-normal">
           لا يوجد لديك اي محادثات
         </p>
       </template>

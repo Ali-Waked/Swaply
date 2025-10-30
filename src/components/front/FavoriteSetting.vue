@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watch } from "vue";
 import RadioComponent from "./global/RadioComponent.vue";
-import SecandryTitle from "./global/SecandryTitle.vue";
-import SingleFavoriteStraucture from "./SingleFavoriteStraucture.vue";
+import SecondaryTitle from "./global/SecondaryTitle.vue";
+import SingleFavoriteStructure from "./SingleFavoriteStructure.vue";
 import BaseSwitch from "./global/BaseSwitch.vue";
 import { useThemeStore } from "../../stores/theme";
 import { storeToRefs } from "pinia";
@@ -60,22 +60,22 @@ watch(currentTheme, async (newVal) => {
 </script>
 
 <template>
-  <SecandryTitle label="التفضيلات" class="mb-3" />
+  <SecondaryTitle label="التفضيلات" class="mb-3" />
   <div class="border rounded-xl p-6 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-    <SingleFavoriteStraucture title="المظهر" description="اختر مظهر التطبيق">
+    <SingleFavoriteStructure title="المظهر" description="اختر مظهر التطبيق">
       <template #action>
         <RadioComponent :items="themes" name="theme" v-model:selected="currentTheme" />
       </template>
-    </SingleFavoriteStraucture>
-    <SingleFavoriteStraucture title="الوحدة" description="وحدة قياس الاسعار">
+    </SingleFavoriteStructure>
+    <SingleFavoriteStructure title="الوحدة" description="وحدة قياس الاسعار">
       <template #action>
         <RadioComponent :items="currency" name="currency" v-model:selected="currencySelected" />
       </template>
-    </SingleFavoriteStraucture>
-    <SingleFavoriteStraucture title="التنبيهات" description="تفعيل إشعارات الاسعار">
+    </SingleFavoriteStructure>
+    <SingleFavoriteStructure title="التنبيهات" description="تفعيل إشعارات الاسعار">
       <template #action>
         <BaseSwitch v-model:model-value="enabled" />
       </template>
-    </SingleFavoriteStraucture>
+    </SingleFavoriteStructure>
   </div>
 </template>

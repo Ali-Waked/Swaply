@@ -18,12 +18,12 @@
     <template v-else>
       <template v-for="item in cardItems" :key="item.title">
         <div
-          class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-[400] w-[280px] lg:w-[340px] transition-colors duration-200"
+          class="border-2 rounded-xl flex items-center justify-center gap-6 lg:gap-8 h-40 text-[22px] lg:text-[28px] font-normal w-[280px] lg:w-[340px] transition-colors duration-200"
           :class="item.style">
           <component :is="item.icon" class="w-12 lg:w-14" />
           <div class="flex items-center flex-col justify-center gap-4">
             <span>{{ item.title }}</span>
-            <span class="font-[500] text-2xl lg:text-4xl">{{ item.number }}</span>
+            <span class="font-medium text-2xl lg:text-4xl">{{ item.number }}</span>
           </div>
         </div>
       </template>
@@ -36,16 +36,16 @@
         <div
           class="bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-700 rounded-lg p-6 pb-3 transition-colors duration-200">
           <div class="flex justify-between items-center mb-6">
-            <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-[500]">
+            <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-medium">
               آخر المستخدمين انضماما
             </h4>
             <button @click="$router.push({ name: 'dashboard-user' })"
-              class="border-2 text-[12px] text-nowrap text-blue-400 border-blue-400 dark:text-blue-200 dark:border-blue-200 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-400 hover:text-white">
+              class="border-2 text-[12px] text-nowrap text-blue-400 border-blue-400 dark:text-blue-200 dark:border-blue-200 rounded-lg px-3 py-[6px] font-normal transition-all duration-200 hover:bg-blue-400 hover:text-white">
               عرض المزيد
             </button>
           </div>
           <div class="text-[14px]">
-            <div class="row grid grid-cols-8 gap-4 mb-2 font-[400] text-gray-800 dark:text-gray-200">
+            <div class="row grid grid-cols-8 gap-4 mb-2 font-normal text-gray-800 dark:text-gray-200">
               <span>رقم المستخدم</span>
               <span>اسم المستخدم</span>
               <span class="col-span-2 text-center">ايميل المستخدم</span>
@@ -88,11 +88,11 @@
       class="bg-white border border-gray-200 overflow-hidden dark:bg-gray-700 dark:shadow-gray-700 dark:border-gray-700 shadow-md rounded-lg p-6 pb-3 flex-1 max-h-[25rem] min-w-[280px] transition-colors duration-200"
       :class="{ 'overflow-y-auto': showAll }">
       <div class="flex justify-between items-center gap-6 mb-6">
-        <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-[500] text-nowrap">
+        <h4 class="text-blue-400 dark:text-blue-200 text-[20px] font-medium text-nowrap">
           آخر الإشعارات
         </h4>
         <button v-if="notifications.data?.length > 4" @click="showAll = !showAll"
-          class="border-2 text-[12px] text-nowrap text-blue-400 dark:text-blue-200 border-blue-500 dark:border-blue-200 rounded-lg px-3 py-[6px] font-[400] transition-all duration-200 hover:bg-blue-500 hover:text-white dark:hover:text-white">
+          class="border-2 text-[12px] text-nowrap text-blue-400 dark:text-blue-200 border-blue-500 dark:border-blue-200 rounded-lg px-3 py-[6px] font-normal transition-all duration-200 hover:bg-blue-500 hover:text-white dark:hover:text-white">
           {{ showAll ? "عرض أقل" : "عرض الكل" }}
         </button>
       </div>
@@ -113,7 +113,7 @@
           v-for="notification in notifications.data" :key="notification.id">
           <component :is="getIcon(notification.data.icon_type)" class="w-6 text-gray-800 dark:text-gray-200" />
           <div class="flex flex-col gap-[2px]">
-            <span class="text-gray-800 dark:text-gray-200 font-[400] text-[14px]">
+            <span class="text-gray-800 dark:text-gray-200 font-normal text-[14px]">
               {{ notification.data.title }}
             </span>
             <span class="text-gray-600 dark:text-gray-400 text-[12px]">
@@ -123,7 +123,7 @@
         </div>
       </template>
       <template v-else>
-        <p class="flex justify-center items-center h-[50%] text-sm font-[400] text-gray-800 dark:text-gray-200">
+        <p class="flex justify-center items-center h-[50%] text-sm font-normal text-gray-800 dark:text-gray-200">
           لا يوجد اي إشعارات حتى الان
         </p>
       </template>
@@ -244,7 +244,6 @@ onMounted(async () => {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Firefox */
 .overflow-y-auto {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;

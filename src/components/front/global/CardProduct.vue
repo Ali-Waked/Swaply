@@ -128,7 +128,7 @@ const removeFromFavorite = async () => {
 
     <!-- Content -->
     <div class="p-4">
-      <div class="flex items-center gap-4 font-[500] mb-1 text-[18px]">
+      <div class="flex items-center gap-4 font-normal mb-1 text-[18px]">
         <span class="title flex-1">{{ name }}</span>
         <span class="price">{{
           currencyFormat(
@@ -142,7 +142,7 @@ const removeFromFavorite = async () => {
 
       <div class="flex items-center justify-between">
         <p
-          class="description mb-1 text-nowrap w-full overflow-hidden text-ellipsis text-gray-500 dark:text-gray-400 text-[14px]">
+          class="description mb-1 text-nowrap w-full overflow-hidden text-ellipsis text-gray-500 dark:text-gray-300/90 text-[14px]">
           {{ description }}
         </p>
         <span class="line-through" v-if="offer">
@@ -152,7 +152,7 @@ const removeFromFavorite = async () => {
 
       <div class="store-name flex items-center gap-1 mb-1">
         <MapPinIcon class="w-[12px] h-[12px]" />
-        <span class="text-[12px] font-[400] dark:text-gray-300">{{
+        <span class="text-[12px] font-normal dark:text-gray-300">{{
           storeName
         }}</span>
       </div>

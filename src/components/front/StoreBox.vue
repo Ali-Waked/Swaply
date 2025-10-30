@@ -40,13 +40,13 @@ onMounted(async () => {
 
 <template>
   <div class="border border-gray-200 dark:border-gray-700 py-8 px-6 rounded-xl mb-2 bg-white dark:bg-gray-900">
-    <div class="flex justify-between items-center font-[400] text-[26px]">
-      <div class="flex gap-2 items-center font-[400] text-[26px]">
+    <div class="flex justify-between items-center font-normal text-[26px]">
+      <div class="flex gap-2 items-center font-normal text-[26px]">
         <span class="text-gray-900 dark:text-gray-100">{{ storeName }}</span>
         <span
           class="cursor-default border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 gap-[2px] text-[10px] py-1 pr-1 flex items-center"
           v-if="isCertified">
-          <span class="font-[500]">معتمد</span>
+          <span class="font-medium">معتمد</span>
           <CheckIcon class="w-4 h-4" />
         </span>
       </div>
@@ -55,7 +55,7 @@ onMounted(async () => {
       }}</span>
     </div>
 
-    <div class="flex items-center justify-between text-gray-700 dark:text-gray-300 font-[400]">
+    <div class="flex items-center justify-between text-gray-700 dark:text-gray-300 font-normal">
       <span class="flex items-center gap-2 mt-3">
         <span>{{ rating }}</span>
         <StarIcon class="w-5 h-5 text-amber-400" />
@@ -67,7 +67,7 @@ onMounted(async () => {
       <span class="text-[12px] rounded-lg px-4 py-[6px] cursor-default" :class="priceType.style">
         {{ priceType.rating }}
       </span>
-      <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-[400]">
+      <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-normal">
         <span>
           {{ distance }}
           كم
@@ -78,7 +78,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="text-gray-500 dark:text-gray-400 text-[12px] mt-3 font-[400]">
+    <div class="text-gray-500 dark:text-gray-400 text-[12px] mt-3 font-normal">
       <span>اخر تحديث: </span>
       <span>{{ lastUpdate }}</span>
     </div>

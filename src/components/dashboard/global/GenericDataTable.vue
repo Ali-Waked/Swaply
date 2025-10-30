@@ -25,7 +25,7 @@
         <div>
           <label
           for="rows-per-page"
-           class="font-[400] text-[14px] text-gray-700 dark:text-gray-300 ml-3">
+           class="font-normal text-[14px] text-gray-700 dark:text-gray-300 ml-3">
             عدد الصفوف لكل صفحة:
           </label>
           <select
@@ -132,11 +132,8 @@ const updateRowsPerPageSelect = (e) => {
   --easy-table-header-font-size: 15px;
   --easy-table-header-height: 52px;
   --easy-table-header-font-color: #ffffff;
-  /* نص أبيض دائمًا */
   --easy-table-header-background-color: #3b82f6;
-  /* bg-blue-500 */
   --easy-table-header-background-color-dark: #1e40af;
-  /* bg-blue-900 في darkmode */
   --easy-table-header-item-padding: 12px 16px;
 
   /* Body rows */
@@ -172,13 +169,9 @@ const updateRowsPerPageSelect = (e) => {
 /* Dark Mode support */
 .dark-theme {
   --easy-table-header-background-color: #1e40af;
-  /* bg-blue-900 */
   --easy-table-body-row-background-color: #1f2937;
-  /* bg-gray-800 */
   --easy-table-body-even-row-background-color: #374151;
-  /* bg-gray-700 */
   --easy-table-body-row-font-color: #f9fafb;
-  /* text-gray-100 */
   --easy-table-body-row-hover-background-color: #e6e6e630;
   --easy-table-body-row-hover-font-color: #ffffff;
   --easy-table-footer-background-color: #1f2937;
